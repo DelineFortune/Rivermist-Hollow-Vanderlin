@@ -66,14 +66,14 @@
 
 	if(!item_skip && ismovable(A))
 		var/atom/movable/thing = A
-		if(used_intent.type == INTENT_GRAB)
+		if(istype(used_intent, INTENT_GRAB))
 			if(!thing.anchored)
 				start_pulling(thing) //add params to grab bodyparts based on loc
 				return TRUE
 
-		if(used_intent.type == INTENT_DISARM)
+		if(istype(used_intent, INTENT_DISARM))
 			if(!thing.anchored)
-				var/stam_loss = max(100 - (STASTR * 10), 5)
+				var/stam_loss = max(100 - (GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) * 10), 5)
 				visible_message(span_info("[src] pushes [thing]."), span_info("I push [thing]."))
 				if(adjust_stamina(stam_loss))
 					PushAM(thing, MOVE_FORCE_STRONG)
@@ -86,7 +86,6 @@
 			return TRUE
 
 	A.attack_hand(src, modifiers)
-
 
 /mob/living/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -105,9 +104,10 @@
 
 	if(ishuman(src) && ishuman(user))
 		var/mob/living/carbon/human/target = src
+		var/datum/job/job = SSjob.GetJob(target.job)
 		if(length(user.return_apprentices()) >= user.return_max_apprentices())
 			return
-		if(target.age == AGE_CHILD && !target.is_apprentice())
+		if((target.age == AGE_CHILD || job?.type == /datum/job/vagrant) && target.mind && !target.is_apprentice())
 			to_chat(user, span_notice("You offer apprenticeship to [target]."))
 			user.make_apprentice(target)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -161,7 +161,7 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_BITE, used_item = FALSE, atom_bounce = TRUE)
 	next_attack_msg.Cut()
 
-	var/dmg = user.STASTR*0.5
+	var/dmg = GET_MOB_ATTRIBUTE_VALUE(user, STAT_STRENGTH)*0.5
 	dmg *= HAS_TRAIT(user, TRAIT_STRONGBITE) ? 2 : \
 		affecting.has_wound(/datum/wound/bite) ? 1 : 0
 	if(dmg)
@@ -170,7 +170,7 @@
 			affecting.bodypart_attacked_by(BCLASS_BITE, dmg, user, user.zone_selected, crit_message = TRUE)
 			playsound(src, "smallslash", 100, TRUE, -1)
 			if(HAS_TRAIT(user, TRAIT_POISONBITE) && src.reagents)
-				var/poison = user.STACON/2
+				var/poison = GET_MOB_ATTRIBUTE_VALUE(user, STAT_CONSTITUTION)/2
 				src.reagents.add_reagent(/datum/reagent/toxin/venom, poison/2)
 				src.reagents.add_reagent(/datum/reagent/medicine/soporpot, poison)
 				to_chat(user, span_warning("Your fangs inject venom into [src]!"))
@@ -404,16 +404,16 @@
 	if(ishuman(A))
 		var/mob/living/carbon/human/thief = src
 		var/mob/living/carbon/human/victim = A
-		var/thiefskill = thief.get_skill_level(/datum/skill/misc/stealing) + (has_world_trait(/datum/world_trait/matthios_fingers) ? (is_ascendant(MATTHIOS) ? 2 : 1) : 0)
-		var/thief_skill_base = thief.get_skill_level(/datum/skill/misc/stealing)
+		var/thiefskill = GET_MOB_SKILL_VALUE_OLD(thief, /datum/attribute/skill/misc/stealing) + (has_world_trait(/datum/world_trait/matthios_fingers) ? (is_ascendant(MATTHIOS) ? 2 : 1) : 0)
+		var/thief_skill_base = GET_MOB_SKILL_VALUE_OLD(thief, /datum/attribute/skill/misc/stealing)
 		if(thiefskill <= 0)
 			thiefskill = 1
 		if(thief.rogue_sneaking)
 			thiefskill += 1
-		var/stealroll = roll("[thiefskill]d6")
-		var/target_perception = victim.STAPER
-		var/target_skill = victim.get_skill_level(/datum/skill/misc/stealing)
-		var/exp_to_gain = thief.STAINT * 1.5
+		var/stealroll = roll("[floor(thiefskill)]d6")
+		var/target_perception = GET_MOB_ATTRIBUTE_VALUE(victim, STAT_PERCEPTION)
+		var/target_skill = GET_MOB_SKILL_VALUE_OLD(victim, /datum/attribute/skill/misc/stealing)
+		var/exp_to_gain = GET_MOB_ATTRIBUTE_VALUE(thief, STAT_INTELLIGENCE) * 1.5
 		var/list/stealablezones = list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_PRECISE_NECK, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_HAND)
 		var/list/stealpos = list()
 		if(client?.prefs.showrolls)
@@ -429,42 +429,25 @@
 			//better skill shortens time, up to one second with legendary
 			if(do_after(thief, (2.5 - (thief_skill_base * 0.25)) SECONDS, victim, progress = FALSE))
 				switch(thief.zone_selected)
-					if(BODY_ZONE_HEAD)
-						if (victim.get_item_by_slot(ITEM_SLOT_EARRING_L))
-							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_EARRING_L))
-						if (victim.get_item_by_slot(ITEM_SLOT_EARRING_R))
-							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_EARRING_R))
 					if(BODY_ZONE_CHEST)
 						if (victim.get_item_by_slot(ITEM_SLOT_BACK_L))
 							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_BACK_L))
 						if (victim.get_item_by_slot(ITEM_SLOT_BACK_R))
 							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_BACK_R))
-						if (victim.get_item_by_slot(ITEM_SLOT_UNDER_TOP))
-							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_UNDER_TOP))
-						if (victim.get_item_by_slot(ITEM_SLOT_UNDERSHIRT))
-							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_UNDERSHIRT))
 					if(BODY_ZONE_L_ARM)
 						if (victim.get_item_by_slot(ITEM_SLOT_BACK_L))
 							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_BACK_L))
 					if(BODY_ZONE_R_ARM)
 						if (victim.get_item_by_slot(ITEM_SLOT_BACK_R))
 							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_BACK_R))
-						if (victim.get_item_by_slot(ITEM_SLOT_ARMSLEEVES))
-							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_ARMSLEEVES))
 					if(BODY_ZONE_PRECISE_NECK)
 						if (victim.get_item_by_slot(ITEM_SLOT_NECK))
 							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_NECK))
-						if (victim.get_item_by_slot(ITEM_SLOT_GARTER))
-							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_GARTER))
 					if(BODY_ZONE_PRECISE_GROIN)
 						if (victim.get_item_by_slot(ITEM_SLOT_BELT_R))
 							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_BELT_R))
 						if (victim.get_item_by_slot(ITEM_SLOT_BELT_L))
 							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_BELT_L))
-						if (victim.get_item_by_slot(ITEM_SLOT_UNDER_BOTTOM))
-							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_UNDER_BOTTOM))
-						if (victim.get_item_by_slot(ITEM_SLOT_GARTER))
-							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_GARTER))
 					if(BODY_ZONE_L_ARM)
 						if (victim.get_item_by_slot(ITEM_SLOT_BELT_L))
 							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_BELT_L))
@@ -474,9 +457,6 @@
 					if(BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_HAND)
 						if (victim.get_item_by_slot(ITEM_SLOT_RING))
 							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_RING))
-					if(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
-						if (victim.get_item_by_slot(ITEM_SLOT_SOCKS))
-							stealpos.Add(victim.get_item_by_slot(ITEM_SLOT_SOCKS))
 				if(length(stealpos) > 0)
 					var/obj/item/picked = pick(stealpos)
 					if(HAS_TRAIT(picked, TRAIT_HARD_TO_STEAL))
@@ -487,7 +467,7 @@
 					put_in_active_hand(picked)
 					to_chat(thief, span_green("I stole [picked]!"))
 					log_combat(thief, victim, "stole [picked] from ")
-					exp_to_gain += thief.get_learning_boon(thiefskill) * 5
+					exp_to_gain += thief.get_learning_boon(/datum/attribute/skill/misc/stealing) * 5
 					if(victim.client && victim.stat != DEAD)
 						SEND_SIGNAL(thief, COMSIG_ITEM_STOLEN, victim)
 						record_featured_stat(FEATURED_STATS_THIEVES, thief)
@@ -510,7 +490,7 @@
 		if(stealroll < target_perception)
 			exp_to_gain /= 2
 			to_chat(thief, span_danger("I failed to pick the pocket!"))
-		thief.adjust_experience(/datum/skill/misc/stealing, exp_to_gain, FALSE)
+		thief.adjust_experience(/datum/attribute/skill/misc/stealing, exp_to_gain, FALSE)
 		changeNext_move(mmb_intent.clickcd)
 
 /mob/living/proc/jump_action(atom/A)
@@ -587,7 +567,7 @@
 	var/flip_direction = FLIP_DIRECTION_CLOCKWISE
 	var/prev_pixel_z = pixel_z
 	var/prev_transform = transform
-	if(get_skill_level(/datum/skill/misc/athletics) > 4)
+	if(GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/misc/athletics) > 4 || HAS_TRAIT(src, TRAIT_FLIP_JUMP))
 		do_a_flip = TRUE
 		if((dir & SOUTH) || (dir & WEST))
 			flip_direction = FLIP_DIRECTION_ANTICLOCKWISE
@@ -640,7 +620,7 @@
 		if(used_intent.type == INTENT_DISARM)
 			var/obj/structure/AM = A
 			if(istype(AM) && !AM.anchored)
-				var/jadded = max(100-(STASTR*10),5)
+				var/jadded = max(100-(GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH)*10),5)
 				if(adjust_stamina(jadded))
 					visible_message(span_info("[src] pushes [AM]."))
 					PushAM(AM, MOVE_FORCE_STRONG)

@@ -7,7 +7,8 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
-	associated_skill = /datum/skill/magic/holy
+	associated_skill = /datum/attribute/skill/magic/holy
+	required_items = list(/obj/item/clothing/neck/psycross/silver/divine/dendor)
 	attunements = list(/datum/attunement/earth = 0.5)
 	charge_time = 1 SECONDS
 	charge_drain = 1
@@ -105,9 +106,6 @@
 			to_chat(M, span_nicegreen("A falcon swoops low and drops [send_item.name] before you!"))
 
 /obj/effect/falcon_messenger/proc/cleanup()
-	send_item = null
-	target_turf = null
-	recipient = null
 	qdel(src)
 
 /obj/projectile/magic/falcon_dive
@@ -132,7 +130,7 @@
 	icon_state = "falconing"
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/mob/living/owner_mob
 	var/cycle_count = 0

@@ -27,11 +27,6 @@
 	if(has_reflection)
 		create_reflection()
 	recalculate_stats()
-	//for organ spawning
-	if(ai_controller)
-		var/datum/ai_planning_subtree/horny/hornybehavior = locate() in ai_controller.planning_subtrees
-		if(hornybehavior && !GetComponent(/datum/component/arousal))
-			AddComponent(/datum/component/arousal)
 
 /mob/living/Destroy()
 	if(FACTION_MATTHIOS in faction)
@@ -62,9 +57,9 @@
 	sharedSoullinks = null
 	return ..()
 
-/mob/living/carbon/human/regenerate_icons()
-	update_reflection()
+/mob/living/update_appearance(updates)
 	. = ..()
+	update_reflection()
 
 /mob/living/proc/create_reflection()
 	//Add custom reflection image
@@ -118,7 +113,7 @@
 		to_chat(src, span_info("You glide down to a more manageable height."))
 		playsound(src, 'sound/mobs/wingflap.ogg', 75, FALSE)
 		return
-	var/dex_save = src.get_skill_level(/datum/skill/misc/climbing)
+	var/dex_save = GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/misc/climbing)
 	if(dex_save >= 5) // Master climbers can fall down 2 levels without hurting themselves
 		if(levels <= 2)
 			to_chat(src, span_info("My dexterity allowed me to land on my feet unscathed!"))
@@ -253,8 +248,8 @@
 
 			var/mob/living/L = M
 
-			var/self_points = FLOOR((STACON + STASTR + get_skill_level(/datum/skill/misc/athletics))/2, 1)
-			var/target_points = FLOOR((L.STAEND + L.STASTR + L.get_skill_level(/datum/skill/misc/athletics))/2, 1)
+			var/self_points = FLOOR((GET_MOB_ATTRIBUTE_VALUE(src, STAT_CONSTITUTION) + GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) + GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/misc/athletics))/2, 1)
+			var/target_points = FLOOR((GET_MOB_ATTRIBUTE_VALUE(L, STAT_ENDURANCE) + GET_MOB_ATTRIBUTE_VALUE(L, STAT_STRENGTH) + GET_MOB_SKILL_VALUE_OLD(L, /datum/attribute/skill/misc/athletics))/2, 1)
 
 			switch(sprint_distance)
 				// Point blank
@@ -315,11 +310,11 @@
 		if(!(world.time % 5))
 			var/statchance = 50
 
-			if(STASTR > L.STASTR)
-				statchance = 50 + (STASTR - L.STASTR * 10)
+			if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) > GET_MOB_ATTRIBUTE_VALUE(L, STAT_STRENGTH))
+				statchance = 50 + (GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) - GET_MOB_ATTRIBUTE_VALUE(L, STAT_STRENGTH) * 10)
 
-			else if(STASTR < L.STASTR)
-				statchance = 50 - (L.STASTR - STASTR * 10)
+			else if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) < GET_MOB_ATTRIBUTE_VALUE(L, STAT_STRENGTH))
+				statchance = 50 - (GET_MOB_ATTRIBUTE_VALUE(L, STAT_STRENGTH) - GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) * 10)
 			if(statchance < 10)
 				statchance = 10
 			if(prob(statchance))
@@ -649,11 +644,9 @@
 		stop_pulling()
 
 /mob/living/stop_pulling(pulling_broke_free = FALSE)
-	if(pulling_broke_free && ismob(pulling) && grab_state >= GRAB_AGGRESSIVE)
-		var/wrestling_cooldown_reduction = 0
-		if(pulledby?.get_skill_level(/datum/skill/combat/wrestling))
-			wrestling_cooldown_reduction = 0.2 SECONDS * pulledby.get_skill_level(/datum/skill/combat/wrestling, TRUE)
-		TIMER_COOLDOWN_START(src, "broke_free", max(0, 2 SECONDS - wrestling_cooldown_reduction)) // BUFF: Reduced cooldown
+	if(pulling_broke_free && ismob(pulling))
+		var/wrestling_cooldown_reduction = 0.1 SECONDS * GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/combat/wrestling)
+		TIMER_COOLDOWN_START(pulling, "broke_free", max(0, 1 SECONDS - wrestling_cooldown_reduction)) // BUFF: Reduced cooldown
 
 	for(var/obj/item/grabbing/grabber_item in held_items)
 		if(grabber_item.grabbed == pulling)
@@ -884,31 +877,6 @@
 /mob/living/proc/set_lying_down(new_lying_angle)
 	set_body_position(LYING_DOWN)
 
-/mob/living/proc/get_lying_direction_name()
-	if(body_position != LYING_DOWN)
-		return null
-
-	switch(SIMPLIFY_DEGREES(lying_angle))
-		if(90)
-			return "east"
-		if(180)
-			return "south"
-		if(270)
-			return "west"
-		if(0)
-			return "north"
-
-	return null
-
-/mob/living/proc/swap_lying_direction()
-	if(body_position != LYING_DOWN)
-		to_chat(src, span_warning("I need to be lying down first."))
-		return FALSE
-
-	set_lying_angle(REVERSE_ANGLE(lying_angle))
-	visible_message(span_notice("[src] shifts around and turns the other way."), span_notice("I shift around and turn the other way."))
-	return TRUE
-
 /// Proc to append behavior related to lying down.
 /mob/living/proc/on_lying_down(new_lying_angle)
 	if(layer == initial(layer)) //to avoid things like hiding larvas.
@@ -987,6 +955,7 @@
 		GLOB.alive_mob_list += src
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
+		timeofdeath = 0
 		updatehealth() //then we check if the mob should wake up.
 		// if(full_heal_flags & HEAL_ADMIN)
 		// 	get_up(TRUE)
@@ -1056,20 +1025,13 @@
 
 	set_disgust(0)
 	cure_husk()
-	set_nutrition(NUTRITION_LEVEL_FED + 50)
-	bodytemperature = BODYTEMP_NORMAL
-	remove_status_effect(/datum/status_effect/temporary_blindness)
-	set_eye_blur(0)
-	remove_status_effect(/datum/status_effect/dizziness)
-	//cure_nearsighted()
-	//cure_blind()
 
 	if(heal_flags & HEAL_WOUNDS)
 		for(var/datum/wound/wound as anything in get_wounds())
 			if(heal_flags & ADMIN_HEAL_ALL)
 				qdel(wound)
 			else
-				wound.heal_wound(wound.whp)
+				wound.heal_wound(wound.whp, forced = TRUE)
 
 	if(heal_flags & HEAL_TEMP)
 		bodytemperature = BODYTEMP_NORMAL
@@ -1093,7 +1055,6 @@
 
 	updatehealth()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
-	reapply_quirks()
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, heal_flags)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
@@ -1102,13 +1063,14 @@
 		return FALSE
 	return TRUE
 
-
 /mob/living/carbon/human/can_be_revived()
 	. = ..()
 	var/obj/item/bodypart/head/H = get_bodypart(BODY_ZONE_HEAD)
-	if(H)
-		if(H.rotted || H.skeletonized || H.brainkill)
-			return FALSE
+	if(!istype(H) || H.rotted || H.skeletonized)
+		return FALSE
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	if(!istype(B) || B.brain_death)
+		return FALSE
 
 
 /mob/living/proc/update_damage_overlays()
@@ -1150,9 +1112,8 @@
 
 	if(m_intent == MOVE_INTENT_RUN)
 		sprinted_tiles++
-		sprinted_since_last_dir_change++
-		var/boon = get_learning_boon(/datum/skill/misc/athletics)
-		adjust_experience(/datum/skill/misc/athletics, (STAEND*0.05) * boon)
+		var/boon = get_learning_boon(/datum/attribute/skill/misc/athletics)
+		adjust_experience(/datum/attribute/skill/misc/athletics, (GET_MOB_ATTRIBUTE_VALUE(src, STAT_ENDURANCE)*0.05) * boon)
 
 	if(wallpressed)
 		update_wallpress(T, newloc, direct)
@@ -1179,6 +1140,18 @@
 	. = ..()
 
 	update_sneak_invis()
+
+	// Complete and utter shitcode, make sure conditions match those in /client/proc/Process_Grab()
+	if(. && client && isliving(pulledby) && pulledby != pulling && pulledby.cmode && pulledby.grab_state == GRAB_PASSIVE) //NICHE case of being in a first tier grab state.
+		if(pulledby.anchored)
+			pulledby.stop_pulling()
+		else
+			var/pull_dir = get_dir(src, pulledby)
+			//puller and pullee more than one tile away or in diagonal position
+			if(get_dist(src, pulledby) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
+				pulledby.moving_from_pull = src
+				pulledby.Move(T, get_dir(pulledby, T), glide_size) //the pullee tries to reach our previous position
+				pulledby.moving_from_pull = null
 
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1 && (pulledby != moving_from_pull))//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
@@ -1223,12 +1196,14 @@
 				if((newdir in GLOB.cardinals) && (prob(50)))
 					newdir = turn(get_dir(target_turf, start), 180)
 				if(!blood_exists)
-					new /obj/effect/decal/cleanable/trail_holder(start)
+					new /obj/effect/decal/cleanable/trail_holder(start, get_blood_type().color)
 
 				for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
 					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 						TH.existing_dirs += newdir
-						TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+						var/image/bloodthing = image('icons/effects/blood.dmi', trail_type, dir = newdir)
+						bloodthing.color = get_blood_type().color
+						TH.add_overlay(bloodthing)
 						TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
@@ -1260,7 +1235,6 @@
 	if(!can_resist() || surrendering)
 		return
 
-	changeNext_move(CLICK_CD_RESIST)
 
 	if(atkswinging)
 		stop_attack(FALSE)
@@ -1271,6 +1245,8 @@
 		log_combat(src, pulledby, "resisted grab")
 		resist_grab()
 		return
+
+	changeNext_move(CLICK_CD_RESIST)
 
 	//unbuckling yourself
 	if(buckled && last_special <= world.time)
@@ -1285,14 +1261,7 @@
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
 		else if(last_special <= world.time)
-			if(has_status_effect(/datum/status_effect/leash_pet))
-				resist_leash() //trying to remove a leash.
-			else
-				resist_restraints() //trying to remove cuffs.
-			var/datum/component/riding/human/riding_datum = GetComponent(/datum/component/riding/human)
-			if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE) && riding_datum)
-				for(var/mob/M in buckled_mobs)
-					riding_datum.force_dismount(M)
+			resist_restraints() //trying to remove cuffs.
 
 /mob/living/carbon/human/verb/ic_pray()
 	set name = "Prayer"
@@ -1311,6 +1280,7 @@
 	surrendering = 1
 	if(!alert(src, "Yield in surrender?",,"YES","NO") == "YES")
 		return
+
 	record_round_statistic(STATS_YIELDS)
 	changeNext_move(CLICK_CD_EXHAUSTED)
 	var/mutable_appearance/flaggy = mutable_appearance('icons/effects/effects.dmi', "surrender", ABOVE_MOB_LAYER, appearance_flags = RESET_TRANSFORM|KEEP_APART)
@@ -1322,62 +1292,6 @@
 	playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1)
 	toggle_cmode()
 	addtimer(VARSET_CALLBACK(src, surrendering, FALSE), 15 SECONDS)
-
-/mob/living
-	var/had_pacifist = FALSE
-
-/mob/living/Topic(href, href_list)
-	if(href_list["swap_lying_direction"])
-		if(usr != src)
-			return
-		swap_lying_direction()
-		return TRUE
-
-	return ..()
-
-/mob/living/verb/toggle_submit()
-	set name = "Toggle Yield"
-	set category = "IC"
-
-	if(stat)
-		return
-
-	if(!surrendering)
-		if(alert(src, "Yield in surrender?",,"YES","NO") == "YES")
-			if(HAS_TRAIT(src, TRAIT_PACIFISM))
-				had_pacifist = TRUE
-			else
-				ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
-			surrendering = TRUE
-			changeNext_move(CLICK_CD_EXHAUSTED)
-			var/image/flaggy = image('icons/effects/effects.dmi',src,"surrender",ABOVE_MOB_LAYER)
-			flaggy.appearance_flags = RESET_TRANSFORM|KEEP_APART
-			flaggy.transform = null
-			flaggy.pixel_y = 12
-			flick_overlay_view(flaggy, 150)
-			drop_all_held_items()
-			Stun(20)
-			Knockdown(200)
-			src.visible_message("<span class='notice'>[src] yields utterly - they cannot harm anyone like this!</span>")
-			playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1)
-			log_attack("[key_name(src)] has toggled yield ON!")
-	else
-		if(IsKnockdown() || IsStun())
-			to_chat(src, span_warn("I can't rescind my yield when knocked down!"))
-			return
-
-		if(alert(src, "Rescind your yield?",,"YES","NO") == "YES")
-			surrendering = FALSE
-			if(!had_pacifist)
-				REMOVE_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
-			had_pacifist = FALSE
-			src.visible_message("<span class='notice'>[src] no longer yields!</span>")
-
-/mob/living/verb/swap_lying_direction_verb()
-	set name = "Swap Lying Direction"
-	set category = "IC"
-
-	swap_lying_direction()
 
 /mob/proc/stop_attack(message = FALSE)
 	if(atkswinging)
@@ -1419,13 +1333,13 @@
 	var/my_wrestling = 0
 	var/their_wrestling = 0
 	if(mind)
-		my_wrestling = get_skill_level(/datum/skill/combat/wrestling, TRUE)
+		my_wrestling = GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/combat/wrestling)
 	if(pulledby.mind)
-		their_wrestling = pulledby.get_skill_level(/datum/skill/combat/wrestling, TRUE)
+		their_wrestling = GET_MOB_SKILL_VALUE_OLD(pulledby, /datum/attribute/skill/combat/wrestling)
 
 	var/break_chance = 15 // Base chance
 	break_chance += (my_wrestling - their_wrestling)
-	break_chance += (STASTR - pulledby.STASTR) * 0.4
+	break_chance += (GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) - GET_MOB_ATTRIBUTE_VALUE(pulledby, STAT_STRENGTH)) * 0.4
 
 	// Both parties get a chance to break free
 	if(prob(break_chance))
@@ -1472,12 +1386,12 @@
 
 	var/counter_chance = 20 // Base chance
 
-	counter_chance += get_skill_level(/datum/skill/combat/wrestling, TRUE) * 4
-	counter_chance += get_skill_level(/datum/skill/combat/unarmed, TRUE) * 4
+	counter_chance += GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/combat/wrestling) * 4
+	counter_chance += GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/combat/unarmed) * 4
 
 	// Stat differences
-	counter_chance += (STASTR - attacker.STASTR) * 2
-	counter_chance += (STASPD - attacker.STASPD) * 1.5
+	counter_chance += (GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) - GET_MOB_ATTRIBUTE_VALUE(attacker, STAT_STRENGTH)) * 2
+	counter_chance += (GET_MOB_ATTRIBUTE_VALUE(src, STAT_SPEED) - GET_MOB_ATTRIBUTE_VALUE(attacker, STAT_SPEED)) * 1.5
 
 	// Positioning bonuses
 	// if(attacker.body_position == LYING_DOWN && body_position != LYING_DOWN)
@@ -1508,7 +1422,7 @@
 		apply_status_effect(/datum/status_effect/grab_counter_cd)
 
 		var/counter_type
-		if(get_skill_level(/datum/skill/combat/unarmed) >= 4)
+		if(GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/combat/unarmed) >= 4)
 			counter_type = pickweight(list("knee" = 30, "elbow" = 70))
 		else
 			counter_type = pickweight(list("knee" = 60, "elbow" = 40))
@@ -1624,10 +1538,13 @@
 		to_chat(src, span_warning("I'm restrained!"))
 		return
 
+	// Passive grabs without cmode can be instantly broken and do not block movement
+	if(pulledby.grab_state == GRAB_PASSIVE && !pulledby.cmode)
+		pulledby.stop_pulling()
+		return FALSE
+
 	if(!MOBTIMER_FINISHED(pulledby, MT_RESIST_GRAB, 2 SECONDS))
 		return
-
-	SEND_SIGNAL(src, COMSIG_LIVING_RESIST_GRAB, src, pulledby, moving_resist)
 
 	var/wrestling_diff = 0
 	var/resist_chance = BASE_GRAB_RESIST_CHANCE
@@ -1637,8 +1554,8 @@
 	// Modifier of pulledby against the resisting src
 	var/positioning_modifier = L.get_positioning_modifier(src)
 
-	wrestling_diff += (get_skill_level(/datum/skill/combat/wrestling, TRUE))
-	wrestling_diff -= (L.get_skill_level(/datum/skill/combat/wrestling, TRUE))
+	wrestling_diff += (GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/combat/wrestling))
+	wrestling_diff -= (GET_MOB_SKILL_VALUE_OLD(L, /datum/attribute/skill/combat/wrestling))
 
 	if(has_status_effect(/datum/status_effect/buff/oiled))
 		var/obj/item/grabbing/grabbed = L.get_active_held_item()
@@ -1681,7 +1598,7 @@
 		if(G.chokehold)
 			combat_modifier -= 0.1 // BUFF: Reduced chokehold penalty (was 0.15)
 
-	resist_chance += ((((STASTR - L.STASTR)/3) + wrestling_diff) * 5)
+	resist_chance += ((((GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) - GET_MOB_ATTRIBUTE_VALUE(L, STAT_STRENGTH))/3) + wrestling_diff) * 5)
 	resist_chance *= combat_modifier * stamina_factor * (1/positioning_modifier)
 	resist_chance = clamp(resist_chance, 5, 95)
 
@@ -1724,6 +1641,7 @@
 						span_warning("I struggle against [L]'s grasp![shitte]"), null, null)
 		playsound(src.loc, 'sound/combat/grabstruggle.ogg', 50, TRUE, -1)
 		pulledby.Immobilize(rand(1, 3))
+		Immobilize(3)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST_GRAB, src, pulledby, moving_resist, .)
 
@@ -1756,9 +1674,6 @@
 	buckled.user_unbuckle_mob(src,src)
 	return TRUE
 
-/mob/living/proc/resist_leash()
-	return
-
 /mob/living/proc/resist_fire()
 	return
 
@@ -1770,7 +1685,7 @@
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
-/mob/living/stripPanelUnequip(obj/item/what, mob/who, where, extra_only)
+/mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
 	if(!what.canStrip(who))
 		to_chat(src, "<span class='warning'>I can't remove \the [what.name], it appears to be stuck!</span>")
 		return
@@ -1816,13 +1731,13 @@
 					log_combat(src, who, "stripped [what] off")
 
 	if(Adjacent(who)) //update inventory window
-		who.show_inv(src, extra_only)
+		who.show_inv(src)
 	else
 		src << browse(null,"window=mob[REF(who)]")
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
-/mob/living/stripPanelEquip(obj/item/what, mob/who, where, extra_only)
+/mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_held_item()
 	if(what && (HAS_TRAIT(what, TRAIT_NODROP)))
 		to_chat(src, "<span class='warning'>I can't put \the [what.name] on [who], it's stuck to my hand!</span>")
@@ -1854,7 +1769,7 @@
 						who.equip_to_slot(what, where, TRUE)
 
 		if(Adjacent(who)) //update inventory window
-			who.show_inv(src, extra_only)
+			who.show_inv(src)
 		else
 			src << browse(null,"window=mob[REF(who)]")
 
@@ -2241,6 +2156,9 @@
 			return
 		if(incapacitated())
 			return
+		//if(!step(src,get_dir(src,over)))
+		//	to_chat(src, span_warning("You can't climb into [over] whilst it's there."))
+		//	return
 		for(var/obj/item/grabbing/G in grabbedby)
 			if(G.grab_state == GRAB_AGGRESSIVE)
 				return
@@ -2326,39 +2244,6 @@
 		else
 			clear_fullscreen("remote_view", 0)
 
-/mob/living/vv_get_dropdown()
-	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
-	VV_DROPDOWN_OPTION(VV_HK_MODIFY_STATS, "Modify Stats")
-
-/mob/living/vv_do_topic(list/href_list)
-	. = ..()
-	if(href_list[VV_HK_MODIFY_STATS])
-		if(!check_rights(R_ADMIN))
-			return
-
-		switch(browser_alert(usr, "Add or remove?", "MODIFY STATS", list("ADD", "REMOVE")))
-			if("REMOVE")
-				if(!LAZYLEN(stat_modifiers))
-					return
-
-				var/source = browser_input_list(usr, "Source to Remove", "MODIFY STATS", stat_modifiers)
-				if(!source)
-					return
-
-				remove_stat_modifier(source)
-			if("ADD")
-				var/stat_key = browser_input_list(usr, "Stat to Add", "MODIFY STATS", MOBSTATS)
-				if(!stat_key)
-					return
-
-				var/amount = input(usr, "Stat amount", "MODIFY_STATS") as num|null
-				if(!amount)
-					return
-
-				set_stat_modifier(ADMIN_TRAIT, stat_key, amount)
-		return
-
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if ("maxHealth")
@@ -2383,8 +2268,6 @@
 			SetUnconscious(var_value)
 		if("sleeping")
 			SetSleeping(var_value)
-		if("eye_blurry")
-			set_eye_blur(var_value)
 		if("eye_blind")
 			adjust_temp_blindness(var_value)
 		if("eye_damage")
@@ -2590,7 +2473,7 @@
 	changeNext_move(CLICK_CD_EXHAUSTED)
 	if(m_intent != MOVE_INTENT_SNEAK)
 		visible_message(span_info("[src] looks around."), span_info("I look around."))
-	var/looktime = 5 SECONDS - (STAPER * 2)
+	var/looktime = 5 SECONDS - (GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) * 2)
 	if(has_quirk(/datum/quirk/boon/keen_eye))
 		looktime *= 0.25
 	if(do_after(src, looktime))
@@ -2601,9 +2484,9 @@
 				continue
 			if(HAS_TRAIT(M, TRAIT_IMPERCEPTIBLE)) // Check if the mob is affected by the invisibility spell
 				continue
-			var/probby = 3 * STAPER
+			var/probby = 3 * GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION)
 			if(M.mind)
-				probby -= (M.get_skill_level(/datum/skill/misc/sneaking, TRUE) * 10)
+				probby -= (GET_MOB_SKILL_VALUE_OLD(M, /datum/attribute/skill/misc/sneaking) * 10)
 			probby = (max(probby, 5))
 			if(prob(probby))
 				found_ping(get_turf(M), client, "hidden")
@@ -2639,7 +2522,7 @@
 					accessor_trait = door.accessor_trait
 					hidden_dc = door.hidden_dc
 				var/bonuses = (HAS_TRAIT(src, TRAIT_THIEVESGUILD) || HAS_TRAIT(src, TRAIT_ASSASSIN)) ? 2 : 0
-				if(STAPER + bonuses >= hidden_dc || (accessor_trait && HAS_MIND_TRAIT(src, accessor_trait)))
+				if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) + bonuses >= hidden_dc || (accessor_trait && HAS_MIND_TRAIT(src, accessor_trait)))
 					found_ping(get_turf(O), client, "hidden")
 		for(var/obj/effect/skill_tracker/potential_track in orange(7, src)) //Can't use view because they're invisible by default.
 			if(!can_see(src, potential_track, 10))
@@ -2649,12 +2532,12 @@
 			found_ping(get_turf(potential_track), client, "hidden")
 			potential_track.handle_revealing(src)
 
-/proc/found_ping(atom/A, client/C, state)
+/proc/found_ping(atom/A, client/C, state, duration = 3 SECONDS)
 	if(!A || !C || !state)
 		return
 	var/image/I = image('icons/effects/effects.dmi', A, state)
 	I.plane = ABOVE_LIGHTING_PLANE
-	flick_overlay(I, list(C), 3 SECONDS)
+	flick_overlay(I, list(C), duration)
 
 /**
  * look_up Changes the perspective of the mob to any openspace turf above the mob
@@ -2686,8 +2569,8 @@
 		return
 
 	var/ttime = 1 SECONDS
-	if(STAPER > 5)
-		ttime -= (STAPER - 5)
+	if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) > 5)
+		ttime -= (GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) - 5)
 		if(ttime < 0)
 			ttime = 0
 
@@ -2733,8 +2616,8 @@
 		return
 	hide_cone()
 	var/ttime = 10
-	if(STAPER > 5)
-		ttime = 10 - (STAPER - 5)
+	if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) > 5)
+		ttime = 10 - (GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) - 5)
 		if(ttime < 0)
 			ttime = 0
 	if(m_intent != MOVE_INTENT_SNEAK)
@@ -2764,8 +2647,8 @@
 	if(!OS)
 		return
 	var/ttime = 1 SECONDS
-	if(STAPER > 5)
-		ttime -= (STAPER - 5)
+	if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) > 5)
+		ttime -= (GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) - 5)
 		if(ttime < 0)
 			ttime = 0
 
@@ -2870,7 +2753,7 @@
 	return TRUE
 
 /mob/living/proc/get_carry_capacity()
-	return max(45, max(STAEND, STACON) * 12)
+	return max(45, max(GET_MOB_ATTRIBUTE_VALUE(src, STAT_ENDURANCE), GET_MOB_ATTRIBUTE_VALUE(src, STAT_CONSTITUTION)) * 12)
 
 ///this is returned as decimal value between 0 and 1
 /mob/living/proc/get_encumbrance()
@@ -2878,9 +2761,6 @@
 
 /mob/living/proc/get_total_weight()
 	return 0
-
-/mob/living/proc/encumbrance_to_dodge()
-	return 1
 
 /mob/living/proc/encumbrance_to_speed()
 
@@ -3009,7 +2889,9 @@
  * * points - amount of points to grant or reduce
  * * used_points - ajust used points
 */
-/mob/living/proc/adjust_spell_points(points, used_points = FALSE)
+/mob/proc/adjust_spell_points(points, used_points = FALSE)
+
+/mob/living/adjust_spell_points(points, used_points = FALSE)
 	if(QDELETED(src))
 		return
 

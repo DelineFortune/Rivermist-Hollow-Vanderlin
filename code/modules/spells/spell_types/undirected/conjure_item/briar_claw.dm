@@ -2,11 +2,12 @@
 	name = "Briar Claw"
 	desc = "Turns one hand into a wolf's claw."
 	button_icon_state = "dendor"
-	invocation = "Beast-Lord, lend me the claws of a wolf."
+	invocation = "Beast-Lord, lend me the claws of a volf."
 	invocation_type = INVOCATION_WHISPER
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
-	associated_skill = /datum/skill/magic/holy
+	associated_skill = /datum/attribute/skill/magic/holy
+	required_items = list(/obj/item/clothing/neck/psycross/silver/divine/dendor)
 	spell_cost = 15
 	item_duration = 1 MINUTES
 	cooldown_time = 4 MINUTES
@@ -45,7 +46,7 @@
 /obj/item/weapon/briar_claw
 	parent_type = /obj/item/weapon/werewolf_claw
 	name = "briar claw"
-	desc = "A wolf's claw."
+	desc = "A volf's claw."
 	force = DAMAGE_KATAR
 	wdefense = MEDIOCRE_PARRY
 	armor_penetration = 7

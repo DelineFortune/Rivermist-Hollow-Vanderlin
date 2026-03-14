@@ -9,6 +9,20 @@
 /mob/living/carbon/human/species/elf/dark
 	race = /datum/species/elf/dark
 
+/datum/attribute_holder/sheet/job/species/dark
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 1,
+		STAT_SPEED = 2,
+		STAT_FORTUNE = 1,
+	)
+
+/datum/attribute_holder/sheet/job/species/dark/female
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 1,
+		STAT_SPEED = 2,
+		STAT_FORTUNE = 1,
+	)
+
 /datum/species/elf/dark
 	name = "Drow"
 	id = SPEC_ID_DROW
@@ -131,8 +145,8 @@
 		OFFSET_UNDIES = list(0,0),\
 	)
 
-	specstats_m = list(STATKEY_STR = 0, STATKEY_PER = 1, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 2, STATKEY_LCK = 1)
-	specstats_f = list(STATKEY_STR = 0, STATKEY_PER = 1, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 2, STATKEY_LCK = 1)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/dark
+	statsheet_female = /datum/attribute_holder/sheet/job/species/dark/female
 	enflamed_icon = "widefire"
 
 	body_markings = list(

@@ -17,7 +17,7 @@
 
 	starting_atom = /obj/item/needle
 	attacked_atom = /obj/item/natural/fibers
-	skillcraft = /datum/skill/misc/sewing
+	skillcraft = /datum/attribute/skill/misc/sewing
 	output = /obj/item/natural/cloth
 
 /datum/repeatable_crafting_recipe/survival/thorn_needle
@@ -53,7 +53,7 @@
 	attacked_atom = /obj/item/rope
 	output = /obj/item/rope/net
 	crafting_message = "starts to braid some rope"
-	skillcraft = /datum/skill/craft/traps
+	skillcraft = /datum/attribute/skill/craft/traps
 	craftdiff = 1
 
 /datum/repeatable_crafting_recipe/survival/woodenbucket
@@ -236,7 +236,7 @@
 	starting_atom  = /obj/item/ingot/iron
 	allow_inverse_start = TRUE
 	output = /obj/item/flint
-	skillcraft = /datum/skill/craft/engineering
+	skillcraft = /datum/attribute/skill/craft/engineering
 
 /datum/repeatable_crafting_recipe/survival/bag
 	name = "sack"
@@ -250,7 +250,7 @@
 	starting_atom = /obj/item/needle
 	attacked_atom = /obj/item/natural/cloth
 	output = /obj/item/storage/sack
-	skillcraft = /datum/skill/misc/sewing
+	skillcraft = /datum/attribute/skill/misc/sewing
 
 /datum/repeatable_crafting_recipe/survival/sack_clothing
 	name = "head sack"
@@ -265,50 +265,19 @@
 	attacked_atom = /obj/item/natural/cloth
 	output = /obj/item/clothing/head/sack
 	craftdiff = 1
-	skillcraft = /datum/skill/misc/sewing
+	skillcraft = /datum/attribute/skill/misc/sewing
 	subtypes_allowed = TRUE
-
-/datum/repeatable_crafting_recipe/survival/poor_sewingkit
-    name = "Poor sewing kit"
-    requirements = list(
-        /obj/item/natural/cloth = 2,
-        /obj/item/natural/fibers = 2,
-    )
-    tool_usage = list(
-        /obj/item/needle = list("starts to sew", "start to sew")
-    )
-    starting_atom = /obj/item/needle
-    attacked_atom = /obj/item/natural/cloth
-    output = /obj/item/repair_kit/poor_sewingkit
-    craftdiff = 1
-    skillcraft = /datum/skill/misc/sewing
-
-/datum/repeatable_crafting_recipe/survival/sewingkit
-    name = "Sewing kit"
-    requirements = list(
-        /obj/item/natural/cloth = 2,
-        /obj/item/natural/hide/cured = 2,
-        /obj/item/natural/fibers = 2,
-    )
-    tool_usage = list(
-        /obj/item/needle = list("starts to sew", "start to sew")
-    )
-    starting_atom = /obj/item/needle
-    attacked_atom = /obj/item/natural/cloth
-    output = /obj/item/repair_kit/sewingkit
-    craftdiff = 3
-    skillcraft = /datum/skill/misc/sewing
 
 /datum/repeatable_crafting_recipe/survival/clay
 	name = "clay lump"
 	requirements = list(
-		/obj/item/natural/dirtclod= 3,
+		/obj/item/natural/clod/dirt= 3,
 	)
 	reagent_requirements = list(
 		/datum/reagent/water = 10
 	)
-	attacked_atom = /obj/item/natural/dirtclod
-	starting_atom = /obj/item/natural/dirtclod
+	attacked_atom = /obj/item/natural/clod/dirt
+	starting_atom = /obj/item/natural/clod/dirt
 	output = /obj/item/natural/clay
 
 /datum/repeatable_crafting_recipe/survival/wicker_basket
@@ -367,7 +336,7 @@
 
 	starting_atom = /obj/item/grown/log
 	attacked_atom = /obj/item/natural/clay
-	skillcraft = /datum/skill/craft/masonry
+	skillcraft = /datum/attribute/skill/craft/masonry
 	output = /obj/item/natural/raw_brick
 
 /datum/repeatable_crafting_recipe/survival/mushmound

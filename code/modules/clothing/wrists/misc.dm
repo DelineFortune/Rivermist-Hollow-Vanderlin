@@ -124,7 +124,7 @@
 	smeltresult = /obj/item/ingot/copper
 	blocksound = PLATEHIT
 	resistance_flags = FIRE_PROOF
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sewrepair = FALSE
 
 //Queensleeves

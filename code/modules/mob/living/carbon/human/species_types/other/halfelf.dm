@@ -7,6 +7,11 @@
 /mob/living/carbon/human/species/human/halfelf
 	race = /datum/species/human/halfelf
 
+/datum/attribute_holder/sheet/job/species/halfelf
+	raw_attribute_list = list(
+		STAT_FORTUNE = 2,
+	)
+
 /datum/species/human/halfelf
 	name = "Half-Elf"
 	id = SPEC_ID_HALF_ELF
@@ -85,8 +90,8 @@
 		OFFSET_UNDIES = list(0,-1),\
 	)
 
-	specstats_m = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 0, STATKEY_LCK = 2)
-	specstats_f = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 0, STATKEY_LCK = 2)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/halfelf
+	statsheet_female = /datum/attribute_holder/sheet/job/species/halfelf
 
 	enflamed_icon = "widefire"
 

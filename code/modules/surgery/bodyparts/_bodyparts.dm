@@ -184,32 +184,36 @@
 	if(skeletonized || !length(food_type))
 		to_chat(user, span_warning("[src] has no meat to eat."))
 		return
+	var/bloodcolor = COLOR_BLOOD
+	if(owner)
+		bloodcolor = owner.get_blood_type().color
+	else if(original_owner)
+		bloodcolor = original_owner.get_blood_type().color
 	var/obj/item/held_item = user.get_active_held_item()
 	if(isanimal(user))
 		visible_message("[user] begins to eat \the [src].")
 		playsound(src, 'sound/foley/gross.ogg', 100, FALSE)
 		if(!do_after(user, 5 SECONDS, src))
 			return
-		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src))
+		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src), bloodcolor)
 		qdel(src)
 		return
 	else if(held_item?.get_sharpness() && held_item.wlength == WLENGTH_SHORT)
 		var/used_time = 21 SECONDS
-		if(user.skills)
-			used_time -= (user.get_skill_level(/datum/skill/labor/butchering, TRUE) * 3 SECONDS)
+		used_time -= (GET_MOB_SKILL_VALUE_OLD(user, /datum/attribute/skill/labor/butchering) * 3 SECONDS)
 		visible_message("[user] begins to butcher \the [src].")
 		playsound(src, 'sound/foley/gross.ogg', 100, FALSE)
 		if(!do_after(user, used_time, src))
 			return
-		var/drops = 1 + round(lerp(0, 3, user.get_skill_level(/datum/skill/labor/butchering, TRUE) / SKILL_LEVEL_LEGENDARY))
-		var/amt2raise = user.STAINT/3
+		var/drops = 1 + round(lerp(0, 3, GET_MOB_SKILL_VALUE_OLD(user, /datum/attribute/skill/labor/butchering) / SKILL_LEVEL_LEGENDARY))
+		var/amt2raise = GET_MOB_ATTRIBUTE_VALUE(user, STAT_INTELLIGENCE)/3
 		for(var/i in 1 to drops)
 			var/choose_type = pickweight(food_type)
 			var/obj/item/reagent_containers/food/snacks/food = new choose_type(get_turf(src))
 			if(rotted)
 				food.become_rotten()
-		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src))
-		user.adjust_experience(/datum/skill/labor/butchering, amt2raise, FALSE)
+		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src), bloodcolor)
+		user.adjust_experience(/datum/attribute/skill/labor/butchering, amt2raise, FALSE)
 		qdel(src)
 		return
 	..()
@@ -250,7 +254,12 @@
 	pixel_x = base_pixel_x + rand(-3, 3)
 	pixel_y = base_pixel_y + rand(-3, 3)
 	if(!skeletonized)
-		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src))
+		var/bloodcolor = COLOR_BLOOD
+		if(owner)
+			bloodcolor = owner.get_blood_type().color
+		else if(original_owner)
+			bloodcolor = original_owner.get_blood_type().color
+		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src), bloodcolor)
 
 //empties the bodypart from its organs and other things inside it
 /obj/item/bodypart/proc/drop_organs(mob/user, violent_removal)
@@ -283,7 +292,7 @@
 	if(!is_organic_limb() || !owner)
 		return
 	var/old_max_damage = max_damage
-	var/new_max_damage = initial(max_damage) * (owner.STACON / 10)
+	var/new_max_damage = initial(max_damage) * (GET_MOB_ATTRIBUTE_VALUE(owner, STAT_CONSTITUTION) / 10)
 	if(new_max_damage != old_max_damage)
 		max_damage = new_max_damage
 
@@ -594,14 +603,7 @@
 		body_gender = H.gender
 		should_draw_gender = S.sexes
 
-		if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits))
-			if(S.fixed_mut_color)
-				species_color = S.fixed_mut_color
-			else
-				species_color = H.dna.features["mcolor"]
-			should_draw_greyscale = TRUE
-		else
-			species_color = ""
+		species_color = ""
 
 		mutation_color = ""
 
@@ -644,7 +646,14 @@
 		image_dir = SOUTH
 		if(dmg_overlay_type)
 			if(brutestate)
-				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_[icon_gender]", -DAMAGE_LAYER, image_dir)
+				var/image/brute_image = image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_[icon_gender]", -DAMAGE_LAYER, image_dir)
+				if(owner)
+					owner.get_blood_type().color
+				else if(original_owner)
+					original_owner.get_blood_type().color
+				else
+					brute_image.color = COLOR_BLOOD
+				. += brute_image
 			if(burnstate)
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]_[icon_gender]", -DAMAGE_LAYER, image_dir)
 
@@ -750,15 +759,6 @@
 		if(NO_BODYPART_FEATURES in owner_species.species_traits)
 			draw_bodypart_features = FALSE
 
-	// Markings overlays
-	var/override_color = null
-	if(rotted)
-		override_color = SKIN_COLOR_ROT
-	if(!skeletonized)
-		var/list/marking_overlays = get_markings_overlays(override_color)
-		if(marking_overlays)
-			. += marking_overlays
-
 	if(!skeletonized && draw_organ_features)
 		for(var/obj/item/organ/organ as anything in get_organs())
 			if(!organ.is_visible())
@@ -813,8 +813,8 @@
 	px_x = 0
 	px_y = 0
 	var/obj/item/cavity_item
-	//aux_zone = "boob"
-	//aux_layer = BODYPARTS_LAYER
+	aux_zone = "boob"
+	aux_layer = BODYPARTS_LAYER
 	subtargets = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_STOMACH, BODY_ZONE_PRECISE_GROIN)
 	grabtargets = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_STOMACH, BODY_ZONE_PRECISE_GROIN)
 	offset = OFFSET_ARMOR
@@ -1199,43 +1199,3 @@
 	dismemberable = 0
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
-
-/obj/item/bodypart/proc/adjust_marking_overlays(list/appearance_list)
-	return
-
-/obj/item/bodypart/proc/get_specific_markings_overlays(list/specific_markings, aux = FALSE, mob/living/carbon/human/human_owner, override_color)
-	var/list/appearance_list = list()
-	var/specific_layer = aux ? aux_layer : BODYPARTS_LAYER
-	if(aux_layer == HANDS_PART_LAYER)
-		specific_layer = aux_layer
-	else if(aux_layer == LEG_PART_LAYER)
-		specific_layer = aux_layer - 0.1
-	var/specific_render_zone = aux ? aux_zone : body_zone
-	for(var/key in specific_markings)
-		var/color = specific_markings[key]
-		var/datum/body_marking/BM = GLOB.body_markings[key]
-
-		var/render_limb_string = specific_render_zone
-		if(BM.gendered && (!BM.gender_only_chest || specific_render_zone == BODY_ZONE_CHEST))
-			var/gendaar = (human_owner.gender == FEMALE) ? "f" : "m"
-			render_limb_string = "[render_limb_string]_[gendaar]"
-
-		var/mutable_appearance/accessory_overlay = mutable_appearance(BM.icon, "[BM.icon_state]_[render_limb_string]", -specific_layer)
-		if(override_color)
-			accessory_overlay.color = "#[override_color]"
-		else
-			accessory_overlay.color = "#[color]"
-		appearance_list += accessory_overlay
-	return appearance_list
-
-/obj/item/bodypart/proc/get_markings_overlays(override_color)
-	if((!markings && !aux_markings) || !owner || !ishuman(owner))
-		return
-	var/mob/living/carbon/human/human_owner = owner
-	var/list/appearance_list = list()
-	if(markings)
-		appearance_list += get_specific_markings_overlays(markings, FALSE, human_owner, override_color)
-	if(aux_markings)
-		appearance_list += get_specific_markings_overlays(aux_markings, TRUE, human_owner, override_color)
-	adjust_marking_overlays(appearance_list)
-	return appearance_list

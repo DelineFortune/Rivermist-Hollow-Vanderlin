@@ -5,46 +5,36 @@
 	own supply. You are Baotha's strongest spice-addict."
 	migrant_job = /datum/job/migrant/sweetshare
 
+/datum/attribute_holder/sheet/job/migrant/sweetshare
+	raw_attribute_list = list(
+		STAT_SPEED = 2,
+		STAT_ENDURANCE = 2,
+		STAT_STRENGTH = -2,
+		STAT_CONSTITUTION = -1,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/craft/alchemy = 30,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/climbing = 40,
+	)
+
 /datum/job/migrant/sweetshare
 	title = "Candyman"
 	tutorial = "Who can take a rainbow, wrap it in a sigh. Soak it in the sun, and make a groovy pie? The Candy Man can. \
 	Sell your product to those who should imbibe - the poor, the downtrodden, the youth. Get them hooked; stay off of your \
 	own supply. You are Baotha's strongest spice-addict."
 	outfit = /datum/outfit/sweetshare
+	honorary_suffix = "the Candyman"
+	honorary_suffix_f = "the Candywoman"
 
-	jobstats = list(
-		STATKEY_SPD = 2,
-		STATKEY_END = 2,
-		STATKEY_STR = -2,
-		STATKEY_CON = -1,
-	)
-
-	skills = list(
-		/datum/skill/combat/knives = 1,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/craft/alchemy = 3,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/climbing = 4,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/migrant/sweetshare
 
 	traits = list(TRAIT_STEELHEARTED)
 	cmode_music = 'sound/music/cmode/antag/CombatBandit1.ogg'
-
-/datum/job/migrant/sweetshare/after_spawn(mob/living/carbon/human/spawned, client/player_client)
-	. = ..()
-
-	var/prev_real_name = spawned.real_name
-	var/prev_name = spawned.name
-	var/honorary = "Candyman"
-	if(spawned.pronouns == SHE_HER)
-		honorary = "Candywoman"
-	spawned.real_name = "[honorary] [prev_real_name]"
-	spawned.name = "[honorary] [prev_name]"
-
 /datum/outfit/sweetshare
 	name = "Candyman (Migrant Wave)"
 	shirt = /obj/item/clothing/shirt/undershirt/colored/black

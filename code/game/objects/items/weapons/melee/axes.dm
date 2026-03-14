@@ -16,7 +16,7 @@
 
 	parrysound = "parrywood"
 	swingsound = BLADEWOOSH_MED
-	associated_skill = /datum/skill/combat/axesmaces
+	associated_skill = /datum/attribute/skill/combat/axesmaces
 	resistance_flags = FLAMMABLE // Weapon made mostly of wood
 	axe_cut = 10	// bonus damage to trees
 	melt_amount = 75
@@ -204,43 +204,33 @@
 //................ Pick Axe ............... //
 // Pickaxe-axe ; Technically both a tool and weapon, but it goes here due to weapon function.
 // Same stats as steel axe, but refactored for pickaxe quality purposes.
-/obj/item/weapon/axe/paxe
+/obj/item/weapon/pick/paxe
 	name = "pickaxe"
 	desc = "An odd mix of a pickaxe front and a hatchet blade back, capable of being switched between."
 	icon = 'icons/roguetown/weapons/32/axes_picks.dmi'
 	icon_state = "paxe"
-
 	force = DAMAGE_AXE
 	force_wielded = DAMAGE_AXE_WIELD
-
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/pick)
-	gripped_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop)
-
+	wdefense = AVERAGE_PARRY
 	wlength = WLENGTH_NORMAL
-	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK
-
+	possible_item_intents = list(AXE_CUT, PICK_INTENT)
+	gripped_intents = list(AXE_CUT, AXE_CHOP)
 	max_blade_int = 300
 	max_integrity = INTEGRITY_STRONGEST
+	minstr = 6
 
-	associated_skill = /datum/skill/combat/axesmaces
-	anvilrepair = /datum/skill/craft/weaponsmithing
-
+	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK
+	associated_skill = /datum/attribute/skill/combat/axesmaces
 	melting_material = /datum/material/steel
 	melt_amount = 175
-
+	sharpness = IS_SHARP
 	resistance_flags = FIRE_PROOF
-	parrysound = list('sound/combat/parry/wood/parrywood (1).ogg', \
-					  'sound/combat/parry/wood/parrywood (2).ogg', \
-					  'sound/combat/parry/wood/parrywood (3).ogg')
+	parrysound = list('sound/combat/parry/wood/parrywood (1).ogg', 'sound/combat/parry/wood/parrywood (2).ogg', 'sound/combat/parry/wood/parrywood (3).ogg')
 	swingsound = BLADEWOOSH_MED
-
-	wdefense = MEDIOCRE_PARRY
-	minstr = 6
 	sellprice = 50
-
-	pickmult = 1.2	// A pick!
-	axe_cut = 15	// And an axe!
-	toolspeed = 2	// Same mining speed tier as picks
+	pickmult = 1.2 // It's a pick...
+	axe_cut = 15 // ...and an Axe!
+	toolspeed = 2
 
 
 //................ Steel Axe ............... //
@@ -395,8 +385,8 @@
 	bigboy = TRUE
 	gripsprite = TRUE
 	w_class = WEIGHT_CLASS_BULKY
-	anvilrepair = /datum/skill/craft/weaponsmithing
-	associated_skill = /datum/skill/combat/axesmaces
+	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	associated_skill = /datum/attribute/skill/combat/axesmaces
 	slot_flags = ITEM_SLOT_BACK
 	melting_material = /datum/material/iron
 	melt_amount = 150
@@ -420,7 +410,7 @@
 
 /obj/item/weapon/greataxe/psy
 	name = "psydonic poleaxe"
-	desc = "A poleaxe, fitted with a reinforced shaft and a beaked axe head of alloyed silver. As the fragility of swords've become more apparent, the Psydonic Orders - following the disastrous Massacre of Blastenghyll - have shifted their focus towards arming their paladins with longer-lasting greatweapons."
+	desc = "A poleaxe, fitted with a reinforced shaft and a beaked axe head of alloyed silver. As the fragility of swords've become more apparent, the Psydonic Orders have shifted their focus towards arming their paladins with longer-lasting greatweapons."
 	icon = 'icons/roguetown/weapons/64/axes.dmi'
 	icon_state = "silverpolearm"
 	possible_item_intents = list(AXE_CUT, AXE_CHOP, MACE_STRIKE) //When possible, add the longsword's 'alternate grip' mechanic to let people flip this around into a Mace-scaling weapon with swapped damage.

@@ -31,10 +31,10 @@
 				if(user.mind && isliving(user) && T.held_item?:smeltresult) // Prevents an exploit with coal and runtimes with everything else
 					if(!istype(T.held_item, /obj/item/ore) && T.held_item?:smelted) // Burning items to ash won't level smelting.
 						var/mob/living/L = user
-						var/boon = user.get_learning_boon(/datum/skill/craft/smelting)
-						var/amt2raise = L.STAINT*2 // Smelting is already a timesink, this is justified to accelerate levelling
+						var/boon = user.get_learning_boon(/datum/attribute/skill/craft/smelting)
+						var/amt2raise = GET_MOB_ATTRIBUTE_VALUE(L, STAT_INTELLIGENCE)*2 // Smelting is already a timesink, this is justified to accelerate levelling
 						if(amt2raise > 0)
-							user.adjust_experience(/datum/skill/craft/smelting, amt2raise * boon, FALSE)
+							user.adjust_experience(/datum/attribute/skill/craft/smelting, amt2raise * boon, FALSE)
 							SEND_SIGNAL(user, COMSIG_ITEM_SMELTED)
 				user.visible_message("<span class='info'>[user] retrieves [I] from [src].</span>")
 				if(on)
@@ -71,13 +71,7 @@
 		user.visible_message("Loads a crucible into [src].", "You load a crucible into [src].")
 		return ..()
 
-	if(W.smeltresult || W.melting_material)
-		var/can_melt = TRUE
-		var/datum/material/material = W.melting_material
-		if(!material)
-			var/obj/item/ingot/ingot = W.smeltresult
-			if(!ingot)
-				can_melt = FALSE
+	if(W.smeltresult)
 		if(ore.len < maxore)
 			if(!(W in user.held_items) || !user.temporarilyRemoveItemFromInventory(W))
 				return
@@ -86,11 +80,11 @@
 			if(!isliving(user) || !user.mind)
 				ore[W] = SMELTERY_LEVEL_SPOIL
 			else
-				var/smelter_exp = user.get_skill_level(/datum/skill/craft/smelting) // 0 to 6
-				//if(smelter_exp < 6)
-				ore[W] = floor(rand(smelter_exp*15, max(63, smelter_exp*25))/25) // Math explained below
-				//else
-				//	ore[W] = floor(min(3, smelter_exp)) // Guarantees a return of 3 no matter how extra experience past 3000 you have.
+				var/smelter_exp = GET_MOB_SKILL_VALUE_OLD(user, /datum/attribute/skill/craft/smelting) // 0 to 6
+				if(smelter_exp < 6)
+					ore[W] = floor(rand(smelter_exp*15, max(63, smelter_exp*25))/25) // Math explained below
+				else
+					ore[W] = floor(min(3, smelter_exp)) // Guarantees a return of 3 no matter how extra experience past 3000 you have.
 				/*
 				RANDOMLY PICKED NUMBER ACCORDING TO SMELTER SKILL:
 					NO SKILL: 		between 00 and 63
@@ -112,7 +106,7 @@
 			cooking = 0
 			return
 		else
-			to_chat(user, "<span class='warning'>\The [W.name] [can_melt? "can" : "can't"] be smelted, but \the [src] is full.</span>")
+			to_chat(user, "<span class='warning'>\The [W.name] [W.smeltresult? "can" : "can't"] be smelted, but \the [src] is full.</span>")
 	else
 		if(!W.firefuel && !istype(W, /obj/item/flint) && !istype(W, /obj/item/flashlight/flare/torch) && !istype(W, /obj/item/ore/coal))
 			to_chat(user, "<span class='warning'>\The [W.name] cannot be smelted.</span>")
@@ -148,9 +142,6 @@
 		return
 	if(cooking == 20)
 		for(var/obj/item/I in ore)
-			if(I.melting_material)
-				var/datum/material/material = I.melting_material
-				I.smeltresult = material.ingot_type
 			if(I.smeltresult)
 				var/obj/item/R = new I.smeltresult(src, ore[I])
 				ore -= I
@@ -195,9 +186,6 @@
 					var/blacksteelalloy
 
 					for(var/obj/item/I in ore)
-						if(I.melting_material)
-							var/datum/material/material = I.melting_material
-							I.smeltresult = material.ingot_type
 						if(I.smeltresult == /obj/item/ore/coal)
 							steelalloy = steelalloy + 1
 						if(I.smeltresult == /obj/item/ingot/iron)
@@ -238,9 +226,6 @@
 							ore += R
 					else
 						for(var/obj/item/I in ore)
-							if(I.melting_material)
-								var/datum/material/material = I.melting_material
-								I.smeltresult = material.ingot_type
 							if(I.smeltresult)
 								var/obj/item/R = new I.smeltresult(src, ore[I])
 								ore -= I

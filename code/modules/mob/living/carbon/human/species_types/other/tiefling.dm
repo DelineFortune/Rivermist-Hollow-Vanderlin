@@ -7,6 +7,12 @@
 /mob/living/carbon/human/species/tieberian
 	race = /datum/species/tieberian
 
+/datum/attribute_holder/sheet/job/species/tieberian
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 1,
+		STAT_FORTUNE = 2
+	)
+
 /datum/species/tieberian
 	name = "Tiefling"
 	id = SPEC_ID_TIEFLING
@@ -101,9 +107,8 @@
 		OFFSET_TESTICLES = list(0,0),\
 		OFFSET_VAGINA = list(0,0),\
 	)
-
-	specstats_m = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = 1, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 0, STATKEY_LCK = 2)
-	specstats_f = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = 1, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 0, STATKEY_LCK = 2)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/tieberian
+	statsheet_female = /datum/attribute_holder/sheet/job/species/tieberian
 
 	enflamed_icon = "widefire"
 

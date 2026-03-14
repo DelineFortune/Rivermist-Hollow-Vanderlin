@@ -112,14 +112,14 @@
 	/// Voicepack to grant to females
 	var/datum/voicepack/voicepack_f
 
-	/// Stats given to the job in the form of list(STA_X = value)
-	var/list/jobstats
+	/// Stats given to the job in the form of list(STA_X = value) DEPRECIATED DO NOT USE
+	VAR_FINAL/list/jobstats
 
 	/// Skill levels granted at roundstart.
 	/// Possibly modified by species.
-	/// Basic format is list(/datum/skill/foo = value).
-	/// Supports (/datum/skill/bar = list(value, clamp)).
-	var/list/skills
+	/// Basic format is list(/datum/attribute/skill/foo = value).
+	/// Supports (/datum/attribute/skill/bar = list(value, clamp)). DEPRECIATED DO NOT USE
+	VAR_FINAL/list/skills
 
 	/// Associative list of skill - base multiplier to set for skill_holder
 	var/list/skill_multipliers = list()
@@ -205,7 +205,6 @@
 	var/pack_title = "JOB PACKS"
 	var/pack_message = "Choose a job pack"
 
-
 	///The job's subclasses, if any. Overrides jobstats if present.
 	var/list/job_subclasses
 
@@ -217,6 +216,14 @@
 
 	/// Does this job get revived on the res rune
 	var/rune_linked = TRUE
+
+	var/attribute_sheet
+	var/attribute_sheet_old
+	var/attribute_sheet_child
+	var/attribute_sheet_adult
+
+	/// Runtime-cached bridge for legacy jobstats/skills content.
+	var/datum/attribute_holder/sheet/job/legacy_attribute_sheet
 
 /datum/job/New()
 	. = ..()
@@ -272,6 +279,9 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 
+	var/used_attribute_sheet = FALSE
+	if(spawned.attributes)
+		used_attribute_sheet = assign_attributes(spawned, player_client)
 	if(!ishuman(spawned))
 		return
 
@@ -307,14 +317,15 @@
 	if(clear_job_stats) // Reset for most non-advclasses
 		spawned.remove_stat_modifier(STATMOD_JOB)
 
-	spawned.adjust_stat_modifier_list(STATMOD_JOB, jobstats)
+	if(!used_attribute_sheet)
+		spawned.adjust_stat_modifier(STATMOD_JOB, jobstats)
 
-	for(var/datum/skill/skill as anything in skills)
-		var/amount_or_list = skills[skill]
-		if(islist(amount_or_list))
-			spawned.clamped_adjust_skillrank(skill, amount_or_list[1], amount_or_list[2], TRUE)
-		else
-			spawned.adjust_skillrank(skill, amount_or_list, TRUE)
+		for(var/datum/attribute/skill/skill as anything in skills)
+			var/amount_or_list = skills[skill]
+			if(islist(amount_or_list))
+				spawned.clamped_adjust_skill_level(skill, amount_or_list[1], amount_or_list[2], TRUE)
+			else
+				spawned.adjust_skillrank(skill, amount_or_list, TRUE)
 
 	for(var/skill_type in skill_multipliers)
 		spawned.set_skill_exp_multiplier(skill_type, skill_multipliers[skill_type])
@@ -426,6 +437,35 @@
 //Used for a special check of whether to allow a client to latejoin as this job.
 /datum/job/proc/special_check_latejoin(client/C)
 	return TRUE
+
+/datum/job/proc/assign_attributes(mob/living/spawned, client/player_client)
+	if(!ishuman(spawned))
+		return FALSE
+	var/mob/living/carbon/human/spawned_human = spawned
+	var/datum/attribute_holder/sheet/sheet_to_apply
+	if(attribute_sheet_old && spawned_human.age == AGE_OLD)
+		sheet_to_apply = attribute_sheet_old
+	else if(attribute_sheet_child && spawned_human.age == AGE_CHILD)
+		sheet_to_apply = attribute_sheet_child
+	else if(attribute_sheet_adult && spawned_human.age == AGE_ADULT)
+		sheet_to_apply = attribute_sheet_adult
+	else if(attribute_sheet)
+		sheet_to_apply = attribute_sheet
+	else
+		sheet_to_apply = get_legacy_attribute_sheet()
+
+	if(!sheet_to_apply)
+		return FALSE
+
+	spawned_human.attributes?.add_sheet(sheet_to_apply)
+	return TRUE
+
+/datum/job/proc/get_legacy_attribute_sheet()
+	if(!LAZYLEN(jobstats) && !LAZYLEN(skills))
+		return null
+	if(!legacy_attribute_sheet)
+		legacy_attribute_sheet = build_legacy_attribute_sheet(jobstats, skills)
+	return legacy_attribute_sheet
 
 /datum/job/proc/GetAntagRep()
 	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]

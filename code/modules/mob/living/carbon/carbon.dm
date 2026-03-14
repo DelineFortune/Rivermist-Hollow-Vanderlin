@@ -209,8 +209,8 @@
 							return
 						thrown_thing = throwable_mob
 						thrown_speed = 1
-						thrown_range = round((STASTR/throwable_mob.STACON)*2)
-						if(body_position == LYING_DOWN || (!HAS_TRAIT(thrown_thing, TRAIT_TINY) && throwable_mob.cmode && (throwable_mob.body_position != LYING_DOWN || STASTR < 15)))
+						thrown_range = round((GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH)/GET_MOB_ATTRIBUTE_VALUE(throwable_mob, STAT_CONSTITUTION))*2)
+						if(body_position == LYING_DOWN || (!HAS_TRAIT(thrown_thing, TRAIT_TINY) && throwable_mob.cmode && (throwable_mob.body_position != LYING_DOWN || GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) < 15)))
 							while(end_T.z > start_T.z)
 								end_T = GET_TURF_BELOW(end_T)
 						if((end_T.z > start_T.z) && throwable_mob.cmode)
@@ -265,14 +265,14 @@
 	<HR>
 	<BR><B>Head:</B> <A href='byond://?src=[REF(src)];item=[ITEM_SLOT_HEAD]'>[(head && !(head.item_flags & ABSTRACT)) ? head : "Nothing"]</A>"}
 
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 
-	if(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_NECK)
+	if(obscured & ITEM_SLOT_NECK)
 		dat += "<BR><B>Neck:</B> Obscured"
 	else
 		dat += "<BR><B>Neck:</B> <A href='byond://?src=[REF(src)];item=[ITEM_SLOT_NECK]'>[(wear_neck && !(wear_neck.item_flags & ABSTRACT)) ? (wear_neck) : "Nothing"]</A>"
 
-	if(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_MASK)
+	if(obscured & ITEM_SLOT_MASK)
 		dat += "<BR><B>Mask:</B> Obscured"
 	else
 		dat += "<BR><B>Mask:</B> <A href='byond://?src=[REF(src)];item=[ITEM_SLOT_MASK]'>[(wear_mask && !(wear_mask.item_flags & ABSTRACT))	? wear_mask	: "Nothing"]</a>"
@@ -321,7 +321,7 @@
 		if(istype(buckled, /obj/structure))
 			var/obj/structure/S = buckled
 			buckle_cd += S.breakoutextra
-		if(STASTR > 15)
+		if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) > 15)
 			buckle_cd = 3 SECONDS
 		visible_message("<span class='warning'>[src] attempts to struggle free!</span>", \
 					"<span class='notice'>I attempt to struggle free...</span>")
@@ -351,20 +351,6 @@
 		ExtinguishMob(TRUE)
 	return
 
-/mob/living/carbon/resist_leash()
-	if(!has_status_effect(/datum/status_effect/leash_pet))
-		return
-	to_chat(src, span_notice("I reach for the hook on my collar..."))
-	var/deleash = 5 SECONDS
-	if(handcuffed)
-		deleash = 20 SECONDS
-	if(do_after(src, deleash, target = src))
-		if(QDELETED(src))
-			return
-		to_chat(src, "<span class='warning'>[src] has removed their leash!</span>")
-		remove_status_effect(/datum/status_effect/leash_pet)
-	return
-
 /mob/living/carbon/resist_restraints(instant = FALSE)
 	var/obj/item/I = null
 	var/type = 0
@@ -390,10 +376,10 @@
 		return
 	I.item_flags |= BEING_REMOVED
 	breakouttime = I.slipouttime
-	if(STASTR > 10)
+	if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) > 10)
 		cuff_break = FAST_CUFFBREAK
 		breakouttime = I.breakouttime
-	if(STASTR > 15 || (mind && mind.has_antag_datum(/datum/antagonist/zombie)) )
+	if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) > 15 || (mind && mind.has_antag_datum(/datum/antagonist/zombie)) )
 		cuff_break = INSTANT_CUFFBREAK
 
 	if(instant)
@@ -509,26 +495,25 @@
 
 /mob/living/carbon/proc/get_str_arms(num)
 	if(!domhand || !num || HAS_TRAIT(src, TRAIT_DUALWIELDER))
-		return STASTR
-	var/used = STASTR
+		return GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH)
+	var/used = GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH)
 	if(num == domhand)
 		return used
 	else
-		used = STASTR - 1
+		used = GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) - 1
 		if(used < 1)
 			used = 1
 		return used
 
 /mob/living/get_status_tab_items()
 	. = ..()
-	. += "STR: \Roman[STASTR]"
-	. += "PER: \Roman[STAPER]"
-	. += "INT: \Roman[STAINT]"
-	. += "CON: \Roman[STACON]"
-	. += "END: \Roman[STAEND]"
-	. += "SPD: \Roman[STASPD]"
-	if(patron)
-		. += "PATRON: [uppertext(patron.name)]"
+	. += "STR: \Roman[GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH)]"
+	. += "PER: \Roman[GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION)]"
+	. += "INT: \Roman[GET_MOB_ATTRIBUTE_VALUE(src, STAT_INTELLIGENCE)]"
+	. += "CON: \Roman[GET_MOB_ATTRIBUTE_VALUE(src, STAT_CONSTITUTION)]"
+	. += "END: \Roman[GET_MOB_ATTRIBUTE_VALUE(src, STAT_ENDURANCE)]"
+	. += "SPD: \Roman[GET_MOB_ATTRIBUTE_VALUE(src, STAT_SPEED)]"
+	. += "PATRON: [uppertext(patron.name)]"
 
 /mob/living/carbon/attack_ui(slot)
 	if(!has_hand_for_held_index(active_hand_index))
@@ -905,7 +890,7 @@
 	else
 		clear_fullscreen("oxy")
 
-	var/hurtdamage = ((get_complex_pain() / (STAEND * 10)) * 100) //what percent out of 100 to max pain
+	var/hurtdamage = ((get_complex_pain() / max(1, (GET_MOB_ATTRIBUTE_VALUE(src, STAT_ENDURANCE) * 10))) * 100) //what percent out of 100 to max pain
 	if(hurtdamage)
 		var/severity = 0
 		switch(hurtdamage)
@@ -1004,10 +989,10 @@
 /mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
 		if(dna && !(NOBLOOD in dna.species.species_traits))
-			blood_volume += (excess_healing * 2) //1 excess = 10 blood
+			blood_volume += (excess_healing * 2) //1 excess = 2 blood
 
 		for(var/obj/item/organ/organ as anything in internal_organs)
-			organ.applyOrganDamage(excess_healing * -1) //1 excess = 5 organ damage healed
+			organ.applyOrganDamage(excess_healing * -1)
 
 	return ..()
 
@@ -1031,8 +1016,7 @@
 		// regenerate_organs(regenerate_existing = (heal_flags & HEAL_REFRESH_ORGANS))
 		regenerate_organs()
 		var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
-		if(B)
-			B.brain_death = FALSE
+		B?.brain_death = FALSE
 
 	if(heal_flags & HEAL_TRAUMAS)
 		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
@@ -1110,11 +1094,6 @@
 	new_bodypart.set_owner(src)
 
 	switch(new_bodypart.body_part)
-		if(LEGS)
-			if(istype(new_bodypart, /obj/item/bodypart/taur))
-				set_num_legs(num_legs + 2)
-				if(!new_bodypart.bodypart_disabled)
-					set_usable_legs(usable_legs + 2)
 		if(LEG_LEFT, LEG_RIGHT)
 			set_num_legs(num_legs + 1)
 			if(!new_bodypart.bodypart_disabled)
@@ -1129,11 +1108,6 @@
 	bodyparts -= old_bodypart
 
 	switch(old_bodypart.body_part)
-		if(LEGS)
-			if(istype(old_bodypart, /obj/item/bodypart/taur))
-				set_num_legs(num_legs - 2)
-				if(!old_bodypart.bodypart_disabled)
-					set_usable_legs(usable_legs - 2)
 		if(LEG_LEFT, LEG_RIGHT)
 			set_num_legs(num_legs - 1)
 			if(!old_bodypart.bodypart_disabled)
@@ -1285,8 +1259,6 @@
 		return
 	if(mouth?.muteinmouth)
 		return FALSE
-	if(mouth_blocked)
-		return FALSE
 	for(var/obj/item/grabbing/grab in grabbedby)
 		if(grab.sublimb_grabbed == BODY_ZONE_PRECISE_MOUTH)
 			return FALSE
@@ -1331,7 +1303,7 @@
 /mob/living/carbon/get_total_weight()
 	var/held_weight = 0
 
-	for(var/obj/item/worn_item as anything in (get_equipped_items(TRUE) + held_items + get_organs_items()))
+	for(var/obj/item/worn_item as anything in (get_equipped_items(TRUE) + held_items))
 		if(isnull(worn_item))
 			continue
 		var/modifier = 1
@@ -1363,22 +1335,12 @@
 
 	return held_weight
 
-/mob/living/carbon/encumbrance_to_dodge()
-	var/encumbrance = get_encumbrance()
-	if(!HAS_TRAIT(src, TRAIT_DODGEEXPERT))
-		encumbrance *= 1.5
-	if(encumbrance <= 0.3 && HAS_TRAIT(src, TRAIT_DODGEEXPERT))
-		return 1
-	if(encumbrance >= 1)
-		return 0
-	return 1 - (encumbrance * 1)
-
 /mob/living/carbon/encumbrance_to_speed()
 	var/exponential = (2.71 ** -(get_encumbrance() - 0.6)) * 10
 	var/speed_factor = 1 / (1 + exponential)
 	var/precentage =  CLAMP(speed_factor, 0, 1)
 
-	add_movespeed_modifier("encumbrance", override = TRUE, multiplicative_slowdown = 5 * precentage)
+	add_movespeed_modifier(MOVESPEED_ID_ENCUMBRANCE, override = TRUE, multiplicative_slowdown = 5 * precentage)
 
 /// skeletonize all limbs of a carbon mob, pass TRUE as an argument if it's lethal, FALSE if it's not.
 /mob/living/carbon/proc/skeletonize(lethal = TRUE)
@@ -1388,17 +1350,12 @@
 
 /// grant undead eyes to a carbon mob.
 /mob/living/carbon/proc/grant_undead_eyes()
-	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-	var/eyecolor = eyes.eye_color
-	var/eyesecond = eyes.second_color
-	if(eyes)
-		eyes.Remove(src,1)
-		QDEL_NULL(eyes)
-
-	eyes = new /obj/item/organ/eyes/night_vision/zombie
-	eyes.eye_color = eyecolor
-	eyes.second_color = eyesecond
-	eyes.Insert(src)
+	var/datum/organ_dna/eyes/eye_dna = dna?.organ_dna[ORGAN_SLOT_EYES]
+	if(!eye_dna)
+		return
+	eye_dna.organ_type = /obj/item/organ/eyes/night_vision/zombie
+	var/obj/item/organ/eyes/eyes = eye_dna.create_organ(species = dna.species)
+	eyes.Insert(src, TRUE)
 
 /mob/living/carbon/wash(clean_types)
 	. = ..()
@@ -1410,25 +1367,25 @@
 
 
 	// Check and wash stuff that can be covered
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 
-	if(!(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_HEAD) && head?.wash(clean_types))
+	if(!(obscured & ITEM_SLOT_HEAD) && head?.wash(clean_types))
 		update_inv_head()
 		. = TRUE
 
-	if(!(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_MASK) && wear_mask?.wash(clean_types))
+	if(!(obscured & ITEM_SLOT_MASK) && wear_mask?.wash(clean_types))
 		update_inv_wear_mask()
 		. = TRUE
 
-	if(!(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_NECK) && wear_neck?.wash(clean_types))
+	if(!(obscured & ITEM_SLOT_NECK) && wear_neck?.wash(clean_types))
 		update_inv_neck()
 		. = TRUE
 
-	if(!(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_SHOES) && shoes?.wash(clean_types))
+	if(!(obscured & ITEM_SLOT_SHOES) && shoes?.wash(clean_types))
 		update_inv_shoes()
 		. = TRUE
 
-	if(!(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_GLOVES) && gloves?.wash(clean_types))
+	if(!(obscured & ITEM_SLOT_GLOVES) && gloves?.wash(clean_types))
 		update_inv_gloves()
 		. = TRUE
 

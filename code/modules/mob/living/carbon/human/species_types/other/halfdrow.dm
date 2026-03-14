@@ -7,6 +7,12 @@
 /mob/living/carbon/human/species/human/halfdrow
 	race = /datum/species/human/halfdrow
 
+/datum/attribute_holder/sheet/job/species/halfdrow
+	raw_attribute_list = list(
+		STAT_SPEED = 1,
+		STAT_FORTUNE = 2,
+	)
+
 /datum/species/human/halfdrow
 	name = "Half-Drow"
 	id = SPEC_ID_HALF_DROW
@@ -89,8 +95,8 @@
 		OFFSET_UNDIES = list(0,-1),\
 	)
 
-	specstats_m = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 1, STATKEY_LCK = 2)
-	specstats_f = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 1, STATKEY_LCK = 2)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/halfdrow
+	statsheet_female = /datum/attribute_holder/sheet/job/species/halfdrow
 
 	enflamed_icon = "widefire"
 

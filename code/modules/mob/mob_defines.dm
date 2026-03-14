@@ -90,6 +90,11 @@
 	/// How many ticks this mob has been over reating
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
 
+	/// Skill holder
+	var/datum/attribute_holder/attributes = /datum/attribute_holder
+	/// Extra effort that can be spent on efforts
+	var/extra_effort = 0
+
 	/// The current intent of the mob
 	var/uses_intents = TRUE
 	var/datum/intent/a_intent = INTENT_HELP//Living
@@ -260,12 +265,8 @@
 	var/music_playing = FALSE
 	/// Tracker for amount of turfs we sprinted over, for things like bumping and charging
 	var/sprinted_tiles = 0
-	/// Tracker for amount of turfs sprinted since last dir change
-	var/sprinted_since_last_dir_change = 0
 	///how many tiles we can move while casting
 	var/cast_move = 0
-	/// Last tick where we moved or clicked something in-world, used to block AFK shenanigans.
-	var/last_client_interact = 0
 
 	/// pronouns of the mob, set in the character sheet.
 	var/pronouns = null
@@ -289,5 +290,10 @@
 	/// new title given by an admin.
 	var/admin_title = null
 
-	var/cmode_music_override = list() // set by prefs or the verb, ignored if empty
-	var/cmode_music_override_name // solely for autoselecting as a spawned-in mob
+	VAR_PROTECTED/base_strength = 10
+	VAR_PROTECTED/base_perception = 10
+	VAR_PROTECTED/base_endurance = 10
+	VAR_PROTECTED/base_constitution = 10
+	VAR_PROTECTED/base_intelligence = 10
+	VAR_PROTECTED/base_speed = 10
+	VAR_PROTECTED/base_fortune = 10

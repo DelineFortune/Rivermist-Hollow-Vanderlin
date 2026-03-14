@@ -1,12 +1,13 @@
 /datum/action/cooldown/spell/projectile/eora_curse
-	name = "Sune's Curse"
+	name = "Eora's Curse"
 	desc = ""
 	button_icon_state = "curse2"
 	sound = 'sound/magic/whiteflame.ogg'
 
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
-	associated_skill = /datum/skill/magic/holy
+	associated_skill = /datum/attribute/skill/magic/holy
+	required_items = list(/obj/item/clothing/neck/psycross/silver/divine/eora)
 
 	invocation =  "Nulla felicitas sine amore!"
 	invocation_type = INVOCATION_WHISPER

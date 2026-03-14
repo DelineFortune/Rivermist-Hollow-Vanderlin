@@ -22,8 +22,8 @@
 	equip_sound = "rustle"
 	sharpness = IS_BLUNT
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
-	associated_skill = /datum/skill/combat/axesmaces
+	slot_flags = ITEM_SLOT_HIP
+	associated_skill = /datum/attribute/skill/combat/axesmaces
 	melting_material = /datum/material/iron
 	melt_amount = 75
 	parrysound = list('sound/combat/parry/parrygen.ogg')
@@ -95,7 +95,7 @@
 
 /obj/item/weapon/mace/cane/courtphysician
 	name = "physician's cane"
-	desc = "A prized cane. Embellished with a golden serpent, representing the Neverwinter academy. The pointy end is quite sharp."
+	desc = "A prized cane. Embellished with a golden serpent, representing the Kingsfield university. The pointy end is quite sharp."
 	icon_state = "physician_cane"
 	force = DAMAGE_MACE - 3
 	force_wielded = DAMAGE_MACE - 1
@@ -386,7 +386,7 @@
 	wdefense = ULTMATE_PARRY
 	wbalance = DODGE_CHANCE_NORMAL
 	max_integrity = INTEGRITY_STANDARD
-	associated_skill = /datum/skill/combat/swords
+	associated_skill = /datum/attribute/skill/combat/swords
 	metalizer_result = /obj/item/weapon/sword/iron
 
 /obj/item/weapon/mace/woodclub/train_sword/getonmobprop(tag)
@@ -637,7 +637,7 @@
 
 /obj/item/weapon/mace/elvenclub/bronze
 	name = "bronze elven war club"
-	desc = "A bronze one-handed war club with a sharp end. It's been long favoured by the people of Silvermoon, despite its foreign origins."
+	desc = "A bronze one-handed war club with a sharp end. It's been long favoured by the Elves of Heartfelt, despite its foreign origins."
 	icon_state = "elvenclub_bronze"
 	melting_material = /datum/material/bronze
 	max_integrity = INTEGRITY_STANDARD
@@ -645,7 +645,7 @@
 
 /obj/item/weapon/mace/elvenclub/silver
 	name = "regal elven war club"
-	desc = "A fashionable silver war club of elvish design, beautifully decorated with golden filigree. It's commonly wielded by groups of shamanist exorcists."
+	desc = "A fashionable silver war club of elvish design, beautifully decorated with golden filigree."
 	icon_state = "regalelvenclub"
 	force = DAMAGE_MACE
 	force_wielded = DAMAGE_MACE_WIELD
@@ -684,7 +684,7 @@
 /obj/item/weapon/mace/gada
 	name = "regal gada"
 	icon_state = "gada"
-	desc = "A luxurious silver mace of Savannah Elf origin that's been reinforced and embellished with gold. It's considerably heavier compared to other maces."
+	desc = "A luxurious silver mace that's been reinforced and embellished with gold. It's considerably heavier compared to other maces."
 	force = DAMAGE_MACE + 2
 	wbalance = DODGE_CHANCE_NORMAL
 	max_integrity = INTEGRITY_STRONGEST * 0.8
@@ -701,7 +701,7 @@
 /obj/item/weapon/mace/bronze
 	name = "bronze mace"
 	icon_state = "mace_bronze"
-	desc = "A spiked bronze mace."
+	desc = "A spiked bronze mace. A weapon thats seen a revival in use amidst the cataclysm in Heartfelt."
 	force = DAMAGE_MACE + 1
 	force_wielded = DAMAGE_MACE_WIELD + 1 //Spiked
 	max_integrity = INTEGRITY_STANDARD

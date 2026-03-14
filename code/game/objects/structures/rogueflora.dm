@@ -35,14 +35,20 @@
 	smeltresult = /obj/item/ore/coal
 
 /obj/structure/flora/tree/attack_hand_secondary(mob/user, list/modifiers)
-
-    . = ..()
-    if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-        return
-
-    handle_special_items_retrieval(user, src)
-
-    return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(user.mind && isliving(user))
+		if(user.mind.special_items && user.mind.special_items.len)
+			var/item = browser_input_list(user, "What will I take?", "STASH", user.mind.special_items)
+			if(item)
+				if(user.Adjacent(src))
+					if(user.mind.special_items[item])
+						var/path2item = user.mind.special_items[item]
+						user.mind.special_items -= item
+						var/obj/item/I = new path2item(user.loc)
+						user.put_in_hands(I)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/flora/tree/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
@@ -574,14 +580,20 @@
 	static_debris = list(/obj/item/grown/log/tree/small = 1)
 
 /obj/structure/flora/shroom_tree/attack_hand_secondary(mob/user, list/modifiers)
-
-    . = ..()
-    if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-        return
-
-    handle_special_items_retrieval(user, src)
-
-    return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(user.mind && isliving(user))
+		if(user.mind.special_items && user.mind.special_items.len)
+			var/item = browser_input_list(user, "What will I take?", "STASH", user.mind.special_items)
+			if(item)
+				if(user.Adjacent(src))
+					if(user.mind.special_items[item])
+						var/path2item = user.mind.special_items[item]
+						user.mind.special_items -= item
+						var/obj/item/I = new path2item(user.loc)
+						user.put_in_hands(I)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/flora/shroom_tree/Initialize()
 	. = ..()
@@ -662,8 +674,8 @@
 	var/mob/living/L = user
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src, "plantcross", 80, FALSE, -1)
-	prob2findstuff = prob2findstuff + ( user.STAPER * 4 )
-	user.visible_message(span_noticesmall("[user] searches through [src]."))
+	prob2findstuff = prob2findstuff + ( GET_MOB_ATTRIBUTE_VALUE(user, STAT_PERCEPTION) * 4 )
+	user.visible_message(span_smallnotice("[user] searches through [src]."))
 
 	if(do_after(L, rand(5 DECISECONDS, 2 SECONDS), src))
 
@@ -801,10 +813,10 @@
 	var/mob/living/L = user
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src, "plantcross", 80, FALSE, -1)
-	prob2findstuff = prob2findstuff + ( user.STAPER * 4 )
-	prob2findgoodie = prob2findgoodie + ( user.STALUC * 2 ) + ( user.STAPER * 2 )
-	luckydouble = ( user.STALUC * 2 )
-	user.visible_message(span_noticesmall("[user] searches through [src]."))
+	prob2findstuff = prob2findstuff + ( GET_MOB_ATTRIBUTE_VALUE(user, STAT_PERCEPTION) * 4 )
+	prob2findgoodie = prob2findgoodie + ( GET_MOB_ATTRIBUTE_VALUE(user, STAT_FORTUNE) * 2 ) + ( GET_MOB_ATTRIBUTE_VALUE(user, STAT_PERCEPTION) * 2 )
+	luckydouble = ( GET_MOB_ATTRIBUTE_VALUE(user, STAT_FORTUNE) * 2 )
+	user.visible_message(span_smallnotice("[user] searches through [src]."))
 
 	if(do_after(L, rand(5 DECISECONDS, 2 SECONDS), src))
 
@@ -844,7 +856,7 @@
 					return
 
 		else
-			to_chat(user, span_noticesmall("Didn't find anything."))
+			to_chat(user, span_smallnotice("Didn't find anything."))
 	prob2findstuff = 18
 	prob2findgoodie = 15
 	luckydouble	= 3

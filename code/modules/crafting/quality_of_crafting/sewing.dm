@@ -9,7 +9,7 @@
 
 	starting_atom = /obj/item/needle
 	attacked_atom = /obj/item/natural/cloth
-	skillcraft = /datum/skill/misc/sewing
+	skillcraft = /datum/attribute/skill/misc/sewing
 	craftdiff = 0
 	subtypes_allowed = TRUE // so you can use any subtype of fur
 	category = "Shirt"
@@ -44,7 +44,7 @@
 	output = /obj/item/clothing/shoes/tribal
 
 /datum/repeatable_crafting_recipe/sewing/hide/volfhelm
-	name = "wolf helm"
+	name = "volf helm"
 	requirements = list(
 		/obj/item/natural/hide = 3,
 		/obj/item/natural/fur = 2,
@@ -53,7 +53,7 @@
 	sellprice = 20
 
 /datum/repeatable_crafting_recipe/sewing/hide/volfmantle
-	name = "wolf mantle"
+	name = "volf mantle"
 	attacked_atom = /obj/item/natural/fur/volf
 	requirements = list(
 		/obj/item/natural/hide = 1,
@@ -319,6 +319,14 @@
 	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 2)
 	craftdiff = 1
+	category = "Storage"
+
+/datum/repeatable_crafting_recipe/sewing/clothrucksack
+	name = "cloth rucksack"
+	output = /obj/item/storage/backpack/satchel/cloth/big
+	requirements = list(/obj/item/natural/cloth = 4,
+				/obj/item/natural/fibers = 4)
+	craftdiff = 2
 	category = "Storage"
 
 /datum/repeatable_crafting_recipe/sewing/pcoif
@@ -1160,7 +1168,7 @@
 /*.............. recipes requiring skill 5 ..............*/
 
 /datum/repeatable_crafting_recipe/sewing/grenzel_shirt
-	name = "Darkholdian hip shirt"
+	name = "Grenzelhoftian hip shirt"
 	output = /obj/item/clothing/shirt/grenzelhoft
 	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/silk = 2,
@@ -1169,7 +1177,7 @@
 	category = "Shirt"
 
 /datum/repeatable_crafting_recipe/sewing/grenzel_pants
-	name = "Darkholdian paumpers"
+	name = "Grenzelhoftian paumpers"
 	output = /obj/item/clothing/pants/grenzelpants
 	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/silk = 1,
@@ -1731,6 +1739,17 @@
 	)
 	craftdiff = 2
 	category = "Gloves"
+
+/datum/repeatable_crafting_recipe/sewing/bandage
+	name = "Bandage"
+	output = /obj/item/natural/cloth/bandage
+	requirements = list(
+		/obj/item/natural/cloth = 2,
+		/obj/item/natural/fibers = 2
+	)
+	craftdiff = 2.5
+	skillcraft = /datum/attribute/skill/misc/medicine
+	blacklisted_paths = list(/obj/item/natural/cloth/bandage)
 
 /datum/repeatable_crafting_recipe/sewing/barding
 	name = "padded barding (saiga)"

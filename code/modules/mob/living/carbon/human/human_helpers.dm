@@ -11,7 +11,7 @@
 			return TRUE
 	if(!has_language(language))
 		if(has_quirk(/datum/quirk/vice/paranoid))
-			V.add_stress(/datum/stress_event/paratalk)
+			V.add_stress(/datum/stress_event/para/talk)
 
 /mob/living/carbon/human/canBeHandcuffed()
 	if(num_hands < 2)
@@ -29,35 +29,40 @@
 	return if_no_id
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
-/mob/living/carbon/human/get_visible_name()
-	var/face_name = get_face_name("")
-	var/id_name = get_id_name("")
+/// html_tags surrounds the real name with tags to differentiate it from the rest of the name. Used for examine strings.
+/// html_tags = list("EM", "B")
+/mob/living/carbon/get_visible_name(if_none = "Unknown", list/html_tags)
 	if(name_override)
 		return name_override
-	if(face_name)
-		if(id_name && (id_name != face_name))
-			return "Unknown [(gender == FEMALE) ? "Woman" : "Man"]"
-		return face_name
-	if(id_name)
-		return id_name
-	return "Unknown"
+	var/face_name = get_face_name(if_none, html_tags)
+	var/id_name = get_id_name(if_none, html_tags)
+	// Face takes priority if its visible, then your ID
+	if(face_name != id_name)
+		return face_name != if_none ? face_name : id_name
+	return if_none || "Unknown" // I'm really not sure why you would try and call this null but just in case
 
-//Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
-/mob/living/carbon/human/proc/get_face_name(if_no_face = "Unknown")
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
+/// Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
+/mob/living/carbon/proc/get_face_name(if_no_face = "Unknown", list/html_tags, include_honoraries=TRUE)
+	if(!is_human_part_visible(src, HIDEFACE))
 		return if_no_face
-	if( head && (head.flags_inv&HIDEFACE) )
-		return if_no_face		//Likewise for hats
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
 	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || !real_name || O.skeletonized )	//disfigured. use id-name if possible
 		return if_no_face
-	return real_name
+	. = real_name
+	for(var/tag in html_tags)
+		. = html_tag(tag, .)
+	if(include_honoraries)
+		if(honorary)
+			. = "[honorary] [.]"
+		if(SSticker.regent_mob == src)
+			. = "Regent [.]"
+		if(honorary_suffix)
+			. += " [honorary_suffix]"
 
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
-/mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
-	. = if_no_id	//to prevent null-names making the mob unclickable
-	return
+/mob/living/carbon/proc/get_id_name(if_no_id = "Unknown", html_tags)
+	return if_no_id //to prevent null-names making the mob unclickable
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	if(HAS_TRAIT(src, TRAIT_MONKEYLIKE))
@@ -105,12 +110,12 @@
 		return
 
 	var/damage
-	if(STASTR > 12 || STASTR < 10)
-		damage = STASTR
+	if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) > 12 || GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) < 10)
+		damage = GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH)
 	else
 		damage = 12
 
-	var/used_str = STASTR
+	var/used_str = GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH)
 
 	if(mind?.has_antag_datum(/datum/antagonist/werewolf))
 		return damage * 2
@@ -140,7 +145,8 @@
 		return
 
 	var/damage = 12
-	var/used_str = STASTR
+	var/used_str = GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH)
+	damage += dna?.species?.kick_damage || 0
 
 	if(mind?.has_antag_datum(/datum/antagonist/werewolf))
 		return 30 * multiplier
@@ -157,7 +163,7 @@
 
 /// Fully randomizes everything in the character.
 // Reflect changes in [datum/preferences/proc/randomise_appearance_prefs]
-/mob/living/carbon/human/proc/randomize_human_appearance(randomise_flags = ALL)
+/mob/living/carbon/human/proc/randomize_human_appearance(randomise_flags = ALL, include_donator = TRUE)
 	if(!dna)
 		return
 
@@ -179,16 +185,15 @@
 	if(randomise_flags & RANDOMIZE_NAME)
 		real_name = species.random_name(gender, TRUE)
 
-	//if(randomise_flags & RANDOMIZE_UNDERWEAR)
-	//	underwear = species.random_underwear(gender)
+	if(randomise_flags & RANDOMIZE_UNDERWEAR)
+		underwear = species.random_underwear(gender)
 
 	if(randomise_flags & RANDOMIZE_SKIN_TONE)
 		var/list/skin_list = species.get_skin_list()
 		skin_tone = pick_assoc(skin_list)
 
 	if(randomise_flags & RANDOMIZE_EYE_COLOR)
-		var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-		eyes.eye_color = random_eye_color()
+		set_eye_color(random_eye_color(TRUE))
 
 	// if(randomise_flags & RANDOMIZE_FEATURES)
 	// 	dna.features = random_features()

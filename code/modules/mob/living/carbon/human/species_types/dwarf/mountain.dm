@@ -9,6 +9,25 @@
 /mob/living/carbon/human/species/dwarf/mountain
 	race = /datum/species/dwarf/mountain
 
+/datum/attribute_holder/sheet/job/species/mountain_dwarf
+	raw_attribute_list = list(
+		/datum/attribute/skill/combat/axesmaces = 40,
+		/datum/attribute/skill/combat/shields = 40,
+		/datum/attribute/skill/craft/blacksmithing = 40,
+		/datum/attribute/skill/craft/armorsmithing = 40,
+		/datum/attribute/skill/craft/weaponsmithing = 30,
+		/datum/attribute/skill/labor/mining = 40,
+		/datum/attribute/skill/craft/masonry = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+	)
+
+/datum/attribute_holder/sheet/job/species/mountain_dwarf/stats
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_CONSTITUTION = 2,
+		STAT_ENDURANCE = 1
+	)
+
 /datum/species/dwarf/mountain
 	name = "Dwarf"
 	id = SPEC_ID_DWARF
@@ -27,19 +46,7 @@
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, YOUNGBEARD, STUBBLE, OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP, TRAIT_POISON_RESILIENCE)
-	inherent_skills = list(
-		/datum/skill/combat/axesmaces = 4,
-		/datum/skill/combat/shields = 4,
-
-		/datum/skill/craft/blacksmithing = 4,
-		/datum/skill/craft/armorsmithing = 4,
-		/datum/skill/craft/weaponsmithing = 3,
-
-		/datum/skill/labor/mining = 4,
-		/datum/skill/craft/masonry = 3,
-
-		/datum/skill/misc/athletics = 3,
-	)
+	inherent_sheet = /datum/attribute_holder/sheet/job/species/mountain_dwarf
 
 	possible_ages = NORMAL_AGES_LIST
 	use_skintones = TRUE
@@ -113,9 +120,8 @@
 		OFFSET_BUTT = list(0,-4),\
 		OFFSET_BELLY = list(0,-4),\
 	)
-
-	specstats_m = list(STATKEY_STR = 1, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 2, STATKEY_END = 1, STATKEY_SPD = 0, STATKEY_LCK = 0)
-	specstats_f = list(STATKEY_STR = 1, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 2, STATKEY_END = 1, STATKEY_SPD = 0, STATKEY_LCK = 0)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/mountain_dwarf/stats
+	statsheet_female = /datum/attribute_holder/sheet/job/species/mountain_dwarf/stats
 
 	enflamed_icon = "widefire"
 

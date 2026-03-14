@@ -77,6 +77,8 @@
 		/datum/language/elvish,
 		/datum/language/dwarvish,
 		/datum/language/deepspeak,
+		/datum/language/zalad,
+		/datum/language/newpsydonic,
 		/datum/language/hellspeak,
 		/datum/language/orcish,
 	)
@@ -168,33 +170,23 @@
 	)
 	preview_render = FALSE
 
-/datum/quirk/boon/folk_hero/on_spawn()
-	if(!ishuman(owner))
+/datum/quirk/boon/folk_hero/on_examined(mob/user, list/P, list/examine_contents)
+	if(user == owner)
 		return
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
-
-/datum/quirk/boon/folk_hero/on_remove()
-	if(!ishuman(owner))
+	var/mob/living/carbon/source_mob = owner
+	var/mob/living/examiner = user
+	if(!istype(source_mob) || !istype(examiner))
 		return
-	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
-
-/datum/quirk/boon/folk_hero/proc/on_examine(mob/living/source, mob/user, list/examine_list)
-	if(!ishuman(user) || !ishuman(source))
-		return
-
-	var/mob/living/carbon/human/source_mob = source
-	var/mob/living/carbon/human/examiner = user
-
 	if(!examiner.mind || !source_mob.mind)
 		return
-
-	// Folk heroes are recognized by others
-	if(prob(80)) // 80% chance people recognize them
-		examine_list += span_notice("You recognize [source_mob.real_name], the folk hero!")
-
-		// Add them to known people if not already known
-		if(!examiner.mind.do_i_know(source_mob.mind))
-			examiner.mind.share_identities(source_mob.mind)
+	if(GET_MOB_ATTRIBUTE_VALUE(examiner, STAT_INTELLIGENCE) < 8)
+		return
+	var/mob_name = source_mob.get_visible_name("")
+	if(!mob_name || (mob_name == "Unknown"))
+		return
+	LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_FACE, span_notice("You recognize [P[THEM]]. This is [mob_name], the folk hero!"))
+	if(!examiner.mind.do_i_know(source_mob.mind, source_mob.real_name))
+		examiner.mind.learn_target_identity(source_mob.mind, source_mob.real_name)
 
 /datum/quirk/boon/quick_hands
 	name = "Quick Hands"
@@ -254,8 +246,8 @@
 		L = new(T)
 		tent = new(T)
 		var/obj/structure/handcart/cart = new(T)
-		cart.put_in(null, L)
-		cart.put_in(null, tent)
+		cart.put_in(null, L, TRUE)
+		cart.put_in(null, tent, TRUE)
 
 	to_chat(owner, span_notice("Your equipment is ready. You're well prepared for the journey ahead."))
 
@@ -314,12 +306,12 @@
 		return
 
 	var/mob/living/carbon/human/H = owner
-	H.clamped_adjust_skillrank(/datum/skill/misc/riding, 2, 2, TRUE)
+	H.clamped_adjust_skill_level(/datum/attribute/skill/misc/riding, 20, 20, TRUE)
 
 /datum/quirk/boon/beautiful
 	name = "Strikingly Beautiful"
 	desc = "You are remarkably attractive, improving social interactions."
-	point_value = -2
+	point_value = -4
 
 /datum/quirk/boon/beautiful/on_spawn()
 	if(!owner)
@@ -333,379 +325,3 @@
 	if(!owner)
 		return
 	REMOVE_TRAIT(owner, TRAIT_BEAUTIFUL, "[type]")
-
-/datum/quirk/boon/value
-	name = "Skilled Appraiser"
-	desc = "I know how to estimate an item's value, more or less."
-	point_value = -2
-
-/datum/quirk/boon/value/on_spawn()
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/H = owner
-	ADD_TRAIT(H, TRAIT_SEEPRICES, "[type]")
-
-/datum/quirk/boon/night_owl
-	name = "Night Owl"
-	desc = "I've always preferred Lune over Elysius. I am no longer fatigued by being tired."
-	point_value = -3
-
-/datum/quirk/boon/night_owl/on_spawn()
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/H = owner
-	ADD_TRAIT(H, TRAIT_NIGHT_OWL, "[type]")
-
-/datum/quirk/duelist
-	name = "Sword Training"
-	desc = "I sword training and stashed a short sword."
-	point_value = -2
-
-/datum/quirk/boon/duelist/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)
-	if(H.mind)
-		H.mind.special_items["Short Sword"] = /obj/item/weapon/sword/short
-
-/datum/quirk/boon/fence
-	name = "Fencer"
-	desc = "I have trained in agile sword fighting. I dodge more easily without wearing anything and have stashed my rapier nearby."
-	point_value = -4
-
-/datum/quirk/boon/fence/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	ADD_TRAIT(H, TRAIT_DODGEEXPERT, "[type]")
-	H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)
-	if(H.mind)
-		H.mind.special_items["Rapier"] = /obj/item/weapon/sword/rapier
-
-/datum/quirk/boon/duelist
-	name = "Sword Training"
-	desc = "I sword training and stashed a short sword."
-	point_value = -2
-
-/datum/quirk/boon/duelist/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)
-	if(H.mind)
-		H.mind.special_items["Short Sword"] = /obj/item/weapon/sword/short
-
-/datum/quirk/boon/training2
-	name = "Mace Training"
-	desc = "I have mace training and stashed a mace."
-	point_value = -3
-
-/datum/quirk/boon/training2/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/combat/axesmaces, 3, TRUE)
-	if(H.mind)
-		H.mind.special_items["Mace"] = /obj/item/weapon/mace/spiked
-
-/datum/quirk/boon/training4
-	name = "Polearms Training"
-	desc = "I have polearm training and stashed a spear."
-	point_value = -3
-
-/datum/quirk/boon/training4/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
-	if(H.mind)
-		H.mind.special_items["Spear"] = /obj/item/weapon/polearm/spear
-
-/datum/quirk/boon/training5
-	name = "Knife Training"
-	desc = "I have knife training and stashed a parrying dagger."
-	point_value = -3
-
-/datum/quirk/boon/training5/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/combat/knives, 3, TRUE)
-	if(H.mind)
-		H.mind.special_items["Dagger"] = /obj/item/weapon/knife/dagger/steel
-
-/datum/quirk/boon/training6
-	name = "Axe Training"
-	desc = "I have training with axes and am a capable jumberjack. I've also stashed a copper axe."
-	point_value = -3
-
-/datum/quirk/boon/training6/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/combat/axesmaces, 3, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/labor/lumberjacking, 3, TRUE)
-	if(H.mind)
-		H.mind.special_items["Axe"] = /obj/item/weapon/axe/copper
-
-/datum/quirk/boon/training8
-	name = "Shield Training"
-	desc = "I have shield training and stashed a shield. As long as I have a shield in one hand I can catch arrows with ease."
-	point_value = -3
-
-/datum/quirk/boon/training8/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/combat/shields, 3, TRUE)
-	if(H.mind)
-		H.mind.special_items["Shield"] = /obj/item/weapon/shield/wood
-
-/datum/quirk/boon/training9
-	name = "Unarmed Training"
-	desc = "I have journeyman unarmed training and stashed some dusters."
-	point_value = -3
-
-/datum/quirk/boon/training9/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 3, TRUE)
-
-/datum/quirk/boon/mtraining1
-	name = "Medical Training"
-	desc = "I have basic medical training and stashed some med supplies."
-	point_value = -2
-
-/datum/quirk/boon/mtraining1/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 4, TRUE)
-	H.add_spell(/datum/action/cooldown/spell/diagnose)
-	if(H.mind)
-		H.mind.special_items["Patch Kit"] = /obj/item/storage/fancy/ifak
-		H.mind.special_items["Surgery Kit"] = /obj/item/storage/backpack/satchel/surgbag
-
-/datum/quirk/boon/greenthumb
-	name = "Green Thumb"
-	desc = "I've always been rather good at tending to plants, and I have some powerful fertilizer stashed away and a women of ill repute. (Raises skill to journeyman)"
-	point_value = -2
-
-/datum/quirk/boon/greenthumb/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/labor/farming, 4, TRUE)
-	if(H.mind)
-		H.mind.special_items["Fertilizer 1"] = /obj/item/fertilizer
-		H.mind.special_items["Fertilizer 2"] = /obj/item/fertilizer
-		H.mind.special_items["Fertilizer 3"] = /obj/item/fertilizer
-		H.mind.special_items["Whore"] = /obj/item/weapon/hoe // I too respect a humble farmer.
-
-/datum/quirk/boon/eagle_eyed
-	name = "Eagle Eyed"
-	desc = "I was always good at spotting distant things."
-	point_value = -2
-
-/datum/quirk/boon/eagle_eyed/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.change_stat(STATKEY_PER, 2)
-
-/datum/quirk/boon/training10
-	name = "Bow Training"
-	desc = "I have journeyman bow training and stashed a bow."
-	point_value = -3
-
-/datum/quirk/boon/training10/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/combat/bows, 3, TRUE)
-	if(H.mind)
-		H.mind.special_items["Bow"] = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/long
-		H.mind.special_items["Quiver"] = /obj/item/ammo_holder/quiver/arrows
-
-/datum/quirk/boon/bookworm
-	name = "Bookworm"
-	desc = "I love books and I became quite skilled at reading and writing. What's more, my mind is much sharper for the experience."
-	point_value = -2
-
-/datum/quirk/boon/bookworm/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/misc/reading, 4, TRUE)
-	H.change_stat("intelligence", 2)
-
-/datum/quirk/boon/thief
-	name = "Thief"
-	desc = "Life's not easy around here, but I've made mine a little easier by taking things of others. I am a great at picking pockets and locks. I've stashed some picks nearby."
-	point_value = -4
-
-/datum/quirk/boon/thief/after_job_spawn(datum/job/job)
-	. = ..()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/misc/stealing, 4, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, 4, TRUE)
-	H.mind.special_items["Lockpicks"] = /obj/item/lockpickring/mundane
-
-/datum/quirk/boon/languagesavant
-	name = "Polyglot"
-	desc = "I have always picked up on languages easily. I know the languages of all the races found in this land, and my flexible tongue is certainly useful in the bedchamber."
-	point_value = -2//Believe it or not, this is a really niche quirk with very few actual use-cases.
-
-/datum/quirk/boon/languagesavant/on_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.grant_language(/datum/language/dwarvish)
-	H.grant_language(/datum/language/elvish)
-	H.grant_language(/datum/language/hellspeak)
-	H.grant_language(/datum/language/celestial)
-	H.grant_language(/datum/language/orcish)
-	H.grant_language(/datum/language/beast)
-	H.grant_language(/datum/language/thievescant)
-	ADD_TRAIT(H, TRAIT_GOODLOVER, "[type]")
-
-/datum/quirk/boon/mastercraftsmen // Named this way to absorb the old quirk. Keeps old saves cleaner without them needing to reset quirks.
-	name = "Jack of All Trades"
-	desc = "I've always had steady hands. I'm experienced enough in most fine craftsmanship to make a career out of it, if I can procure my own tools."
-	point_value = -4 //
-
-/datum/quirk/boon/mastercraftsmen/on_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 3, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/craft/blacksmithing, 3, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 3, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 3, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 3, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 3, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/misc/sewing, 3, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/craft/smelting, 3, TRUE)
-
-/datum/quirk/boon/masterbuilder
-	name = "Practiced Builder"
-	desc = "I have experience in putting up large structures and foundations for buildings. I can even use a sawmill if I can find one, and I have a handcart and two sacks hidden away for transporting my construction materials."
-	point_value = -2 // I have a lot of respect for people who actually bother making buildings that will be deleted within an hour or two.
-
-/datum/quirk/boon/masterbuilder/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 4, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 4, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 4, TRUE) // Needed to install things like levers in a house. This unfortunately means construction workers can make illegal firearms.
-	H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 3, TRUE) // Pretty sure some crafting stations use this. Also stone axes and whatever other basic tools they need.
-	if(H.mind)
-		H.mind.special_items["Handcart"] = /obj/structure/handcart //TO-DO: Implement sawmill and the trait to use it. Giving them a handcart to move materials with.
-		H.mind.special_items["Sack 1"] = /obj/item/storage/sack
-		H.mind.special_items["Sack 2"] = /obj/item/storage/sack
-
-/datum/quirk/boon/mastersmith
-	name = "Practiced Smith"
-	desc = "I am a metalworker by trade, and I have the tools for my practice stashed away." // Needs looking at after the smithing rework goes through.
-	point_value = -4 // Armor-making. Weapon-making. Everyone wants the gamer gear.
-
-/datum/quirk/boon/mastersmith/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/craft/blacksmithing, 4, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 4, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/craft/smelting, 4, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 3, TRUE)
-	if(H.mind)
-		H.mind.special_items["Hammer"] = /obj/item/weapon/hammer
-		H.mind.special_items["Tongs"] = /obj/item/weapon/tongs
-		H.mind.special_items["Coal"] = /obj/item/ore/coal
-
-/datum/quirk/boon/mastertailor
-	name = "Practiced Tailor"
-	desc = "I'm particularly skilled in working with needle, thread, and loom. I also have a needle, thread, and scissors hidden away."
-	point_value = -4
-
-/datum/quirk/boon/mastertailor/after_job_spawn()
-	var/mob/living/carbon/human/H = owner
-	H.adjust_skillrank_up_to(/datum/skill/misc/sewing, 4, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 4, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 3, TRUE)//Being skilled with a needle offers some overlap with stitching up peoples' wounds. Also, weaving isn't a skill anymore so...
-	if(H.mind)
-		H.mind.special_items["Scissors"] = /obj/item/weapon/knife/scissors/steel
-		H.mind.special_items["Needle"] = /obj/item/needle
-		H.mind.special_items["Thread"] = /obj/item/natural/bundle/fibers/full
-
-/datum/quirk/boon/bleublood
-	name = "Noble Lineage"
-	desc = "I am of noble blood."
-	point_value = -3
-
-/datum/quirk/boon/bleublood/on_spawn()
-	var/mob/living/carbon/human/H = owner
-	ADD_TRAIT(H, TRAIT_NOBLE, "[type]")
-	H.adjust_skillrank_up_to(/datum/skill/misc/reading, 2, TRUE)
-
-/datum/quirk/boon/richpouch
-	name = "Rich Pouch"
-	desc = "I have a pouch full of amnas."
-	point_value = -2
-
-/datum/quirk/boon/richpouch/on_spawn()
-	var/mob/living/carbon/human/H = owner
-	var/obj/item/pouch = new /obj/item/storage/belt/pouch/coins/rich(get_turf(H))
-	H.put_in_hands(pouch, forced = TRUE)
-
-/datum/quirk/boon/nasty_eater
-	name = "Not a Picky Eater"
-	desc = "I can eat even the most spoiled, raw, or toxic food and water as if they were delicacies. I'm even immune to the berry poison some folk like to coat their arrows with."
-	point_value = -2
-
-/datum/quirk/boon/nasty_eater/on_spawn()
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/H = owner
-	ADD_TRAIT(H, TRAIT_NASTY_EATER, "[type]")
-
-/datum/quirk/boon/alcohol_tolerance
-	name = "Alcohol Tolerance"
-	desc = "Alcohol doesn't affect me much."
-	point_value = -1
-	gain_text = span_notice("I feel like you could drink a whole keg!")
-	lose_text = span_danger("I don't feel as resistant to alcohol anymore. Somehow.")
-
-/datum/quirk/boon/alcohol_tolerance/on_spawn()
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/H = owner
-	ADD_TRAIT(H, TRAIT_LIGHT_DRINKER, "[type]")
-
-/datum/quirk/boon/alcohol_tolerance/on_remove()
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/H = owner
-	REMOVE_TRAIT(H, TRAIT_LIGHT_DRINKER, "[type]")
-
-/datum/quirk/boon/empath
-	name = "Empath"
-	desc = "I can better tell the mood of those around me."
-	point_value = -4
-	gain_text = span_notice("I feel in tune with those around you.")
-	lose_text = span_danger("I feel isolated from others.")
-
-/datum/quirk/boon/empath/on_spawn()
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/H = owner
-	ADD_TRAIT(H, TRAIT_EMPATH, "[type]")
-
-/datum/quirk/boon/empath/on_remove()
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/H = owner
-	REMOVE_TRAIT(H, TRAIT_EMPATH, "[type]")
-
-/datum/quirk/boon/musician
-	name = "Musician"
-	desc = "I am good at playing music. I've also hidden a lute!"
-	point_value = -1
-	gain_text = span_notice("I know everything about musical instruments.")
-	lose_text = span_danger("I forget how musical instruments work.")
-
-/datum/quirk/boon/empath/on_spawn()
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/H = owner
-	ADD_TRAIT(H, TRAIT_MUSICIAN, "[type]")
-
-/datum/quirk/boon/empath/on_remove()
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/H = owner
-	REMOVE_TRAIT(H, TRAIT_MUSICIAN, "[type]")
-
-/datum/quirk/boon/selfaware
-	name = "Self-Aware"
-	desc = "I know the extent of my wounds to a terrifying scale."
-	point_value = -2
-
-/datum/quirk/boon/selfaware/on_spawn()
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/H = owner
-	ADD_TRAIT(H, TRAIT_SELF_AWARE, "[type]")
-
-/datum/quirk/boon/selfaware/on_remove()
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/H = owner
-	REMOVE_TRAIT(H, TRAIT_SELF_AWARE, "[type]")

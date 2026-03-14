@@ -74,6 +74,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * Intialize the movespeed of the mob
  */
 /mob/Initialize()
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_CREATED, src)
 	GLOB.mob_list += src
 	GLOB.mob_directory[tag] = src
@@ -92,15 +93,31 @@ GLOBAL_VAR_INIT(mobids, 1)
 		AA.onNewMob(src)
 	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	set_hydration(rand(HYDRATION_LEVEL_START_MIN, HYDRATION_LEVEL_START_MAX))
+	attribute_initialize()
 	. = ..()
 	update_config_movespeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
 
-/mob/Moved(oldloc, dir)
-	if(client?.manual_afk)
-		client.set_manual_afk(FALSE, show_message = FALSE)
-	return ..()
+/// Attributes
+/mob/proc/attribute_initialize()
+	// If we have an attribute holder, lets get that W
+	if(!ispath(attributes))
+		return
+	attributes = new attributes(src)
+
+	// Seed raw stat values from the subtype's base_* vars.
+	// These are var/final so we read via initial() to get the
+	// compile-time value for this specific subtype.
+	attributes.raw_attribute_list[STAT_STRENGTH]     = initial(base_strength)
+	attributes.raw_attribute_list[STAT_PERCEPTION]   = initial(base_perception)
+	attributes.raw_attribute_list[STAT_ENDURANCE]    = initial(base_endurance)
+	attributes.raw_attribute_list[STAT_CONSTITUTION] = initial(base_constitution)
+	attributes.raw_attribute_list[STAT_INTELLIGENCE] = initial(base_intelligence)
+	attributes.raw_attribute_list[STAT_SPEED]        = initial(base_speed)
+	attributes.raw_attribute_list[STAT_FORTUNE]      = initial(base_fortune)
+	attributes.update_attributes()
+
 
 /**
  * Generate the tag for this mob
@@ -203,117 +220,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(self_message)
 		show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
 
-/mob/living/carbon/human/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, runechat_message, log_seen, log_seen_msg)
-	var/turf/T = get_turf(src)
-	if(!T)
-		return
-	if(!islist(ignored_mobs))
-		ignored_mobs = list(ignored_mobs)
-
-	// ERP Subtle Mode Detection
-	var/is_subtle_message = FALSE
-	var/subtle_noghost = FALSE
-
-	if(ishuman(src))
-		var/mob/living/carbon/human/human_speaker = src
-		var/subtle_prefs = human_speaker.get_erp_pref(/datum/erp_preference/bitflag/subtle)
-
-		// Check if message starts with @ (Subtle Tag preference)
-		if(subtle_prefs & SUBTLE_TAG)
-			// Look for @ after the character name formatting
-			var/at_pos = findtext(message, "</b> @")
-			if(at_pos)
-				is_subtle_message = TRUE
-				// Remove the @ symbol from the message
-				var/closing_tag_end = at_pos + 4 // Length of "</b> "
-				message = copytext(message, 1, closing_tag_end) + copytext(message, closing_tag_end + 2)
-				// Handle self_message if it exists
-				if(self_message)
-					var/self_at_pos = findtext(self_message, "</b> @")
-					if(self_at_pos)
-						var/self_closing_tag_end = self_at_pos + 4
-						self_message = copytext(self_message, 1, self_closing_tag_end) + copytext(self_message, self_closing_tag_end + 2)
-
-					var/collective_span = ""
-					// Find any collective this person is involved in
-					for(var/datum/collective_message/collective in GLOB.sex_collectives)
-						if(human_speaker in collective.involved_mobs)
-							collective_span = " [collective.collective_span_class]"
-							break
-
-					self_message = "<span class= '[collective_span]'> " + self_message + "</span>"
-
-		var/collective_span = ""
-		// Find any collective this person is involved in
-		for(var/datum/collective_message/collective in GLOB.sex_collectives)
-			if(human_speaker in collective.involved_mobs)
-				collective_span = " [collective.collective_span_class]"
-				break
-
-		message = "<span class= '[collective_span]'> " + message + "</span>"
-
-
-		// Check if we're in a collective with subtle mode
-		var/collective_subtle = FALSE
-		var/in_sex_session = FALSE
-		for(var/datum/collective_message/collective in GLOB.sex_collectives)
-			if(human_speaker in collective.involved_mobs)
-				in_sex_session = TRUE
-				if(collective.subtle_mode)
-					collective_subtle = TRUE
-					break
-
-		if(subtle_prefs & SUBTLE_ALL)
-			if(in_sex_session || collective_subtle)
-				is_subtle_message = TRUE
-
-		if(collective_subtle)
-			is_subtle_message = TRUE
-
-		if(is_subtle_message)
-			if(subtle_prefs & SUBTLE_NOGHOST)
-				subtle_noghost = TRUE
-
-			if(subtle_prefs & SUBTLE_SHORT)
-				vision_distance = 2 // Override to short range
-
-	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
-	hearers -= ignored_mobs
-	if(self_message)
-		hearers -= src
-
-	// Handle ghosts for subtle messages
-	if(is_subtle_message && subtle_noghost)
-		for(var/mob/M in hearers)
-			if(isobserver(M))
-				hearers -= M
-
-	for(var/mob/M in hearers)
-		if(!M.client)
-			continue
-		//This entire if/else chain could be in two lines but isn't for readibilties sake.
-		var/msg = message
-		if(M.see_invisible < invisibility) //if src is invisible to M
-			msg = blind_message
-		if(!msg)
-			continue
-
-		// Add subtle styling to the message
-		if(is_subtle_message)
-			msg = "<span class='subtle'>[msg]</span>"
-
-		if(M != src && !M.is_blind())
-			M.log_message("saw [key_name(src)] emote: [message]", LOG_EMOTE, log_globally = FALSE)
-		M.show_message(msg, MSG_VISUAL, blind_message, MSG_AUDIBLE)
-
-		if(runechat_message && M.can_hear())
-			var/list/runechat_spans = list("emote")
-			if(is_subtle_message)
-				runechat_spans += "subtle"
-			M.create_chat_message(src, raw_message = runechat_message, spans = runechat_spans)
-	if(self_message)
-		show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
-
 /**
  * Show a message to all mobs in earshot of this atom
  *
@@ -349,103 +255,6 @@ GLOBAL_VAR_INIT(mobids, 1)
  */
 /mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null)
 	. = ..()
-	if(self_message)
-		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
-
-/mob/living/carbon/human/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null)
-	var/is_subtle_message = FALSE
-	var/subtle_noghost = FALSE
-
-	if(ishuman(src))
-		var/mob/living/carbon/human/human_speaker = src
-		var/subtle_prefs = human_speaker.get_erp_pref(/datum/erp_preference/bitflag/subtle)
-
-		if(subtle_prefs & SUBTLE_TAG)
-			// Look for @ after the character name formatting
-			var/at_pos = findtext(message, "</b> @")
-			if(at_pos)
-				is_subtle_message = TRUE
-				// Remove the @ symbol from the message
-				var/closing_tag_end = at_pos + 4 // Length of "</b> "
-				message = copytext(message, 1, closing_tag_end) + copytext(message, closing_tag_end + 2)
-				// Handle self_message if it exists
-				if(self_message)
-					var/self_at_pos = findtext(self_message, "</b> @")
-					if(self_at_pos)
-						var/self_closing_tag_end = self_at_pos + 4
-						self_message = copytext(self_message, 1, self_closing_tag_end) + copytext(self_message, self_closing_tag_end + 2)
-					var/collective_span = ""
-					// Find any collective this person is involved in
-					for(var/datum/collective_message/collective in GLOB.sex_collectives)
-						if(human_speaker in collective.involved_mobs)
-							collective_span = " [collective.collective_span_class]"
-							break
-
-					self_message = "<span class= '[collective_span]'> " + self_message + "</span>"
-
-		var/collective_span = ""
-		// Find any collective this person is involved in
-		for(var/datum/collective_message/collective in GLOB.sex_collectives)
-			if(human_speaker in collective.involved_mobs)
-				collective_span = " [collective.collective_span_class]"
-				break
-
-		message = "<span class= '[collective_span]'> " + message + "</span>"
-
-		// Check if we're in a collective with subtle mode
-		var/collective_subtle = FALSE
-		var/in_sex_session = FALSE
-		for(var/datum/collective_message/collective in GLOB.sex_collectives)
-			if(human_speaker in collective.involved_mobs)
-				in_sex_session = TRUE
-				if(collective.subtle_mode)
-					collective_subtle = TRUE
-					break
-
-		// Check All Session Messages preference
-		if(subtle_prefs & SUBTLE_ALL)
-			if(in_sex_session || collective_subtle)
-				is_subtle_message = TRUE
-
-		// Apply collective subtle mode
-		if(collective_subtle)
-			is_subtle_message = TRUE
-
-		// Apply subtle preferences if this is a subtle message
-		if(is_subtle_message)
-			// No Ghost preference
-			if(subtle_prefs & SUBTLE_NOGHOST)
-				subtle_noghost = TRUE
-
-			// Short Range Subtle preference
-			if(subtle_prefs & SUBTLE_SHORT)
-				hearing_distance = 2 // Override to short range
-
-	var/list/hearers = get_hearers_in_view(hearing_distance, src)
-	if(self_message)
-		hearers -= src
-
-	if(is_subtle_message && subtle_noghost)
-		for(var/mob/M in hearers)
-			if(isobserver(M))
-				hearers -= M
-
-	for(var/mob/M in hearers)
-		var/msg = message
-
-		if(is_subtle_message)
-			msg = "<span class='subtle'>[msg]</span>"
-
-		if(M != src && M.client)
-			if(M.can_hear())
-				M.log_message("heard [key_name(src)] emote: [message]", LOG_EMOTE, log_globally = FALSE)
-		M.show_message(msg, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
-
-		if(runechat_message && M.can_see_runechat(src) && M.can_hear())
-			var/list/runechat_spans = list("emote")
-			if(is_subtle_message)
-				runechat_spans += "subtle"
-			M.create_chat_message(src, raw_message = runechat_message, spans = runechat_spans)
 	if(self_message)
 		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
@@ -631,27 +440,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(isturf(examinify.loc) && isliving(src) && stat == CONSCIOUS)
 		face_atom(examinify)
 		if(m_intent != MOVE_INTENT_SNEAK)
-			var/look_target_text = "[examinify]"
-			if(cmode && ismob(examinify))
-				var/atom/movable/T = examinify
-				var/zone_text = parse_zone(zone_selected)
-				if(zone_selected == BODY_ZONE_PRECISE_GROIN)
-					var/atom/front_turf = get_step(T, T.dir)
-					var/atom/behind_turf = get_step(T, turn(T.dir, 180))
-					var/atom/side_left = get_step(T, turn(T.dir, 90))
-					var/atom/side_right = get_step(T, turn(T.dir, 270))
-					if(behind_turf && src.loc && behind_turf.z == src.loc.z && abs(behind_turf.x - src.loc.x) <= 1 && abs(behind_turf.y - src.loc.y) == 0)
-						zone_text = "ass"
-					else if((side_left && src.loc && side_left.z == src.loc.z && abs(side_left.x - src.loc.x) == 0 && abs(side_left.y - src.loc.y) == 0) || (side_right && src.loc && side_right.z == src.loc.z && abs(side_right.x - src.loc.x) == 0 && abs(side_right.y - src.loc.y) == 0))
-						zone_text = "hips"
-					else if(front_turf && src.loc && front_turf.z == src.loc.z && abs(front_turf.x - src.loc.x) <= 1 && abs(front_turf.y - src.loc.y) == 0)
-						zone_text = "crotch"
-				else if(zone_selected == BODY_ZONE_CHEST)
-					var/mob/living/carbon/target_carbon = T
-					if(istype(target_carbon) && target_carbon.getorganslot(ORGAN_SLOT_BREASTS))
-						zone_text = "breasts"
-				look_target_text = "[T]'s [zone_text]"
-			visible_message("<span class='emote'>[src] looks at [look_target_text].</span>")
+			visible_message(span_emote("[src] looks at [examinify]."), span_emote("I look at [examinify]"))
 		else if(isliving(examinify))
 			var/mob/living/examaniee = examinify
 			if(examaniee.peek_examine_check(src))
@@ -669,8 +458,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 			result[i] += "\n"
 		to_chat(src, examine_block("<span class='infoplain'>[result.Join()]</span>"))
 
-	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
-
 // Check if we notice an observer
 /mob/living/proc/peek_examine_check(mob/living/observer)
 	if(!istype(observer))
@@ -679,7 +466,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(is_blind() || stat < CONSCIOUS)
 		return FALSE
 
-	var/observer_skill = observer.get_skill_level(/datum/skill/misc/sneaking)
+	var/observer_skill = GET_MOB_SKILL_VALUE_OLD(observer, /datum/attribute/skill/misc/sneaking)
 	if(observer_skill <= 0)
 		observer_skill = 1
 	if(observer.rogue_sneaking)
@@ -687,7 +474,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 
 	var/multiplier = 5
 
-	var/our_per = STAPER
+	var/our_per = GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION)
 	if(our_per < 5)
 		multiplier = 4
 	else if(our_per >= 5 && our_per < 10)
@@ -870,7 +657,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 
 	if(href_list["refresh"])
 		if(machine && in_range(src, usr))
-			show_inv(machine, text2num(href_list["extra_only"]))
+			show_inv(machine)
 
 	if(href_list["item"] && usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		var/slot = text2num(href_list["item"])
@@ -883,29 +670,24 @@ GLOBAL_VAR_INIT(mobids, 1)
 			what = get_item_by_slot(slot)
 		if(what)
 			if(!(what.item_flags & ABSTRACT))
-				usr.stripPanelUnequip(what,src,slot, text2num(href_list["extra_only"]))
+				usr.stripPanelUnequip(what,src,slot)
 		else
-			usr.stripPanelEquip(what,src,slot, text2num(href_list["extra_only"]))
-
-	if(href_list["show_storage"])
-		var/slot = text2num(href_list["show_storage"])
-		var/obj/item/what = get_item_by_slot(slot)
-		SEND_SIGNAL(what, COMSIG_ATOM_ATTACK_HAND, usr)
+			usr.stripPanelEquip(what,src,slot)
 
 	if(usr.machine == src)
 		if(Adjacent(usr))
-			show_inv(usr, text2num(href_list["extra_only"]))
+			show_inv(usr)
 		else
 			usr << browse(null,"window=mob[REF(src)]")
 
 // The src mob is trying to strip an item from someone
 // Defined in living.dm
-/mob/proc/stripPanelUnequip(obj/item/what, mob/who, extra_only)
+/mob/proc/stripPanelUnequip(obj/item/what, mob/who)
 	return
 
 // The src mob is trying to place an item on someone
 // Defined in living.dm
-/mob/proc/stripPanelEquip(obj/item/what, mob/who, extra_only)
+/mob/proc/stripPanelEquip(obj/item/what, mob/who)
 	return
 
 /**
@@ -1085,8 +867,6 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * magic_flags (optional) A bitfield with the type of magic being cast (see flags at: /datum/component/anti_magic)
 **/
 /mob/proc/can_cast_magic(magic_flags = MAGIC_RESISTANCE)
-	if(HAS_TRAIT(src, TRAIT_NO_SELF_MAGIC)) // Cannot ever cast with the nomagic trait
-		return FALSE
 	if(magic_flags == NONE) // magic with the NONE flag can always be cast
 		return TRUE
 
@@ -1322,7 +1102,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  * Args:
  *  light_amount (optional) - A decimal amount between 1.0 through 0.0 (default is 0.2)
 **/
-/mob/proc/has_light_nearby(light_amount = LIGHTING_TILE_IS_DARK)
+/atom/proc/has_light_nearby(light_amount = LIGHTING_TILE_IS_DARK)
 	var/turf/mob_location = get_turf(src)
 	var/area/mob_area = get_area(src)
 
@@ -1444,8 +1224,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 /mob/proc/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		nutrition = NUTRITION_LEVEL_FULL
-	if((client?.manual_afk || HAS_TRAIT(src, TRAIT_FREEZEHUNGER)) && change < 0)
-		return FALSE
 	nutrition = max(0, nutrition + change)
 	if(nutrition > NUTRITION_LEVEL_FULL)
 		nutrition = NUTRITION_LEVEL_FULL
@@ -1461,8 +1239,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 /mob/proc/adjust_hydration(change)
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		hydration = HYDRATION_LEVEL_FULL
-	if((client?.manual_afk || HAS_TRAIT(src, TRAIT_FREEZEHUNGER)) && change < 0)
-		return FALSE
 	hydration = max(0, hydration + change)
 	if(hydration > HYDRATION_LEVEL_FULL)
 		hydration = HYDRATION_LEVEL_FULL
@@ -1508,7 +1284,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	return "[message_spans_start(spans)][input]</span>"
 
 /mob/living/proc/can_smell()
-	if(HAS_TRAIT(src, TRAIT_MISSING_NOSE) || HAS_TRAIT(src, TRAIT_AGEUSIA))
+	if(HAS_TRAIT(src, TRAIT_MISSING_NOSE))
 		return FALSE
 	return TRUE
 
@@ -1552,7 +1328,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	for(var/mob/living/carbon/human/target as anything in viewers(6, src))
 		if(!target.mind || target.stat != CONSCIOUS)
 			continue
-		if(!HAS_TRAIT(target, TRAIT_NOBLE))
+		if(!HAS_TRAIT(target, TRAIT_NOBLE_BLOOD) && !HAS_TRAIT(target, TRAIT_NOBLE_POWER))
 			continue
 		nobles += target
 	if(length(nobles))
@@ -1565,3 +1341,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	. = list("") //we want to offset unique stuff from standard stuff
 	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
 	return .
+
+/mob/get_examine_name(mob/user, use_article=FALSE)
+	return use_article && article ? "[article] <EM>[real_name]</EM>" : "\a <EM>[real_name]</EM>"
+

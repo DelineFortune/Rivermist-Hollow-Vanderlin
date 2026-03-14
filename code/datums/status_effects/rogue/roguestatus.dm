@@ -1,9 +1,19 @@
 /datum/status_effect/stress
 	status_type = STATUS_EFFECT_REFRESH
 
+/datum/status_effect/stress/stressinsane
+	id = "insane"
+	effectedstats = list(STAT_CONSTITUTION = -2, STAT_ENDURANCE = -2, STAT_SPEED = -2, STAT_FORTUNE = -2, STAT_INTELLIGENCE = -2)
+	alert_type = /atom/movable/screen/alert/status_effect/stress/stressinsane
+
+/atom/movable/screen/alert/status_effect/stress/stressinsane
+	name = "Insane"
+	desc = "I need relief. I need relief. I need relief.\n"
+	icon_state = "stressinsane"
+
 /datum/status_effect/stress/stressvbad
 	id = "stressvbad"
-	effectedstats = list(STATKEY_CON = -1, STATKEY_END = -1, STATKEY_SPD = -1, STATKEY_LCK = -1, STATKEY_INT = -1)
+	effectedstats = list(STAT_CONSTITUTION = -1, STAT_ENDURANCE = -1, STAT_SPEED = -1, STAT_FORTUNE = -1, STAT_INTELLIGENCE = -1)
 	alert_type = /atom/movable/screen/alert/status_effect/stress/stressvbad
 
 /atom/movable/screen/alert/status_effect/stress/stressvbad
@@ -13,7 +23,7 @@
 
 /datum/status_effect/stress/stressbad
 	id = "stressbad"
-	effectedstats = list(STATKEY_LCK = -1)
+	effectedstats = list(STAT_FORTUNE = -1)
 	alert_type = /atom/movable/screen/alert/status_effect/stress/stressbad
 
 /atom/movable/screen/alert/status_effect/stress/stressbad
@@ -23,7 +33,7 @@
 
 /datum/status_effect/stress/stressvgood
 	id = "stressvgood"
-	effectedstats = list(STATKEY_LCK = 1)
+	effectedstats = list(STAT_FORTUNE = 1)
 	alert_type = /atom/movable/screen/alert/status_effect/stress/good/stressvgood
 
 /atom/movable/screen/alert/status_effect/stress/good/stressvgood
