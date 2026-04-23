@@ -175,6 +175,7 @@
 			cleanup_quirks_for_customizer_entry(entry)
 		else
 			choice.handle_topic(user, href_list, src, entry, customizer_type)
+	mark_preview_appearance_dirty()
 
 /datum/preferences/proc/reset_all_customizer_accessory_colors()
 	for(var/datum/customizer_entry/entry as anything in customizer_entries)

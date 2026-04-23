@@ -1,3 +1,8 @@
+#define PREFERENCE_PREVIEW_RATE_LIMIT_WINDOW_DS 10
+#define PREFERENCE_PREVIEW_RATE_LIMIT_MAX_REQUESTS 8
+#define PREFERENCE_PREVIEW_RATE_LIMIT_MUTE_DS 50
+#define PREFERENCE_PREVIEW_CACHE_LIMIT 8
+
 /// Randomizes our character preferences according to enabled bitflags.
 // Reflect changes in [mob/living/carbon/human/proc/randomize_human_appearance]
 /datum/preferences/proc/randomise_appearance_prefs(randomise_flags = ALL)
@@ -164,21 +169,93 @@
 /datum/preferences/proc/get_preview_dummy_key()
 	return "[DUMMY_HUMAN_SLOT_PREFERENCES]_[get_preview_resource_token()]"
 
-/datum/preferences/proc/get_character_preview_data(mob/user)
-	var/list/preview_data = list()
-	if(!user?.client)
-		return preview_data
-
-	var/datum/job/preview_job = preview_subclass || get_preview_job()
-	var/resource_token = get_preview_resource_token()
+/datum/preferences/proc/mark_preview_appearance_dirty()
 	preview_image_revision++
+	preview_browser_fingerprint = null
 
-	var/list/preview_dirs = list(
-		"preview_north" = NORTH,
-		"preview_south" = SOUTH,
-		"preview_east" = EAST,
-		"preview_west" = WEST,
+/datum/preferences/proc/normalize_preview_fingerprint_value(value)
+	if(isnull(value))
+		return null
+	if(islist(value))
+		var/list/normalized = list()
+		for(var/key in value)
+			var/normalized_value = normalize_preview_fingerprint_value(value[key])
+			if(isnum(key))
+				normalized += list(normalized_value)
+			else
+				normalized["[normalize_preview_fingerprint_value(key)]"] = normalized_value
+		return normalized
+	if(ispath(value))
+		return "[value]"
+	if(isicon(value) || isfile(value))
+		return "[value]"
+	if(isdatum(value))
+		var/datum/datum_value = value
+		var/list/datum_vars = list("__type" = "[datum_value.type]")
+		for(var/var_name in datum_value.vars)
+			if(var_name in list("type", "parent_type", "vars", "tag"))
+				continue
+			datum_vars[var_name] = normalize_preview_fingerprint_value(datum_value.vars[var_name])
+		return datum_vars
+	return value
+
+/datum/preferences/proc/get_character_preview_fingerprint()
+	var/datum/job/preview_job = preview_subclass || get_preview_job()
+	var/list/fingerprint_data = list(
+		"preview_image_revision" = preview_image_revision,
+		"species" = "[pref_species?.type]",
+		"preview_job" = preview_job ? "[preview_job.type]" : null,
+		"preview_subclass" = preview_subclass ? "[preview_subclass.type]" : null,
+		"gender" = gender,
+		"age" = age,
+		"skin_tone" = skin_tone,
+		"eye_color" = eye_color,
+		"detail" = detail,
+		"detail_color" = detail_color,
+		"taur_type" = taur_type ? "[taur_type]" : null,
+		"taur_color" = taur_color,
+		"taur_markings" = taur_markings,
+		"taur_tertiary" = taur_tertiary,
+		"features" = normalize_preview_fingerprint_value(features),
+		"body_markings" = normalize_preview_fingerprint_value(body_markings),
+		"customizer_entries" = normalize_preview_fingerprint_value(customizer_entries),
+		"smallclothes_preferences" = normalize_preview_fingerprint_value(smallclothes_preferences),
 	)
+	return md5(json_encode(fingerprint_data))
+
+/datum/preferences/proc/touch_preview_sheet_cache(preview_fingerprint)
+	preview_sheet_cache_order -= preview_fingerprint
+	preview_sheet_cache_order += preview_fingerprint
+
+/datum/preferences/proc/get_cached_preview_sheet_icon(preview_fingerprint)
+	var/icon/cached_sheet = preview_sheet_cache[preview_fingerprint]
+	if(cached_sheet)
+		touch_preview_sheet_cache(preview_fingerprint)
+	return cached_sheet
+
+/datum/preferences/proc/cache_preview_sheet_icon(preview_fingerprint, icon/preview_sheet)
+	preview_sheet_cache[preview_fingerprint] = preview_sheet
+	touch_preview_sheet_cache(preview_fingerprint)
+	if(length(preview_sheet_cache_order) <= PREFERENCE_PREVIEW_CACHE_LIMIT)
+		return
+	var/oldest_fingerprint = preview_sheet_cache_order[1]
+	preview_sheet_cache_order.Cut(1, 2)
+	preview_sheet_cache -= oldest_fingerprint
+
+/datum/preferences/proc/build_preview_sheet_icon(icon/preview_icon)
+	var/icon/preview_sheet = icon('icons/blanks/32x32.dmi', "nothing")
+	preview_sheet.Scale(64, 64)
+	preview_sheet.Blend(icon(preview_icon, "", NORTH, 1, 0), ICON_OVERLAY, 1, 33)
+	preview_sheet.Blend(icon(preview_icon, "", SOUTH, 1, 0), ICON_OVERLAY, 33, 33)
+	preview_sheet.Blend(icon(preview_icon, "", EAST, 1, 0), ICON_OVERLAY, 1, 1)
+	preview_sheet.Blend(icon(preview_icon, "", WEST, 1, 0), ICON_OVERLAY, 33, 1)
+	return preview_sheet
+
+/datum/preferences/proc/get_preview_sheet_icon(preview_fingerprint)
+	var/icon/cached_sheet = get_cached_preview_sheet_icon(preview_fingerprint)
+	if(cached_sheet)
+		return cached_sheet
+	var/datum/job/preview_job = preview_subclass || get_preview_job()
 	var/icon/preview_icon = get_flat_human_icon(
 		null,
 		preview_job,
@@ -188,38 +265,142 @@
 	)
 	if(!preview_icon)
 		preview_icon = icon('icons/blanks/32x32.dmi', "nothing")
+	var/icon/preview_sheet = build_preview_sheet_icon(preview_icon)
+	cache_preview_sheet_icon(preview_fingerprint, preview_sheet)
+	return preview_sheet
 
-	for(var/preview_key in preview_dirs)
-		var/icon/flat_icon = icon(preview_icon, "", preview_dirs[preview_key], 1, 0)
-		var/resource_name = "preference_preview_[resource_token]_[preview_key]_[preview_image_revision].png"
-		user << browse_rsc(flat_icon, resource_name)
-		preview_data[preview_key] = resource_name
+/datum/preferences/proc/get_character_preview_data(mob/user, preview_fingerprint)
+	var/list/preview_data = list()
+	if(!user?.client)
+		return preview_data
 
+	var/resource_name = "preference_preview_[get_preview_resource_token()]_sheet_[preview_fingerprint].png"
+	user << browse_rsc(get_preview_sheet_icon(preview_fingerprint), resource_name)
+	preview_data["preview_sheet"] = resource_name
 	return preview_data
 
-/datum/preferences/proc/update_preview_icon()
+/datum/preferences/proc/queue_preview_update(preview_fingerprint, force_push = FALSE)
+	if(preview_render_in_progress && !force_push && preview_active_fingerprint == preview_fingerprint)
+		return
+	if(preview_render_pending && !force_push && preview_pending_fingerprint == preview_fingerprint)
+		return
+	preview_render_pending = TRUE
+	preview_pending_fingerprint = preview_fingerprint
+	preview_pending_force_push ||= force_push
+	preview_update_generation++
+
+/datum/preferences/proc/schedule_preview_rate_limit_release()
+	if(preview_rate_limit_callback_pending)
+		return
+	preview_rate_limit_callback_pending = TRUE
+	if(SStimer?.initialized)
+		addtimer(CALLBACK(src, PROC_REF(on_preview_rate_limit_release)), PREFERENCE_PREVIEW_RATE_LIMIT_MUTE_DS)
+	else
+		spawn(PREFERENCE_PREVIEW_RATE_LIMIT_MUTE_DS)
+			on_preview_rate_limit_release()
+
+/datum/preferences/proc/enter_preview_rate_limit(mob/user)
+	preview_rate_limit_release_time = world.time + PREFERENCE_PREVIEW_RATE_LIMIT_MUTE_DS
+	preview_update_request_times = list()
+	schedule_preview_rate_limit_release()
+	if(user)
+		to_chat(user, span_warning("Preview updates are paused briefly while your latest appearance changes settle."))
+
+/datum/preferences/proc/register_preview_update_request(mob/user)
+	if(preview_rate_limit_release_time > world.time)
+		return
+	var/cutoff = world.time - PREFERENCE_PREVIEW_RATE_LIMIT_WINDOW_DS
+	while(length(preview_update_request_times) && preview_update_request_times[1] <= cutoff)
+		preview_update_request_times.Cut(1, 2)
+	preview_update_request_times += world.time
+	if(length(preview_update_request_times) > PREFERENCE_PREVIEW_RATE_LIMIT_MAX_REQUESTS)
+		enter_preview_rate_limit(user)
+
+/datum/preferences/proc/request_preview_update(force_push = FALSE, ignore_rate_limit = FALSE)
 	set waitfor = 0
 	var/mob/user = parent?.mob
 	if(!user || !winexists(user, "preferences_browser"))
 		return
 
-	var/update_generation = ++preview_update_generation
-	var/list/preview_data = get_character_preview_data(user)
-	if(length(preview_data))
-		schedule_preview_icon_update(user, preview_data, update_generation)
+	var/preview_fingerprint = get_character_preview_fingerprint()
+	if(!force_push)
+		if(preview_browser_fingerprint == preview_fingerprint)
+			return
+		if(preview_render_in_progress && preview_active_fingerprint == preview_fingerprint)
+			return
+		if(preview_render_pending && preview_pending_fingerprint == preview_fingerprint)
+			return
 
-/datum/preferences/proc/schedule_preview_icon_update(mob/user, list/preview_data, update_generation)
+	if(preview_rate_limit_release_time > world.time)
+		queue_preview_update(preview_fingerprint, TRUE)
+		return
+
+	if(!ignore_rate_limit)
+		register_preview_update_request(user)
+		if(preview_rate_limit_release_time > world.time)
+			queue_preview_update(preview_fingerprint, TRUE)
+			return
+
+	if(preview_render_in_progress)
+		queue_preview_update(preview_fingerprint, force_push)
+		return
+
+	preview_render_in_progress = TRUE
+	preview_active_fingerprint = preview_fingerprint
+	var/update_generation = ++preview_update_generation
+	var/list/preview_data = get_character_preview_data(user, preview_fingerprint)
+	if(length(preview_data))
+		schedule_preview_icon_update(user, preview_data, update_generation, preview_fingerprint)
+	else
+		finish_preview_update()
+
+/datum/preferences/proc/update_preview_icon()
+	return request_preview_update()
+
+/datum/preferences/proc/flush_queued_preview_update()
+	if(!preview_render_pending)
+		return
+	if(preview_rate_limit_release_time > world.time || preview_render_in_progress)
+		return
+	var/force_push = preview_pending_force_push
+	preview_render_pending = FALSE
+	preview_pending_fingerprint = null
+	preview_pending_force_push = FALSE
+	request_preview_update(force_push, TRUE)
+
+/datum/preferences/proc/on_preview_rate_limit_release()
+	preview_rate_limit_callback_pending = FALSE
+	if(preview_rate_limit_release_time > world.time)
+		schedule_preview_rate_limit_release()
+		return
+	flush_queued_preview_update()
+
+/datum/preferences/proc/finish_preview_update()
+	preview_render_in_progress = FALSE
+	preview_active_fingerprint = null
+	flush_queued_preview_update()
+
+/datum/preferences/proc/schedule_preview_icon_update(mob/user, list/preview_data, update_generation, preview_fingerprint)
 	// Before subsystem init, addtimer() is not reliable for lobby preview refreshes.
 	// Keep the one-tick delay that fixes live browser loading, but fall back to spawn.
 	if(SStimer?.initialized)
-		addtimer(CALLBACK(src, PROC_REF(push_preview_icon_update), user, preview_data, update_generation), 1)
+		addtimer(CALLBACK(src, PROC_REF(push_preview_icon_update), user, preview_data, update_generation, preview_fingerprint), 1)
 	else
 		sleep(world.tick_lag)
-		push_preview_icon_update(user, preview_data, update_generation)
+		push_preview_icon_update(user, preview_data, update_generation, preview_fingerprint)
 
-/datum/preferences/proc/push_preview_icon_update(mob/user, list/preview_data, update_generation)
+/datum/preferences/proc/push_preview_icon_update(mob/user, list/preview_data, update_generation, preview_fingerprint)
 	if(update_generation != preview_update_generation)
+		finish_preview_update()
 		return
 	if(!user || !winexists(user, "preferences_browser"))
+		finish_preview_update()
 		return
 	user << output(list2params(preview_data), "preferences_browser:updateCharacterData")
+	preview_browser_fingerprint = preview_fingerprint
+	finish_preview_update()
+
+#undef PREFERENCE_PREVIEW_RATE_LIMIT_WINDOW_DS
+#undef PREFERENCE_PREVIEW_RATE_LIMIT_MAX_REQUESTS
+#undef PREFERENCE_PREVIEW_RATE_LIMIT_MUTE_DS
+#undef PREFERENCE_PREVIEW_CACHE_LIMIT

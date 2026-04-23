@@ -319,6 +319,17 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/tmp/preview_image_revision = 0
 	var/tmp/preview_update_generation = 0
 	var/tmp/preview_resource_token
+	var/tmp/preview_render_in_progress = FALSE
+	var/tmp/preview_render_pending = FALSE
+	var/tmp/preview_pending_force_push = FALSE
+	var/tmp/preview_pending_fingerprint
+	var/tmp/preview_active_fingerprint
+	var/tmp/preview_browser_fingerprint
+	var/tmp/preview_rate_limit_release_time = 0
+	var/tmp/preview_rate_limit_callback_pending = FALSE
+	var/tmp/list/preview_update_request_times = list()
+	var/tmp/list/preview_sheet_cache = list()
+	var/tmp/list/preview_sheet_cache_order = list()
 	/// Custom UI scale
 	var/ui_scale
 	///this is our character slot
@@ -455,6 +466,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 /datum/preferences/proc/build_and_show_menu(mob/user)
 	var/list/dat = list()
 	var/datum/faith/selected_faith = GLOB.faith_list[selected_patron.associated_faith]
+	var/preview_sheet = ""
 	var/datum/job/high_job
 	for(var/job_type in job_preferences)
 		if(job_preferences[job_type] != JP_HIGH)
@@ -463,7 +475,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		break
 
 	user?.client.acquire_dpi()
-	var/list/preview_data = get_character_preview_data(user)
 
 	dat += {"
 <html lang="en">
@@ -625,13 +636,20 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			overflow: visible;
 		}
 
-		.preview-slot img {
+		.preview-image {
 			width: 32px;
 			height: 32px;
 			transform-origin: center center;
 			image-rendering: pixelated;
 			pointer-events: none;
+			background-repeat: no-repeat;
+			background-size: 64px 64px;
 		}
+
+		.preview-north { background-position: 0 0; }
+		.preview-south { background-position: -32px 0; }
+		.preview-east  { background-position: 0 -32px; }
+		.preview-west  { background-position: -32px -32px; }
 	</style>
 	<script>
 		function getViewportWidth() {
@@ -717,39 +735,58 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			}
 		}
 
-		function tryApplyPreviewImage(elem, value, loadToken, attempt) {
-			if(!elem || elem.previewLoadToken !== loadToken) {
+		function setPreviewSheet(value, loadToken) {
+			var previewIds = \['preview-north', 'preview-south', 'preview-east', 'preview-west'\];
+			for(var i = 0; i < previewIds.length; i++) {
+				var elem = document.getElementById(previewIds\[i\]);
+				if(!elem || elem.previewLoadToken !== loadToken) {
+					continue;
+				}
+				elem.style.backgroundImage = value ? "url('" + value + "')" : '';
+			}
+		}
+
+		function tryApplyPreviewSheet(value, loadToken, attempt) {
+			if(window.previewLoadToken !== loadToken) {
 				return;
 			}
 
 			var preloader = new Image();
 			preloader.onload = function() {
-				if(!elem || elem.previewLoadToken !== loadToken) {
+				if(window.previewLoadToken !== loadToken) {
 					return;
 				}
-				elem.src = value;
+				setPreviewSheet(value, loadToken);
 			};
 			preloader.onerror = function() {
-				if(!elem || elem.previewLoadToken !== loadToken) {
+				if(window.previewLoadToken !== loadToken) {
 					return;
 				}
 				if(attempt >= 5) {
 					return;
 				}
 				setTimeout(function() {
-					tryApplyPreviewImage(elem, value, loadToken, attempt + 1);
+					tryApplyPreviewSheet(value, loadToken, attempt + 1);
 				}, 50 * (attempt + 1));
 			};
 			preloader.src = value;
 		}
 
-		function updatePreviewImage(fieldId, value) {
-			var elem = document.getElementById(fieldId);
-			if(elem && value) {
-				var loadToken = String(Date.now()) + Math.random();
-				elem.previewLoadToken = loadToken;
-				tryApplyPreviewImage(elem, value, loadToken, 0);
+		function updatePreviewSheet(value) {
+			var previewIds = \['preview-north', 'preview-south', 'preview-east', 'preview-west'\];
+			var loadToken = String(Date.now()) + Math.random();
+			window.previewLoadToken = loadToken;
+			for(var i = 0; i < previewIds.length; i++) {
+				var elem = document.getElementById(previewIds\[i\]);
+				if(elem) {
+					elem.previewLoadToken = loadToken;
+				}
 			}
+			if(!value) {
+				setPreviewSheet('', loadToken);
+				return;
+			}
+			tryApplyPreviewSheet(value, loadToken, 0);
 		}
 
 		function updateCharacterData() {
@@ -789,10 +826,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 			if('headshot' in data) updateHeadshot(data.headshot);
 			if('bespecial' in data) updateBeSpecial(data.bespecial === '1');
-			if('preview_north' in data) updatePreviewImage('preview-north', data.preview_north);
-			if('preview_south' in data) updatePreviewImage('preview-south', data.preview_south);
-			if('preview_east' in data) updatePreviewImage('preview-east', data.preview_east);
-			if('preview_west' in data) updatePreviewImage('preview-west', data.preview_west);
+			if('preview_sheet' in data) updatePreviewSheet(data.preview_sheet);
 
 
 			if('gender' in data) {
@@ -824,10 +858,10 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	<div class="sprite header-bg"></div>
 	<div class="sprite preview-bg"></div>
 	<div class="preview-grid">
-		<div class="preview-slot"><img id="preview-north" src="[preview_data["preview_north"] || ""]"></div>
-		<div class="preview-slot"><img id="preview-south" src="[preview_data["preview_south"] || ""]"></div>
-		<div class="preview-slot"><img id="preview-east" src="[preview_data["preview_east"] || ""]"></div>
-		<div class="preview-slot"><img id="preview-west" src="[preview_data["preview_west"] || ""]"></div>
+		<div class="preview-slot"><div id="preview-north" class="preview-image preview-north" style="background-image: url('[preview_sheet]');"></div></div>
+		<div class="preview-slot"><div id="preview-south" class="preview-image preview-south" style="background-image: url('[preview_sheet]');"></div></div>
+		<div class="preview-slot"><div id="preview-east" class="preview-image preview-east" style="background-image: url('[preview_sheet]');"></div></div>
+		<div class="preview-slot"><div id="preview-west" class="preview-image preview-west" style="background-image: url('[preview_sheet]');"></div></div>
 	</div>
 	<div class="sprite body-bg"></div>
 	<div class="sprite voice-bg"></div>
@@ -974,8 +1008,27 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	winshow(user, "stonekeep_prefwin.character_preview_map", FALSE)
 	// This should really be a browser datum
 	user << browse(dat.Join(), "window=preferences_browser;size=816x950")
-	addtimer(CALLBACK(src, PROC_REF(update_preview_icon)), 1)
+	preview_browser_fingerprint = null
+	if(SStimer?.initialized)
+		addtimer(CALLBACK(src, PROC_REF(request_preview_update), TRUE), 1)
+	else
+		spawn(world.tick_lag)
+			request_preview_update(TRUE)
 	onclose(user, "stonekeep_prefwin", src)
+
+/datum/preferences/proc/fields_affect_character_preview(list/fields_to_update)
+	if(!fields_to_update || !length(fields_to_update))
+		return TRUE
+	var/static/list/preview_fields = list(
+		"age",
+		"gender",
+		"job",
+		"species",
+	)
+	for(var/field_name in fields_to_update)
+		if(field_name in preview_fields)
+			return TRUE
+	return FALSE
 
 /datum/preferences/proc/update_menu_data(mob/user, list/fields_to_update)
 	if(!winexists(user, "preferences_browser"))
@@ -1045,7 +1098,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	// Use list2params as BYOND expects for browser output
 	user << output(list2params(params), "preferences_browser:updateCharacterData")
-	update_preview_icon()
+	if(fields_affect_character_preview(fields_to_update))
+		request_preview_update()
 
 
 /datum/preferences/proc/set_ui_theme(new_theme)
@@ -1913,10 +1967,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						var/new_choice = tgui_input_list(user, "Choose an outfit preview:", "Outfit Preview", choices)
 						if(new_choice && new_choice != "None")
 							preview_subclass = choices[new_choice]
-							update_preview_icon()
 						else
 							preview_subclass = null
-							update_preview_icon()
 						update_menu_data(user, list("job"))
 				if("age")
 					var/new_age = tgui_input_list(user, "SELECT YOUR HERO'S AGE", "YILS DEAD", pref_species.possible_ages, age)

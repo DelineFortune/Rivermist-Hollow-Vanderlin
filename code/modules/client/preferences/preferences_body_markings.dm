@@ -108,6 +108,7 @@
 				body_markings[zone][desired_marking] = marking_content
 		if("reset_all_colors")
 			reset_body_marking_colors()
+	mark_preview_appearance_dirty()
 
 /datum/preferences/proc/print_body_markings_page()
 	var/list/dat = list()
