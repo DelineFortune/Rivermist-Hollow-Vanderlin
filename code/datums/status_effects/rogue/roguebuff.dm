@@ -6,23 +6,37 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/drunk
 	effectedstats = list(STAT_INTELLIGENCE = -1, STAT_SPEED = -1, STAT_CONSTITUTION = 1)
 	duration = 12 MINUTES
+	COOLDOWN_DECLARE(stumble_cooldown)
 
 /atom/movable/screen/alert/status_effect/buff/drunk
 	name = "Drunk"
 	desc = span_nicegreen("I feel very drunk.")
 	icon_state = "drunk"
 
+// Register a movement signal so stumbling only triggers when the mob actually takes a step.
 /datum/status_effect/buff/drunk/on_apply()
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.add_stress(/datum/stress_event/drunk)
+	RegisterSignal(owner, COMSIG_MOB_CLIENT_MOVED, PROC_REF(on_drunk_move))
 
 /datum/status_effect/buff/drunk/on_remove()
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.remove_stress(/datum/stress_event/drunk)
+	UnregisterSignal(owner, COMSIG_MOB_CLIENT_MOVED)
+
+// Called each time the drunk mob takes a step. Small chance to stumble and fall.
+/datum/status_effect/buff/drunk/proc/on_drunk_move(datum/source)
+	if(!COOLDOWN_FINISHED(src, stumble_cooldown))
+		return
+	if(!prob(3)) // 3% chance per step to stumble
+		return
+	COOLDOWN_START(src, stumble_cooldown, 5 SECONDS)
+	owner.Knockdown(20) // knock them down for 2 seconds
+	owner.visible_message(span_warning("[owner] stumbles drunkenly and falls over!"), span_warning("You stumble and fall over!"))
 
 /datum/status_effect/buff/foodbuff
 	id = "Food Buff"
