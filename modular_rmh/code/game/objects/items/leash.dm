@@ -262,9 +262,13 @@
 // ---- Signal-driven collar check (replaces SSfastprocess polling) ----
 
 /// Fired when the pet unequips any item. If they lost their collar, they slip free.
+/// Simple mobs are leashed without collars, so this check doesn't apply to them.
 /obj/item/leash/proc/on_pet_unequipped(mob/living/source, obj/item/item, force, newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 	if(!leash_pet)
+		return
+	// Simple mobs don't use collars — they can't slip free this way.
+	if(!iscarbon(leash_pet))
 		return
 	// Only care if they lost their neck item.
 	if(leash_pet.get_item_by_slot(ITEM_SLOT_NECK))
@@ -308,14 +312,18 @@
 		to_chat(user, span_warning("This leash is already attached to [leash_pet]!"))
 		return
 
-	// Check for a valid collar or chain binding.
-	var/obj/item/collar = target.get_item_by_slot(ITEM_SLOT_NECK)
-	var/has_collar = collar?.leashable
-	var/has_chain = istype(target.get_item_by_slot(ITEM_SLOT_HANDCUFFED), /obj/item/rope/chain)
+	// Simple mobs (animals) can be leashed directly — they can't wear collars.
+	// Humans require a collar or chain binding.
+	var/skip_collar_check = !iscarbon(target)
 
-	if(!has_collar && !has_chain)
-		to_chat(user, span_notice("[target] needs a collar before you can attach a leash to it."))
-		return
+	if(!skip_collar_check)
+		// Check for a valid collar or chain binding.
+		var/obj/item/collar = target.get_item_by_slot(ITEM_SLOT_NECK)
+		var/has_collar = collar?.leashable
+		var/has_chain = istype(target.get_item_by_slot(ITEM_SLOT_HANDCUFFED), /obj/item/rope/chain)
+		if(!has_collar && !has_chain)
+			to_chat(user, span_notice("[target] needs a collar before you can attach a leash to it."))
+			return
 
 	// Begin the leash attempt with a visible do_after.
 	target.visible_message( \
