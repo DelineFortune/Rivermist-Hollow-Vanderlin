@@ -292,4 +292,5 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 /// A simple proc to handle the deletion of the parent, so that it does not force it to hard-delete.
 /datum/looping_sound/proc/handle_parent_del(datum/source)
 	SIGNAL_HANDLER
-	set_parent(null)
+	stop(TRUE)
+	qdel(src)

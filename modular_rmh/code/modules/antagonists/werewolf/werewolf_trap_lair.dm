@@ -61,7 +61,8 @@
 		. += span_warning("The moon pit has gone dead and still.")
 		return .
 
-	if(IS_WEREWOLF(user) == owner_werewolf)
+	var/obj/structure/werewolf_lair_entrance/lair_entrance = get_main_lair_entrance()
+	if(lair_entrance?.is_owner_werewolf(user, owner_werewolf))
 		var/datum/pocket_dimension/trap/werewolf/trap_pocket = get_trap_pocket_instance()
 		var/list/forced_captives = trap_pocket?.get_forced_captives() || list()
 		. += span_notice("Grab and shove victims into the pit. Right-click it to release captives back into the lair.")
@@ -109,7 +110,8 @@
 		if(show_feedback)
 			to_chat(user, span_warning("I need to stand by the moon pit first."))
 		return FALSE
-	if(IS_WEREWOLF(user) == owner_werewolf)
+	var/obj/structure/werewolf_lair_entrance/lair_entrance = get_main_lair_entrance()
+	if(lair_entrance?.is_owner_werewolf(user, owner_werewolf))
 		return TRUE
 	if(show_feedback)
 		to_chat(user, span_warning("Only the lair's owner can command the moon pit."))

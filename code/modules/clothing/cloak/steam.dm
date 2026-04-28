@@ -11,6 +11,8 @@
 
 	//you can't unsmelt your boiler Sir Steam Knightus
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 	var/active = FALSE
 
 /obj/item/clothing/cloak/boiler/Initialize()

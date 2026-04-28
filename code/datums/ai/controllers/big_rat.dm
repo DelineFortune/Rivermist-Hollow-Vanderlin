@@ -2,6 +2,7 @@
 	movement_delay = 0.5 SECONDS
 
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_BEASTS
 
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/not_holding_item(),
@@ -13,6 +14,8 @@
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/flee_target,
 
+		/datum/ai_planning_subtree/simple_find_horny,
+		/datum/ai_planning_subtree/horny,
 		/datum/ai_planning_subtree/simple_find_target/rat,
 		/datum/ai_planning_subtree/find_food/rat,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,

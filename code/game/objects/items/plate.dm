@@ -203,6 +203,8 @@
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	sellprice = 12
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	max_fork_usages = 9
 
 /obj/item/plate/silver/Initialize(mapload)
@@ -217,6 +219,8 @@
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	sellprice = 20
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	max_fork_usages = 11
 
 /obj/item/plate/jade

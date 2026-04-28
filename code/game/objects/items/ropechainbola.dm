@@ -19,6 +19,14 @@
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	var/legcuff_multiplicative_slowdown = 3
 
+/obj/item/rope/spider_silk
+	name = "spider silk"
+	desc = "A tacky coil of fresh spider silk, spun thick enough to bind wrists."
+	icon = 'icons/roguetown/misc/webbing.dmi'
+	icon_state = "stickyweb3"
+	breakouttime = 12 SECONDS
+	slipouttime = 36 SECONDS
+
 /obj/item/rope/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning, bypass_equip_delay_self)
 	. = ..()
 	if(.)

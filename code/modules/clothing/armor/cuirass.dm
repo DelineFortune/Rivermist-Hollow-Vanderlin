@@ -49,6 +49,7 @@
 	icon_state = "ibreastplate"
 	item_state = "ibreastplate"
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	sellprice = VALUE_IRON_ARMOR
 
 	armor = ARMOR_PLATE_BAD
@@ -83,6 +84,7 @@
 	icon_state = "copperchest"
 	item_state = "copperchest"
 	smeltresult = /obj/item/ingot/copper
+	melting_material = /datum/material/copper
 	sellprice = VALUE_DIRT_CHEAP
 
 	armor_class = AC_LIGHT

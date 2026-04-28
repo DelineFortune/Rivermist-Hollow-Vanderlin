@@ -441,7 +441,7 @@
 			"Your most hated drink is <span style='color: red;'>[capitalize(initial(hated_drink_instance.name))]</span>",
 		))
 
-	if(job_flags & JOB_SHOW_IN_CREDITS)
+	if((job_flags & JOB_SHOW_IN_CREDITS) && player_client)
 		START_PROCESSING(SScrediticons, player_client)
 
 /datum/job/proc/adjust_patron(mob/living/carbon/human/spawned)

@@ -65,6 +65,11 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 
 	for(var/slot in client.prefs.multi_ready_slots)
 		client.prefs.load_character(slot)
+		var/list/quirk_extra_customizations = list()
+		for(var/quirk_type in client.prefs.quirk_extra_customizations)
+			var/list/extra_values = client.prefs.quirk_extra_customizations[quirk_type]
+			if(islist(extra_values))
+				quirk_extra_customizations[quirk_type] = extra_values.Copy()
 		var/list/char_data = list(
 			"slot" = slot,
 			"real_name" = client.prefs.real_name,
@@ -76,6 +81,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 			"features" = client.prefs.features?.Copy(),
 			"quirks" = client.prefs.quirks?.Copy(),
 			"quirk_customizations" = client.prefs.quirk_customizations?.Copy(),
+			"quirk_extra_customizations" = quirk_extra_customizations,
 			"skin_tone" = client.prefs.skin_tone,
 			"eye_color" = client.prefs.eye_color,
 			//"underwear" = client.prefs.underwear,
@@ -112,6 +118,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 	P.features = char_data["features"]
 	P.quirks = char_data["quirks"]
 	P.quirk_customizations = char_data["quirk_customizations"]
+	P.quirk_extra_customizations = char_data["quirk_extra_customizations"]
 	P.skin_tone = char_data["skin_tone"]
 	P.eye_color = char_data["eye_color"]
 	//P.underwear = char_data["underwear"]
@@ -129,6 +136,12 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 
 	if(!P.job_preferences)
 		P.job_preferences = list()
+	if(!islist(P.quirks))
+		P.quirks = list()
+	if(!islist(P.quirk_customizations))
+		P.quirk_customizations = list()
+	if(!islist(P.quirk_extra_customizations))
+		P.quirk_extra_customizations = list()
 
 	return TRUE
 

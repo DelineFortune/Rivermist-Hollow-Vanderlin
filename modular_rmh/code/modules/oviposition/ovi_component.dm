@@ -1,5 +1,3 @@
-#define EGG_STAGE_TIME 1 MINUTES
-
 /datum/component/ovipositor
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
@@ -36,6 +34,9 @@
 /datum/component/ovipositor/proc/register_carrier()
 	RegisterSignal(carrier, COMSIG_LIVING_LIFE, PROC_REF(handle_life))
 	RegisterSignal(carrier, COMSIG_SEX_CLIMAX, PROC_REF(on_climax))
+	if(ishuman(carrier))
+		var/mob/living/carbon/human/human_carrier = carrier
+		human_carrier.grant_check_eggs_verb(TRUE)
 
 /datum/component/ovipositor/proc/unregister_carrier()
 	UnregisterSignal(carrier, COMSIG_LIVING_LIFE)
@@ -65,29 +66,79 @@
 	if(COOLDOWN_FINISHED(src, egg_timer))
 		egg_stage += 1
 		egg_stage = min(2, egg_stage)
-		COOLDOWN_START(src, egg_timer, EGG_STAGE_TIME)
+		COOLDOWN_START(src, egg_timer, get_egg_stage_time())
 
 	if(egg_stage == 2)
+		if(eggs_stored >= get_max_stored_eggs())
+			COOLDOWN_START(src, egg_timer, get_egg_stage_time())
+			return
+		var/obj/item/organ/genitals/penis/ovipositor/ovipositor = parent
+		if(ovipositor?.resource_dependent_yield)
+			var/cost = get_oviposition_nutrient_cost(ovipositor.ovi_egg_type, ovipositor.egg_scale, ovipositor.egg_traits, get_clutch_size())
+			if(!consume_oviposition_nutrients(carrier, cost))
+				if(prob(5))
+					to_chat(carrier, span_warning("My ovipositor aches faintly - I need more nutrition to form eggs."))
+				egg_stage = 1
+				COOLDOWN_START(src, egg_timer, get_egg_stage_time())
+				return
 		egg_stage = 0
 		eggs_stored += 1
 		eggs_stored = min(get_max_stored_eggs(), eggs_stored)
 
+/datum/component/ovipositor/proc/get_egg_stage_time()
+	var/obj/item/organ/genitals/penis/ovipositor/ovipositor = parent
+	if(!ovipositor)
+		return OVI_EGG_STAGE_TIME
+
+	var/stage_time = OVI_EGG_STAGE_TIME
+	stage_time *= get_oviposition_egg_type_interval_multiplier(ovipositor.ovi_egg_type)
+	stage_time *= get_oviposition_capacity_interval_multiplier(get_clutch_size())
+	stage_time *= sanitize_oviposition_scale(ovipositor.egg_scale)
+	stage_time *= get_oviposition_trait_interval_multiplier(ovipositor.egg_traits)
+
+	if(ovipositor.resource_dependent_yield && carrier)
+		var/nutriment = carrier.get_reagent_amount(/datum/reagent/consumable/nutriment)
+		var/speed_multiplier = 1.5 - clamp(nutriment / 10, 0, 1)
+		stage_time *= speed_multiplier
+
+	return max(30 SECONDS, round(stage_time))
+
 /datum/component/ovipositor/proc/get_clutch_size()
 	var/obj/item/organ/genitals/penis/genital = parent
 	if(genital)
-		eggs_clutch_size = max(1, round(genital.egg_clutch_size || 1))
-	return max(1, round(eggs_clutch_size || 1))
+		eggs_clutch_size = clamp(round(genital.egg_clutch_size || 1), 1, OVI_EGG_MAX_CLUTCH)
+	var/base = clamp(round(eggs_clutch_size || 1), 1, OVI_EGG_MAX_CLUTCH)
+	// Resource-dependent yield: scale clutch by carrier's nutriment level
+	var/obj/item/organ/genitals/penis/ovipositor/ovi = parent
+	if(istype(ovi) && ovi.resource_dependent_yield && carrier)
+		base = get_resource_adjusted_clutch(carrier, base)
+	return base
+
+/// Scales a base clutch size by the carrier's internal nutriment. Full nutrition = full clutch.
+/proc/get_resource_adjusted_clutch(mob/living/carrier, base_clutch)
+	if(!carrier || base_clutch <= 0)
+		return max(1, base_clutch)
+	var/nutriment = carrier.get_reagent_amount(/datum/reagent/consumable/nutriment)
+	// 0 nutriment = 1 egg minimum, 5+ nutriment = full clutch, linear scale between
+	var/ratio = clamp(nutriment / 5, 0, 1)
+	return max(1, round(base_clutch * ratio))
 
 /datum/component/ovipositor/proc/get_max_stored_eggs()
-	return max(3, get_clutch_size())
+	var/obj/item/organ/genitals/penis/ovipositor/ovipositor = parent
+	if(istype(ovipositor))
+		return clamp(round(max(ovipositor.egg_storage_capacity, get_clutch_size())), 1, OVI_EGG_MAX_CLUTCH)
+	return OVI_EGG_MAX_CLUTCH
 
 /datum/component/ovipositor/proc/set_clutch_size(new_size)
 	if(isnull(new_size))
 		return eggs_clutch_size
 
-	eggs_clutch_size = max(1, round(new_size))
+	eggs_clutch_size = clamp(round(new_size), 1, OVI_EGG_MAX_CLUTCH)
 	eggs_stored = min(eggs_stored, get_max_stored_eggs())
 	return eggs_clutch_size
+
+/datum/component/ovipositor/proc/sync_storage_capacity()
+	eggs_stored = min(eggs_stored, get_max_stored_eggs())
 
 /datum/component/ovipositor/proc/on_climax(datum/source)
 	SIGNAL_HANDLER
@@ -110,20 +161,20 @@
 
 	var/list/sessions = return_sessions_with_user(carrier)
 	var/datum/sex_session/session = return_highest_priority_action(sessions, carrier)
-	if(!session || !session.current_action)
+	if(!session)
 		return null
 
-	var/datum/sex_action/action = SEX_ACTION(session.current_action)
+	var/datum/sex_action/action = session.get_highest_priority_action_for(carrier)
 	if(!action)
 		return null
 	if(!action_allows_internal_oviposition(action))
 		return null
 
-	var/mob/living/insertor = action.flipped ? session.target : session.user
+	var/mob/living/insertor = action.get_storage_insertor(session.user, session.target)
 	if(insertor != carrier)
 		return null
 
-	var/mob/living/receiver_owner = action.flipped ? session.user : session.target
+	var/mob/living/receiver_owner = action.get_storage_receiver(session.user, session.target)
 	if(!receiver_owner)
 		return null
 	if(!target_allows_mob_erp_action(carrier, receiver_owner, /datum/erp_preference/boolean/allow_mob_oviposition))
@@ -178,6 +229,8 @@
 	var/egg_type = ovipositor.ovi_egg_type
 	if(egg_type == initial(ovipositor.ovi_egg_type))
 		egg_type = get_species_oviposition_egg_type(carrier) || egg_type
+	// Apply player custom overrides before setting type (so profile apply respects them)
+	egg.apply_custom_overrides(ovipositor.custom_egg_name, ovipositor.custom_egg_desc, ovipositor.custom_egg_color, ovipositor.egg_scale, ovipositor.egg_traits, ovipositor.custom_auto_hatch)
 	egg.set_egg_type(egg_type)
 	egg.set_oviposition_mother(carrier)
 	return egg
@@ -190,6 +243,9 @@
 	switch(fit_result)
 		if(INSERT_FEEDBACK_OK, INSERT_FEEDBACK_OK_FORCE, INSERT_FEEDBACK_OK_OVERRIDE, INSERT_FEEDBACK_ALMOST_FULL)
 			var/started_growing = receiver.start_oviposition_egg_growth(egg, carrier)
+			if(ishuman(receiver.owner))
+				var/mob/living/carbon/human/human_receiver = receiver.owner
+				human_receiver.grant_check_eggs_verb(TRUE)
 			carrier.visible_message(
 				span_love("[carrier] lays an egg into [receiver.owner]'s [receiver.get_oviposition_location_name()]!"),
 				span_love("I lai an egg into [receiver.owner]'s [receiver.get_oviposition_location_name()]!")

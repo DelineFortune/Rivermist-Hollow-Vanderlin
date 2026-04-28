@@ -118,7 +118,10 @@
 					to_chat(M, "*----*")
 		for(var/X in GLOB.roguetraits)
 			if(HAS_TRAIT(L, X))
-				to_chat(L, "[X] - <span class='info'>[GLOB.roguetraits[X]]</span>")
+				if(!GLOB.trait_name_map)
+					GLOB.trait_name_map = generate_trait_name_map()
+				var/trait_name = GLOB.trait_name_map[X] || X
+				to_chat(L, "[trait_name] - <span class='info'>[GLOB.roguetraits[X]]</span>")
 				ht = TRUE
 		if(!ht)
 			to_chat(L, "<span class='warning'>I have no special traits.</span>")

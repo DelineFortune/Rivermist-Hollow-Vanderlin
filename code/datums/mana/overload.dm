@@ -15,9 +15,10 @@
 
 	adjust_disgust(adjusted_mult)
 
-	if (effect_mult > MANA_OVERLOAD_DAMAGE_THRESHOLD)
-		apply_damage(MANA_OVERLOAD_BASE_DAMAGE * adjusted_mult, damagetype = BRUTE, forced = TRUE, spread_damage = TRUE)
-		blood_volume = max(BLOOD_VOLUME_BAD, blood_volume - round(effect_mult * 0.25, 1))
+	SEND_SIGNAL(src, COMSIG_SEX_ADJUST_AROUSAL, 0.5)
+	//if (effect_mult > MANA_OVERLOAD_DAMAGE_THRESHOLD)
+	//	apply_damage(MANA_OVERLOAD_BASE_DAMAGE * adjusted_mult, damagetype = BRUTE, forced = TRUE, spread_damage = TRUE)
+	//	blood_volume = max(BLOOD_VOLUME_BAD, blood_volume - round(effect_mult * 0.25, 1))
 
 /atom/movable/proc/stop_mana_overload()
 	mana_overloaded = FALSE

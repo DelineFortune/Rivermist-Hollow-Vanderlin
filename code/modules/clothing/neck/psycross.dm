@@ -27,6 +27,8 @@
 	resistance_flags = FIRE_PROOF
 	sellprice = 50
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 
 /obj/item/clothing/neck/psycross/silver/Initialize(mapload)
 	. = ..()
@@ -169,4 +171,6 @@
 	resistance_flags = FIRE_PROOF
 	sellprice = 100
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 

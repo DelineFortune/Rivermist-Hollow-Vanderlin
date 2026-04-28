@@ -7,6 +7,8 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 	slot_flags = ITEM_SLOT_HIP
 	var/obj/item/accepted_power_source = /obj/item/gear/metal
 	/// This is the amount of charges we get per power source
@@ -239,6 +241,8 @@
 	off_icon = "smelter_off"
 	w_class = WEIGHT_CLASS_BULKY
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 	accepted_power_source = /obj/item/ore/coal
 	misfire_chance = 10
 	charge_per_source = 6
@@ -315,6 +319,8 @@
 	off_icon = "shears"
 	w_class = WEIGHT_CLASS_BULKY
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 	charge_per_source = 4
 
 /obj/item/contraption/shears/hammer_action(obj/item/I, mob/user)
@@ -371,6 +377,8 @@
 	tool_behaviour = TOOL_MULTITOOL
 	var/datum/buffer // simple machine buffer for device linkage
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 	charge_per_source = 10
 	grid_height = 96
 	grid_width = 96

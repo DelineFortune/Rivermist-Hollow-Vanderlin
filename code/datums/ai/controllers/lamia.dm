@@ -2,6 +2,7 @@
 	movement_delay = 0.4 SECONDS
 
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_LAMIAS
 
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),

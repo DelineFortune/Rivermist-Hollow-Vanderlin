@@ -110,6 +110,8 @@
 	item_state = "aasimarwrist"
 	armor = list("blunt" = 70, "slash" = 70, "stab" = 70,  "piercing" = 50, "fire" = 0, "acid" = 0) // Less protection than steel
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 
 //copper bracers
 
@@ -122,6 +124,8 @@
 	armor = list("blunt" = 50, "slash" = 50, "stab" = 50,  "piercing" = 60, "fire" = 0, "acid" = 0)
 	prevent_crits = list(BCLASS_LASHING, BCLASS_BITE, BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	smeltresult = /obj/item/ingot/copper
+	melting_material = /datum/material/copper
+	melt_amount = 100
 	blocksound = PLATEHIT
 	resistance_flags = FIRE_PROOF
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing

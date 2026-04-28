@@ -1,6 +1,7 @@
 /datum/ai_controller/minotaur
 	movement_delay = 0.7 SECONDS
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_MINOTAURS
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items(),
 		BB_MINOTAUR_RAGE_METER = 0,

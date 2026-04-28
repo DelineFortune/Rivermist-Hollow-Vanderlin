@@ -26,6 +26,8 @@
 	allowed_sex = list(FEMALE)
 	sewrepair = TRUE
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	sellprice = VALUE_IRON_ARMOR_UNUSUAL
 	// It looks better without these
 	flags_inv = HIDEUNDIES
@@ -71,6 +73,7 @@
 	icon_state = "abyssal_robe"
 	item_state = "abyssal_robe"
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
 
 /obj/item/clothing/armor/brigandine/abyssor/Initialize()
 	. = ..()
@@ -143,6 +146,7 @@
 	armor = ARMOR_LEATHER_STUDDED
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	equip_delay_self = 40
 	armor_class = AC_LIGHT//steel version of the studded leather armor now
 	w_class = WEIGHT_CLASS_BULKY

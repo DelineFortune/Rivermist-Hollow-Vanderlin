@@ -279,6 +279,25 @@
 /mob/living/carbon/human/proc/ReturnRelation(mob/living/carbon/human/stranger)
 	return family_datum.ReturnRelation(src, stranger)
 
+/mob/living/carbon/human/proc/GetParenthoodExamineText(mob/living/carbon/human/viewer)
+	if(!family_member_datum || !viewer?.family_member_datum)
+		return null
+	if(!(viewer.family_member_datum in family_member_datum.parents))
+		return null
+
+	var/list/other_parent_names = list()
+	for(var/datum/family_member/parent_member in family_member_datum.parents)
+		if(parent_member == viewer.family_member_datum)
+			continue
+		if(parent_member.person?.real_name)
+			other_parent_names += parent_member.person.real_name
+
+	var/adoption_text = family_member_datum.adoption_status ? " adopted" : ""
+	if(length(other_parent_names))
+		return span_love(span_bold("This is your and [english_list(other_parent_names)]'s[adoption_text] child!"))
+
+	return span_love(span_bold("This is your[adoption_text] child!"))
+
 /mob/living/carbon/human/proc/highest_ac_worn(check_hands = FALSE)
 	var/list/slots = DEFAULT_SLOT_PRIORITY - (check_hands ? null : ITEM_SLOT_HANDS)
 

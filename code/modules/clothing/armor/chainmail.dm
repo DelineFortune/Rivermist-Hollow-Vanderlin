@@ -27,6 +27,7 @@
 	icon_state = "ihaubergeon"
 	item_state = "ihaubergeon"
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	sellprice = VALUE_IRON_ARMOR
 
 	armor = ARMOR_MAILLE_IRON

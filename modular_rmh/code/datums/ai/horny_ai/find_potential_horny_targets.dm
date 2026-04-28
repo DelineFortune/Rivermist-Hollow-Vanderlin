@@ -46,59 +46,16 @@
 		finish_action(controller, succeeded = FALSE)
 		return
 
-	var/list/potential_targets = hearers(vision_range, controller.pawn) - living_mob //Remove self, so we don't suicide
-	for(var/obj/item/portallight/portal_light in view(vision_range, controller.pawn))
-		potential_targets |= portal_light
-	if(iscarbon(living_mob))
-		var/mob/living/carbon/carbon_mob = living_mob
-		var/obj/item/held_portal = carbon_mob.get_active_held_item()
-		if(istype(held_portal, /obj/item/portallight))
-			potential_targets |= held_portal
-		held_portal = carbon_mob.get_inactive_held_item()
-		if(istype(held_portal, /obj/item/portallight))
-			potential_targets |= held_portal
-
-	if(!potential_targets.len)
-		controller.clear_blackboard_key(BB_HORNY_PORTAL_LIGHT)
-		failed_to_find_anyone(controller, target_key, targetting_datum_key, hiding_location_key)
-		finish_action(controller, succeeded = FALSE)
+	controller.clear_blackboard_key(BB_HORNY_PORTAL_LIGHT)
+	if(failed_to_find_anyone(controller, target_key, targetting_datum_key, hiding_location_key))
 		return
-
-	var/list/portal_targets = list()
-	var/list/filtered_targets = collect_potential_horny_targets(living_mob, targetting_datum, potential_targets, portal_targets)
-
-	for(var/mob/living/living_target in filtered_targets)
-		if(living_target.stat == DEAD)
-			filtered_targets -= living_target
-			continue
-		if(!living_target.rogue_sneaking)
-			continue
-
-	if(!filtered_targets.len)
-		controller.clear_blackboard_key(BB_HORNY_PORTAL_LIGHT)
-		failed_to_find_anyone(controller, target_key, targetting_datum_key, hiding_location_key)
-		finish_action(controller, succeeded = FALSE)
-		return
-
-	var/atom/target = pick_final_target(controller, filtered_targets)
-	controller.set_blackboard_key(target_key, target)
-	if(portal_targets[target])
-		controller.set_blackboard_key(BB_HORNY_PORTAL_LIGHT, portal_targets[target])
-	else
-		controller.clear_blackboard_key(BB_HORNY_PORTAL_LIGHT)
-
-	var/atom/potential_hiding_location = targetting_datum.find_hidden_mobs(living_mob, target)
-
-	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
-		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
-
-	finish_action(controller, succeeded = TRUE)
+	finish_action(controller, succeeded = FALSE)
 
 /datum/ai_behavior/find_potential_horny_targets/proc/failed_to_find_anyone(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/aggro_range = vision_range
 	// takes the larger between our range() input and our implicit hearers() input (world.view)
 	aggro_range = max(aggro_range, ROUND_UP(max(getviewsize(world.view)) / 2))
-	var/datum/proximity_monitor/advanced/ai_target_tracking/horny_detection_field = new(
+	var/datum/proximity_monitor/advanced/ai_target_tracking/horny/horny_detection_field = new(
 		controller.pawn,
 		aggro_range,
 		TRUE,
@@ -110,6 +67,8 @@
 		BB_FIND_HORNY_TARGETS_FIELD(type),
 	)
 	controller.set_blackboard_key(BB_FIND_HORNY_TARGETS_FIELD(type), horny_detection_field)
+	horny_detection_field.prime_existing_candidates()
+	return QDELETED(horny_detection_field)
 
 /datum/ai_behavior/find_potential_horny_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targetting_datum/strategy)
 	var/valid_found = FALSE

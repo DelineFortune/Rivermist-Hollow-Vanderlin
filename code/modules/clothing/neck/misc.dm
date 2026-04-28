@@ -201,10 +201,27 @@
 	bell = FALSE
 	resistance_flags = FLAMMABLE
 	smeltresult = /obj/item/fertilizer/ash
+	/// Text engraved on the collar's tag via a feather or thorn.
+	var/tag_text
 
 	armor = ARMOR_LEATHER
 	max_integrity = INTEGRITY_WORST
 	prevent_crits = CUT_AND_MINOR_CRITS
+
+/obj/item/clothing/neck/leathercollar/examine(mob/user)
+	. = ..()
+	if(tag_text)
+		. += span_notice("A small tag reads: \"[tag_text]\"")
+
+/obj/item/clothing/neck/leathercollar/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(istype(attacking_item, /obj/item/natural/feather) || istype(attacking_item, /obj/item/natural/thorn))
+		var/new_tag = browser_input_text(user, "What would you like to engrave on the collar's tag?", "Collar Tag", tag_text, max_length = 42)
+		if(!new_tag || !Adjacent(user))
+			return
+		tag_text = new_tag
+		to_chat(user, span_notice("You carefully engrave \"[tag_text]\" onto the collar's tag."))
+		return
+	return ..()
 
 /obj/item/clothing/neck/bellcollar
 	name = "bell collar"
@@ -259,7 +276,7 @@
 	blocksound = CHAINHIT
 	smeltresult = null
 	smeltresult = /obj/item/ingot/steel
-	melting_material = /datum/material/iron
+	melting_material = /datum/material/steel
 	melt_amount = 100
 	clothing_flags = CANT_SLEEP_IN
 
@@ -315,6 +332,8 @@
 	icon_state = "copperneck"
 	desc = "An antique and simple protection for the neck, used more as an accessory by the common folk. But poor protection is still better than nothing."
 	smeltresult = /obj/item/ingot/copper
+	melting_material = /datum/material/copper
+	melt_amount = 100
 
 	armor_class = AC_MEDIUM
 	armor = ARMOR_LEATHER_GOOD
@@ -380,6 +399,7 @@
 	break_sound = 'sound/foley/breaksound.ogg'
 	smeltresult = /obj/item/ingot/iron
 	melting_material = /datum/material/iron
+	melt_amount = 100
 	clothing_flags = CANT_SLEEP_IN
 
 	armor_class = AC_HEAVY
@@ -522,6 +542,7 @@
 	icon_state = "aasimarneck"
 	smeltresult = /obj/item/ingot/bronze
 	melting_material = /datum/material/bronze
+	melt_amount = 100
 	armor = ARMOR_MAILLE_GOOD
 
 /obj/item/clothing/neck/highcollier

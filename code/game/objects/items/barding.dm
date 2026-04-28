@@ -69,6 +69,8 @@
 	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
+	melting_material = /datum/material/steel
+	melt_amount = 100
 	sewrepair = FALSE
 	salvage_result = null
 	salvage_amount = 0

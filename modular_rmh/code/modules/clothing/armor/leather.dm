@@ -11,6 +11,8 @@
 	body_parts_covered = COVERAGE_TORSO
 	max_integrity = INTEGRITY_STRONG
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	sellprice = 25
 	armor_class = AC_LIGHT
 

@@ -184,6 +184,8 @@
 	var/simpmob_attack = 0
 	var/simpmob_defend = 0
 
+	var/melee_attack_cooldown = 1.4 SECONDS
+
 	var/defprob = 50 //base chance to defend against this mob's attacks, for simple mob combat
 	var/defdrain = 5
 	var/encumbrance = 0

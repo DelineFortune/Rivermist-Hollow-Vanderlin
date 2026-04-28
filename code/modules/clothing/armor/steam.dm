@@ -25,6 +25,8 @@
 	stand_speed_reduction = 1.4
 
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 
 /obj/item/clothing/armor/steam/Initialize()
 	. = ..()

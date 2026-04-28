@@ -39,6 +39,8 @@
 		qdel(src)
 		return
 
+	maintain_temporary_family_faction()
+
 	var/progress = clamp((world.time - growth_start_time) / growth_duration, 0, 1)
 	if(growing_mob.stat != DEAD)
 		var/target_scale = start_scale + ((final_scale - start_scale) * progress)
@@ -62,6 +64,21 @@
 		return
 
 	temporary_family_faction = "newborn_family_[REF(src)]"
+	maintain_temporary_family_faction()
+
+/datum/component/newborn_growth/proc/maintain_temporary_family_faction()
+	if(!temporary_family_faction || !growing_mob)
+		return
+
+	var/mob/living/protected_parent = protected_parent_ref?.resolve()
+	if(!protected_parent || protected_parent == growing_mob)
+		return
+
+	if(!islist(growing_mob.faction))
+		growing_mob.faction = isnull(growing_mob.faction) ? list() : list(growing_mob.faction)
+	if(!islist(protected_parent.faction))
+		protected_parent.faction = isnull(protected_parent.faction) ? list() : list(protected_parent.faction)
+
 	growing_mob.faction |= temporary_family_faction
 	protected_parent.faction |= temporary_family_faction
 	growing_mob.ai_controller?.insert_blackboard_key_lazylist(BB_FRIENDS_LIST, protected_parent)

@@ -93,5 +93,5 @@
 
 	backpack_contents = list(
 		/obj/item/weapon/knife/dagger/steel = 1,
-		/obj/item/key/matron = 1
+		/obj/item/key/tavern = 1
 	)

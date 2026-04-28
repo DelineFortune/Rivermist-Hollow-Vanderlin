@@ -12,6 +12,7 @@
 	experimental_onback = TRUE
 	experimental_onhip = TRUE
 	smeltresult = /obj/item/ingot/copper
+	melting_material = /datum/material/copper
 	time_multiplier = 0.5
 
 /obj/item/weapon/sickle/copper
@@ -20,6 +21,7 @@
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	icon_state = "csickle"
 	smeltresult = /obj/item/ingot/copper
+	melting_material = /datum/material/copper
 
 /obj/item/weapon/pitchfork/copper
 	name = "copper fork"
@@ -32,6 +34,7 @@
 	experimental_onback = TRUE
 	experimental_onhip = TRUE
 	smeltresult = /obj/item/ingot/copper
+	melting_material = /datum/material/copper
 
 /obj/item/weapon/pitchfork/copper/getonmobprop(tag)
 	. = ..()

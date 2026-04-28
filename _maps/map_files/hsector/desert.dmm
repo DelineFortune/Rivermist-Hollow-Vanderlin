@@ -11195,8 +11195,8 @@
 "qmP" = (
 /obj/structure/fluff/traveltile/rmh_guildleader{
 	name = "Boat Handling";
-	aportalid = "boatin";
-	aportalgoesto = "boatexit";
+	aportalid = "merchantdesert";
+	aportalgoesto = "merchanttown";
 	required_trait = list("seeprices", "cratemover")
 	},
 /turf/open/floor/ruinedwood/darker,
@@ -11911,10 +11911,7 @@
 /turf/open/floor/carpet/lord/left,
 /area/under/rmh_desert/tea/hareml)
 "rzW" = (
-/obj/structure/roguetent{
-	icon_state = "tent_door0";
-	base_state = "tent_door0"
-	},
+/obj/structure/roguetent,
 /turf/open/floor/twig,
 /area/indoors/town/rmh)
 "rAz" = (
@@ -12376,7 +12373,9 @@
 /turf/open/floor/churchmarble,
 /area/under/rmh_desert/tea/hareml)
 "smd" = (
-/obj/structure/underworld/ship,
+/obj/structure/underworld/ship/ramp{
+	icon_state = "boat"
+	},
 /turf/open/water/ocean/abyss,
 /area/outdoors/rmh_desert/sea)
 "smx" = (
@@ -15870,10 +15869,6 @@
 /obj/item/fertilizer/ash,
 /turf/open/floor/tile/brownbrick,
 /area/under/rmh_desert/tea/harem)
-"xxz" = (
-/obj/effect/spawner/map_spawner/loot/coin/absurd,
-/turf/open/floor/naturalstone,
-/area/outdoors/rmh_air)
 "xyK" = (
 /obj/structure/bars/passage{
 	damage_deflection = 9999;
@@ -95994,7 +95989,7 @@ vFl
 vFl
 vFl
 vFl
-vFl
+smd
 vFl
 vFl
 vFl
@@ -96524,7 +96519,7 @@ kCG
 vFl
 vFl
 vFl
-vFl
+smd
 vFl
 vFl
 vFl
@@ -149683,7 +149678,7 @@ wVz
 pfq
 pfq
 pfq
-xxz
+pfq
 pfq
 pfq
 pfq
@@ -150195,7 +150190,7 @@ wVz
 wVz
 pfq
 pfq
-xxz
+pfq
 pfq
 pfq
 wVz

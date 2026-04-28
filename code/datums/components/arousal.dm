@@ -1,5 +1,3 @@
-#define ARO_LOSS_COEFFICIENT 10
-
 /datum/component/arousal
 	/// Our arousal level
 	var/arousal = 0

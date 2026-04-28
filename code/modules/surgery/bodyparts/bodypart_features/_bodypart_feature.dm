@@ -80,6 +80,7 @@
 	if(!(feature in bodypart_features))
 		return
 	bodypart_features -= feature
+	qdel(feature)
 	if(owner)
 		owner.update_body()
 	return

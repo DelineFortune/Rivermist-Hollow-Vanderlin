@@ -8,6 +8,8 @@
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	break_sound = 'sound/foley/breaksound.ogg'
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
 	clothing_flags = CANT_SLEEP_IN
 	armor = ARMOR_NECK_BAD

@@ -16,6 +16,12 @@
 		var/mob/mob_target = target
 		if (mob_target.stat > attack_until_past_stat)
 			return FALSE
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(is_protected_by_active_mob_sex(living_mob, living_target))
+			return FALSE
+		if(ishuman(living_target) && should_use_nonlethal_mob_erp_handling(living_mob, living_target))
+			return FALSE
 
 	if (living_mob.see_invisible < target.invisibility)
 		return FALSE

@@ -38,6 +38,7 @@
 	bstorage_visible_layer = STORAGE_LAYER_OUTER
 	has_body_storage_overlay = TRUE
 	storage_overlay_icon = 'modular_rmh/icons/obj/lewd/leeches_overlay.dmi'
+	bstorage_visible_hole = null
 	var/obj/item/organ/target_organ = null
 	var/trying_to_attach = FALSE
 	var/fluid_sucking = 5

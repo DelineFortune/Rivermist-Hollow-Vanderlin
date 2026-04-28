@@ -164,6 +164,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["crt"]				>> crt
 	S["mastervol"]			>> mastervol
 	S["lastclass"]			>> lastclass
+	var/stored_preferred_ui_language
+	S["preferred_ui_language"] >> stored_preferred_ui_language
+	if(parent)
+		parent.preferred_ui_language = sanitize_preferred_ui_language(stored_preferred_ui_language)
 
 
 	S["default_slot"]		>> default_slot
@@ -262,6 +266,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["char_theme"], char_theme)
 	WRITE_FILE(S["crt"], crt)
 	WRITE_FILE(S["lastclass"], lastclass)
+	WRITE_FILE(S["preferred_ui_language"], parent ? sanitize_preferred_ui_language(parent.preferred_ui_language) : "en")
 	WRITE_FILE(S["mastervol"], mastervol)
 	WRITE_FILE(S["ooccolor"], ooccolor)
 	WRITE_FILE(S["lastchangelog"], lastchangelog)
@@ -555,7 +560,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_smallclothes_preferences(S)
 
 	_load_combat_music(S)
-	load_quirks(S)
 
 	if(!culture)
 		culture = src::culture
@@ -688,6 +692,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["customizer_entries"] >> customizer_entries
 	validate_customizer_entries()
+
+	load_quirks(S)
 
 	load_erp_preferences(S)
 

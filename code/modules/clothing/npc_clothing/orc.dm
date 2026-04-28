@@ -5,6 +5,7 @@
 	item_state = "marauder_armor"
 	allowed_race = list(SPEC_ID_ORC)
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	sellprice = NO_MARKET_VALUE
 	misc_flags = CRAFTING_TEST_EXCLUDE
 
@@ -43,6 +44,8 @@
 	item_state = "marauder_helm"
 	allowed_race = list(SPEC_ID_ORC)
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	armor = list("blunt" = 60, "slash" = 60, "stab" = 60,  "piercing" = 0, "fire" = 0, "acid" = 0)
 	body_parts_covered = HEAD|EARS|HAIR|EYES|NECK
 	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT)

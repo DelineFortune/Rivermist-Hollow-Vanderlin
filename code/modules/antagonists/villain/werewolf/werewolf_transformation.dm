@@ -262,6 +262,7 @@
 
 	var/mob/living/carbon/human/species/werewolf/new_werewolf = generate_werewolf(human_user)
 	new_werewolf.apply_status_effect(/datum/status_effect/shapechange_mob/die_with_form, human_user, FALSE)
+	transfer_skill_state_to_werewolf(human_user, new_werewolf)
 	new_werewolf.dna?.species.after_creation(new_werewolf) // funny accented werewolf
 	new_werewolf.set_patron(human_user.patron)
 	human_user.rage_datum.grant_to_secondary(new_werewolf)
@@ -321,21 +322,38 @@
 	new_werewolf.name = wolfname
 	new_werewolf.skin_armor = new /obj/item/clothing/armor/regenerating/skin/werewolf_skin(new_werewolf)
 
-	new_werewolf.adjust_skill_level(/datum/attribute/skill/combat/wrestling, 50, TRUE)
-	new_werewolf.adjust_skill_level(/datum/attribute/skill/combat/unarmed, 50, TRUE)
-	new_werewolf.adjust_skill_level(/datum/attribute/skill/misc/climbing, 60, TRUE)
-
 	for(var/datum/action/werewolf_power as anything in werewolf_form_powers)
 		new_werewolf.add_spell(werewolf_power)
 
 	return new_werewolf
 
+/datum/antagonist/werewolf/proc/transfer_skill_state_to_werewolf(mob/living/carbon/human/human_user, mob/living/carbon/human/species/werewolf/new_werewolf)
+	if(!human_user?.attributes || !new_werewolf?.attributes)
+		return
+
+	new_werewolf.attributes.copy_skill_state(human_user.attributes)
+	apply_werewolf_skill_floor(new_werewolf, /datum/attribute/skill/combat/wrestling, 50)
+	apply_werewolf_skill_floor(new_werewolf, /datum/attribute/skill/combat/unarmed, 50)
+	apply_werewolf_skill_floor(new_werewolf, /datum/attribute/skill/misc/climbing, 60)
+
+/datum/antagonist/werewolf/proc/apply_werewolf_skill_floor(mob/living/carbon/human/species/werewolf/new_werewolf, skill_type, minimum_level)
+	var/datum/attribute_holder/werewolf_attributes = new_werewolf?.attributes
+	if(!werewolf_attributes)
+		return
+	if(nulltozero(werewolf_attributes.raw_attribute_list[skill_type]) >= minimum_level)
+		return
+	werewolf_attributes.set_skill_level(skill_type, minimum_level, TRUE)
+
 /// Helper to remove werewolf transformation effect from owner.current.
 /datum/antagonist/werewolf/proc/remove_werewolf(forced)
 	SIGNAL_HANDLER
 
-	var/mob/living/carbon/human/werewolf_user = owner.current
+	var/mob/living/carbon/human/werewolf_user = owner?.current
 	if(!transformed)
+		return
+	if(!istype(werewolf_user))
+		transformed = FALSE
+		transformation_in_progress = FALSE
 		return
 	if(!forced && HAS_TRAIT(werewolf_user, TRAIT_NO_TRANSFORM))
 		return
@@ -348,9 +366,13 @@
 	var/mob/living/carbon/human/werewolf_user = status_owner
 	var/mob/living/carbon/human/caster_mob = status_caster_mob
 	if(!istype(werewolf_user) || !istype(caster_mob))
+		if(istype(werewolf_user))
+			QDEL_NULL(werewolf_user.skin_armor)
 		transformed = FALSE
 		transformation_in_progress = FALSE
 		return
+
+	QDEL_NULL(werewolf_user.skin_armor)
 
 	for(var/obj/item/dropped_item in werewolf_user)
 		werewolf_user.dropItemToGround(dropped_item, silent = TRUE)

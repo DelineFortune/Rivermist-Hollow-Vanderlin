@@ -25,6 +25,8 @@
 	clothing_flags = CANT_SLEEP_IN
 	anvilrepair = /datum/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/steel
+	melting_material = /datum/material/steel
+	melt_amount = 100
 	sewrepair = FALSE
 	ignore_sleeves_code = TRUE // No sleeves, otherwise arms will be over the sprite
 	nodismemsleeves = TRUE

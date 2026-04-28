@@ -57,14 +57,16 @@
  */
 /datum/buildmode/proc/open_modeswitch()
 	switch_state = BM_SWITCHSTATE_MODE
-	holder.screen += modeswitch_buttons
+	if(holder)
+		holder.screen += modeswitch_buttons
 
 /**
  * Close the mode selection UI
  */
 /datum/buildmode/proc/close_modeswitch()
 	switch_state = BM_SWITCHSTATE_NONE
-	holder.screen -= modeswitch_buttons
+	if(holder)
+		holder.screen -= modeswitch_buttons
 
 /**
  * Toggle the direction selection UI
@@ -81,14 +83,16 @@
  */
 /datum/buildmode/proc/open_dirswitch()
 	switch_state = BM_SWITCHSTATE_DIR
-	holder.screen += dirswitch_buttons
+	if(holder)
+		holder.screen += dirswitch_buttons
 
 /**
  * Close the direction selection UI
  */
 /datum/buildmode/proc/close_dirswitch()
 	switch_state = BM_SWITCHSTATE_NONE
-	holder.screen -= dirswitch_buttons
+	if(holder)
+		holder.screen -= dirswitch_buttons
 
 /**
  * Toggle the category selection UI
@@ -105,14 +109,16 @@
  */
 /datum/buildmode/proc/open_categoryswitch()
 	switch_state = BM_SWITCHSTATE_CATEGORY
-	holder.screen += category_buttons
+	if(holder)
+		holder.screen += category_buttons
 
 /**
  * Close the category selection UI
  */
 /datum/buildmode/proc/close_categoryswitch()
 	switch_state = BM_SWITCHSTATE_NONE
-	holder.screen -= category_buttons
+	if(holder)
+		holder.screen -= category_buttons
 
 /**
  * Change the current buildmode

@@ -552,6 +552,8 @@
 	bloody_icon_state = "bodyblood"
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	component_type = /datum/component/storage/concrete/grid/headhook
 
 /obj/item/storage/hip/headhook/bronze
@@ -568,6 +570,8 @@
 	bloody_icon_state = "bodyblood"
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 	component_type = /datum/component/storage/concrete/grid/headhook/bronze
 
 
@@ -595,4 +599,6 @@
 	bloody_icon_state = "bodyblood"
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	component_type = /datum/component/storage/concrete/grid/headhook/bronze

@@ -49,6 +49,7 @@
 	icon_state = "ironplate"
 	flags_inv = HIDEEARS
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	sellprice = VALUE_CHEAP_IRON_HELMET
 	block2add = FOV_BEHIND
 
@@ -66,6 +67,7 @@
 	item_state = "rusthelm"
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	sellprice = VALUE_IRON_ARMOR/2
 	armor = ARMOR_PLATE_BAD
 	max_integrity = INTEGRITY_STANDARD

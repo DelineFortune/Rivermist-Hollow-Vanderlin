@@ -40,7 +40,7 @@
 			if(isnull(maintain_range))
 				maintain_range = 12
 
-			if (!targetting_datum.can_attack(living_mob, current_target) && !targetting_datum.should_disarm(living_mob, current_target))
+			if(!targetting_datum.can_engage_target(living_mob, current_target))
 				controller.clear_blackboard_key(BB_HIGHEST_THREAT_MOB)
 				current_target = null
 
@@ -93,7 +93,7 @@
 		// Skip dead mobs
 		if(pot_target.stat == DEAD)
 			continue
-		if (!targetting_datum.can_attack(living_mob, pot_target))
+		if(!targetting_datum.can_quickly_engage_target(living_mob, pot_target))
 			continue
 		// Skip sneaking mobs with a chance to detect them
 		if(pot_target.rogue_sneaking)
@@ -110,7 +110,11 @@
 		return
 
 	// Choose a random mob from filtered targets to add initial threat
-	var/mob/living/chosen_target = pick(filtered_targets)
+	var/mob/living/chosen_target = pick_revalidated_target(controller, filtered_targets, targetting_datum, living_mob)
+	if(!chosen_target)
+		failed_to_find_anyone(controller, target_key, targetting_datum_key, hiding_location_key)
+		finish_action(controller, succeeded = FALSE)
+		return
 
 	// Find the aggro component on our mob
 	var/datum/component/ai_aggro_system/aggro_comp = living_mob.GetComponent(/datum/component/ai_aggro_system)
@@ -161,7 +165,7 @@
 		return FALSE
 	if(!ismob(checking) && !is_type_in_typecache(checking, GLOB.target_interested_atoms))
 		return FALSE
-	if(!strategy.can_attack(pawn, checking))
+	if(!strategy.can_engage_target(pawn, checking))
 		return FALSE
 	// Additional aggro-specific checks for living mobs
 	if(istype(checking, /mob/living))
@@ -226,6 +230,16 @@
 	// Check if target is inside something
 	if(istype(target.loc, /obj/item) || istype(target.loc, /obj/structure) || istype(target.loc, /obj/machinery))
 		return target.loc
+	return null
+
+/datum/ai_behavior/find_aggro_targets/proc/pick_revalidated_target(datum/ai_controller/controller, list/filtered_targets, datum/targetting_datum/strategy, mob/living/living_mob)
+	var/list/remaining_targets = filtered_targets.Copy()
+	while(length(remaining_targets))
+		var/mob/living/picked_target = pick(remaining_targets)
+		remaining_targets -= picked_target
+		if(!strategy.can_engage_target(living_mob, picked_target))
+			continue
+		return picked_target
 	return null
 
 /datum/ai_behavior/find_aggro_targets/finish_action(datum/ai_controller/controller, succeeded, ...)

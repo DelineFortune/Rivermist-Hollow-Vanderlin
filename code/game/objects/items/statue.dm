@@ -12,6 +12,8 @@
 	name = "gold statue"
 	icon_state = "gstatue1"
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	sellprice = 120
 
 /obj/item/statue/gold/Initialize()
@@ -32,6 +34,8 @@
 	name = "silver statue"
 	icon_state = "sstatue1"
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	sellprice = 90
 
 /obj/item/statue/silver/Initialize()
@@ -61,6 +65,8 @@
 	name = "iron statue"
 	icon_state = "istatue1"
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	sellprice = 40
 
 /obj/item/statue/iron/Initialize()
@@ -82,6 +88,8 @@
 	icon_state = "volf_silv"
 	dropshrink = 0.7
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	sellprice = 45
 
 /obj/item/statue/silver/volf/Initialize()
@@ -94,6 +102,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "finger_silv"
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	sellprice = 0
 
 /obj/item/statue/silver/finger/Initialize()
@@ -106,6 +116,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "urn_silv"
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	sellprice = 50
 
 /obj/item/statue/silver/urn/Initialize()
@@ -118,6 +130,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "vase_silv"
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	sellprice = 25
 
 /obj/item/statue/silver/vase/Initialize()
@@ -130,6 +144,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "fancyvase_silv"
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	sellprice = 45
 
 /obj/item/statue/silver/vasefancy/Initialize()
@@ -142,6 +158,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "bust_silv"
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	sellprice = 30
 
 /obj/item/statue/silver/bust/Initialize()
@@ -165,6 +183,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "obelisk_silv"
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	sellprice = 30
 
 /obj/item/statue/silver/obelisk/Initialize()
@@ -188,6 +208,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "tablet_silv"
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	sellprice = 25
 
 /obj/item/statue/silver/tablet/Initialize()
@@ -223,6 +245,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "elven_silv"
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	sellprice = 35
 
 /obj/item/statue/silver/totem/Initialize()
@@ -237,6 +261,8 @@
 	icon_state = "volf_gold"
 	dropshrink = 0.7
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	sellprice = 85
 
 /obj/item/statue/gold/volf/Initialize()
@@ -249,6 +275,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "finger_gold"
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	sellprice = 1
 
 /obj/item/statue/gold/finger/Initialize()
@@ -261,6 +289,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "urn_gold"
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	sellprice = 100
 
 /obj/item/statue/gold/urn/Initialize()
@@ -273,6 +303,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "vase_gold"
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	sellprice = 45
 
 /obj/item/statue/gold/vase/Initialize()
@@ -285,6 +317,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "fancyvase_gold"
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	sellprice = 80
 
 /obj/item/statue/gold/vasefancy/Initialize()
@@ -297,6 +331,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "bust_gold"
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	sellprice = 60
 
 /obj/item/statue/gold/bust/Initialize()
@@ -331,6 +367,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "obelisk_gold"
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	sellprice = 60
 
 /obj/item/statue/gold/obelisk/Initialize()
@@ -343,6 +381,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "tablet_gold"
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	sellprice = 45
 
 /obj/item/statue/gold/tablet/Initialize()
@@ -366,6 +406,8 @@
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "elven_gold"
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	sellprice = 65
 
 /obj/item/statue/gold/totem/Initialize()
@@ -390,6 +432,8 @@
 	name = "bronze statue"
 	icon_state = "bstatue1"
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 	sellprice = 30
 
 /obj/item/statue/bronze/volf

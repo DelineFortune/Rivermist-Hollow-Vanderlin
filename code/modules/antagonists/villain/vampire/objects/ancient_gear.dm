@@ -34,6 +34,8 @@
 	item_weight = 7 * STEEL_MULTIPLIER
 	max_integrity = INTEGRITY_STRONG
 	smeltresult = /obj/item/ingot/steel
+	melting_material = /datum/material/steel
+	melt_amount = 100
 	sellprice = VALUE_STEEL_HELMET
 
 //................ Face ............... //

@@ -1115,3 +1115,8 @@
 /datum/sprite_accessory/hair/head/azur/vulpkian/raine
 	name = "Venardine Raine"
 	icon_state = "raine"
+
+/datum/sprite_accessory/hair/head/azur/jenny
+	icon = 'modular_rmh/icons/mob/sprite_accessory/head/hair/jennyhair.dmi'
+	name = "Half Shaved"
+	icon_state = "hair_halfshaved"

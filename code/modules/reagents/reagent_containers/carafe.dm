@@ -90,6 +90,8 @@
 	fill_icon_thresholds = null
 	dropshrink = 1.0
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 	sellprice = 65
 
 /obj/item/reagent_containers/glass/carafe/teapot/silver
@@ -100,6 +102,8 @@
 	fill_icon_thresholds = null
 	dropshrink = 1.0
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	sellprice = 35
 
 /obj/item/reagent_containers/glass/carafe/teapot/bronze
@@ -110,6 +114,8 @@
 	fill_icon_thresholds = null
 	dropshrink = 1.0
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 	sellprice = 25
 
 /obj/item/reagent_containers/glass/carafe/teapot/jade

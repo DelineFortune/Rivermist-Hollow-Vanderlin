@@ -26,16 +26,33 @@
 		return
 	return ..()
 
+/// Opens a radial menu of slave collar commands when middle-clicked.
 /obj/item/clothing/ring/slave_control/MiddleClick(mob/user, params)
-	if(bound_collar)
-		var/command_input = browser_input_list(user, "SELECT THE DEMAND", "DECREES", GLOB.reverse_slave_phrases_translations, null)
-		if(command_input)
-			if(bound_collar.perform_command(normalize_slave_phrase(phrases_list[GLOB.reverse_slave_phrases_translations[command_input]])))
-				to_chat(user, "<font size='1' color='grey'>The ring vibrates imperceptably - the command was a success.</font>")
-			else
-				to_chat(user, "<font size='1' color='red'>The ring lies still - command failed to perform.</font>")
+	if(!bound_collar)
+		return ..()
+	invoke_collar_command_radial(user, bound_collar)
+	return
+
+/// Shared radial menu for invoking commands on a slave collar.
+/// Used by both the ring's MiddleClick and the leash's MiddleClick.
+/obj/item/clothing/ring/slave_control/proc/invoke_collar_command_radial(mob/user, obj/item/clothing/neck/slave_collar/collar)
+	if(!collar || !collar.phrases_list)
+		to_chat(user, span_warning("The ring has no collar bound."))
 		return
-	. = ..()
+	var/list/choices = list()
+	for(var/translation_key in GLOB.slave_phrases_translations)
+		var/display_name = GLOB.slave_phrases_translations[translation_key]
+		choices[display_name] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_slice")
+	var/chosen = show_radial_menu(user, src, choices, tooltips = TRUE, require_near = FALSE)
+	if(!chosen)
+		return
+	var/internal_key = GLOB.reverse_slave_phrases_translations[chosen]
+	if(!internal_key || !collar.phrases_list[internal_key])
+		return
+	if(collar.perform_command(normalize_slave_phrase(collar.phrases_list[internal_key])))
+		to_chat(user, "<font size='1' color='grey'>The ring vibrates imperceptibly — the command was a success.</font>")
+	else
+		to_chat(user, "<font size='1' color='red'>The ring lies still — command failed to perform.</font>")
 
 /obj/item/clothing/ring/slave_control/examine(mob/user)
 	. = ..()

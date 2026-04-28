@@ -38,6 +38,7 @@
 	name = "iron chain chausses"
 	desc = "Chain mail chausses made of iron rings woven together, offering protection against cuts and stabs."
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	armor = ARMOR_MAILLE_IRON
 	max_integrity = INTEGRITY_STRONG
 	item_weight = 6 * IRON_MULTIPLIER
@@ -57,5 +58,6 @@
 	icon_state = "ichainkilt"
 	item_state = "ichainkilt"
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	armor = ARMOR_MAILLE_IRON
 	max_integrity = INTEGRITY_STRONG

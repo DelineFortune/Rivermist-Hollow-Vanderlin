@@ -568,6 +568,53 @@
 
 	return TRUE
 
+/mob/living/proc/start_handless_pull(mob/living/target, state = GRAB_PASSIVE, force = pull_force, suppress_message = FALSE)
+	if(!target || !src)
+		return FALSE
+	if(!(target.can_be_pulled(src, state, force)))
+		return FALSE
+	if(throwing || !(mobility_flags & MOBILITY_PULL))
+		return FALSE
+
+	if(pulling && pulling != target)
+		stop_pulling()
+
+	changeNext_move(CLICK_CD_GRABBING)
+
+	if(target.pulledby && target.pulledby != src)
+		if(!suppress_message)
+			target.visible_message(
+				span_danger("[src] pulls [target] from [target.pulledby]'s grip."),
+				span_danger("[src] pulls you from [target.pulledby]'s grip."),
+				null,
+				null,
+				src
+			)
+			to_chat(src, span_notice("You pull [target] from [target.pulledby]'s grip."))
+		log_combat(target, target.pulledby, "pulled from", src)
+		target.pulledby.stop_pulling()
+
+	pulling = target
+	target.set_pulledby(src)
+	SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, target, state, force)
+	update_pull_hud_icon()
+
+	// Respect the same post-breakout grace window as the normal grab flow.
+	if(TIMER_COOLDOWN_RUNNING(target, "broke_free") && !HAS_TRAIT(target, TRAIT_INCAPACITATED))
+		target.visible_message(
+			span_warning("[target] slips from [src]'s grip."),
+			span_warning("I slip from [src]'s grip.")
+		)
+		log_combat(src, target, "tried grabbing", addition = "handless grab")
+		stop_pulling()
+		return FALSE
+
+	log_combat(src, target, "grabbed", addition = state >= GRAB_AGGRESSIVE ? "handless aggressive grab" : "handless passive grab")
+	setGrabState(state)
+	update_pull_movespeed()
+	set_pull_offsets(target, grab_state)
+	return TRUE
+
 /mob/living/proc/is_limb_covered(obj/item/bodypart/limb)
 	if(!limb)
 		return FALSE
@@ -1637,9 +1684,9 @@
 		return
 
 	// Passive grabs without cmode can be instantly broken and do not block movement
-	if(pulledby.grab_state == GRAB_PASSIVE && !pulledby.cmode)
-		pulledby.stop_pulling()
-		return FALSE
+	//if(pulledby.grab_state == GRAB_PASSIVE && !pulledby.cmode)
+	//	pulledby.stop_pulling()
+	//	return FALSE
 
 	if(!MOBTIMER_FINISHED(pulledby, MT_RESIST_GRAB, 2 SECONDS))
 		return

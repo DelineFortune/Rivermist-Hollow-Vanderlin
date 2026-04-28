@@ -1,3 +1,5 @@
+#define ERP_SUBDUE_DISARM_SUCCESS_CHANCE 30
+
 /datum/ai_behavior/basic_melee_attack
 	action_cooldown = 0.2 SECONDS // We gotta check unfortunately often because we're in a race condition with nextmove
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
@@ -15,6 +17,69 @@
 		return FALSE
 	set_movement_target(controller, (target))
 	SEND_SIGNAL(controller.pawn, COMSIG_COMBAT_TARGET_SET, TRUE)
+
+/datum/ai_behavior/proc/attempt_nonlethal_mob_erp_subdue(datum/targetting_datum/targetting_datum, mob/living/attacker, mob/living/carbon/human/human_target)
+	if(!targetting_datum || !attacker || !human_target)
+		return FALSE
+	if(!attacker.Adjacent(human_target))
+		return TRUE
+	if(attacker.next_click >= world.time)
+		return TRUE
+
+	if(targetting_datum.human_has_any_held_item(human_target))
+		var/static/datum/intent/unarmed/shove/disarm_intent = new()
+		var/datum/intent/cached_intent = attacker.used_intent
+		attacker.used_intent = disarm_intent
+		var/disarm_was_defended = human_target.checkdefense(disarm_intent, attacker)
+		attacker.used_intent = cached_intent
+
+		if(!disarm_was_defended)
+			if(!prob(ERP_SUBDUE_DISARM_SUCCESS_CHANCE))
+				human_target.visible_message(span_danger("[attacker] swats at [human_target]'s hands, but fails to disarm them!"), \
+					span_userdanger("[attacker] swats at my hands, but I keep hold of my weapon!"), span_hear("I hear a rough struggle over a weapon!"), COMBAT_MESSAGE_RANGE)
+			else
+				for(var/obj/item/held_item as anything in human_target.held_items)
+					if(!held_item)
+						continue
+					human_target.dropItemToGround(held_item, force = FALSE, silent = FALSE)
+				human_target.Stun(2)
+				human_target.visible_message(span_danger("[attacker] disarms [human_target]!"), \
+					span_userdanger("[attacker] disarms me!"), span_hear("I hear someone getting punished!"), COMBAT_MESSAGE_RANGE)
+	else
+		var/prob2defend
+		var/obj/item/mainhand = human_target.get_active_held_item()
+		var/obj/item/offhand = human_target.get_inactive_held_item()
+		var/list/parry_data = human_target.calculate_parry_values(mainhand, offhand)
+		prob2defend += CLAMP(parry_data["defense_bonus"] / 80, 0, 40)
+		prob2defend += CLAMP(human_target.STASPD / 20 * 50, 0, 50)
+		if(human_target.cmode)
+			prob2defend *= 1.2
+		if(human_target.surrendering)
+			prob2defend *= 0.1
+		prob2defend = CLAMP(prob2defend + 60, 0, 100)
+
+		// Once only 20% stamina remains, the takedown becomes guaranteed.
+		var/stamina_exhaustion = (human_target.maximum_stamina - human_target.stamina) / human_target.maximum_stamina <= 0.2 ? 0 : (human_target.maximum_stamina - human_target.stamina) / human_target.maximum_stamina
+		prob2defend = prob2defend * stamina_exhaustion
+		var/down_chance = CLAMP(prob2defend, 0, 100)
+
+		if(prob(100 - down_chance))
+			human_target.SetStun(20)
+			human_target.SetKnockdown(50)
+			if(human_target.body_position != LYING_DOWN)
+				human_target.emote("gasp")
+			attacker.visible_message(span_danger("[attacker] batters [human_target]'s guard down and drags them to the ground!"))
+		else
+			attacker.visible_message(span_danger("[attacker] tries to pull [human_target] to the ground, exhausting them!"))
+
+		var/stamina_drain = max(round(human_target.maximum_stamina * 0.60 * (1 - ((100 - prob2defend) * 0.01))), 25)
+		human_target.adjust_stamina(stamina_drain, null, FALSE, FALSE)
+
+	attacker.next_click = world.time + attacker.melee_attack_cooldown
+	SEND_SIGNAL(attacker, COMSIG_MOB_BREAK_SNEAK)
+	return TRUE
+
+#undef ERP_SUBDUE_DISARM_SUCCESS_CHANCE
 
 /datum/ai_behavior/basic_melee_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
@@ -40,15 +105,10 @@
 
 
 	if(targetting_datum.should_disarm(basic_mob, target))
-		if(ishuman(target) && target.Adjacent(basic_mob))
+		if(ishuman(target))
 			var/mob/living/carbon/human/h_target = target
-			for(var/obj/item/I in h_target.held_items)
-				h_target.dropItemToGround(I, force = FALSE, silent = FALSE)
-			h_target.Stun(30)
-			h_target.visible_message(span_danger("[basic_mob] disarms [h_target]!"), \
-					span_userdanger("[basic_mob] disarms me!"), span_hear("I hear someone getting punished!"), COMBAT_MESSAGE_RANGE)
-			finish_action(controller, FALSE, target_key)
-			return
+			if(attempt_nonlethal_mob_erp_subdue(targetting_datum, basic_mob, h_target))
+				return
 
 	var/list/possible_intents = list()
 	for(var/datum/intent/intent as anything in basic_mob.possible_a_intents)

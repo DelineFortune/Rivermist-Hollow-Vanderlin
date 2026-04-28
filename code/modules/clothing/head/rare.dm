@@ -77,6 +77,7 @@
 
 //............... Hoplite Helmet ............... //
 /obj/item/clothing/head/rare/hoplite // Unique Hoplite kit
+	melting_material = /datum/material/bronze
 	name = "ancient helmet"
 	desc = "A weathered bronze helmet topped with a symbol of Lathander's sun."
 	icon = 'icons/roguetown/clothing/head.dmi'

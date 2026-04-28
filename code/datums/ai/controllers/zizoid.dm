@@ -2,6 +2,7 @@
 	movement_delay = 0.4 SECONDS
 
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_UNDEAD
 
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/zizoid(),
@@ -22,8 +23,10 @@
 		/datum/ai_planning_subtree/flesh_ambush_subtree,
 		/datum/ai_planning_subtree/aggro_find_target,
 		/datum/ai_planning_subtree/flesh_advanced_melee_attack,
-		///datum/ai_planning_subtree/find_dead_bodies,
-		///datum/ai_planning_subtree/eat_dead_body,
+		/datum/ai_planning_subtree/simple_find_horny,
+		/datum/ai_planning_subtree/horny,
+		/datum/ai_planning_subtree/find_dead_bodies,
+		/datum/ai_planning_subtree/eat_dead_body,
 	)
 
 	idle_behavior = /datum/idle_behavior/flesh_idle

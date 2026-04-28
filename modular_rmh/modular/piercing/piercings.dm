@@ -10,6 +10,15 @@
 	var/datum/bodypart_feature/piercing/piercings_feature
 	var/sprite_acc = /datum/sprite_accessory/piercing/rings
 
+/obj/item/piercings/Destroy()
+	var/mob/living/carbon/human/wearer = loc
+	if(istype(wearer) && wearer.piercings_item == src)
+		wearer.piercings_item = null
+	if(piercings_feature?.piercings_item == src)
+		piercings_feature.piercings_item = null
+	piercings_feature = null
+	return ..()
+
 /obj/item/piercings/attack(mob/M, mob/user, def_zone)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

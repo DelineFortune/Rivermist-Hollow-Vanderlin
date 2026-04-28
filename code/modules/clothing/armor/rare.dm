@@ -80,6 +80,7 @@
 	icon_state = "aasimarplate"
 	allowed_race = list(SPEC_ID_AASIMAR)
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
 	sellprice = VALUE_SNOWFLAKE_STEEL+BONUS_VALUE_MODEST // It has great value to historical collectors
 	stand_speed_reduction = 1.2
 

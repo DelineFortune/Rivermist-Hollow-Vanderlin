@@ -16,6 +16,8 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/list/blackboard = list()
 	///Bitfield of traits for this AI to handle extra behavior
 	var/ai_traits
+	/// Which horny-mob family this controller belongs to for player ERP filtering.
+	var/horny_pref_family_flag = NONE
 	///Current actions planned to be performed by the AI in the upcoming plan
 	var/list/planned_behaviors
 	///Current actions being performed by the AI.

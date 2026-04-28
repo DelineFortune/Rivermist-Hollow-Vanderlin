@@ -2,7 +2,7 @@
 /datum/proximity_monitor/advanced/ai_target_tracking
 	edge_is_a_field = TRUE
 	/// The ai behavior who owns us
-	var/datum/ai_behavior/find_potential_targets/owning_behavior
+	var/datum/ai_behavior/owning_behavior
 	/// The ai controller we're using
 	var/datum/ai_controller/controller
 	/// Blackboard key storing this field on the controller
@@ -22,7 +22,7 @@
 
 // Initially, run the check manually
 // If that fails, set up a field and have it manage the behavior fully
-/datum/proximity_monitor/advanced/ai_target_tracking/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, datum/ai_behavior/find_potential_targets/owning_behavior, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, field_key = null)
+/datum/proximity_monitor/advanced/ai_target_tracking/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, datum/ai_behavior/owning_behavior, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, field_key = null)
 	. = ..()
 	src.owning_behavior = owning_behavior
 	src.controller = controller
@@ -62,19 +62,46 @@
 	. = ..()
 	if(first_build)
 		return
+	process_existing_field_turf(target)
+
+/datum/proximity_monitor/advanced/ai_target_tracking/proc/process_existing_field_turf(turf/target)
 	var/list/present = list()
-	for(var/atom/movable/AM in target)
-		present += AM
+	for(var/atom/movable/present_atom as anything in target)
+		present += present_atom
 	if(length(present))
-		owning_behavior.new_atoms_found(present, controller, target_key, filter, hiding_location_key)
+		call(owning_behavior, "new_atoms_found")(present, controller, target_key, filter, hiding_location_key)
 	else
-		owning_behavior.new_turf_found(target, controller, filter)
+		call(owning_behavior, "new_turf_found")(target, controller, filter)
+
+/datum/proximity_monitor/advanced/ai_target_tracking/proc/process_existing_field_atoms()
+	for(var/turf/in_field as anything in field_turfs + edge_turfs)
+		if(QDELETED(src))
+			return
+		process_existing_field_turf(in_field)
+
+/datum/proximity_monitor/advanced/ai_target_tracking/horny/proc/prime_existing_candidates()
+	process_existing_field_atoms()
+	if(QDELETED(src) || controller.blackboard[target_key])
+		return
+	var/mob/living/pawn = controller.pawn
+	if(!iscarbon(pawn))
+		return
+	var/mob/living/carbon/carbon_pawn = pawn
+	var/list/additional_candidates = list()
+	var/obj/item/held_portal = carbon_pawn.get_active_held_item()
+	if(istype(held_portal, /obj/item/portallight))
+		additional_candidates += held_portal
+	held_portal = carbon_pawn.get_inactive_held_item()
+	if(istype(held_portal, /obj/item/portallight))
+		additional_candidates += held_portal
+	if(length(additional_candidates))
+		call(owning_behavior, "new_atoms_found")(additional_candidates, controller, target_key, filter, hiding_location_key)
 
 /datum/proximity_monitor/advanced/ai_target_tracking/field_turf_crossed(atom/movable/movable, turf/location, turf/old_location)
-	if(!owning_behavior.atom_allowed(movable, filter, controller.pawn, controller))
+	if(!call(owning_behavior, "atom_allowed")(movable, filter, controller.pawn, controller))
 		return
 
-	owning_behavior.new_atoms_found(list(movable), controller, target_key, filter, hiding_location_key)
+	call(owning_behavior, "new_atoms_found")(list(movable), controller, target_key, filter, hiding_location_key)
 
 /// React to controller planning
 /datum/proximity_monitor/advanced/ai_target_tracking/proc/controller_deleted(datum/source)
@@ -116,7 +143,7 @@
 	// Filter changed, need to do a full reparse
 	// Fucking 9 * 9 out here I stg
 	for(var/turf/in_field as anything in field_turfs + edge_turfs)
-		owning_behavior.new_turf_found(in_field, controller, filter)
+		call(owning_behavior, "new_turf_found")(in_field, controller, filter)
 
 /datum/proximity_monitor/advanced/ai_target_tracking/proc/targeting_datum_cleared(datum/source)
 	SIGNAL_HANDLER

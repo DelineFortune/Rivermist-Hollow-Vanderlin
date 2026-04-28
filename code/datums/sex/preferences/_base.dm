@@ -19,6 +19,7 @@
 	if(!prefs.erp_preferences)
 		prefs.erp_preferences = list()
 	prefs.erp_preferences[type] = value
+	prefs.mark_erp_preferences_dirty()
 
 /datum/erp_preference/proc/show_pref_ui(datum/preferences/prefs, lock_reason = null)
 	return

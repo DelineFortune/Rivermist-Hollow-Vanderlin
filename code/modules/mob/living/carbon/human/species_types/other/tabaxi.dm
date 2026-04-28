@@ -80,6 +80,8 @@
 		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
 		ORGAN_SLOT_TAIL = /obj/item/organ/tail/cat,
 		ORGAN_SLOT_SNOUT = /obj/item/organ/snout/cat,
+		ORGAN_SLOT_PUBIC = /obj/item/organ/genitals/pubes,
+		ORGAN_SLOT_ANUS = /obj/item/organ/genitals/filling_organ/anus,
 		)
 	bodypart_features = list(
 		/datum/bodypart_feature/hair/head,

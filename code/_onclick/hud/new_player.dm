@@ -227,6 +227,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/lobby)
 		else
 			set_button_status(TRUE)
 
+/atom/movable/screen/lobby/button/Destroy()
+	UnregisterSignal(SSticker, list(COMSIG_TICKER_ENTER_SETTING_UP, COMSIG_TICKER_ERROR_SETTING_UP))
+	return ..()
+
 /atom/movable/screen/lobby/button/join/Click(location, control, params)
 	. = ..()
 	if(!.)

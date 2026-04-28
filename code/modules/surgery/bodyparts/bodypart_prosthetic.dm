@@ -136,6 +136,8 @@
 	sellprice = 30
 	anvilrepair = /datum/attribute/skill/craft/engineering
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	punch_modifier = 1.2
 
 /obj/item/bodypart/r_arm/prosthetic/iron
@@ -150,6 +152,8 @@
 	sellprice = 30
 	anvilrepair = /datum/attribute/skill/craft/engineering
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	punch_modifier = 1.2
 
 /obj/item/bodypart/l_leg/prosthetic/iron
@@ -165,6 +169,8 @@
 	sellprice = 30
 	anvilrepair = /datum/attribute/skill/craft/engineering
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 
 /obj/item/bodypart/r_leg/prosthetic/iron
 	name = "iron right leg"
@@ -179,6 +185,8 @@
 	sellprice = 30
 	anvilrepair = /datum/attribute/skill/craft/engineering
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 
 
 // --------- STEEL PROSTHETICS -----------
@@ -256,6 +264,8 @@
 	sellprice = 70
 	anvilrepair = /datum/attribute/skill/craft/engineering
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 
 /obj/item/bodypart/r_arm/prosthetic/gold
 	name = "golden right arm"
@@ -268,6 +278,8 @@
 	sellprice = 70
 	anvilrepair = /datum/attribute/skill/craft/engineering
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 
 /obj/item/bodypart/l_leg/prosthetic/gold
 	name = "golden left leg"
@@ -280,6 +292,8 @@
 	sellprice = 70
 	anvilrepair = /datum/attribute/skill/craft/engineering
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 
 /obj/item/bodypart/r_leg/prosthetic/gold
 	name = "golden right leg"
@@ -292,6 +306,8 @@
 	sellprice = 70
 	anvilrepair = /datum/attribute/skill/craft/engineering
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
+	melt_amount = 100
 
 // --------- BRONZE PROSTHETICS -----------
 
@@ -306,8 +322,12 @@
 	fingers = TRUE
 	anvilrepair = /datum/attribute/skill/craft/engineering
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 
 /obj/item/bodypart/r_arm/prosthetic/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 	name = "bronze right arm"
 	desc = "A replacement right arm, engineered out of bronze."
 	icon_state = "bprarm"

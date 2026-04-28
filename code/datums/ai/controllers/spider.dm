@@ -2,6 +2,7 @@
 	movement_delay = 0.4 SECONDS
 
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_SPIDERS
 
 	blackboard = list(
 		BB_HOME_PATH = /obj/structure/spider/nest,
@@ -25,8 +26,8 @@
 		/datum/ai_planning_subtree/find_food/spider,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 
-		///datum/ai_planning_subtree/find_dead_bodies,
-		///datum/ai_planning_subtree/eat_dead_body,
+		/datum/ai_planning_subtree/find_dead_bodies,
+		/datum/ai_planning_subtree/eat_dead_body,
 	)
 
 	idle_behavior = /datum/idle_behavior/idle_random_walk

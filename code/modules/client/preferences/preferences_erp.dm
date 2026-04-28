@@ -21,6 +21,14 @@
 
 	return "You have already spawned, so ERP preferences are no longer editable from the lobby. They can still be changed during your first [ERP_PREFERENCE_EDIT_GRACE_MINUTES] minutes after spawning or while standing in a chapel."
 
+/datum/preferences/proc/mark_erp_preferences_dirty()
+	erp_preferences_revision++
+	var/mob/owner = parent?.mob
+	if(!isliving(owner))
+		return
+	var/mob/living/living_owner = owner
+	living_owner.invalidate_erp_preference_cache()
+
 /datum/preferences/proc/show_erp_preferences(mob/user)
 	var/list/dat = list()
 	dat += "<style>span.color_holder_box{display: inline-block; width: 20px; height: 8px; border:1px solid #000; padding: 0px;}</style>"
@@ -253,6 +261,7 @@
 			var/new_notes = input(user, "Enter notes for [kink_name]:", "Kink Notes", kink_data["notes"]) as text|null
 			if(new_notes != null)
 				kink_data["notes"] = new_notes
+	mark_erp_preferences_dirty()
 
 	show_erp_preferences(user) // Refresh the UI
 
@@ -289,6 +298,7 @@
 	S["erp_preferences"] >> erp_preferences
 	erp_preferences = SANITIZE_LIST(erp_preferences)
 	validate_erp_preferences()
+	mark_erp_preferences_dirty()
 
 /datum/preferences/proc/validate_erp_preferences()
 	if(!erp_preferences)
@@ -316,6 +326,7 @@
 		for(var/kink_name in kink_prefs)
 			if(!GLOB.available_kinks[kink_name])
 				kink_prefs -= kink_name
+	mark_erp_preferences_dirty()
 
 /datum/preferences/proc/setup_default_erp_preferences()
 	if(!erp_preferences)
@@ -344,3 +355,4 @@
 	for(var/kink_name in GLOB.available_kinks)
 		if(!kink_prefs[kink_name])
 			kink_prefs[kink_name] = list("enabled" = FALSE, "intensity" = 1, "notes" = "")
+	mark_erp_preferences_dirty()

@@ -14,3 +14,5 @@
 
 #define QUIRK_SELECT "select"
 #define QUIRK_TEXT "text"
+#define QUIRK_NUMBER "number"
+#define QUIRK_COLOR "color"

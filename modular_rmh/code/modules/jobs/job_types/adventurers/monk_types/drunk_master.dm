@@ -26,6 +26,8 @@
 	category_tags = list(CAT_ADVENTURER_MONK)
 	give_bank_account = TRUE
 
+	total_positions = 0
+
 	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_monk/drunk_master
 
 

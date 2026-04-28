@@ -39,6 +39,8 @@
 	var/base_icon_state
 	/// The active icon state of the spell's button icon, used for editing the icon "on"
 	var/active_icon_state
+	/// Timer for the cooldown-end callback
+	var/cooldown_timer
 	/// Timer for retriggering the spell
 	var/retrigger_timer
 
@@ -107,9 +109,23 @@
 		START_PROCESSING(SSfastprocess, src)
 
 /datum/action/cooldown/Remove(mob/living/remove_from)
-	if(click_to_activate && remove_from.click_intercept == src)
+	var/mob/living/signal_owner = remove_from || owner
+	if(signal_owner)
+		UnregisterSignal(signal_owner, COMSIG_MOB_SPELL_ACTIVATED)
+	if(cooldown_timer)
+		deltimer(cooldown_timer)
+		cooldown_timer = null
+	if(retrigger_timer)
+		deltimer(retrigger_timer)
+		retrigger_timer = null
+	if(click_to_activate && remove_from?.click_intercept == src)
 		unset_click_ability(remove_from, refund_cooldown = FALSE)
 	return ..()
+
+/datum/action/cooldown/proc/schedule_cooldown_end(delay)
+	if(cooldown_timer)
+		deltimer(cooldown_timer)
+	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(CooldownEnded)), delay, TIMER_STOPPABLE)
 
 /// Starts a cooldown time to be shared with similar abilities
 /// Will use default cooldown time if an override is not specified
@@ -131,7 +147,12 @@
 	if(isnum(override_cooldown_time))
 		real_time = override_cooldown_time
 	next_use_time = world.time + real_time
-	addtimer(CALLBACK(src, PROC_REF(CooldownEnded)), real_time)
+	schedule_cooldown_end(real_time)
+	if(owner)
+		UnregisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED)
+	if(retrigger_timer)
+		deltimer(retrigger_timer)
+		retrigger_timer = null
 	if(retrigger_after_cooldown && click_to_activate)
 		if(real_time > 0)
 			RegisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED, PROC_REF(cancel_retrigger))
@@ -144,6 +165,7 @@
 /// Callback proc for when the cooldown of the spell would naturally end,
 /// may not actually end at this time or may have already ended.
 /datum/action/cooldown/proc/CooldownEnded()
+	cooldown_timer = null
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
@@ -154,6 +176,7 @@
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
+	retrigger_timer = null
 	UnregisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED)
 
 	// Lets just have a cut off for reset
@@ -173,6 +196,7 @@
 	UnregisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED)
 
 	deltimer(retrigger_timer)
+	retrigger_timer = null
 
 /datum/action/cooldown/Trigger(trigger_flags, atom/target)
 	. = ..()

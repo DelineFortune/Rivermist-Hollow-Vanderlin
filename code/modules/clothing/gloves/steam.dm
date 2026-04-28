@@ -11,6 +11,8 @@
 
 	anvilrepair = /datum/attribute/skill/craft/engineering
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
+	melt_amount = 100
 	item_weight = 7 * BRONZE_MULTIPLIER
 
 /obj/item/clothing/shoes/boots/armor/steam/dropped(mob/living/carbon/user)

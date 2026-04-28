@@ -166,7 +166,7 @@ SUBSYSTEM_DEF(ticker)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
 
-	login_music = pick('modular_rmh/sound/music/maiden_voyage.ogg')
+	login_music = pick('modular_rmh/sound/music/NWN2_Storm_Zehir.ogg')
 
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 	if(CONFIG_GET(flag/randomize_shift_time))

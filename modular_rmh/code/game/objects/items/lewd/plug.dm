@@ -9,6 +9,8 @@
 	righthand_file = 'modular_rmh/icons/mob/lewd/items_righthand.dmi'
 	slot_flags = 0
 	w_class = WEIGHT_CLASS_TINY
+	storage_overlay_icon = 'modular_rmh/icons/obj/lewd/plugs_overlay.dmi'
+	bstorage_visible_hole = ORGAN_SLOT_ANUS
 
 /obj/item/dildo/plug/New()
 	. = ..()
@@ -181,3 +183,25 @@
 	sellprice = 5
 	alpha = 123
 	desc = "Similiar to putting a jar up where?"
+
+//Bunny tail
+
+/obj/item/dildo/plug/bunny
+	name = "unfinished bunny plug"
+	desc = "A plug shaped with cute bunny tail."
+	icon_state = "unfinished_bunny"
+	dildo_material = "steel"
+	sellprice = 10
+	storage_overlay_icon = 'modular_rmh/icons/obj/lewd/plugs_overlay.dmi'
+	storage_icon_state = "plug_bunny"
+	has_body_storage_overlay = TRUE
+	bstorage_visible_layer = STORAGE_LAYER_INNER
+
+/obj/item/dildo/plug/bunny/New()
+	. = ..()
+	name = "unfinished [dildo_material] bunny plug"
+
+/obj/item/dildo/plug/bunny/update_appearance()
+	. = ..()
+	icon_state = "plug_[dildo_size]_bunny"
+	name = "[dildo_size] bunny plug"

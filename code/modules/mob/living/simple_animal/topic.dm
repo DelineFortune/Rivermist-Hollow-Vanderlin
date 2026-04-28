@@ -19,6 +19,8 @@
 		var/obj/item/I = locate(href_list["embedded_object"]) in simple_embedded_objects
 		if(QDELETED(I) || !simple_remove_embedded_object(I))
 			return
+		if(QDELETED(I) || QDELING(I))
+			return
 		usr.put_in_hands(I)
 		playsound(src, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
 		if(usr == src)

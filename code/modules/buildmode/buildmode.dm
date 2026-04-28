@@ -74,9 +74,11 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
  * Clean up and exit buildmode
  */
 /datum/buildmode/proc/quit()
-	mode.exit_mode(src)
-	holder.screen -= buttons
-	holder.click_intercept = null
+	mode?.exit_mode(src)
+	if(holder)
+		holder.screen -= buttons
+		if(holder.click_intercept == src)
+			holder.click_intercept = null
 	clear_preview()
 	if(item_browser)
 		item_browser.close()
@@ -93,12 +95,18 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
 /datum/buildmode/Destroy()
 	clear_pixel_positioning_dummy()
 	close_switchstates()
-	holder.player_details.post_login_callbacks -= li_cb
-	holder = null
-	QDEL_NULL(mode)
+	if(holder)
+		holder.screen -= buttons
+		if(holder.click_intercept == src)
+			holder.click_intercept = null
+	if(holder?.mob)
+		UnregisterSignal(holder.mob, COMSIG_MOUSE_ENTERED)
+		UnregisterSignal(holder.mob, COMSIG_ATOM_MOUSE_ENTERED)
+	holder?.player_details?.post_login_callbacks -= li_cb
 	QDEL_LIST(modeswitch_buttons)
 	QDEL_LIST(dirswitch_buttons)
 	QDEL_LIST(category_buttons)
+	QDEL_LIST(buttons)
 	clear_preview()
 
 	if(item_browser)
@@ -106,6 +114,9 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
 		item_browser = null
 
 	cached_icons.Cut()
+	cached_buildmode_html.Cut()
+	holder = null
+	QDEL_NULL(mode)
 	return ..()
 
 /**
@@ -177,12 +188,11 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
 			preview_appearance.dir = build_dir
 			preview_appearance.color = LIGHT_COLOR_LIGHT_CYAN
 		else
-			var/atom/movable/temp_atom
-			temp_atom = new item_path(null) // Create in nullspace
-			preview_appearance.appearance = temp_atom.appearance
+			var/atom/preview_atom = item_path
+			preview_appearance.icon = initial(preview_atom.icon)
+			preview_appearance.icon_state = initial(preview_atom.icon_state)
 			preview_appearance.dir = build_dir
 			preview_appearance.color = LIGHT_COLOR_LIGHT_CYAN
-			qdel(temp_atom) // Clean up
 
 		GLOB.buildmode_appearance_cache[item_path] = preview_appearance.appearance
 
@@ -269,7 +279,8 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
  */
 /datum/buildmode/proc/clear_preview()
 	if(preview_image)
-		holder.images -= preview_image
+		if(holder)
+			holder.images -= preview_image
 		qdel(preview_image)
 		preview_image = null
 

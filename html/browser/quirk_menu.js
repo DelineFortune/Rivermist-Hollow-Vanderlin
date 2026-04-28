@@ -55,6 +55,59 @@ function updateQuirkText(inputElement) {
 	window.location.href = '?quirk_customize=' + quirkRef + '&value=' + encodeURIComponent(textValue);
 }
 
+// Handle extra customization field changes (text/number inputs)
+function updateQuirkExtraField(inputElement) {
+	var quirkRef = inputElement.getAttribute('data-quirk');
+	var fieldKey = inputElement.getAttribute('data-field');
+	var fieldValue = inputElement.value;
+
+	if (!quirkRef || !fieldKey) {
+		return;
+	}
+
+	saveState();
+	window.location.href = '?quirk_extra_field=' + quirkRef + '&field_key=' + encodeURIComponent(fieldKey) + '&field_value=' + encodeURIComponent(fieldValue);
+}
+
+// Handle extra customization field changes (select dropdowns)
+function updateQuirkExtraSelect(selectElement) {
+	var quirkRef = selectElement.getAttribute('data-quirk');
+	var fieldKey = selectElement.getAttribute('data-field');
+	var fieldValue = selectElement.value;
+
+	if (!quirkRef || !fieldKey) {
+		return;
+	}
+
+	saveState();
+	window.location.href = '?quirk_extra_field=' + quirkRef + '&field_key=' + encodeURIComponent(fieldKey) + '&field_value=' + encodeURIComponent(fieldValue);
+}
+
+// Handle color picker fields. The picker itself provides the final Submit action.
+function pickQuirkColor(buttonElement) {
+	var quirkRef = buttonElement.getAttribute('data-quirk');
+	var fieldKey = buttonElement.getAttribute('data-field');
+
+	if (!quirkRef || !fieldKey) {
+		return;
+	}
+
+	saveState();
+	window.location.href = '?quirk_color_field=' + quirkRef + '&field_key=' + encodeURIComponent(fieldKey);
+}
+
+function resetQuirkColor(buttonElement) {
+	var quirkRef = buttonElement.getAttribute('data-quirk');
+	var fieldKey = buttonElement.getAttribute('data-field');
+
+	if (!quirkRef || !fieldKey) {
+		return;
+	}
+
+	saveState();
+	window.location.href = '?quirk_color_reset=' + quirkRef + '&field_key=' + encodeURIComponent(fieldKey);
+}
+
 // Debounced text update (optional - for auto-saving as user types)
 var textUpdateTimeout;
 function updateQuirkTextDebounced(inputElement) {
@@ -244,6 +297,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Handle select changes (prevent event bubbling)
 	document.addEventListener('change', function(e) {
+		if (e.target.hasAttribute('data-field')) {
+			e.stopPropagation();
+			if (e.target.classList.contains('quirk-select')) {
+				updateQuirkExtraSelect(e.target);
+			} else if (e.target.classList.contains('quirk-text-input')) {
+				updateQuirkExtraField(e.target);
+			}
+			return;
+		}
 		if (e.target.classList.contains('quirk-select')) {
 			e.stopPropagation();
 			updateQuirkCustomization(e.target);

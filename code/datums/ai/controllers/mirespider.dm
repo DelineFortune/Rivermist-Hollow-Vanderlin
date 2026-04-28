@@ -2,6 +2,7 @@
 	movement_delay = 0.4 SECONDS
 
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_SPIDERS
 
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
@@ -10,6 +11,9 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/aggro_find_target,
+
+		/datum/ai_planning_subtree/simple_find_horny,
+		/datum/ai_planning_subtree/horny,
 
 		/datum/ai_planning_subtree/simple_self_recovery,
 		/datum/ai_planning_subtree/find_food,
@@ -23,6 +27,7 @@
 	movement_delay = 0.4 SECONDS
 
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_SPIDERS
 
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
@@ -42,6 +47,7 @@
 	movement_delay = 0.4 SECONDS
 
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_SPIDERS
 
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()

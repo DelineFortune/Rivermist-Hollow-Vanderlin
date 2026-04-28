@@ -296,6 +296,24 @@
 	seed_skill_xp()
 
 /**
+ * Copies only skill levels, XP, and XP multipliers from another holder.
+ * Leaves non-skill attributes alone so transformed bodies can keep their own statline.
+ */
+/datum/attribute_holder/proc/copy_skill_state(datum/attribute_holder/to_copy)
+	if(!istype(to_copy))
+		return
+
+	for(var/thing in raw_attribute_list)
+		if(!ispath(thing, SKILL))
+			continue
+		raw_attribute_list[thing] = to_copy.raw_attribute_list[thing]
+
+	skill_xp = LAZYLEN(to_copy.skill_xp) ? to_copy.skill_xp.Copy() : null
+	skill_xp_multipliers = LAZYLEN(to_copy.skill_xp_multipliers) ? to_copy.skill_xp_multipliers.Copy() : null
+	update_attributes()
+	seed_skill_xp()
+
+/**
  * Stuff we do when another holder copies us
  */
 /datum/attribute_holder/proc/on_copy(datum/attribute_holder/plagiarist)

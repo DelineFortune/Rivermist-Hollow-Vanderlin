@@ -373,12 +373,12 @@
 		if(water_overlay)
 			if((get_dir(src, new_loc) == SOUTH))
 				water_overlay.layer = BELOW_MOB_LAYER
-				water_overlay.plane = WEATHER_OVERLAY_PLANE
+				water_overlay.plane = GAME_PLANE
 			else
 				spawn(6)
 					if(!locate(/mob/living) in src)
 						water_overlay.layer = BELOW_MOB_LAYER
-						water_overlay.plane = WEATHER_OVERLAY_PLANE
+						water_overlay.plane = GAME_PLANE
 		for(var/D in GLOB.cardinals)
 			if(istype(get_step(new_loc, D), /turf/open/floor))
 				return
@@ -444,12 +444,12 @@
 				playsound(arrived, pick('sound/foley/watermove (1).ogg','sound/foley/watermove (2).ogg'), 100, FALSE)
 			if(istype(old_loc, type) && (get_dir(src, old_loc) != SOUTH))
 				water_overlay.layer = ABOVE_MOB_LAYER
-				water_overlay.plane = WEATHER_OVERLAY_PLANE
+				water_overlay.plane = GAME_PLANE
 			else
 				spawn(6)
 					if(arrived.loc == src)
 						water_overlay.layer = ABOVE_MOB_LAYER
-						water_overlay.plane = WEATHER_OVERLAY_PLANE
+						water_overlay.plane = GAME_PLANE
 
 /turf/open/water/attackby(obj/item/C, mob/user, list/modifiers)
 	if(user.used_intent.type == /datum/intent/fill)

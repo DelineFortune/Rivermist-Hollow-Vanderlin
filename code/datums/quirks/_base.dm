@@ -76,10 +76,15 @@ GLOBAL_LIST_EMPTY(quirk_points_by_type)
 	/// Label for the customization dropdown
 	var/customization_label = "Select Option"
 
-	/// Type of customization: "select" for dropdown, "text" for text input
+	/// Type of customization: "select" for dropdown, "text" for text input, "number" for numeric
 	var/customization_type = QUIRK_SELECT
 	/// Placeholder text for text inputs
 	var/customization_placeholder = "Enter text..."
+
+	/// Extra customization fields: list of lists, each with keys: key, label, type, default, options, min, max, placeholder
+	var/list/extra_customization_fields = null
+	/// Stored values for extra fields, keyed by field key
+	var/list/extra_customization_values = null
 
 	/// List of allowed ages (empty = all allowed)
 	var/list/allowed_ages = list()
@@ -96,12 +101,14 @@ GLOBAL_LIST_EMPTY(quirk_points_by_type)
 	/// Text shown on quirk loss
 	var/lose_text
 
-/datum/quirk/New(mob/living/new_owner, custom_value = null)
+/datum/quirk/New(mob/living/new_owner, custom_value = null, list/extra_values = null)
 	. = ..()
 	if(new_owner)
 		owner = new_owner
 		if(custom_value)
 			customization_value = custom_value
+		if(extra_values)
+			extra_customization_values = extra_values.Copy()
 		if(!preview_render && istype(owner, /mob/living/carbon/human/dummy))
 			return
 		on_spawn()
@@ -161,6 +168,21 @@ GLOBAL_LIST_EMPTY(quirk_points_by_type)
 /datum/quirk/proc/return_customization(datum/preferences/prefs)
 	return customization_options.Copy()
 
+/datum/quirk/proc/get_extra_value(key, default_value = null)
+	if(!key)
+		return default_value
+	if(LAZYLEN(extra_customization_values) && !isnull(extra_customization_values[key]))
+		return extra_customization_values[key]
+	// Fall back to field default
+	for(var/list/field in extra_customization_fields)
+		if(field["key"] == key)
+			return field["default"]
+	return default_value
+
+/datum/quirk/proc/set_extra_value(key, value)
+	LAZYINITLIST(extra_customization_values)
+	extra_customization_values[key] = value
+
 /// Check if this quirk is available for the given preferences
 /datum/quirk/proc/is_available(datum/preferences/prefs)
 	if(!prefs)
@@ -183,7 +205,7 @@ GLOBAL_LIST_EMPTY(quirk_points_by_type)
 /mob/living/proc/add_quirk(quirk_type)
 	return
 
-/mob/living/carbon/human/add_quirk(quirk_type, custom_value = null)
+/mob/living/carbon/human/add_quirk(quirk_type, custom_value = null, list/extra_values = null)
 	if(!ispath(quirk_type, /datum/quirk))
 		return FALSE
 
@@ -191,7 +213,7 @@ GLOBAL_LIST_EMPTY(quirk_points_by_type)
 		if(Q.type == quirk_type)
 			return FALSE
 
-	var/datum/quirk/new_quirk = new quirk_type(src, custom_value)
+	var/datum/quirk/new_quirk = new quirk_type(src, custom_value, extra_values)
 	quirks += new_quirk
 	return TRUE
 

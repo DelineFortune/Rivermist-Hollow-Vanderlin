@@ -59,7 +59,7 @@
 			pawn.put_in_active_hand(candidate)
 			break
 
-	if(!td.can_attack(pawn, target))
+	if(!td.can_engage_target(pawn, target))
 		finish_action(controller, FALSE, target_key)
 		return
 	if(ismob(target) && target:stat == DEAD)
@@ -72,6 +72,11 @@
 
 	pawn.face_atom(target)
 	_choose_attack_zone(controller, pawn, target)
+
+	if(td.should_disarm(pawn, target) && ishuman(target))
+		var/mob/living/carbon/human/h_target = target
+		if(attempt_nonlethal_mob_erp_subdue(td, pawn, h_target))
+			return
 
 	if(!pawn.CanReach(target))
 		finish_action(controller, FALSE, target_key)

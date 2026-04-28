@@ -2,6 +2,7 @@
 	movement_delay = 0.5 SECONDS
 
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_HUMANOIDS
 
 	blackboard = list(
 		BB_WEAPON_TYPE = /obj/item/weapon,

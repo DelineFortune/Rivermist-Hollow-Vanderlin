@@ -41,9 +41,11 @@
 /obj/item/weapon/chisel/iron
 	name = "iron chisel"
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	time_multiplier = 1.1
 
 /obj/item/weapon/chisel/bronze
 	name = "bronze chisel"
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
 	time_multiplier = 1.2

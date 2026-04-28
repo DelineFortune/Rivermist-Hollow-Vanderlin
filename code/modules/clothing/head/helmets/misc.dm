@@ -204,6 +204,8 @@
 	icon_state = "lamellar"
 	flags_inv = HIDEEARS
 	smeltresult = /obj/item/ingot/copper
+	melting_material = /datum/material/copper
+	melt_amount = 100
 	sellprice = VALUE_LEATHER_HELMET // until copper/new mats properly finished and integrated this is a stopgap
 
 	armor = ARMOR_PADDED_GOOD
@@ -269,6 +271,7 @@
 	item_state = "isallet"
 	desc = "A simple iron helmet with no attachments. Helps protect the ears."
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	sellprice = VALUE_IRON_HELMET
 
 	armor =  ARMOR_PLATE_BAD
@@ -381,6 +384,7 @@
 	item_state = "isallet_visor"
 	item_weight = 6 * IRON_MULTIPLIER
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	sellprice = VALUE_IRON_HELMET+BONUS_VALUE_TINY
 	armor = ARMOR_PLATE_BAD
 	max_integrity = INTEGRITY_STRONG
@@ -421,6 +425,7 @@
 
 	item_weight = 5.6 * IRON_MULTIPLIER
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	sellprice = VALUE_IRON_HELMET+BONUS_VALUE_TINY
 
 	armor = ARMOR_PLATE_BAD
@@ -455,6 +460,8 @@
 	max_integrity = INTEGRITY_STRONG
 	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_HIP
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	sellprice = VALUE_IRON_ARMOR_UNUSUAL
 	item_weight = 6 * STEEL_MULTIPLIER
 
@@ -480,6 +487,8 @@
 	max_integrity = INTEGRITY_STRONG
 	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_HIP
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	sellprice = VALUE_IRON_ARMOR_UNUSUAL
 	item_weight = 6 * IRON_MULTIPLIER
 	detail_tag = "_detail"
@@ -498,6 +507,8 @@
 	max_integrity = INTEGRITY_STRONG//slighly more integrity
 	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_HIP
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	sellprice = VALUE_IRON_ARMOR_UNUSUAL
 	item_weight = 6 * STEEL_MULTIPLIER
 	detail_tag = "_detail"
@@ -540,6 +551,7 @@
 	icon_state = "silverbascinet"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
 	allowed_ages = ALL_AGES_LIST //placeholder until younglings have onmob sprites for this item
 	armor = ARMOR_PLATE_SILVER
 	sellprice = VALUE_SILVER_ARMOR
@@ -594,6 +606,8 @@
 	max_integrity = 425
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/blacksteel
+	melting_material = /datum/material/blacksteel
+	melt_amount = 100
 	item_weight = 6 * BLACKSTEEL_MULTIPLIER
 
 /obj/item/clothing/head/helmet/blacksteel/psythorns

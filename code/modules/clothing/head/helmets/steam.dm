@@ -8,6 +8,7 @@
 	item_weight = 9 * BRONZE_MULTIPLIER
 	block2add = FOV_RIGHT|FOV_LEFT
 	smeltresult = /obj/item/ingot/bronze
+	melting_material = /datum/material/bronze
 
 /obj/item/clothing/head/helmet/heavy/steam/dropped(mob/living/carbon/user)
 	// Locate the boiler in the back slots

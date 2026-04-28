@@ -41,11 +41,11 @@
 	var/list/filtered_targets = list()
 	if(islist(priority_targets))
 		for(var/atom/pot_target in potential_targets)
-			if((pot_target in priority_targets) && targetting_datum.can_attack(living_mob, pot_target))//Can we attack it?
+			if((pot_target in priority_targets) && targetting_datum.can_quickly_engage_target(living_mob, pot_target))
 				filtered_targets += pot_target
 	else
 		for(var/atom/pot_target in potential_targets)
-			if((pot_target == priority_targets) && targetting_datum.can_attack(living_mob, pot_target))//Can we attack it?
+			if((pot_target == priority_targets) && targetting_datum.can_quickly_engage_target(living_mob, pot_target))
 				filtered_targets += pot_target
 				break
 
@@ -60,7 +60,10 @@
 		finish_action(controller, succeeded = FALSE)
 		return
 
-	var/atom/target = pick_final_target(controller, filtered_targets)
+	var/atom/target = pick_revalidated_target(controller, filtered_targets, targetting_datum, living_mob)
+	if(!target)
+		finish_action(controller, succeeded = FALSE)
+		return
 	controller.set_blackboard_key(target_key, target)
 	var/atom/potential_hiding_location = targetting_datum.find_hidden_mobs(living_mob, target)
 
@@ -77,3 +80,13 @@
 /// Returns the desired final target from the filtered list of targets
 /datum/ai_behavior/find_priority_targets/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
 	return pick(filtered_targets)
+
+/datum/ai_behavior/find_priority_targets/proc/pick_revalidated_target(datum/ai_controller/controller, list/filtered_targets, datum/targetting_datum/strategy, mob/living/living_mob)
+	var/list/remaining_targets = filtered_targets.Copy()
+	while(length(remaining_targets))
+		var/atom/picked_target = pick_final_target(controller, remaining_targets)
+		remaining_targets -= picked_target
+		if(!strategy.can_engage_target(living_mob, picked_target))
+			continue
+		return picked_target
+	return null

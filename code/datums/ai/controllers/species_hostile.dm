@@ -2,6 +2,7 @@
 	movement_delay = 0.5 SECONDS
 
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_HUMANOIDS
 
 	blackboard = list(
 		BB_WEAPON_TYPE = /obj/item/weapon,
@@ -16,6 +17,9 @@
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/generic_resist,
 		/datum/ai_planning_subtree/flee_target,
+
+		/datum/ai_planning_subtree/simple_find_horny,
+		/datum/ai_planning_subtree/horny,
 
 		/datum/ai_planning_subtree/aggro_find_target/species_hostile,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/species_hostile,

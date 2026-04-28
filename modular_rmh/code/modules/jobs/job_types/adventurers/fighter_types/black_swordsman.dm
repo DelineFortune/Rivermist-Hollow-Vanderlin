@@ -29,7 +29,7 @@
 	outfit = /datum/outfit/adventurer_fighter/black_swordsman
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
-	total_positions = 1
+	total_positions = 0
 
 	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/black_swordsman
 

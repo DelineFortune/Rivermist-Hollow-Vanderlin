@@ -10,6 +10,8 @@
 	slot_flags = ITEM_SLOT_HIP
 	associated_skill = null
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	grid_width = 32
 	grid_height = 96
 	var/obj/item/held_item = null

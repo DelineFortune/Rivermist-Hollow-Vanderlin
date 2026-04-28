@@ -2,11 +2,14 @@
 	if(!S)
 		return
 
-	// Save as list of lists: list(list("type" = type, "value" = value), ...)
+	// Save as list of lists: list(list("type" = type, "value" = value, "extra" = list(...)), ...)
 	var/list/quirk_data = list()
 	for(var/quirk_type in quirks)
 		var/custom_val = quirk_customizations[quirk_type]
-		quirk_data += list(list("type" = quirk_type, "value" = custom_val))
+		var/list/extra_val = quirk_extra_customizations[quirk_type]
+		if(islist(extra_val))
+			extra_val = extra_val.Copy()
+		quirk_data += list(list("type" = quirk_type, "value" = custom_val, "extra" = extra_val))
 
 	WRITE_FILE(S["quirks"], quirk_data)
 
@@ -16,6 +19,7 @@
 
 	quirks = list()
 	quirk_customizations = list()
+	quirk_extra_customizations = list()
 
 	var/list/quirk_data
 	S["quirks"] >> quirk_data
@@ -28,11 +32,14 @@
 			continue
 		var/quirk_type = entry["type"]
 		var/custom_val = entry["value"]
+		var/list/extra_val = entry["extra"]
 
 		if(ispath(quirk_type, /datum/quirk))
 			quirks += quirk_type
 			if(custom_val)
 				quirk_customizations[quirk_type] = custom_val
+			if(islist(extra_val) && length(extra_val))
+				quirk_extra_customizations[quirk_type] = extra_val.Copy()
 
 	validate_quirks()
 
@@ -47,10 +54,61 @@
 /datum/preferences/proc/get_quirk_customization(quirk_type)
 	return quirk_customizations[quirk_type]
 
+/datum/preferences/proc/set_quirk_extra_customization(quirk_type, key, value)
+	if(!(quirk_type in quirks))
+		return FALSE
+	var/datum/quirk/quirk = GLOB.quirk_singletons[quirk_type]
+	var/list/field_definition
+	for(var/list/field in quirk?.extra_customization_fields)
+		if(field["key"] == key)
+			field_definition = field
+			break
+	if(!field_definition)
+		return FALSE
+	var/field_type = field_definition["type"]
+	switch(field_type)
+		if(QUIRK_NUMBER)
+			var/min_value = field_definition["min"] || 1
+			var/max_value = field_definition["max"] || 10
+			var/default_value = field_definition["default"] || min_value
+			var/number_value = text2num("[value]")
+			if(isnull(number_value))
+				value = default_value
+			else
+				value = clamp(round(number_value), min_value, max_value)
+		if(QUIRK_SELECT)
+			var/list/options = field_definition["options"]
+			if(!(value in options))
+				value = field_definition["default"]
+		if(QUIRK_TEXT)
+			var/max_length = field_definition["max_length"] || 64
+			var/allow_newlines = field_definition["multiline"] ? TRUE : FALSE
+			value = sanitize_oviposition_text(value, max_length, allow_newlines)
+		if(QUIRK_COLOR)
+			var/sanitized_color = sanitize_oviposition_color(value)
+			value = sanitized_color ? sanitized_color : ""
+	if(!islist(quirk_extra_customizations[quirk_type]))
+		quirk_extra_customizations[quirk_type] = list()
+	quirk_extra_customizations[quirk_type][key] = value
+	save_character()
+	return TRUE
+
+/datum/preferences/proc/get_quirk_extra_customization(quirk_type, key)
+	var/list/extra = quirk_extra_customizations[quirk_type]
+	if(islist(extra))
+		return extra[key]
+	return null
+
 /datum/preferences/proc/validate_quirks()
 	if(!quirks || !islist(quirks))
 		quirks = list()
+		quirk_customizations = list()
+		quirk_extra_customizations = list()
 		return
+	if(!islist(quirk_customizations))
+		quirk_customizations = list()
+	if(!islist(quirk_extra_customizations))
+		quirk_extra_customizations = list()
 
 	// Remove invalid quirk types
 	var/list/valid_quirks = list()
@@ -91,6 +149,17 @@
 			boon_count = count_boons_in_list()
 		else
 			break
+
+	var/list/valid_customizations = list()
+	var/list/valid_extra_customizations = list()
+	for(var/quirk_type in quirks)
+		if(quirk_customizations[quirk_type])
+			valid_customizations[quirk_type] = quirk_customizations[quirk_type]
+		var/list/extra_values = quirk_extra_customizations[quirk_type]
+		if(islist(extra_values) && length(extra_values))
+			valid_extra_customizations[quirk_type] = extra_values.Copy()
+	quirk_customizations = valid_customizations
+	quirk_extra_customizations = valid_extra_customizations
 
 /datum/preferences/proc/calculate_quirk_balance()
 	var/balance = STARTING_QUIRK_POINTS
@@ -175,6 +244,7 @@
 	if(quirk_type in quirks)
 		quirks -= quirk_type
 		quirk_customizations -= quirk_type
+		quirk_extra_customizations -= quirk_type
 
 		// After removing a quirk, validate that the remaining quirks are still affordable
 		var/balance = calculate_quirk_balance()
@@ -185,6 +255,7 @@
 			if(most_expensive)
 				quirks -= most_expensive
 				quirk_customizations -= most_expensive
+				quirk_extra_customizations -= most_expensive
 				balance = calculate_quirk_balance()
 			else
 				break
@@ -196,6 +267,7 @@
 /datum/preferences/proc/clear_quirks()
 	quirks = list()
 	quirk_customizations = list()
+	quirk_extra_customizations = list()
 	save_character()
 
 /datum/preferences/proc/apply_quirks_to_character(mob/living/carbon/human/H)
@@ -207,6 +279,7 @@
 	// Revalidate and apply quirks
 	var/list/valid_quirks = list()
 	var/list/valid_customizations = list()
+	var/list/valid_extra_customizations = list()
 
 	for(var/quirk_type in quirks)
 		var/datum/quirk/Q = new quirk_type()
@@ -232,12 +305,17 @@
 		valid_quirks += quirk_type
 		if(quirk_customizations[quirk_type])
 			valid_customizations[quirk_type] = quirk_customizations[quirk_type]
+		var/list/extra_values = quirk_extra_customizations[quirk_type]
+		if(islist(extra_values) && length(extra_values))
+			valid_extra_customizations[quirk_type] = extra_values.Copy()
 
 		qdel(Q)
 
 	// Update the quirk lists to only valid quirks
+	var/had_invalid_quirks = length(quirks) != length(valid_quirks)
 	quirks = valid_quirks
 	quirk_customizations = valid_customizations
+	quirk_extra_customizations = valid_extra_customizations
 
 	quirks = sort_quirks(quirks)
 
@@ -251,10 +329,11 @@
 	// Apply valid quirks to character
 	for(var/quirk_type in quirks)
 		var/custom_val = quirk_customizations[quirk_type]
-		H.add_quirk(quirk_type, custom_val)
+		var/list/extra_val = quirk_extra_customizations[quirk_type]
+		H.add_quirk(quirk_type, custom_val, extra_val)
 
 	// Save if anything changed
-	if(length(quirks) != length(valid_quirks))
+	if(had_invalid_quirks)
 		save_character()
 
 /datum/preferences/proc/open_quirk_menu(mob/user)
@@ -402,7 +481,7 @@
 			dat += "<label>[label]:</label>"
 			dat += "<input type='text' class='quirk-text-input' data-quirk='\ref[quirk_type]' "
 			dat += "placeholder='[placeholder]' value='[current_value ? current_value : ""]' "
-			dat += "onchange='updateQuirkText(this)' onclick='event.stopPropagation()' />"
+			dat += "onclick='event.stopPropagation()' />"
 			dat += "</div>"
 
 		else if(length(options))
@@ -412,7 +491,7 @@
 
 			dat += "<div class='quirk-customization'>"
 			dat += "<label>[label]:</label>"
-			dat += "<select class='quirk-select' data-quirk='\ref[quirk_type]' onchange='updateQuirkCustomization(this)'>"
+			dat += "<select class='quirk-select' data-quirk='\ref[quirk_type]'>"
 
 			if(!current_value)
 				dat += "<option value='' selected>-- Select --</option>"
@@ -424,6 +503,63 @@
 
 			dat += "</select>"
 			dat += "</div>"
+
+		// Extra customization fields
+		var/list/extra_fields = quirk.extra_customization_fields
+		if(LAZYLEN(extra_fields))
+			for(var/list/field in extra_fields)
+				var/field_key = field["key"]
+				var/field_label = field["label"]
+				var/field_type = field["type"]
+				var/field_current = get_quirk_extra_customization(quirk_type, field_key)
+				if(isnull(field_current))
+					field_current = field["default"]
+
+				dat += "<div class='quirk-customization'>"
+				dat += "<label>[field_label]:</label>"
+
+				if(field_type == QUIRK_TEXT)
+					var/field_placeholder = field["placeholder"] || ""
+					var/field_value = field_current ? field_current : ""
+					var/field_max_length = field["max_length"] || 64
+					if(field["multiline"])
+						dat += "<textarea class='quirk-text-input' data-quirk='\ref[quirk_type]' data-field='[field_key]' "
+						dat += "placeholder='[escape_html_attribute(field_placeholder)]' onclick='event.stopPropagation()' "
+						dat += "maxlength='[field_max_length]' rows='4'>[html_encode(field_value)]</textarea>"
+					else
+						dat += "<input type='text' class='quirk-text-input' data-quirk='\ref[quirk_type]' data-field='[field_key]' "
+						dat += "placeholder='[escape_html_attribute(field_placeholder)]' value='[escape_html_attribute(field_value)]' "
+						dat += "onclick='event.stopPropagation()' maxlength='[field_max_length]' />"
+
+				else if(field_type == QUIRK_NUMBER)
+					var/field_min = field["min"] || 1
+					var/field_max = field["max"] || 10
+					dat += "<input type='number' class='quirk-text-input' data-quirk='\ref[quirk_type]' data-field='[field_key]' "
+					dat += "value='[field_current]' min='[field_min]' max='[field_max]' "
+					dat += "onclick='event.stopPropagation()' />"
+
+				else if(field_type == QUIRK_SELECT)
+					var/list/field_options = field["options"]
+					dat += "<select class='quirk-select' data-quirk='\ref[quirk_type]' data-field='[field_key]'>"
+					for(var/opt in field_options)
+						var/opt_selected = (field_current == opt) ? "selected" : ""
+						dat += "<option value='[opt]' [opt_selected]>[opt]</option>"
+					dat += "</select>"
+
+				else if(field_type == QUIRK_COLOR)
+					var/field_value = field_current ? field_current : ""
+					var/display_color = sanitize_oviposition_color(field_value)
+					if(!display_color)
+						display_color = "#eee3c7"
+					dat += "<div class='quirk-color-row'>"
+					dat += "<span class='quirk-color-swatch' style='background-color: [display_color];'></span>"
+					dat += "<span class='quirk-color-value'>[field_value ? html_encode(field_value) : "Default"]</span>"
+					dat += "<button type='button' class='quirk-color-button' data-quirk='\ref[quirk_type]' data-field='[field_key]' onclick='event.stopPropagation(); pickQuirkColor(this);'>Set Colour</button>"
+					if(field_value)
+						dat += "<button type='button' class='quirk-color-button reset' data-quirk='\ref[quirk_type]' data-field='[field_key]' onclick='event.stopPropagation(); resetQuirkColor(this);'>Reset</button>"
+					dat += "</div>"
+
+				dat += "</div>"
 
 		dat += "<div class='quirk-status'>Click to remove</div>"
 		dat += "</div>"
@@ -472,6 +608,38 @@
 
 		if(quirk_ref)
 			prefs.set_quirk_customization(quirk_ref, text_value)
+		return TRUE
+
+	if(href_list["quirk_extra_field"])
+		var/quirk_ref = locate(href_list["quirk_extra_field"])
+		var/field_key = href_list["field_key"]
+		var/field_value = href_list["field_value"]
+
+		if(quirk_ref && field_key)
+			prefs.set_quirk_extra_customization(quirk_ref, field_key, field_value)
+		return TRUE
+
+	if(href_list["quirk_color_field"])
+		var/quirk_ref = locate(href_list["quirk_color_field"])
+		var/field_key = href_list["field_key"]
+
+		if(quirk_ref && field_key)
+			var/current_color = prefs.get_quirk_extra_customization(quirk_ref, field_key)
+			if(!sanitize_oviposition_color(current_color))
+				current_color = "#eee3c7"
+			var/new_color = tgui_color_picker(usr, "Choose the custom egg color.", "Egg Color", current_color)
+			if(new_color)
+				prefs.set_quirk_extra_customization(quirk_ref, field_key, new_color)
+				prefs.open_quirk_menu(usr)
+		return TRUE
+
+	if(href_list["quirk_color_reset"])
+		var/quirk_ref = locate(href_list["quirk_color_reset"])
+		var/field_key = href_list["field_key"]
+
+		if(quirk_ref && field_key)
+			prefs.set_quirk_extra_customization(quirk_ref, field_key, "")
+			prefs.open_quirk_menu(usr)
 		return TRUE
 
 	if(href_list["quirk_clear"])

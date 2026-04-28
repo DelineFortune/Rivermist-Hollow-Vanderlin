@@ -31,8 +31,10 @@
 	RegisterSignal(holder?.mob, COMSIG_ATOM_MOUSE_ENTERED, PROC_REF(on_mouse_moved_pre))
 
 /datum/blueprint_system/proc/quit()
-	holder.screen -= buttons
-	holder.click_intercept = null
+	if(holder)
+		holder.screen -= buttons
+		if(holder.click_intercept == src)
+			holder.click_intercept = null
 	clear_preview()
 	clear_pixel_positioning_dummy()
 	if(recipe_browser)
@@ -44,13 +46,22 @@
 	qdel(src)
 
 /datum/blueprint_system/Destroy()
-	holder.player_details.post_login_callbacks -= li_cb
-	holder = null
+	if(holder)
+		holder.screen -= buttons
+		if(holder.click_intercept == src)
+			holder.click_intercept = null
+	if(holder?.mob)
+		UnregisterSignal(holder.mob, COMSIG_USER_MOUSE_ENTERED)
+		UnregisterSignal(holder.mob, COMSIG_ATOM_MOUSE_ENTERED)
+	holder?.player_details?.post_login_callbacks -= li_cb
 	clear_preview()
 	clear_pixel_positioning_dummy()
 	if(recipe_browser)
 		recipe_browser.close()
 		recipe_browser = null
+	QDEL_LIST(recipe_buttons)
+	QDEL_LIST(buttons)
+	holder = null
 	return ..()
 
 /datum/blueprint_system/proc/post_login()
@@ -189,7 +200,8 @@
 
 /datum/blueprint_system/proc/clear_preview()
 	if(preview_image)
-		holder.images -= preview_image
+		if(holder)
+			holder.images -= preview_image
 		qdel(preview_image)
 		preview_image = null
 	preview_appearance = null

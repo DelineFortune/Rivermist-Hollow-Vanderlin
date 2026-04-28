@@ -509,6 +509,8 @@
 		if(QDELETED(I) || QDELETED(L) || !L.remove_embedded_object(I))
 			return FALSE
 		L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class) //It hurts to rip it out, get surgery you dingus.
+		if(QDELETED(I) || QDELING(I))
+			return FALSE
 		qdel(src)
 		user.put_in_hands(I)
 		C.emote("paincrit", TRUE)
@@ -523,6 +525,8 @@
 		if(QDELETED(I) || !M.simple_remove_embedded_object(I))
 			return FALSE
 		M.apply_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class, BRUTE) //It hurts to rip it out, get surgery you dingus.
+		if(QDELETED(I) || QDELING(I))
+			return FALSE
 		qdel(src)
 		user.put_in_hands(I)
 		M.emote("paincrit", TRUE)

@@ -34,7 +34,7 @@
 	var/atom/target = controller.blackboard[target_key]
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 
-	if(!targetting_datum.can_attack(lycan, target))
+	if(!targetting_datum.can_engage_target(lycan, target))
 		finish_action(controller, FALSE, target_key)
 		return
 
@@ -53,6 +53,11 @@
 	if(length(possible_intents))
 		lycan.a_intent = pick(possible_intents)
 		lycan.used_intent = lycan.a_intent
+
+	if(targetting_datum.should_disarm(lycan, target) && ishuman(target))
+		var/mob/living/carbon/human/h_target = target
+		if(attempt_nonlethal_mob_erp_subdue(targetting_datum, lycan, h_target))
+			return
 
 	if(!lycan.CanReach(target))
 		finish_action(controller, FALSE, target_key)

@@ -12,3 +12,9 @@
 		qdel(owner.piercings_item)
 	owner.piercings_item = piercings_item
 	piercings_item.piercings_feature = src
+
+/datum/bodypart_feature/piercing/Destroy()
+	if(piercings_item?.piercings_feature == src)
+		piercings_item.piercings_feature = null
+	piercings_item = null
+	return ..()

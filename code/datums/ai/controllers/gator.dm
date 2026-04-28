@@ -1,6 +1,7 @@
 /datum/ai_controller/gator
 	movement_delay = 0.8 SECONDS // Gators are slower than rats on land
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_LIZARDS
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items(),
 		BB_PET_TARGETING_DATUM = new /datum/targetting_datum/basic/not_friends(),
@@ -13,11 +14,13 @@
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/simple_find_target/gator,
+		/datum/ai_planning_subtree/simple_find_horny,
+		/datum/ai_planning_subtree/horny,
 		/datum/ai_planning_subtree/find_food/gator,
 		/datum/ai_planning_subtree/gator_behavior,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/gator_attack,
-		///datum/ai_planning_subtree/find_dead_bodies,
-		///datum/ai_planning_subtree/eat_dead_body,
+		/datum/ai_planning_subtree/find_dead_bodies,
+		/datum/ai_planning_subtree/eat_dead_body,
 		/datum/ai_planning_subtree/find_water,
 	)
 	idle_behavior = /datum/idle_behavior/gator_idle

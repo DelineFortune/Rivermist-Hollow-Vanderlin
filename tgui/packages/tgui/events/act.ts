@@ -2,6 +2,10 @@ import { logger } from '../logging';
 import { createQueue } from './handlers/chunking';
 
 const MAX_BYOND_MESSAGE_URL_SIZE = 2048;
+// Chunk wrapper messages are more fragile than direct submits because they
+// carry escaped JSON inside another escaped JSON payload. Keep them well below
+// the nominal BYOND topic limit instead of aiming at the ceiling.
+const MAX_PAYLOAD_CHUNK_MESSAGE_URL_SIZE = 1500;
 const PAYLOAD_CHUNK_MESSAGE_TYPE = 'payloadChunk';
 
 /**
@@ -43,7 +47,7 @@ function estimateMessageUrlSize(type: string, payload: unknown): number {
     type,
     payload: JSON.stringify(payload),
     tgui: 1,
-    windowId: Byond.windowId,
+    window_id: Byond.windowId,
   }).reduce(
     (url, [key, value], i) =>
       url +
@@ -83,7 +87,7 @@ function findLargestSafeChunkEnd(
       chunk,
     });
 
-    if (urlSize <= MAX_BYOND_MESSAGE_URL_SIZE) {
+    if (urlSize <= MAX_PAYLOAD_CHUNK_MESSAGE_URL_SIZE) {
       bestEnd = mid;
       low = mid + 1;
     } else {

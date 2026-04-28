@@ -251,6 +251,9 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 		qdel(src)
 		return
 	var/should_update = FALSE
+	var/is_matthios = FALSE
+	if(FACTION_MATTHIOS in C.faction)
+		is_matthios = TRUE
 	if(amount > 20 MINUTES)
 		for(var/obj/item/bodypart/B in C.bodyparts)
 			if(!B.skeletonized)
@@ -261,7 +264,7 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 			if(!B.rotted)
 				B.rotted = TRUE
 				should_update = TRUE
-			if(B.rotted && amount < 16 MINUTES && !(FACTION_MATTHIOS in C.faction))
+			if(B.rotted && amount < 16 MINUTES && !is_matthios)
 				var/turf/open/T = C.loc
 				if(istype(T))
 					T.pollute_turf(/datum/pollutant/rot, 4)
@@ -402,6 +405,7 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 		if(QDELETED(alarm))
 			continue
 		qdel(alarm)
+	all_alarms.Cut()
 
 /obj/structure/rousman_alarm
 	name = ""
@@ -414,6 +418,7 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	var/obj/structure/rousman_hole/hole
 
 /obj/structure/rousman_alarm/Destroy()
+	hole?.all_alarms -= src
 	hole = null
 	return ..()
 

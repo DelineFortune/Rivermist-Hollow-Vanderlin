@@ -103,6 +103,17 @@ ui_state()     ──→ access check
 
 Registration is automatic via `routes.ts` — no manual registration needed.
 
+### Multilingual RMH interfaces
+
+RMH bilingual player-facing TGUI should follow the modular wrapper pattern used by `ContractLedger` and `OvipositionStatus`:
+
+- Before starting TGUI work, always offer the user to make or keep the interface multilingual (EN/RU), even when the original request does not explicitly ask for localization.
+- Keep one shared implementation in `tgui/packages/tgui/interfaces/MyThingView.tsx`.
+- Put user-facing strings in `MyThing.i18n.en.ts` and `MyThing.i18n.ru.ts`.
+- Keep route wrappers thin: `MyThing.tsx` imports EN locale and `MyThingRu.tsx` imports RU locale, then both render `MyThingView`.
+- On the DM side, choose the interface name before opening the UI: `get_preferred_ui_language(user) == "ru" ? "MyThingRu" : "MyThing"`. The language setting is stored on `client.preferred_ui_language` and changed by `modular_rmh/code/modules/client/preferred_language.dm`.
+- Prefer stable keys, ids, counts, and raw state in `ui_data()`. Translate labels and status text in TS locale files; avoid hardcoding parallel English/Russian strings in DM unless the DM value is not TGUI-specific.
+
 ### Minimal component
 
 ```tsx

@@ -38,15 +38,32 @@
 	if(lair_entrance)
 		qdel(lair_entrance)
 
-/datum/antagonist/werewolf/proc/get_werewolf_lair_entrance()
-	if(!lair_entrance_ref)
-		return null
+/datum/antagonist/werewolf/proc/is_current_werewolf_body(mob/living/user = owner?.current)
+	if(!istype(user))
+		return FALSE
+	if(owner != user.mind)
+		return FALSE
+	if(owner?.current != user)
+		return FALSE
+	return !!IS_WEREWOLF(user)
 
-	var/obj/structure/werewolf_lair_entrance/lair_entrance = lair_entrance_ref.resolve()
+/datum/antagonist/werewolf/proc/get_werewolf_lair_entrance()
+	var/obj/structure/werewolf_lair_entrance/lair_entrance = lair_entrance_ref?.resolve()
 	if(lair_entrance)
 		return lair_entrance
 
 	lair_entrance_ref = null
+
+	if(!owner)
+		return null
+
+	// Recover the lair if this werewolf datum was recreated and lost its cached ref.
+	for(var/obj/structure/werewolf_lair_entrance/existing_lair in world)
+		if(existing_lair.get_owner_mind() != owner)
+			continue
+		lair_entrance_ref = WEAKREF(existing_lair)
+		return existing_lair
+
 	return null
 
 /datum/antagonist/werewolf/proc/can_create_werewolf_lair()
@@ -95,11 +112,7 @@
 		lair_scent_action.Remove(lair_scent_action.owner)
 
 /datum/antagonist/werewolf/proc/can_track_werewolf_lair(mob/living/user = owner?.current)
-	if(!istype(user))
-		return FALSE
-	if(owner?.current != user)
-		return FALSE
-	if(IS_WEREWOLF(user) != src)
+	if(!is_current_werewolf_body(user))
 		return FALSE
 	return !!get_werewolf_lair_entrance()
 
@@ -264,6 +277,7 @@
 	pixel_y = 5
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/datum/weakref/owner_werewolf_ref
+	var/datum/weakref/owner_mind_ref
 	var/list/invited_werewolf_ckeys
 
 /obj/structure/werewolf_lair_entrance/Initialize(mapload, datum/antagonist/werewolf/owner_werewolf, turf/dug_wall)
@@ -282,6 +296,8 @@
 		return .
 
 	owner_werewolf_ref = WEAKREF(owner_werewolf)
+	if(owner_werewolf.owner)
+		owner_mind_ref = WEAKREF(owner_werewolf.owner)
 
 /obj/structure/werewolf_lair_entrance/setDir(newdir)
 	..()
@@ -316,6 +332,7 @@
 		owner_werewolf.sync_werewolf_lair_tracking_action()
 
 	invited_werewolf_ckeys = null
+	owner_mind_ref = null
 	owner_werewolf_ref = null
 	return ..()
 
@@ -345,23 +362,39 @@
 		. += span_warning("The burrow has gone dead and still.")
 		return .
 
-	if(IS_WEREWOLF(user) == owner_werewolf)
+	if(is_owner_werewolf(user, owner_werewolf))
 		. += span_notice("Right-click to manage invitations for other werewolves.")
 		if(length(invited_werewolf_ckeys))
 			. += span_notice("Invited werewolves: [english_list(get_invited_display_names())].")
 		else
 			. += span_notice("No other werewolves have been invited yet.")
 
-/obj/structure/werewolf_lair_entrance/proc/get_owner_werewolf()
-	if(!owner_werewolf_ref)
+/obj/structure/werewolf_lair_entrance/proc/get_owner_mind()
+	var/datum/mind/owner_mind = owner_mind_ref?.resolve()
+	if(owner_mind)
+		return owner_mind
+
+	owner_mind_ref = null
+	var/datum/antagonist/werewolf/owner_werewolf = owner_werewolf_ref?.resolve()
+	if(!owner_werewolf?.owner)
 		return null
 
-	var/datum/antagonist/werewolf/owner_werewolf = owner_werewolf_ref.resolve()
-	if(owner_werewolf)
-		return owner_werewolf
+	owner_mind_ref = WEAKREF(owner_werewolf.owner)
+	return owner_werewolf.owner
 
-	owner_werewolf_ref = null
-	return null
+/obj/structure/werewolf_lair_entrance/proc/get_owner_werewolf()
+	var/datum/mind/owner_mind = get_owner_mind()
+	if(!owner_mind)
+		owner_werewolf_ref = null
+		return null
+
+	var/datum/antagonist/werewolf/owner_werewolf = owner_mind.has_antag_datum(/datum/antagonist/werewolf)
+	if(!owner_werewolf)
+		owner_werewolf_ref = null
+		return null
+
+	owner_werewolf_ref = WEAKREF(owner_werewolf)
+	return owner_werewolf
 
 /obj/structure/werewolf_lair_entrance/proc/get_pocket_instance_key()
 	return "werewolf_lair::[REF(src)]"
@@ -494,9 +527,14 @@
 
 /obj/structure/werewolf_lair_entrance/proc/is_owner_werewolf(mob/living/user, datum/antagonist/werewolf/owner_werewolf = null)
 	owner_werewolf ||= get_owner_werewolf()
-	if(!owner_werewolf)
+	var/datum/mind/owner_mind = owner_werewolf?.owner
+	if(!owner_mind)
+		owner_mind = get_owner_mind()
+	if(!owner_mind)
 		return FALSE
-	return IS_WEREWOLF(user) == owner_werewolf
+	if(!user?.mind || owner_mind != user.mind)
+		return FALSE
+	return !!IS_WEREWOLF(user)
 
 /obj/structure/werewolf_lair_entrance/proc/is_invited_werewolf(mob/living/user)
 	var/datum/antagonist/werewolf/requesting_werewolf = IS_WEREWOLF(user)
@@ -533,7 +571,7 @@
 		if(show_feedback)
 			to_chat(user, span_warning("I need to stand by my lair entrance first."))
 		return FALSE
-	if(IS_WEREWOLF(user) == owner_werewolf)
+	if(is_owner_werewolf(user, owner_werewolf))
 		return TRUE
 	if(show_feedback)
 		to_chat(user, span_warning("Only the lair's owner can manage invitations."))
@@ -566,8 +604,7 @@
 		to_chat(user, span_warning("No werewolf by that name answers the moon."))
 		return FALSE
 
-	var/datum/antagonist/werewolf/owner_werewolf = get_owner_werewolf()
-	if(invitee_mind == owner_werewolf?.owner)
+	if(invitee_mind == get_owner_mind())
 		to_chat(user, span_notice("It is already my lair."))
 		return FALSE
 

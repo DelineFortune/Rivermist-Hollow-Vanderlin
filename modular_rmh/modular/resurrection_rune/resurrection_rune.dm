@@ -11,6 +11,7 @@
 #define RUNE_STAGE_IMMEDIATE 3
 #define RUNE_THRESHOLD_FULLCRIT 30
 #define RUNE_THRESHOLD_SOFTCRIT 45
+#define RUNE_MOB_ERP_ESCAPE_ACTION_DURATION (1 MINUTES)
 
 /proc/find_resurrection_rune_by_tag(rune_tag)
 	if(!rune_tag || rune_tag == RUNE_LINK_NONE)
@@ -30,6 +31,21 @@
 		return
 
 	return pick(tagged_markers)
+
+/proc/get_resurrection_rune_controller_for_user(mob/living/carbon/user)
+	if(!ishuman(user))
+		return null
+
+	var/mob/living/carbon/human/human_user = user
+	if(!human_user.rune_linked || human_user.rune_linked == RUNE_LINK_NONE)
+		return null
+
+	var/obj/structure/resurrection_rune/linked_rune = find_resurrection_rune_by_tag(human_user.rune_linked)
+	if(!linked_rune)
+		return null
+	if(!linked_rune.main_rune_link && !linked_rune.is_main)
+		linked_rune.find_master()
+	return linked_rune.resrunecontroler
 
 /proc/is_townhall_job(datum/job/assigned_role)
 	if(!assigned_role)
@@ -100,7 +116,9 @@
 
 	var/mob/living/carbon/carbon_owner = owner
 	var/rescue_stage = rune_controller.get_rescue_stage(carbon_owner)
-	return rescue_stage == RUNE_STAGE_SOFT_CRIT || rescue_stage == RUNE_STAGE_HARD_CRIT
+	if(rescue_stage == RUNE_STAGE_SOFT_CRIT || rescue_stage == RUNE_STAGE_HARD_CRIT)
+		return TRUE
+	return rune_controller.can_offer_mob_erp_rescue(carbon_owner)
 
 /datum/action/innate/resurrection_rune_call/Activate()
 	. = ..()
@@ -110,7 +128,12 @@
 		return
 
 	var/mob/living/carbon/carbon_owner = owner
-	rune_controller.trigger_voluntary_revival(carbon_owner)
+	var/rescue_stage = rune_controller.get_rescue_stage(carbon_owner)
+	if(rescue_stage == RUNE_STAGE_SOFT_CRIT || rescue_stage == RUNE_STAGE_HARD_CRIT)
+		rune_controller.trigger_voluntary_revival(carbon_owner)
+		return
+	if(rune_controller.can_offer_mob_erp_rescue(carbon_owner))
+		rune_controller.trigger_mob_erp_escape(carbon_owner)
 
 
 /datum/resurrection_rune_controller
@@ -123,6 +146,7 @@
 	var/list/resurrecting = list()
 	var/list/rescue_actions = list()
 	var/list/hard_crit_deadlines = list()
+	var/list/mob_erp_escape_deadlines = list()
 	// If the body is completely gone, rebuild this kind of shell at the rune.
 	var/mob_type = /mob/living/carbon/human
 
@@ -146,6 +170,7 @@
 	resurrecting = null
 	rescue_actions = null
 	hard_crit_deadlines = null
+	mob_erp_escape_deadlines = null
 	return ..()
 
 /datum/resurrection_rune_controller/process()
@@ -166,12 +191,15 @@
 			remove_linked_mind(linked_mind)
 			return
 		prune_deleted_linked_body_state(linked_mind)
-		if(linked_mind.current && !istype(linked_mind.current, /mob/living/brain))
+		var/mob/living/carbon/current_body = get_current_linkable_body(linked_mind)
+		if(current_body)
+			replace_linked_body(linked_mind, current_body)
 			continue
 		if(linked_mind in resurrecting)
 			continue
 		queue_body_remake(linked_mind)
 
+	process_mob_erp_escape_offers()
 	process_hard_crit_timeouts()
 
 /datum/resurrection_rune_controller/proc/resurrections_disabled()
@@ -183,10 +211,25 @@
 	if(!linked_mind)
 		return FALSE
 
+	// Client handoffs can briefly still point at a lobby mob during spawn. Only
+	// sever a link if the mind itself is explicitly sitting in a new-player body.
 	var/mob/current_mob = linked_mind.current
-	if(isnull(current_mob?.client))
+	if(!current_mob)
 		return FALSE
-	return isnewplayer(current_mob.client.mob)
+	return isnewplayer(current_mob)
+
+/datum/resurrection_rune_controller/proc/get_current_linkable_body(datum/mind/linked_mind)
+	if(!linked_mind)
+		return null
+
+	var/mob/living/carbon/current_body = linked_mind.current
+	if(!istype(current_body))
+		return null
+	if(istype(current_body, /mob/living/brain))
+		return null
+	if(QDELETED(current_body))
+		return null
+	return current_body
 
 /datum/resurrection_rune_controller/proc/queue_body_remake(datum/mind/linked_mind)
 	to_chat(linked_mind.get_ghost(TRUE, TRUE), span_blue("Somewhere, you are being remade anew..."))
@@ -200,7 +243,7 @@
 	if(!(linked_mind in linked_users_minds))
 		resurrecting -= linked_mind
 		return
-	if(linked_mind.current && !istype(linked_mind.current, /mob/living/brain))
+	if(get_current_linkable_body(linked_mind))
 		resurrecting -= linked_mind
 		return
 
@@ -286,6 +329,8 @@
 		return
 
 	var/mob/living/carbon/old_body = linked_body_by_mind[linked_mind]
+	if(old_body == new_body && (new_body in linked_users))
+		return
 	if(old_body && old_body != new_body)
 		unregister_linked_body(old_body)
 
@@ -422,19 +467,80 @@
 		if(RUNE_STAGE_SOFT_CRIT)
 			ensure_rescue_action(user)
 			clear_hard_crit_deadline(user)
+			return
 		if(RUNE_STAGE_HARD_CRIT)
 			ensure_rescue_action(user)
 			ensure_hard_crit_deadline(user)
-		else
-			clear_linked_user_rescue_state(user)
+			return
+
+	clear_hard_crit_deadline(user)
+	if(can_offer_mob_erp_rescue(user))
+		ensure_rescue_action(user)
+		return
+
+	clear_rescue_action(user)
 
 /datum/resurrection_rune_controller/proc/clear_all_linked_user_rescue_states()
 	for(var/mob/living/carbon/linked_user as anything in linked_users)
 		clear_linked_user_rescue_state(linked_user)
 
 /datum/resurrection_rune_controller/proc/clear_linked_user_rescue_state(mob/living/carbon/user)
+	clear_mob_erp_escape_offer(user, FALSE)
 	clear_rescue_action(user)
 	clear_hard_crit_deadline(user)
+
+/datum/resurrection_rune_controller/proc/process_mob_erp_escape_offers()
+	if(!mob_erp_escape_deadlines.len)
+		return
+
+	var/list/offer_targets = mob_erp_escape_deadlines.Copy()
+	for(var/mob/living/carbon/linked_user as anything in offer_targets)
+		var/deadline = mob_erp_escape_deadlines[linked_user]
+		if(!deadline)
+			continue
+		if(QDELETED(linked_user))
+			clear_mob_erp_escape_offer(linked_user, FALSE)
+			continue
+		if(!(linked_user in linked_users))
+			clear_mob_erp_escape_offer(linked_user, FALSE)
+			continue
+		if(linked_user in resurrecting)
+			clear_mob_erp_escape_offer(linked_user)
+			continue
+		if(world.time < deadline)
+			continue
+
+		clear_mob_erp_escape_offer(linked_user)
+
+/datum/resurrection_rune_controller/proc/offer_mob_erp_escape(mob/living/carbon/user, offer_duration = RUNE_MOB_ERP_ESCAPE_ACTION_DURATION)
+	if(!can_queue_rescue_for(user))
+		return FALSE
+
+	var/existing_deadline = mob_erp_escape_deadlines[user]
+	mob_erp_escape_deadlines[user] = max(existing_deadline || 0, world.time + offer_duration)
+	update_linked_user_rescue_state(user)
+	return TRUE
+
+/datum/resurrection_rune_controller/proc/can_offer_mob_erp_rescue(mob/living/carbon/user)
+	if(!user)
+		return FALSE
+
+	var/deadline = mob_erp_escape_deadlines[user]
+	if(!deadline)
+		return FALSE
+	if(world.time >= deadline)
+		return FALSE
+	return can_queue_rescue_for(user)
+
+/datum/resurrection_rune_controller/proc/clear_mob_erp_escape_offer(mob/living/carbon/user, refresh_rescue_state = TRUE)
+	if(!user)
+		return
+	if(!mob_erp_escape_deadlines[user])
+		return
+
+	mob_erp_escape_deadlines.Remove(user)
+	if(refresh_rescue_state)
+		update_linked_user_rescue_state(user)
 
 /datum/resurrection_rune_controller/proc/ensure_rescue_action(mob/living/carbon/user)
 	if(!user)
@@ -498,6 +604,13 @@
 
 	var/rescue_stage = get_rescue_stage(user)
 	if(rescue_stage != RUNE_STAGE_SOFT_CRIT && rescue_stage != RUNE_STAGE_HARD_CRIT)
+		return FALSE
+
+	queue_revival(user, voluntary = TRUE)
+	return TRUE
+
+/datum/resurrection_rune_controller/proc/trigger_mob_erp_escape(mob/living/carbon/user)
+	if(!can_offer_mob_erp_rescue(user))
 		return FALSE
 
 	queue_revival(user, voluntary = TRUE)
@@ -1082,3 +1195,4 @@
 #undef RUNE_STAGE_SOFT_CRIT
 #undef RUNE_STAGE_HARD_CRIT
 #undef RUNE_STAGE_IMMEDIATE
+#undef RUNE_MOB_ERP_ESCAPE_ACTION_DURATION

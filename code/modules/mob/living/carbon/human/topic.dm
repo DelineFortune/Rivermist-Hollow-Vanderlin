@@ -92,6 +92,8 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			if(QDELETED(I) || QDELETED(L) || !L.remove_embedded_object(I))
 				return
 			L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
+			if(QDELETED(I) || QDELING(I))
+				return
 			usr.put_in_hands(I)
 			emote("pain", TRUE)
 			playsound(src, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)

@@ -12,7 +12,7 @@
 	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, /datum/intent/unarmed/claw, /datum/intent/simple/bite, /datum/intent/kick)
 
 /mob/living/carbon/human/species/zizombie/npc
-	ai_controller = /datum/ai_controller/human_npc
+	ai_controller = /datum/ai_controller/human_npc/undead
 	dodgetime = 15 //they can dodge easily, but have a cooldown on it
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -24,7 +24,7 @@
 	AddComponent(/datum/component/combat_noise, list("rage" = 1, "scream" = 1))
 
 /mob/living/carbon/human/species/zizombie/ambush
-	ai_controller = /datum/ai_controller/human_npc
+	ai_controller = /datum/ai_controller/human_npc/undead
 
 /mob/living/carbon/human/species/zizombie/ambush/after_creation()
 	..()
@@ -201,6 +201,9 @@
 		qdel(src)
 		return
 	var/should_update = FALSE
+	var/is_matthios = FALSE
+	if(FACTION_MATTHIOS in C.faction)
+		is_matthios = TRUE
 	if(amount > 20 MINUTES)
 		for(var/obj/item/bodypart/B in C.bodyparts)
 			if(!B.skeletonized)
@@ -211,7 +214,7 @@
 			if(!B.rotted)
 				B.rotted = TRUE
 				should_update = TRUE
-			if(B.rotted && amount < 16 MINUTES && !(FACTION_MATTHIOS in C.faction))
+			if(B.rotted && amount < 16 MINUTES && !is_matthios)
 				var/turf/open/T = C.loc
 				if(istype(T))
 					T.pollute_turf(/datum/pollutant/rot, 4)

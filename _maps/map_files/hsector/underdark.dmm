@@ -200,10 +200,6 @@
 	},
 /turf/open/floor/churchmarble,
 /area/under/underdark/rmh/shar)
-"ct" = (
-/obj/effect/landmark/quest_spawner/medium,
-/turf/open/floor/naturalstone,
-/area/under/underdark/rmh)
 "cx" = (
 /obj/effect/decal/cobbleedge{
 	dir = 10
@@ -1041,13 +1037,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/tile/harem,
 /area/under/underdark/rmh/shar)
-"ni" = (
-/obj/effect/landmark/quest_spawner/medium,
-/turf/open/floor/grass/cold{
-	name = "underdark grass";
-	desc = "Grass, frigid and touched by Underdark air."
-	},
-/area/under/underdark/rmh/glimmerlakes)
 "nk" = (
 /obj/machinery/light/fueled/oven/south,
 /obj/structure/table/wood,
@@ -1291,9 +1280,10 @@
 /turf/open/floor/church,
 /area/under/underdark/rmh/shar)
 "qu" = (
-/obj/effect/landmark/quest_spawner/medium,
-/turf/open/floor/dirt,
-/area/under/underdark/rmh/glimmerlakes)
+/obj/effect/decal/cleanable/debris/stone,
+/obj/effect/landmark/quest_spawner/hard,
+/turf/open/floor/cobble,
+/area/indoors/shelter)
 "qy" = (
 /obj/effect/decal/cleanable/debris/wood,
 /obj/item/grown/log/tree/small,
@@ -2489,9 +2479,9 @@
 /turf/open/floor/hexstone,
 /area/under/underdark/rmh/shar)
 "Go" = (
-/obj/effect/landmark/quest_spawner/medium,
-/turf/open/floor/dirt/road,
-/area/under/underdark/rmh/glimmerlakes)
+/obj/effect/landmark/quest_spawner/hard,
+/turf/open/floor/naturalstone,
+/area/under/underdark/rmh/flow)
 "Gp" = (
 /obj/structure/flora/mushroomcluster,
 /turf/open/floor/grass/cold{
@@ -8528,7 +8518,7 @@ xr
 xr
 xr
 xr
-xr
+ul
 xr
 ic
 ic
@@ -10473,7 +10463,7 @@ xt
 xt
 xt
 xt
-ct
+xt
 xt
 xt
 xt
@@ -11738,7 +11728,7 @@ xt
 xt
 ic
 ic
-xr
+ul
 xr
 xr
 xr
@@ -24431,7 +24421,7 @@ ic
 ic
 xt
 xt
-xt
+dc
 xt
 xt
 xt
@@ -24639,7 +24629,7 @@ fo
 aS
 xf
 xf
-JU
+Go
 JU
 cc
 fo
@@ -46984,7 +46974,7 @@ LV
 CH
 CH
 VE
-yD
+qu
 RX
 RX
 IN
@@ -72174,7 +72164,7 @@ ak
 xA
 Vb
 Vb
-qu
+Vb
 Vb
 Vb
 ak
@@ -82214,7 +82204,7 @@ ak
 EN
 EN
 EN
-ni
+ak
 ak
 ak
 ak
@@ -92972,7 +92962,7 @@ ak
 Vm
 Vm
 gt
-Go
+gt
 gt
 gt
 gt

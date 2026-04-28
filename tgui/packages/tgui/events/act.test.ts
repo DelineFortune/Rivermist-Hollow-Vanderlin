@@ -5,6 +5,8 @@ import '../__mocks__/byond';
 import { __testables__, sendAct } from './act';
 import { chunkingAtom, store } from './store';
 
+const MAX_PAYLOAD_CHUNK_MESSAGE_URL_SIZE = 1500;
+
 describe('tgui act chunking', () => {
   const originalSendMessage = Byond.sendMessage;
 
@@ -63,7 +65,7 @@ describe('tgui act chunking', () => {
     for (const chunk of chunks) {
       expect(
         __testables__.estimateMessageUrlSize('payloadChunk', { id, chunk }),
-      ).toBeLessThanOrEqual(2048);
+      ).toBeLessThanOrEqual(MAX_PAYLOAD_CHUNK_MESSAGE_URL_SIZE);
     }
   });
 });

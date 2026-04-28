@@ -470,6 +470,9 @@
 	name = "ring of burden"
 	icon_state = "ring_protection" //N/A change this to a real sprite after its made
 	sellprice = 0
+	var/death_timerid
+	var/drop_timerid
+	var/psstt_timerid
 
 /obj/item/clothing/ring/gold/burden/Initialize()
 	. = ..()
@@ -513,23 +516,36 @@
 
 /obj/item/clothing/ring/gold/burden/on_mob_death(mob/living/user)
 	. = ..()
+	if(QDELETED(src))
+		return
 	if(user.ckey)
-		addtimer(CALLBACK(src, PROC_REF(on_mob_death),user), 5 MINUTES)
+		if(death_timerid)
+			deltimer(death_timerid)
+		death_timerid = addtimer(CALLBACK(src, PROC_REF(on_mob_death), user), 5 MINUTES, TIMER_STOPPABLE)
 		return
 	user.dropItemToGround(src, force = TRUE)
 
 /obj/item/clothing/ring/gold/burden/dropped(mob/user, slot)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(on_ring_drop),user), 5 MINUTES)
+	if(drop_timerid)
+		deltimer(drop_timerid)
+	drop_timerid = addtimer(CALLBACK(src, PROC_REF(on_ring_drop), user), 5 MINUTES, TIMER_STOPPABLE)
 	REMOVE_TRAIT (user, TRAIT_BURDEN, type)
-	addtimer(CALLBACK(src, PROC_REF(psstt)), rand(10,20) SECONDS)
+	if(psstt_timerid)
+		deltimer(psstt_timerid)
+	psstt_timerid = addtimer(CALLBACK(src, PROC_REF(psstt)), rand(10,20) SECONDS, TIMER_STOPPABLE)
 
 /obj/item/clothing/ring/gold/burden/proc/psstt()
+	if(QDELETED(src))
+		return
 	if(!ismob(loc))
 		playsound(src, 'sound/vo/psst.ogg', 50)
-		addtimer(CALLBACK(src, PROC_REF(psstt)), rand(10,20) SECONDS)
+		psstt_timerid = addtimer(CALLBACK(src, PROC_REF(psstt)), rand(10,20) SECONDS, TIMER_STOPPABLE)
 
 /obj/item/clothing/ring/gold/burden/proc/on_ring_drop(mob/user, slot)
+	drop_timerid = null
+	if(QDELETED(src))
+		return
 	if(ismob(loc))
 		return
 	visible_message(span_warning("[src] begins to twitch and shake violently, before crumbling into ash"))
@@ -538,6 +554,12 @@
 
 /obj/item/clothing/ring/gold/burden/equipped(mob/user, slot)
 	. = ..()
+	if(drop_timerid)
+		deltimer(drop_timerid)
+		drop_timerid = null
+	if(psstt_timerid)
+		deltimer(psstt_timerid)
+		psstt_timerid = null
 	if((slot & ITEM_SLOT_RING) && istype(user)) //this will hopefully be a natural HEADEATER tutorial when HEADEATER is a proper thing
 		//say("good choice") as much as I love the aesthetic of the ring speech bubble being in the inventory screen, cant make it whisper like this
 		var/message = pick("New...bearer...",
@@ -552,6 +574,15 @@
 	to_chat(user, span_danger("The moment the [src] is in your grasp, it fuses with the skin of your palm, you can't let it go without choosing your destiny first."))
 
 /obj/item/clothing/ring/gold/burden/Destroy()
+	if(death_timerid)
+		deltimer(death_timerid)
+		death_timerid = null
+	if(drop_timerid)
+		deltimer(drop_timerid)
+		drop_timerid = null
+	if(psstt_timerid)
+		deltimer(psstt_timerid)
+		psstt_timerid = null
 	SEND_GLOBAL_SIGNAL(COMSIG_GAFFER_RING_DESTROYED, src)
 	. = ..()
 

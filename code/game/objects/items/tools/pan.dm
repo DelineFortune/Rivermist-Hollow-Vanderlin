@@ -18,6 +18,8 @@
 	associated_skill = /datum/attribute/skill/combat/axesmaces
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	ingsize = 3
 
 /obj/item/cooking/pan/Initialize()

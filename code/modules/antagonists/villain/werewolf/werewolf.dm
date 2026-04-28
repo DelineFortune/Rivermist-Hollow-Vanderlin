@@ -216,6 +216,12 @@
 	item_flags = DROPDEL
 	repair_time = 15 SECONDS
 
+/obj/item/clothing/armor/regenerating/skin/werewolf_skin/Destroy()
+	var/mob/living/carbon/human/werewolf_owner = loc
+	if(istype(werewolf_owner) && werewolf_owner.skin_armor == src)
+		werewolf_owner.skin_armor = null
+	return ..()
+
 /datum/intent/simple/werewolf
 	name = "claw"
 	icon_state = "inclaw"

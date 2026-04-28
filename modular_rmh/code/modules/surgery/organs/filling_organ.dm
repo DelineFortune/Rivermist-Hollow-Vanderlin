@@ -216,9 +216,10 @@
 							the_bottle = bottle
 							break
 				if(!the_bottle) //no bottle so just spill
-					var/turf/ownerloc = owner.loc
-					ownerloc.add_liquid_from_reagents(reagents, amount = tempdriprate)
-					reagents.remove_all(tempdriprate)
+					var/turf/ownerloc = get_turf(owner)
+					if(ownerloc)
+						ownerloc.add_liquid_from_reagents(reagents, amount = tempdriprate)
+						reagents.remove_all(tempdriprate)
 				else
 					tempdriprate *= 50 //since default values are basically decimals.
 					reagents.trans_to(the_bottle, min(tempdriprate))
@@ -244,10 +245,11 @@
 	var/keepinsidechance = CLAMP((rand(25,100) - (stealth * 20)),0,100) //basically cant lose your item if you have 5 stealth.
 	if(reagents.total_volume > reagents.maximum_volume / 2 && spiller && prob(keepinsidechance)) //if you have more than half full spiller organ.
 		owner.visible_message(span_info("[owner]'s [pick(altnames)] spill some of it's contents with the pressure on it!"),span_info("My [pick(altnames)] spill some of it's contents with the pressure on it! [keepinsidechance]%"),span_unconscious("I hear a splash."))
-		var/turf/ownerloc = owner.loc
-		ownerloc.add_liquid_from_reagents(reagents, amount = reagents.maximum_volume/3)
-		reagents.remove_all(reagents.maximum_volume/3)
-		playsound(owner, 'sound/foley/waterenter.ogg', 15)
+		var/turf/ownerloc = get_turf(owner)
+		if(ownerloc)
+			ownerloc.add_liquid_from_reagents(reagents, amount = reagents.maximum_volume/3)
+			reagents.remove_all(reagents.maximum_volume/3)
+			playsound(owner, 'sound/foley/waterenter.ogg', 15)
 
 	if(!isanimal(H) && H.mind)
 		if(length(contents))
@@ -334,17 +336,68 @@
 			count += 1
 	return count
 
+/obj/item/organ/proc/sanitize_internal_womb_holders()
+	var/datum/component/body_storage/storage = get_oviposition_storage()
+	if(!storage)
+		return FALSE
+
+	var/needs_bulk_recalculation = FALSE
+	for(var/layer in storage.available_layers)
+		if(!storage.available_layers[layer])
+			continue
+		var/list/layer_contents = storage.all_layers[layer]
+		if(!islist(layer_contents))
+			continue
+		for(var/obj/item/stored_item as anything in layer_contents.Copy())
+			if(QDELETED(stored_item) || stored_item.loc != src)
+				layer_contents -= stored_item
+				needs_bulk_recalculation = TRUE
+				continue
+			if(!istype(stored_item, /obj/item/mob_holder/internal_womb))
+				continue
+			var/obj/item/mob_holder/internal_womb/holder = stored_item
+			if(holder.held_mob)
+				continue
+			layer_contents -= holder
+			contents -= holder
+			needs_bulk_recalculation = TRUE
+			qdel(holder)
+
+	for(var/obj/item/stored_item as anything in contents.Copy())
+		if(QDELETED(stored_item) || stored_item.loc != src)
+			contents -= stored_item
+			needs_bulk_recalculation = TRUE
+			continue
+		if(!istype(stored_item, /obj/item/mob_holder/internal_womb))
+			continue
+		var/obj/item/mob_holder/internal_womb/holder = stored_item
+		if(holder.held_mob)
+			continue
+		contents -= holder
+		needs_bulk_recalculation = TRUE
+		qdel(holder)
+
+	if(needs_bulk_recalculation)
+		storage.recalculate_current_bulk(src)
+	return needs_bulk_recalculation
+
 /obj/item/organ/proc/count_internal_womb_hatchlings()
 	var/datum/component/body_storage/storage = get_oviposition_storage()
 	if(!storage)
 		return 0
 
+	sanitize_internal_womb_holders()
+
 	var/count = 0
 	for(var/layer in storage.available_layers)
 		if(!storage.available_layers[layer])
 			continue
-		for(var/obj/item/mob_holder/internal_womb/holder as anything in storage.all_layers[layer])
-			count += 1
+		var/list/layer_contents = storage.all_layers[layer]
+		if(!islist(layer_contents))
+			continue
+		for(var/obj/item/stored_item as anything in layer_contents)
+			if(istype(stored_item, /obj/item/mob_holder/internal_womb))
+				count += 1
 	return count
 
 /obj/item/organ/proc/start_oviposition_egg_growth(obj/item/oviposition_egg/egg, mob/living/father = null, hatch_result_type = null, fertilized = FALSE, list/father_features = null, father_name = null)

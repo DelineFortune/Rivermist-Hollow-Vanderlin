@@ -1,18 +1,16 @@
-#define OVI_EGG_NORMAL "normal_ovi"
-#define OVI_EGG_SPIDER "spider_ovi"
-#define OVI_EGG_BOG_BUG "bog_bug_ovi"
-#define OVI_EGG_HARPY "harpy_ovi"
-#define OVI_EGG_EMBRYO "embryo_ovi"
-
 // Egg profiles keep appearance and hatch behavior together so new egg types only
 // need one local subtype instead of special cases spread across the system.
 /datum/oviposition_egg_profile
 	var/egg_type = OVI_EGG_NORMAL
-	var/display_name = "oviposition egg"
+	var/display_name = "hardshell egg"
 	var/display_desc = "A soft, warm egg that feels alive even before it starts to twitch."
 	var/display_icon_state = "egg"
 	var/display_icon = null
 	var/display_color = null
+	var/default_scale = OVI_EGG_DEFAULT_SCALE
+	var/list/default_traits = null
+	var/production_interval_multiplier = 1
+	var/resource_cost_multiplier = 1
 	var/hatch_result_type = /obj/item/reagent_containers/food/snacks/oviposition_egg/color/green //placeholder because we don't want human hatching
 	var/requires_fertilization = TRUE
 	var/poll_for_ghost = FALSE
@@ -41,16 +39,29 @@
 		return null
 	return stage_messages[stage]
 
+/datum/oviposition_egg_profile/proc/get_default_traits()
+	if(!islist(default_traits))
+		return list()
+	return default_traits.Copy()
+
 /datum/oviposition_egg_profile/proc/apply_to_egg(obj/item/oviposition_egg/egg)
 	if(!egg)
 		return
-	egg.name = display_name
-	egg.desc = display_desc
-	egg.icon_state = display_icon_state
-	egg.color = display_color
+	// Apply base profile values, then let player custom overrides take priority
+	egg.name = egg.custom_egg_name ? egg.custom_egg_name : display_name
+	egg.desc = egg.custom_egg_desc ? egg.custom_egg_desc : display_desc
+	egg.icon_state = egg.custom_egg_color ? "egg_color" : display_icon_state
+	egg.color = egg.custom_egg_color ? egg.custom_egg_color : display_color
+	var/list/profile_traits = get_default_traits()
+	if(isnull(egg.egg_traits))
+		egg.egg_traits = profile_traits
+	else if(length(profile_traits))
+		egg.egg_traits = sanitize_oviposition_trait_list(profile_traits + egg.egg_traits)
+	if(isnull(egg.egg_scale))
+		egg.egg_scale = default_scale
 	if(display_icon)
 		egg.icon = display_icon
-	egg.auto_hatch_when_laid = auto_hatch_when_laid
+	egg.auto_hatch_when_laid = isnull(egg.custom_auto_hatch) ? auto_hatch_when_laid : egg.custom_auto_hatch
 	egg.hatch_inside_host = hatch_inside_host
 	egg.body_storage_manual_removal = allow_manual_host_removal
 	egg.body_storage_random_removal = allow_manual_host_removal
@@ -65,6 +76,7 @@
 	egg.internal_hatch_message = internal_hatch_message
 	egg.internal_contraction_message = internal_contraction_message
 	egg.internal_birth_message = internal_birth_message
+	egg.apply_scale_to_appearance()
 
 /datum/oviposition_egg_profile/spider
 	egg_type = OVI_EGG_SPIDER
@@ -98,7 +110,44 @@
 	display_desc = "A smooth, birdlike egg with a sturdy shell and a gentle, nest-warm weight."
 	display_icon_state = "egg_chicken"
 	display_color = "#eee3c7"
+	default_scale = 1.15
+	production_interval_multiplier = 1.15
 	ready_message = "The harpy egg in my %CONTAINER% feels full and heavy, like a ripe nesting egg ready to be laid."
+
+/datum/oviposition_egg_profile/avian
+	egg_type = OVI_EGG_AVIAN
+	display_name = "avian egg"
+	display_desc = "A warm birdlike egg with a smooth shell, faint speckles, and a nesting weight."
+	display_icon_state = "egg_chicken"
+	display_color = "#f0e0bd"
+	default_scale = 1.1
+	production_interval_multiplier = 1.1
+	ready_message = "The avian egg in my %CONTAINER% feels heavy, warm, and ready to be laid."
+
+/datum/oviposition_egg_profile/softshell
+	egg_type = OVI_EGG_SOFTSHELL
+	display_name = "softshell egg"
+	display_desc = "A flexible, translucent egg whose shell gives gently under the fingers."
+	display_icon_state = "egg_color"
+	display_color = "#e9b6a9"
+	default_scale = 0.85
+	production_interval_multiplier = 0.8
+	resource_cost_multiplier = 0.8
+	incubation_stage_duration = 4 MINUTES
+	ready_message = "The softshell egg in my %CONTAINER% feels pliant, warm, and ready to pass."
+
+/datum/oviposition_egg_profile/parasitic
+	egg_type = OVI_EGG_PARASITIC
+	display_name = "parasitic egg"
+	display_desc = "A clinging, slick egg with a faint pulse and an unsettling hunger."
+	display_icon_state = "egg_color"
+	display_color = "#8aa05b"
+	default_scale = 0.9
+	default_traits = list(OVI_EGG_TRAIT_PARASITE, OVI_EGG_TRAIT_FAST_GROWTH)
+	production_interval_multiplier = 1.35
+	resource_cost_multiplier = 1.4
+	incubation_stage_duration = 6 MINUTES
+	ready_message = "The parasitic egg in my %CONTAINER% twitches with needy, invasive warmth."
 
 /datum/oviposition_egg_profile/embryo
 	egg_type = OVI_EGG_EMBRYO
@@ -121,7 +170,7 @@
 	internal_hatch_holder_bulk = 2
 	internal_hatch_triggers_contractions = TRUE
 	internal_hatch_auto_birth = TRUE
-	internal_hatch_birth_delay = 1 SECONDS
+	internal_hatch_birth_delay = 20 SECONDS
 	internal_hatch_message = "Something alive hatches inside my %CONTAINER%, forcing it to clench around the newborn."
 	internal_contraction_message = "My %CONTAINER% clenches in sharp contractions around the hatchling inside."
 	internal_birth_message = "%CARRIER% doubles over as a newborn forces its way out of %CONTAINER%!"
@@ -129,6 +178,12 @@
 /proc/get_oviposition_egg_profile(egg_type)
 	var/profile_type = /datum/oviposition_egg_profile
 	switch(egg_type)
+		if(OVI_EGG_AVIAN)
+			profile_type = /datum/oviposition_egg_profile/avian
+		if(OVI_EGG_SOFTSHELL)
+			profile_type = /datum/oviposition_egg_profile/softshell
+		if(OVI_EGG_PARASITIC)
+			profile_type = /datum/oviposition_egg_profile/parasitic
 		if(OVI_EGG_SPIDER)
 			profile_type = /datum/oviposition_egg_profile/spider
 		if(OVI_EGG_BOG_BUG)
@@ -141,8 +196,117 @@
 
 /proc/get_species_oviposition_egg_type(mob/living/owner)
 	if(isharpy(owner))
-		return OVI_EGG_HARPY
+		return OVI_EGG_AVIAN
 	return null
+
+/proc/get_oviposition_egg_type_options(include_unsafe = TRUE)
+	var/list/options = list(
+		OVI_EGG_NORMAL,
+		OVI_EGG_AVIAN,
+		OVI_EGG_SOFTSHELL,
+		OVI_EGG_PARASITIC,
+		OVI_EGG_HARPY
+	)
+	if(include_unsafe)
+		options += list(OVI_EGG_SPIDER, OVI_EGG_BOG_BUG)
+	return options
+
+/proc/get_oviposition_egg_trait_options()
+	return list(
+		OVI_EGG_TRAIT_APHRODISIAC,
+		OVI_EGG_TRAIT_POISON,
+		OVI_EGG_TRAIT_PARASITE,
+		OVI_EGG_TRAIT_FAST_GROWTH
+	)
+
+/proc/sanitize_oviposition_scale(scale)
+	var/scale_number = text2num("[scale]")
+	if(isnull(scale_number))
+		scale_number = OVI_EGG_DEFAULT_SCALE
+	return clamp(scale_number, OVI_EGG_MIN_SCALE, OVI_EGG_MAX_SCALE)
+
+/proc/sanitize_oviposition_trait_list(list/raw_traits)
+	var/list/sanitized_traits = list()
+	var/list/valid_traits = get_oviposition_egg_trait_options()
+	for(var/trait_flag in raw_traits)
+		if(trait_flag in valid_traits)
+			sanitized_traits |= trait_flag
+	return sanitized_traits
+
+/proc/sanitize_oviposition_text(text_input, max_length = OVI_EGG_MAX_CUSTOM_DESC_LENGTH, allow_newlines = TRUE)
+	if(!istext(text_input))
+		return ""
+	var/text_value = copytext_char("[text_input]", 1, max_length + 1)
+	var/static/cr = ascii2text(13)
+	var/static/lf = ascii2text(10)
+	var/static/tab = ascii2text(9)
+	text_value = replacetext(text_value, "[cr][lf]", lf)
+	text_value = replacetext(text_value, cr, lf)
+	text_value = replacetext(text_value, tab, " ")
+	if(allow_newlines)
+		while(findtext(text_value, "[lf][lf][lf]"))
+			text_value = replacetext(text_value, "[lf][lf][lf]", "[lf][lf]")
+	else
+		text_value = replacetext(text_value, lf, " ")
+	return trim(html_encode(text_value))
+
+/proc/get_oviposition_egg_type_interval_multiplier(egg_type)
+	var/datum/oviposition_egg_profile/profile = get_oviposition_egg_profile(egg_type)
+	return profile?.production_interval_multiplier || 1
+
+/proc/get_oviposition_egg_type_resource_cost_multiplier(egg_type)
+	var/datum/oviposition_egg_profile/profile = get_oviposition_egg_profile(egg_type)
+	return profile?.resource_cost_multiplier || 1
+
+/proc/get_oviposition_capacity_interval_multiplier(capacity)
+	return 1 + (max(0, capacity - 3) * 0.03)
+
+/proc/get_oviposition_trait_interval_multiplier(list/trait_flags)
+	var/multiplier = 1
+	if(islist(trait_flags))
+		if(OVI_EGG_TRAIT_FAST_GROWTH in trait_flags)
+			multiplier *= 0.75
+		if(OVI_EGG_TRAIT_POISON in trait_flags)
+			multiplier *= 1.15
+		if(OVI_EGG_TRAIT_PARASITE in trait_flags)
+			multiplier *= 1.2
+	return multiplier
+
+/proc/get_oviposition_nutrient_cost(egg_type, scale = OVI_EGG_DEFAULT_SCALE, list/trait_flags = null, clutch_size = 1)
+	var/cost = 0.35 * sanitize_oviposition_scale(scale)
+	cost *= get_oviposition_egg_type_resource_cost_multiplier(egg_type)
+	cost += max(0, clutch_size - 1) * 0.05
+	if(islist(trait_flags))
+		if(OVI_EGG_TRAIT_POISON in trait_flags)
+			cost += 0.25
+		if(OVI_EGG_TRAIT_PARASITE in trait_flags)
+			cost += 0.35
+	return round(max(0.1, cost), 0.1)
+
+/proc/can_pay_oviposition_nutrients(mob/living/carrier, cost)
+	if(!carrier || cost <= 0)
+		return TRUE
+	return carrier.get_reagent_amount(/datum/reagent/consumable/nutriment) >= cost
+
+/proc/consume_oviposition_nutrients(mob/living/carrier, cost)
+	if(!carrier || cost <= 0)
+		return TRUE
+	if(!can_pay_oviposition_nutrients(carrier, cost))
+		return FALSE
+	carrier.reagents?.remove_reagent(/datum/reagent/consumable/nutriment, cost)
+	return TRUE
+
+/proc/get_oviposition_color_presets(mob/living/owner)
+	var/list/presets = list(
+		list("id" = "shell", "name" = "Shell", "color" = "#eee3c7"),
+		list("id" = "soft", "name" = "Soft Pink", "color" = "#e9b6a9"),
+		list("id" = "moss", "name" = "Moss", "color" = "#8aa05b"),
+		list("id" = "spider", "name" = "Spider Grey", "color" = "#6d7685"),
+		list("id" = "blood", "name" = "Blood", "color" = "#9c3838"),
+	)
+	if(isharpy(owner))
+		presets += list(list("id" = "avian", "name" = "Avian Cream", "color" = "#f0e0bd"))
+	return presets
 
 /proc/get_oviposition_parent_hatch_result_type(mob/living/parent)
 	if(!parent)
@@ -223,6 +387,18 @@
 	var/mob/living/oviposition_mother
 	var/oviposition_mother_name
 	var/list/oviposition_mother_features
+	/// Player-set custom name override (blank = use profile default)
+	var/custom_egg_name = ""
+	/// Player-set custom description override
+	var/custom_egg_desc = ""
+	/// Player-set custom color override (hex string, uses grayscale icon_state)
+	var/custom_egg_color = null
+	/// Optional player override for laid auto-hatching.
+	var/custom_auto_hatch = null
+	/// Visual/mechanical egg scale. Null means profile default until first appearance update.
+	var/egg_scale = null
+	/// Optional modifier flags applied to this egg. Null means profile default.
+	var/list/egg_traits = null
 	var/auto_hatch_when_laid = TRUE
 	var/hatch_inside_host = FALSE
 	var/newborn_start_scale = 0.5
@@ -246,6 +422,21 @@
 		egg_type = new_egg_type
 	update_egg_appearance()
 	return egg_type
+
+/obj/item/oviposition_egg/proc/apply_custom_overrides(c_name, c_desc, c_color, c_scale = null, list/c_traits = null, c_auto_hatch = null)
+	if(c_name && istext(c_name) && length(c_name))
+		custom_egg_name = c_name
+	if(c_desc && istext(c_desc) && length(c_desc))
+		custom_egg_desc = c_desc
+	if(c_color && istext(c_color) && length(c_color))
+		custom_egg_color = c_color
+	if(!isnull(c_scale))
+		egg_scale = sanitize_oviposition_scale(c_scale)
+	if(islist(c_traits))
+		egg_traits = sanitize_oviposition_trait_list(c_traits)
+	if(!isnull(c_auto_hatch))
+		custom_auto_hatch = c_auto_hatch ? TRUE : FALSE
+	update_egg_appearance()
 
 /obj/item/oviposition_egg/proc/set_oviposition_mother(mob/living/new_mother)
 	oviposition_mother = new_mother
@@ -275,7 +466,9 @@
 
 /obj/item/oviposition_egg/proc/get_incubation_stage_duration()
 	var/datum/oviposition_egg_profile/profile = get_egg_profile()
-	return profile?.incubation_stage_duration || 15 MINUTES
+	var/duration = profile?.incubation_stage_duration || 15 MINUTES
+	duration *= get_incubation_multiplier()
+	return max(1 MINUTES, round(duration))
 
 /obj/item/oviposition_egg/proc/get_stage_message(stage)
 	var/datum/oviposition_egg_profile/profile = get_egg_profile()
@@ -301,10 +494,47 @@
 	return isnull(profile?.require_ghost_to_hatch) ? FALSE : profile.require_ghost_to_hatch
 
 /obj/item/oviposition_egg/proc/get_newborn_start_scale()
-	return newborn_start_scale
+	return clamp(newborn_start_scale * ((get_egg_scale() + 1) / 2), 0.25, 1.25)
 
 /obj/item/oviposition_egg/proc/get_newborn_growth_duration()
-	return newborn_growth_duration
+	return round(newborn_growth_duration * get_egg_scale())
+
+/obj/item/oviposition_egg/proc/get_egg_scale()
+	if(isnull(egg_scale))
+		var/datum/oviposition_egg_profile/profile = get_egg_profile()
+		egg_scale = sanitize_oviposition_scale(profile?.default_scale || OVI_EGG_DEFAULT_SCALE)
+	return sanitize_oviposition_scale(egg_scale)
+
+/obj/item/oviposition_egg/proc/has_egg_trait(trait_flag)
+	return islist(egg_traits) && (trait_flag in egg_traits)
+
+/obj/item/oviposition_egg/proc/get_incubation_multiplier()
+	var/multiplier = get_egg_scale()
+	if(has_egg_trait(OVI_EGG_TRAIT_FAST_GROWTH))
+		multiplier *= 0.65
+	if(has_egg_trait(OVI_EGG_TRAIT_PARASITE))
+		multiplier *= 0.9
+	return clamp(multiplier, 0.25, 4)
+
+/obj/item/oviposition_egg/proc/get_storage_bulk_for_stage(stage)
+	return max(1, round(max(1, stage) * 2 * get_egg_scale()))
+
+/obj/item/oviposition_egg/proc/apply_scale_to_appearance()
+	var/scale = get_egg_scale()
+	var/matrix/scaled_transform = matrix()
+	scaled_transform.Scale(scale)
+	transform = scaled_transform
+	body_storage_bulk = max(1, round(initial(body_storage_bulk) * scale))
+
+/obj/item/oviposition_egg/proc/apply_trait_reagents_to(obj/item/reagent_containers/food/snacks/hatch_item)
+	if(!hatch_item)
+		return
+	if(!hatch_item.reagents)
+		hatch_item.create_reagents(10)
+	if(has_egg_trait(OVI_EGG_TRAIT_APHRODISIAC))
+		hatch_item.reagents.add_reagent(/datum/reagent/consumable/aphrodisiac, 2)
+	if(has_egg_trait(OVI_EGG_TRAIT_POISON))
+		hatch_item.reagents.add_reagent(/datum/reagent/toxin/venom, 1)
 
 /obj/item/oviposition_egg/proc/get_pregnancy_component()
 	return GetComponent(/datum/component/pregnancy)

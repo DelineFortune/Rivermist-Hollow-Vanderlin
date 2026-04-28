@@ -69,6 +69,8 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/rust_armor.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/rust_armor.dmi'
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	sellprice = VALUE_IRON_ARMOR/2
 	armor = ARMOR_PLATE_BAD
 	max_integrity = INTEGRITY_STANDARD
@@ -82,6 +84,8 @@
 	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/blacksteel
+	melting_material = /datum/material/blacksteel
+	melt_amount = 100
 	armor_class = AC_MEDIUM
 	armor = ARMOR_PLATE_GOOD
 	item_weight = 7 * BLACKSTEEL_MULTIPLIER
@@ -182,6 +186,8 @@
 	icon_state = "silverboots"
 	armor = ARMOR_PLATE_SILVER
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
+	melt_amount = 100
 	item_weight = 12 * SILVER_MULTIPLIER
 	sellprice = VALUE_SILVER_ITEM
 

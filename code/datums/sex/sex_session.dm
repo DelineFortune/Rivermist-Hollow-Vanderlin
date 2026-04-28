@@ -64,6 +64,7 @@
 	if(target && target != user)
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 	stop_current_action()
+	unregister_sex_session(src)
 	// Remove from collective
 	if(session_updater)
 		qdel(session_updater)
@@ -84,8 +85,6 @@
 	current_action = null
 	user = null
 	target = null
-
-	GLOB.sex_sessions -= src
 	. = ..()
 
 
@@ -338,11 +337,11 @@
 		return FALSE
 	if(action.check_same_tile && !user.check_closet(target))
 		var/same_tile = (get_turf(user) == get_turf(target))
-		var/grab_bypass = (action.aggro_grab_instead_same_tile && user.get_highest_grab_state_on(target) == GRAB_AGGRESSIVE)
+		var/grab_bypass = (action.aggro_grab_instead_same_tile && user.get_effective_grab_state_on(target) == GRAB_AGGRESSIVE)
 		if(!same_tile && !grab_bypass)
 			return FALSE
 	if(action.require_grab)
-		var/grabstate = user.get_highest_grab_state_on(target)
+		var/grabstate = user.get_effective_grab_state_on(target)
 		if(grabstate == null || grabstate < action.required_grab_state)
 			return FALSE
 	return TRUE
@@ -580,8 +579,8 @@
 	switch(selected_tab)
 		if("custom_actions")
 			return get_custom_actions_tab_content(selected_tab)
-		if("genital")
-			return get_controls_tab_content(selected_tab)
+		//if("genital")
+		//	return get_controls_tab_content(selected_tab)
 		if("session")
 			return get_session_tab_content()
 		if("preferences")
@@ -985,7 +984,7 @@
 	dat += "<div class='tabs'>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=interactions' class='tab [selected_tab == "interactions" ? "active" : ""]'>Interactions</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=custom_actions' class='tab [selected_tab == "custom_actions" ? "active" : ""]'>Custom Actions</a>"
-	dat += "<a href='?src=[REF(src)];task=tab;tab=genital' class='tab [selected_tab == "genital" ? "active" : ""]'>Controls</a>"
+	//dat += "<a href='?src=[REF(src)];task=tab;tab=genital' class='tab [selected_tab == "genital" ? "active" : ""]'>Controls</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=session' class='tab [selected_tab == "session" ? "active" : ""]'>Session</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=preferences' class='tab [selected_tab == "preferences" ? "active" : ""]'>Preferences</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=kinks' class='tab [selected_tab == "kinks" ? "active" : ""]'>Kinks</a>"

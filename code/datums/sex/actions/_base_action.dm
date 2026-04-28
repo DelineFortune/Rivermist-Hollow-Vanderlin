@@ -154,12 +154,12 @@
 
 	if(src.check_same_tile && (user != target || self_target))
 		var/same_tile = (get_turf(user) == get_turf(target))
-		var/grab_bypass = (src.aggro_grab_instead_same_tile && user.get_highest_grab_state_on(target) == GRAB_AGGRESSIVE)
+		var/grab_bypass = (src.aggro_grab_instead_same_tile && user.get_effective_grab_state_on(target) == GRAB_AGGRESSIVE)
 		if(!same_tile && !grab_bypass)
 			return FALSE
 
 	if(src.require_grab && (user != target || self_target))
-		var/grabstate = user.get_highest_grab_state_on(target)
+		var/grabstate = user.get_effective_grab_state_on(target)
 		if((grabstate == null || grabstate < src.required_grab_state))
 			return FALSE
 

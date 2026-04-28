@@ -3,6 +3,7 @@
 
 	ai_movement = /datum/ai_movement/hybrid_pathing
 
+	horny_pref_family_flag = HORNY_MOB_TYPE_BEASTS
 	blackboard = list(
 		BB_HELLHOUND_FIRE = 0,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
@@ -10,6 +11,8 @@
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/simple_find_horny,
+		/datum/ai_planning_subtree/horny,
 		/datum/ai_planning_subtree/aggro_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/hellhound,
 

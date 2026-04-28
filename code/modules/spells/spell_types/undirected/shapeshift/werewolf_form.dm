@@ -30,7 +30,7 @@
 		real_time = override_cooldown_time
 
 	next_use_time = world.time + real_time
-	addtimer(CALLBACK(src, PROC_REF(CooldownEnded)), real_time)
+	schedule_cooldown_end(real_time)
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
 

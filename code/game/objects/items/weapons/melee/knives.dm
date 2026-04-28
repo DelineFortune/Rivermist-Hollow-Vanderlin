@@ -412,7 +412,7 @@
 /obj/item/weapon/knife/dagger/steel/profane/pre_attack(mob/living/carbon/human/target, mob/living/user, list/modifiers)
 	if(!istype(target))
 		return FALSE
-	if(target.has_quirk(/datum/quirk/vice/hunted) || HAS_TRAIT(target, TRAIT_ZIZOID_HUNTED)) // Check to see if the dagger will do 20 damage or 14
+	if(target.has_quirk(/datum/quirk/vice/wanted) || HAS_TRAIT(target, TRAIT_ZIZOID_HUNTED)) // Check to see if the dagger will do 20 damage or 14
 		force = DAMAGE_KNIFE * 2
 	else
 		force = DAMAGE_DAGGER + 2
@@ -469,7 +469,7 @@
 
 			return
 
-		if(target.has_quirk(/datum/quirk/vice/hunted) || HAS_TRAIT(target, TRAIT_ZIZOID_HUNTED)) // The profane dagger only thirsts for those who are hunted, by flaw or by zizoid curse.
+		if(target.has_quirk(/datum/quirk/vice/wanted) || HAS_TRAIT(target, TRAIT_ZIZOID_HUNTED)) // The profane dagger only thirsts for those who are hunted, by flaw or by zizoid curse.
 			if(target.has_quirk(/datum/quirk/vice/hardcore))
 				if(HAS_TRAIT(target, TRAIT_HARDCORE_PROFANE))
 					return

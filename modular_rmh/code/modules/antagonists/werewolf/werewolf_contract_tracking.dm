@@ -31,7 +31,7 @@
 	var/list/contract_scrolls = list()
 
 	for(var/obj/item/paper/scroll/quest/werewolf_hidden/hidden_scroll in GLOB.quest_scrolls)
-		if(hidden_scroll.get_owner_werewolf() != src)
+		if(!hidden_scroll.is_owned_by_werewolf(src))
 			continue
 		if(!hidden_scroll.assigned_quest)
 			continue
@@ -59,7 +59,7 @@
 
 /datum/antagonist/werewolf/proc/sanitize_tracked_werewolf_contract_scroll()
 	var/obj/item/paper/scroll/quest/werewolf_hidden/tracked_scroll = tracked_contract_scroll_ref?.resolve()
-	if(tracked_scroll && tracked_scroll.get_owner_werewolf() == src && tracked_scroll.assigned_quest && !tracked_scroll.assigned_quest.complete)
+	if(tracked_scroll && tracked_scroll.is_owned_by_werewolf(src) && tracked_scroll.assigned_quest && !tracked_scroll.assigned_quest.complete)
 		return tracked_scroll
 
 	tracked_contract_scroll_ref = null
@@ -74,7 +74,7 @@
 		return sanitize_tracked_werewolf_contract_scroll()
 
 	var/obj/item/paper/scroll/quest/werewolf_hidden/tracked_scroll = tracked_contract_scroll_ref?.resolve()
-	if(tracked_scroll && tracked_scroll.get_owner_werewolf() == src && tracked_scroll.assigned_quest)
+	if(tracked_scroll && tracked_scroll.is_owned_by_werewolf(src) && tracked_scroll.assigned_quest)
 		return tracked_scroll
 
 	tracked_contract_scroll_ref = null
@@ -89,7 +89,7 @@
 		refresh_werewolf_contract_browser_if_open()
 		return FALSE
 
-	if(new_tracked_scroll.get_owner_werewolf() != src)
+	if(!new_tracked_scroll.is_owned_by_werewolf(src))
 		return FALSE
 	if(!new_tracked_scroll.assigned_quest || new_tracked_scroll.assigned_quest.complete)
 		return FALSE
@@ -103,7 +103,7 @@
 		return null
 
 	var/obj/item/paper/scroll/quest/werewolf_hidden/hidden_scroll = locate(scroll_ref_text) in GLOB.quest_scrolls
-	if(!hidden_scroll || hidden_scroll.get_owner_werewolf() != src)
+	if(!hidden_scroll || !hidden_scroll.is_owned_by_werewolf(src))
 		return null
 
 	return hidden_scroll
@@ -155,11 +155,7 @@
 		contract_scent_action.Remove(contract_scent_action.owner)
 
 /datum/antagonist/werewolf/proc/can_use_werewolf_contract_interface(mob/living/user)
-	if(!istype(user))
-		return FALSE
-	if(owner?.current != user)
-		return FALSE
-	return IS_WEREWOLF(user) == src
+	return is_current_werewolf_body(user)
 
 /datum/antagonist/werewolf/proc/open_werewolf_contract_browser(mob/living/user = owner?.current)
 	if(!can_use_werewolf_contract_interface(user))
@@ -374,12 +370,15 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/datum/weakref/owner_werewolf_ref
+	var/datum/weakref/owner_mind_ref
 
 /obj/item/paper/scroll/quest/werewolf_hidden/Initialize(mapload, datum/antagonist/werewolf/owner_werewolf)
 	if(!mapload && !owner_werewolf)
 		return INITIALIZE_HINT_QDEL
 	if(owner_werewolf)
 		owner_werewolf_ref = WEAKREF(owner_werewolf)
+		if(owner_werewolf.owner)
+			owner_mind_ref = WEAKREF(owner_werewolf.owner)
 
 	. = ..()
 	moveToNullspace()
@@ -390,16 +389,37 @@
 	if(owner_werewolf && !QDELETED(owner_werewolf))
 		owner_werewolf.refresh_werewolf_contract_state()
 
-/obj/item/paper/scroll/quest/werewolf_hidden/proc/get_owner_werewolf()
-	if(!owner_werewolf_ref)
+/obj/item/paper/scroll/quest/werewolf_hidden/proc/get_owner_mind()
+	var/datum/mind/owner_mind = owner_mind_ref?.resolve()
+	if(owner_mind)
+		return owner_mind
+
+	owner_mind_ref = null
+	var/datum/antagonist/werewolf/owner_werewolf = owner_werewolf_ref?.resolve()
+	if(!owner_werewolf?.owner)
 		return null
 
-	var/datum/antagonist/werewolf/owner_werewolf = owner_werewolf_ref.resolve()
-	if(owner_werewolf)
-		return owner_werewolf
+	owner_mind_ref = WEAKREF(owner_werewolf.owner)
+	return owner_werewolf.owner
 
-	owner_werewolf_ref = null
-	return null
+/obj/item/paper/scroll/quest/werewolf_hidden/proc/get_owner_werewolf()
+	var/datum/mind/owner_mind = get_owner_mind()
+	if(!owner_mind)
+		owner_werewolf_ref = null
+		return null
+
+	var/datum/antagonist/werewolf/owner_werewolf = owner_mind.has_antag_datum(/datum/antagonist/werewolf)
+	if(!owner_werewolf)
+		owner_werewolf_ref = null
+		return null
+
+	owner_werewolf_ref = WEAKREF(owner_werewolf)
+	return owner_werewolf
+
+/obj/item/paper/scroll/quest/werewolf_hidden/proc/is_owned_by_werewolf(datum/antagonist/werewolf/requesting_werewolf)
+	if(!istype(requesting_werewolf))
+		return FALSE
+	return get_owner_mind() == requesting_werewolf.owner
 
 /obj/item/paper/scroll/quest/werewolf_hidden/proc/sync_receiver_to_current_owner(mob/living/current_body = null)
 	if(!assigned_quest)

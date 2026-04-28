@@ -1,12 +1,22 @@
+#define HORNY_INTERACTION_TIMEOUT (5 MINUTES)
+#define HORNY_ACTION_BLEED_HEAL_AMOUNT 30
+#define HORNY_ACTION_BLEED_CLOT_TICKS 10
+#define BB_HORNY_BLEED_HEAL_DONE "BB_horny_bleed_heal_done"
+
 /datum/ai_behavior/horny
-	action_cooldown = 2 SECONDS
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	action_cooldown = 1.5 SECONDS
+	// Horny targets are often "close" while still being blocked by a bush, nest, closet edge,
+	// or similar obstacle. Requiring reach keeps the controller pathing until adjacency is real.
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	var/seek_timeout = 1.5 MINUTES
 	var/failed_seek_cooldown = 10 SECONDS
 	var/successful_seek_cooldown = 15 SECONDS
 
 /datum/ai_behavior/horny/simple_mob
 	// Simple mobs currently only use the shared horny flow as-is.
+
+/datum/ai_behavior/horny/simple_mob/spider
+	// Spider-family mobs can wrap prone targets in silk before starting.
 
 /datum/ai_behavior/horny/human
 	// Human-type mobs add prep work before the shared action flow.
@@ -39,6 +49,7 @@
 	controller.set_blackboard_key(BB_HORNY_TARGET_ATTACK_COUNT, 0)
 	controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
 	controller.clear_blackboard_key(BB_HORNY_INITIAL_STRIP_DONE)
+	controller.clear_blackboard_key(BB_HORNY_BLEED_HEAL_DONE)
 	controller.clear_blackboard_key(BB_HORNY_SEEK_START_TIME)
 	controller.set_blackboard_key(BB_HORNY_STAND_UP_COUNTER, 0)
 	controller.set_blackboard_key(BB_HORNY_ACTIONLESS_TICKS, 0)
@@ -160,7 +171,10 @@
 		session = basic_mob.start_sex_session(target_living)
 
 	//check if we are sated
-	if(last_orgasm_time > world.time - 10 SECONDS || horny_start_time < world.time - 5 MINUTES)
+	var/interaction_timed_out = horny_start_time + HORNY_INTERACTION_TIMEOUT <= world.time
+	if(last_orgasm_time > world.time - 10 SECONDS || interaction_timed_out)
+		if(interaction_timed_out && session && (session.current_action || length(session.active_actions)))
+			offer_target_rune_escape(target_living)
 		if(session)
 			session.stop_current_action()
 		finish_action(controller, TRUE, target_key)
@@ -206,6 +220,16 @@
 		if(session.user != basic_mob)
 			continue
 		session.stop_current_action()
+
+/datum/ai_behavior/horny/proc/offer_target_rune_escape(mob/living/target_living)
+	if(!ishuman(target_living))
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = target_living
+	var/datum/resurrection_rune_controller/rune_controller = get_resurrection_rune_controller_for_user(human_target)
+	if(!rune_controller)
+		return FALSE
+	return rune_controller.offer_mob_erp_escape(human_target)
 
 /datum/ai_behavior/horny/proc/is_valid_aggro_interrupt_target(mob/living/basic_mob, datum/targetting_datum/targetting_datum, atom/target)
 	if(!target || target == basic_mob || QDELETED(target))
@@ -307,7 +331,7 @@
 		prob2defend *= 1.2
 	if(target_living.surrendering)
 		prob2defend *= 0.1
-	prob2defend = CLAMP(prob2defend, 0, 100)
+	prob2defend = CLAMP(prob2defend + 60, 0, 100)
 
 	// Once only 20% stamina remains, the takedown becomes guaranteed
 	var/stamina_exhaustion = (target_living.maximum_stamina - target_living.stamina) / target_living.maximum_stamina <= 0.2 ? 0 : (target_living.maximum_stamina - target_living.stamina) / target_living.maximum_stamina
@@ -315,12 +339,8 @@
 	var/down_chance = CLAMP(prob2defend, 0, 100)
 
 	if(prob(100 - down_chance))
-		if(iscarbon(basic_mob))
-			target_living.SetStun(30)
-			target_living.SetKnockdown(50)
-		else
-			target_living.SetStun(80)
-			target_living.SetKnockdown(200)
+		target_living.SetStun(20)
+		target_living.SetKnockdown(50)
 		if(target_living.body_position != LYING_DOWN)
 			target_living.emote("gasp")
 		controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time + 10 SECONDS)
@@ -329,11 +349,58 @@
 		controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time + 5 SECONDS)
 		basic_mob.visible_message(span_danger("[basic_mob] tries to pull [target_living] to the ground, exhausting them!"))
 
-	var/base_stamina_drain = iscarbon(basic_mob) ? target_living.maximum_stamina * 0.25 : target_living.maximum_stamina * 0.28
-	var/stamina_drain = max(round(base_stamina_drain * (1 - (prob2defend / 125))), 5)
+	var/stamina_drain = max(round(target_living.maximum_stamina * 0.60 * (1 - ((100 - prob2defend) * 0.01))), 25)
 	target_living.adjust_stamina(stamina_drain, null, FALSE, FALSE)
 
 	return TRUE
+
+/datum/ai_behavior/horny/proc/heal_horny_action_bleeding(mob/living/participant)
+	if(!participant || QDELETED(participant))
+		return FALSE
+	if(participant.get_bleed_rate() <= 0)
+		return FALSE
+
+	var/list/wounds = participant.get_wounds()
+	if(!length(wounds))
+		return FALSE
+
+	var/processed_any = FALSE
+	for(var/datum/wound/wound as anything in wounds)
+		if(QDELETED(wound) || !wound.bleed_rate)
+			continue
+		processed_any = TRUE
+		for(var/i in 1 to HORNY_ACTION_BLEED_CLOT_TICKS)
+			if(QDELETED(wound))
+				break
+			wound.on_life()
+
+	if(!processed_any)
+		return FALSE
+
+	var/heal_budget = HORNY_ACTION_BLEED_HEAL_AMOUNT
+	for(var/datum/wound/wound as anything in wounds)
+		if(heal_budget <= 0)
+			break
+		if(QDELETED(wound) || !wound.bleed_rate)
+			continue
+		var/amount_healed = wound.heal_wound(heal_budget)
+		if(amount_healed)
+			heal_budget -= amount_healed
+
+	participant.update_damage_overlays()
+	return TRUE
+
+/datum/ai_behavior/horny/proc/try_heal_horny_action_bleeding(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
+	if(!controller || controller.blackboard[BB_HORNY_BLEED_HEAL_DONE])
+		return
+
+	var/healed_any = FALSE
+	healed_any = heal_horny_action_bleeding(basic_mob) || healed_any
+	healed_any = heal_horny_action_bleeding(target_living) || healed_any
+	if(!healed_any)
+		return
+
+	controller.set_blackboard_key(BB_HORNY_BLEED_HEAL_DONE, TRUE)
 
 /datum/ai_behavior/horny/proc/start_horny_action(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session, target_key)
 	if(!session)
@@ -360,6 +427,8 @@
 		session.set_current_force(force)
 		session.set_current_speed(speed)
 		target_living.apply_status_effect(/datum/status_effect/debuff/mob_fucked)
+		if(!isnull(session.current_action))
+			try_heal_horny_action_bleeding(controller, basic_mob, target_living)
 		if(isnull(session.current_action))
 			var/actionless_ticks = controller.blackboard[BB_HORNY_ACTIONLESS_TICKS]
 			if(isnull(actionless_ticks))
@@ -426,12 +495,97 @@
 
 	return pick(valid_actions)
 
+/datum/ai_behavior/horny/simple_mob/proc/get_hold_message(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
+	switch(controller?.horny_pref_family_flag)
+		if(HORNY_MOB_TYPE_SPIDERS)
+			return "[basic_mob] pins [target_living] down under a tangle of bristling legs!"
+		if(HORNY_MOB_TYPE_BOG_BUGS)
+			return "[basic_mob] clamps onto [target_living], locking [target_living.p_them()] in place!"
+		if(HORNY_MOB_TYPE_TROLLS)
+			return "[basic_mob] mauls [target_living] to the ground and keeps [target_living.p_them()] there!"
+		if(HORNY_MOB_TYPE_BEASTS)
+			return "[basic_mob] pins [target_living] in place with snapping jaws and brute weight!"
+		if(HORNY_MOB_TYPE_LAMIAS)
+			return "[basic_mob] coils tightly around [target_living], holding [target_living.p_them()] fast!"
+		if(HORNY_MOB_TYPE_MINOTAURS)
+			return "[basic_mob] hooks [target_living] into a crushing hold and keeps [target_living.p_them()] pinned!"
+		if(HORNY_MOB_TYPE_LYCANS)
+			return "[basic_mob] slams into [target_living] and pins [target_living.p_them()] in place!"
+		if(HORNY_MOB_TYPE_HUMANOIDS)
+			return "[basic_mob] wrestles [target_living] into a rough hold!"
+	return "[basic_mob] clamps onto [target_living], holding [target_living.p_them()] in place!"
+
+/datum/ai_behavior/horny/simple_mob/proc/promote_existing_pull_to_hold(mob/living/basic_mob, mob/living/target_living)
+	if(target_living.pulledby != basic_mob)
+		return FALSE
+	if(basic_mob.grab_state >= GRAB_AGGRESSIVE)
+		return FALSE
+
+	// Handless mobs keep victims in place through the generic pull state, not grab items.
+	basic_mob.setGrabState(GRAB_AGGRESSIVE)
+	basic_mob.update_pull_movespeed()
+	basic_mob.set_pull_offsets(target_living, basic_mob.grab_state)
+	return TRUE
+
+/datum/ai_behavior/horny/simple_mob/proc/ensure_target_hold(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
+	if(!basic_mob.Adjacent(target_living))
+		return FALSE
+
+	if(basic_mob.pulling && basic_mob.pulling != target_living)
+		basic_mob.stop_pulling()
+
+	if(target_living.pulledby == basic_mob)
+		if(basic_mob.grab_state >= GRAB_AGGRESSIVE)
+			return FALSE
+		if(!promote_existing_pull_to_hold(basic_mob, target_living))
+			return FALSE
+		basic_mob.visible_message(
+			span_danger(get_hold_message(controller, basic_mob, target_living)),
+			null,
+			span_hear("I hear a violent struggle.")
+		)
+		return TRUE
+
+	if(basic_mob.pulling == target_living)
+		basic_mob.stop_pulling()
+
+	if(target_living.pulledby && target_living.pulledby != basic_mob && target_living.pulledby.grab_state >= GRAB_AGGRESSIVE)
+		return FALSE
+
+	if(!basic_mob.start_handless_pull(target_living, GRAB_PASSIVE, suppress_message = TRUE))
+		return FALSE
+
+	if(!promote_existing_pull_to_hold(basic_mob, target_living))
+		return FALSE
+
+	basic_mob.visible_message(
+		span_danger(get_hold_message(controller, basic_mob, target_living)),
+		null,
+		span_hear("I hear a violent struggle.")
+	)
+	return TRUE
+
+/datum/ai_behavior/horny/simple_mob/proc/wait_for_knockdown(mob/living/basic_mob, mob/living/target_living)
+	if(target_living.body_position == LYING_DOWN)
+		return FALSE
+
+	if(target_living.pulledby == basic_mob)
+		basic_mob.stop_pulling()
+
+	return TRUE
+
 /datum/ai_behavior/horny/simple_mob/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
 	if(get_target_portal_light(controller, basic_mob, target_living))
 		return FALSE
 
 	if(!ishuman(target_living) || !basic_mob.Adjacent(target_living))
 		return FALSE
+
+	if(wait_for_knockdown(basic_mob, target_living))
+		return TRUE
+
+	if(ensure_target_hold(controller, basic_mob, target_living))
+		return TRUE
 
 	if(session.current_action)
 		return FALSE
@@ -467,7 +621,7 @@
 		basic_mob.used_intent = cached_intent
 		return TRUE
 	basic_mob.used_intent = cached_intent
-	if(!prob(50))
+	if(!prob(30))
 		human_target.visible_message(span_danger("[basic_mob] swats at [human_target]'s hands, but fails to disarm them!"), \
 				span_userdanger("[basic_mob] swats at my hands, but I keep hold of my weapon!"), span_hear("I hear a rough struggle over a weapon!"), COMBAT_MESSAGE_RANGE)
 		return TRUE
@@ -567,6 +721,65 @@
 
 /datum/ai_behavior/horny/simple_mob/proc/strip_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
 	return do_strip_human_target(basic_mob, human_target, rand(12, 20) DECISECONDS, 35, 0.15, allow_regular_clothes = TRUE)
+
+/datum/ai_behavior/horny/simple_mob/spider/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
+	if(get_target_portal_light(controller, basic_mob, target_living))
+		return FALSE
+
+	if(!ishuman(target_living) || !basic_mob.Adjacent(target_living))
+		return FALSE
+
+	if(wait_for_knockdown(basic_mob, target_living))
+		return TRUE
+
+	if(ensure_target_hold(controller, basic_mob, target_living))
+		return TRUE
+
+	if(session.current_action)
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = target_living
+	if(!controller.blackboard[BB_HORNY_INITIAL_STRIP_DONE])
+		controller.set_blackboard_key(BB_HORNY_INITIAL_STRIP_DONE, TRUE)
+		if(pick_strip_target(basic_mob, human_target, allow_regular_clothes = TRUE))
+			return strip_human_target(basic_mob, human_target)
+
+	var/has_valid_action = !isnull(select_horny_ai_act(controller, basic_mob, target_living, session))
+	if((!has_valid_action || prob(20)) && strip_human_target(basic_mob, human_target))
+		return TRUE
+
+	if(tie_human_target(basic_mob, human_target))
+		return TRUE
+
+	return FALSE
+
+/datum/ai_behavior/horny/simple_mob/spider/proc/tie_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
+	if(human_target.body_position != LYING_DOWN || human_target.get_active_held_item())
+		return FALSE
+	if(!basic_mob.Adjacent(human_target) || human_target.get_num_arms(TRUE) <= 1 || human_target.handcuffed)
+		return FALSE
+
+	basic_mob.visible_message(
+		span_danger("[basic_mob] starts winding sticky silk around [human_target]'s wrists!"),
+		span_danger("[basic_mob] starts winding sticky silk around my wrists!"),
+		span_hear("I hear wet strands of silk stretching tight.")
+	)
+	if(!do_after(basic_mob, 1 SECONDS, human_target))
+		return FALSE
+	if(QDELETED(human_target) || !basic_mob.Adjacent(human_target) || human_target.handcuffed || human_target.body_position != LYING_DOWN)
+		return FALSE
+
+	var/obj/item/rope/spider_silk/webbing = new /obj/item/rope/spider_silk
+	if(webbing.apply_cuffs(human_target))
+		human_target.visible_message(
+			span_danger("[basic_mob] binds [human_target]'s wrists in spider silk!"),
+			span_userdanger("[basic_mob] binds my wrists in sticky spider silk!"),
+			span_hear("I hear silk tightening around someone's wrists.")
+		)
+		return TRUE
+
+	qdel(webbing)
+	return FALSE
 
 /datum/ai_behavior/horny/human/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
 	if(!iscarbon(basic_mob))
@@ -671,7 +884,7 @@
 		basic_mob.used_intent = cached_intent
 		return TRUE
 	basic_mob.used_intent = cached_intent
-	if(!prob(50))
+	if(!prob(30))
 		human_target.visible_message(span_danger("[basic_mob] lunges for [human_target]'s weapon, but can't wrench it free!"), \
 				span_userdanger("[basic_mob] lunges for my weapon, but I keep hold of it!"), span_hear("I hear a struggle over a weapon!"), COMBAT_MESSAGE_RANGE)
 		return TRUE
@@ -806,6 +1019,7 @@
 	basic_mob.stop_pulling()
 	controller.clear_blackboard_key(BB_HORNY_TARGET_ATTACK_COUNT)
 	controller.clear_blackboard_key(BB_HORNY_INITIAL_STRIP_DONE)
+	controller.clear_blackboard_key(BB_HORNY_BLEED_HEAL_DONE)
 	controller.clear_blackboard_key(BB_HORNY_SEEK_START_TIME)
 	controller.clear_blackboard_key(BB_HORNY_STAND_UP_COUNTER)
 	controller.clear_blackboard_key(BB_HORNY_ACTIONLESS_TICKS)
@@ -834,10 +1048,15 @@
 	var/datum/component/arousal/arousal_component = basic_mob.GetComponent(/datum/component/arousal)
 	var/message = span_danger("[basic_mob] exhales contently!")
 	if(arousal_component?.recent_orgasm_count >= 3)
-		success_cooldown += 2 MINUTES
+		success_cooldown += 3 MINUTES
 		message = span_danger("[basic_mob] lets out a releved sigh and releases [finished_target] for now.")
 	controller.set_blackboard_key(BB_HORNY_SEEK_COOLDOWN, world.time + success_cooldown)
 	basic_mob.visible_message(message)
 	controller.modify_cooldown(src, world.time)
 	//controller.CancelActions()
+
+#undef HORNY_INTERACTION_TIMEOUT
+#undef HORNY_ACTION_BLEED_HEAL_AMOUNT
+#undef HORNY_ACTION_BLEED_CLOT_TICKS
+#undef BB_HORNY_BLEED_HEAL_DONE
 

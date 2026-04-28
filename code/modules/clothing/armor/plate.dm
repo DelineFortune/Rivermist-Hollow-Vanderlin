@@ -29,6 +29,7 @@
 	icon_state = "ihalfplate"
 	item_state = "ihalfplate"
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	sellprice = VALUE_IRON_ARMOR
 	armor = ARMOR_PLATE_BAD
 	max_integrity = INTEGRITY_STRONG
@@ -54,6 +55,7 @@
 	item_state = "iplate"
 	sellprice = VALUE_IRON_ARMOR*2
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 
 	armor = ARMOR_PLATE_BAD
 	max_integrity = INTEGRITY_STRONG
@@ -69,6 +71,7 @@
 	icon_state = "rustplate"
 	item_state = "rustplate"
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	sellprice = VALUE_IRON_ARMOR/2
 	armor = ARMOR_PLATE_BAD
 	max_integrity = INTEGRITY_STANDARD
@@ -86,6 +89,7 @@
 	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/blacksteel
+	melting_material = /datum/material/blacksteel
 	item_weight = 12 * BLACKSTEEL_MULTIPLIER
 	sellprice = VALUE_SILVER_ITEM * 6
 	stand_speed_reduction = 1.05
@@ -148,6 +152,7 @@
 	allowed_ages = ALL_AGES_LIST //placeholder until younglings have onmob sprites for this item
 	armor = ARMOR_PLATE_SILVER
 	smeltresult = /obj/item/ingot/silver
+	melting_material = /datum/material/silver
 	item_weight = 12 * SILVER_MULTIPLIER
 	sellprice = VALUE_SILVER_ITEM * 3
 

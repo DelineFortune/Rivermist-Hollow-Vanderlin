@@ -1,6 +1,7 @@
 /datum/ai_controller/lycan
 	movement_delay = 0.5 SECONDS
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_LYCANS
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/leyline(),
 		BB_LEYLINE_SOURCE = null,
@@ -68,6 +69,10 @@
 
 	if(isliving(the_target)) //Targetting vs living mobs
 		var/mob/living/L = the_target
+		if(is_protected_by_active_mob_sex(living_mob, L))
+			return FALSE
+		if(ishuman(L) && should_use_nonlethal_mob_erp_handling(living_mob, L))
+			return FALSE
 		if(faction_check(living_mob, L) || L.stat >= DEAD) //basic targetting doesn't target dead people
 			return FALSE
 		return TRUE

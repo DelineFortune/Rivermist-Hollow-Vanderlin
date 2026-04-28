@@ -4,6 +4,7 @@
 	item_state = "plate_armor"
 	icon = 'icons/roguetown/mob/monster/goblins.dmi'
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	armor = list("blunt" = 80, "slash" = 80, "stab" = 80,  "piercing" = 0, "fire" = 0, "acid" = 0)
 	allowed_race = list(SPEC_ID_GOBLIN)
 	flags_inv = HIDECROTCH|HIDEBOOB|HIDEBELLY|HIDEBUTT
@@ -56,6 +57,8 @@
 	icon_state = "plate_helm_item"
 	item_state = "plate_helm"
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	icon = 'icons/roguetown/mob/monster/goblins.dmi'
 	allowed_race = list(SPEC_ID_GOBLIN)
 	armor = list("blunt" = 80, "slash" = 80, "stab" = 80,  "piercing" = 0, "fire" = 0, "acid" = 0)

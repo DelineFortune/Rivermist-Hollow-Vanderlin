@@ -13,6 +13,8 @@
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/iron //no 1 to 1 conversion
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	max_integrity = INTEGRITY_STRONG
 
 /obj/item/clothing/wrists/bracers/naledi

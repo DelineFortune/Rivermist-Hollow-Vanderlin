@@ -93,7 +93,7 @@
 		return FALSE
 	if (!can_see(living_mob, target, vision_range))
 		return FALSE
-	return targetting_datum.can_attack(living_mob, target)
+	return targetting_datum.can_engage_target(living_mob, target)
 
 /// Returns the desired final target from the filtered list of enemies
 /datum/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)

@@ -102,6 +102,9 @@
 		if(entry.customizer_type == customizer_type)
 			return entry
 
+/datum/preferences/proc/cleanup_quirks_for_customizer_entry(datum/customizer_entry/entry)
+	return FALSE
+
 /// Gets an associative list of organ slots to organ dna created from organ customization
 /datum/preferences/proc/get_organ_dna_list()
 	var/list/organ_list = list()
@@ -153,6 +156,8 @@
 		if("toggle_missing")
 			if(customizer.allows_disabling)
 				entry.disabled = !entry.disabled
+				if(entry.disabled)
+					cleanup_quirks_for_customizer_entry(entry)
 		if("change_choice")
 			var/list/choice_list = list()
 			for(var/choice_type in customizer.customizer_choices)
@@ -165,9 +170,12 @@
 			if(choice_type == choice.type)
 				return
 			customizer_entries -= entry
-			customizer_entries += customizer.create_customizer_entry(src, choice_type)
+			entry = customizer.create_customizer_entry(src, choice_type)
+			customizer_entries += entry
+			cleanup_quirks_for_customizer_entry(entry)
 		else
 			choice.handle_topic(user, href_list, src, entry, customizer_type)
+	mark_preview_appearance_dirty()
 
 /datum/preferences/proc/reset_all_customizer_accessory_colors()
 	for(var/datum/customizer_entry/entry as anything in customizer_entries)

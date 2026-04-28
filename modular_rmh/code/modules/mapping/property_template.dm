@@ -40,3 +40,9 @@
 	mappath = "_maps/map_files/hsector/housing/room1.dmm"
 	width = 7
 	height = 9
+
+/datum/map_template/rmh_lab1
+	name = "Rivermist Hollow Artificer Private Lab"
+	mappath = "_maps/map_files/hsector/housing/lab.dmm"
+	width = 8
+	height = 8

@@ -81,10 +81,13 @@ CONFIGURATION:
 	var/list/loot = list()
 	for(var/i = 1 to spawn_count)
 		var/atom/spawn_path = pickweight(weighted_list)
+		if(!spawn_path)
+			continue
 		var/atom/movable/new_spawn = new spawn_path(spawn_location)
-		if(spawn_location)
-			if(istype(looter))
-				looter.put_in_active_hand(new_spawn)
+		if(QDELETED(new_spawn) || QDELING(new_spawn))
+			continue
+		if(spawn_location && istype(looter))
+			looter.put_in_active_hand(new_spawn)
 		loot += new_spawn
 	return loot
 

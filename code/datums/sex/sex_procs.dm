@@ -8,6 +8,14 @@
 			grabstate = l_grab.grab_state
 	return grabstate
 
+/mob/living/proc/get_effective_grab_state_on(mob/living/victim)
+	var/grabstate = get_highest_grab_state_on(victim)
+	if(pulling != victim && victim?.pulledby != src)
+		return grabstate
+	if(isnull(grabstate))
+		return grab_state
+	return max(grabstate, grab_state)
+
 /proc/do_thrust_animate(atom/movable/user, atom/movable/target, pixels = 4, time = 2.7)
 	var/datum/sex_session/sex_session
 	if(isliving(user) && isliving(target))
@@ -54,10 +62,46 @@
 
 
 	var/datum/sex_session/session = new /datum/sex_session(src, target)
-	LAZYADD(GLOB.sex_sessions, session)
+	register_sex_session(session)
 	if(target.client && client && show_ui)
 		session.show_ui()
 	return session
+
+/proc/register_sex_session(datum/sex_session/session)
+	if(!session)
+		return
+	LAZYADD(GLOB.sex_sessions, session)
+	add_user_sex_session(session.user, session)
+	if(session.target != session.user)
+		add_user_sex_session(session.target, session)
+
+/proc/add_user_sex_session(mob/living/user, datum/sex_session/session)
+	if(!user || !session)
+		return
+	var/list/user_sessions = GLOB.sex_sessions_by_user[user]
+	if(!user_sessions)
+		user_sessions = list()
+		GLOB.sex_sessions_by_user[user] = user_sessions
+	user_sessions |= session
+
+/proc/unregister_sex_session(datum/sex_session/session)
+	if(!session)
+		return
+	GLOB.sex_sessions -= session
+	remove_user_sex_session(session.user, session)
+	if(session.target != session.user)
+		remove_user_sex_session(session.target, session)
+
+/proc/remove_user_sex_session(mob/living/user, datum/sex_session/session)
+	if(!user || !session)
+		return
+	var/list/user_sessions = GLOB.sex_sessions_by_user[user]
+	if(!user_sessions)
+		return
+	user_sessions -= session
+	if(length(user_sessions))
+		return
+	GLOB.sex_sessions_by_user -= user
 
 /mob/living/proc/make_sucking_noise()
 	if(gender == FEMALE)
@@ -87,7 +131,7 @@
 		return
 
 /proc/get_sex_session(mob/giver, mob/taker)
-	for(var/datum/sex_session/session as anything in GLOB.sex_sessions)
+	for(var/datum/sex_session/session as anything in return_sessions_with_user(giver))
 		if(session.user != giver)
 			continue
 		if(session.target != taker)
@@ -343,12 +387,9 @@
 					return TRUE
 
 /proc/return_sessions_with_user(mob/living/user)
-	var/list/sessions = list()
-	for(var/datum/sex_session/session in GLOB.sex_sessions)
-		if(user != session.target && user != session.user)
-			continue
-		sessions |= session
-	return sessions
+	if(!user)
+		return list()
+	return GLOB.sex_sessions_by_user[user] || list()
 
 /proc/return_highest_priority_action(list/sessions = list(), mob/living/user)
 	var/datum/sex_session/highest_session
@@ -457,6 +498,9 @@
 
 /mob/living
 	var/list/attached_sex_toys = list()
+	var/tmp/erp_preferences_revision_seen = -1
+	var/tmp/cached_horny_mob_pref_flags = NONE
+	var/tmp/cached_horny_mob_family_flags = NONE
 
 	///npc organs to use
 	var/ball_organ = /obj/item/organ/genitals/filling_organ/testicles
@@ -480,10 +524,40 @@
 
 /mob/living/Initialize()
 	. = ..()
+	refresh_erp_preference_cache()
 	if(ai_controller)
 		var/datum/ai_planning_subtree/horny/hornybehavior = locate() in ai_controller.planning_subtrees
 		if(hornybehavior && !GetComponent(/datum/component/arousal))
 			AddComponent(/datum/component/arousal)
+
+/mob/living/proc/invalidate_erp_preference_cache()
+	erp_preferences_revision_seen = -1
+	cached_horny_mob_pref_flags = NONE
+	cached_horny_mob_family_flags = NONE
+
+/mob/living/proc/refresh_erp_preference_cache()
+	var/datum/preferences/prefs = client?.prefs
+	var/current_revision = prefs?.erp_preferences_revision
+	if(erp_preferences_revision_seen == current_revision)
+		return
+	erp_preferences_revision_seen = current_revision
+	cached_horny_mob_pref_flags = NONE
+	cached_horny_mob_family_flags = NONE
+	if(!prefs?.erp_preferences)
+		return
+	cached_horny_mob_pref_flags = prefs.erp_preferences[/datum/erp_preference/bitflag/horny_mobs] || NONE
+	var/allowed_families = prefs.erp_preferences[/datum/erp_preference/bitflag/horny_mob_types]
+	if(isnull(allowed_families))
+		allowed_families = HORNY_MOB_TYPE_ALL
+	cached_horny_mob_family_flags = allowed_families
+
+/mob/living/proc/get_cached_horny_mob_pref_flags()
+	refresh_erp_preference_cache()
+	return cached_horny_mob_pref_flags
+
+/mob/living/proc/get_cached_horny_mob_family_flags()
+	refresh_erp_preference_cache()
+	return cached_horny_mob_family_flags
 
 /mob/living/proc/give_genitals()
 	var/mob/living/user = src

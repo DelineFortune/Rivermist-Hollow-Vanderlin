@@ -6053,10 +6053,6 @@
 /obj/structure/fluff/statue/knight,
 /turf/open/floor/concrete,
 /area/indoors/cave/rmh_dwarf_keep/treasury)
-"zU" = (
-/obj/effect/landmark/quest_spawner/medium,
-/turf/open/floor/snow/rough,
-/area/outdoors/mountains/rmh_mountains/frozen/forsaken_village)
 "zV" = (
 /obj/effect/decal/cleanable/dreamfiend_ichor,
 /obj/effect/decal/cleanable/debris/stone,
@@ -60532,7 +60528,7 @@ Oz
 Oz
 Oz
 vE
-zU
+Ad
 Ad
 Jc
 Jc
@@ -71747,7 +71743,7 @@ QL
 AN
 FU
 AN
-gO
+QL
 QL
 QL
 QL
@@ -72126,7 +72122,7 @@ QL
 QL
 QL
 QL
-QL
+es
 QL
 QL
 LM
@@ -73678,7 +73674,7 @@ ce
 QL
 Wr
 AN
-pX
+ml
 ml
 aD
 Wr
@@ -75356,7 +75352,7 @@ QL
 QL
 QL
 ml
-ml
+pX
 ml
 QL
 QL

@@ -19,18 +19,16 @@
 		return "[desc]<br><br><b>Reason:</b> [reason]"
 	return "[desc]<br><br><b>Reason:</b> Unknown - a mystery from your past."
 
-/datum/quirk/vice/wanted/on_life(mob/living/user)
-
-/datum/quirk/vice/wanted/on_examined(mob/user, list/P, list/examine_contents)
-	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("A wanted person..."))
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
+/datum/quirk/vice/wanted/after_job_spawn(datum/job/job)
+	var/mob/living/carbon/human/H = owner
 	if(!logged && H.name)
 		log_hunted("[H.ckey] playing as [H.name] has the hunted quirk.")
 		logged = TRUE
 		GLOB.outlawed_players += H.real_name
+
+/datum/quirk/vice/wanted/on_examined(mob/user, list/P, list/examine_contents)
+	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("A wanted person..."))
 
 /datum/quirk/vice/luxless
 	name = "Lux-less"
@@ -439,7 +437,7 @@
 /atom/movable/screen/alert/status_effect/tremor_grip_loss
 	name = "Trembling Hands"
 	desc = "My hands are shaking uncontrollably! I can't grip anything!"
-
+/*
 /datum/quirk/vice/heretic_outlaw
 	name = "Heretic or Outlaw"
 	desc = "You begin your journey marked as either a heretic or an outlaw, despised by society."
@@ -463,7 +461,5 @@
 		to_chat(H, span_boldwarning("I've been denounced by the church for either reasons legitimate or not!"))
 	else // Outlaw
 		GLOB.outlawed_players |= H.real_name
-		to_chat(H, span_boldwarning("Whether for crimes I did or was accused of, I have been declared an outlaw!"))
+		to_chat(H, span_boldwarning("Whether for crimes I did or was accused of, I have been declared an outlaw!"))*/
 
-/datum/quirk/vice/hunted
-	parent_type = /datum/quirk/vice/wanted

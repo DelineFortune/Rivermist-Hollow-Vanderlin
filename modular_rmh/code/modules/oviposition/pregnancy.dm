@@ -229,7 +229,7 @@
 	if(!storage || !max_stage)
 		return
 
-	var/new_bulk = max(1, stage) * 2
+	var/new_bulk = egg.get_storage_bulk_for_stage(stage)
 	if(egg.body_storage_bulk == new_bulk)
 		return
 
@@ -372,7 +372,22 @@
 /datum/component/pregnancy/proc/create_hatch_result()
 	if(!egg || !hatch_result_type || !ispath(hatch_result_type, /atom/movable))
 		return null
-	return new hatch_result_type(get_turf(egg))
+	var/atom/movable/hatch_result = new hatch_result_type(get_turf(egg))
+	apply_hatch_result_appearance(hatch_result)
+	return hatch_result
+
+/datum/component/pregnancy/proc/apply_hatch_result_appearance(atom/movable/hatch_result)
+	if(!egg || !istype(hatch_result, /obj/item/reagent_containers/food/snacks/oviposition_egg))
+		return
+
+	var/obj/item/reagent_containers/food/snacks/oviposition_egg/hatch_item = hatch_result
+	hatch_item.name = egg.name
+	hatch_item.desc = egg.desc
+	hatch_item.icon = egg.icon
+	hatch_item.icon_state = egg.icon_state
+	hatch_item.color = egg.color
+	hatch_item.transform = egg.transform
+	egg.apply_trait_reagents_to(hatch_item)
 
 /datum/component/pregnancy/proc/hatch_living_inside_host(mob/living/hatchling)
 	if(!egg || !container || !carrier || !hatchling)
@@ -422,8 +437,9 @@
 	var/newborn_start_scale = egg?.get_newborn_start_scale()
 	var/newborn_growth_duration = egg?.get_newborn_growth_duration()
 	var/mob/living/protected_parent = mother || carrier
-	if(newborn_start_scale > 0 && newborn_start_scale < 1 && newborn_growth_duration > 0)
-		hatchling.AddComponent(/datum/component/newborn_growth, newborn_start_scale, newborn_growth_duration, 1, protected_parent)
+	var/needs_newborn_scaling = newborn_start_scale > 0 && newborn_start_scale < 1 && newborn_growth_duration > 0
+	if((protected_parent && newborn_growth_duration > 0) || needs_newborn_scaling)
+		hatchling.AddComponent(/datum/component/newborn_growth, needs_newborn_scaling ? newborn_start_scale : 1, newborn_growth_duration, 1, protected_parent)
 
 	if(player)
 		hatchling.mind_initialize()
@@ -439,12 +455,50 @@
 	else if(ishuman(hatchling))
 		hatchling.real_name = random_unique_name(hatchling.gender)
 	hatchling.update_name()
+	register_hatchling_family(hatchling)
 
 	if(hatchling.mind && mother_name)
 		if(egg?.hatch_inside_host)
 			hatchling.mind.store_memory("[mother_name] carried you inside an embryo.")
 		else
 			hatchling.mind.store_memory("[mother_name] laid your egg.")
+
+/datum/component/pregnancy/proc/register_hatchling_family(mob/living/hatchling)
+	if(!ishuman(hatchling))
+		return FALSE
+
+	var/mob/living/carbon/human/child = hatchling
+	var/mob/living/carbon/human/mother_human = ishuman(mother) ? mother : null
+	if(!mother_human && ishuman(carrier))
+		mother_human = carrier
+
+	var/mob/living/carbon/human/father_human = ishuman(father) ? father : null
+	if(mother_human == father_human)
+		father_human = null
+
+	if(!mother_human && !father_human)
+		return FALSE
+
+	var/datum/heritage/child_family = mother_human?.family_datum || father_human?.family_datum
+	if(!child_family)
+		var/mob/living/carbon/human/founding_parent = mother_human || father_human
+		child_family = new /datum/heritage(founding_parent, null, founding_parent.dna?.species?.type)
+
+	var/datum/family_member/mother_member = get_family_parent_member(child_family, mother_human)
+	var/datum/family_member/father_member = get_family_parent_member(child_family, father_human)
+	return !!child_family.AddToFamily(child, mother_member, father_member, FALSE, TRUE)
+
+/datum/component/pregnancy/proc/get_family_parent_member(datum/heritage/child_family, mob/living/carbon/human/parent_human)
+	if(!child_family || !parent_human)
+		return null
+
+	if(parent_human.family_datum == child_family)
+		return parent_human.family_member_datum || child_family.CreateFamilyMember(parent_human)
+
+	if(!parent_human.family_datum)
+		return child_family.CreateFamilyMember(parent_human)
+
+	return parent_human.family_member_datum || parent_human.family_datum.CreateFamilyMember(parent_human)
 
 /datum/component/pregnancy/proc/remove_newborn_gear(mob/living/hatchling)
 	if(!hatchling)
@@ -643,11 +697,23 @@
 	if(!release_location)
 		return FALSE
 
-	if(container)
-		SEND_SIGNAL(container, COMSIG_BODYSTORAGE_TRY_REMOVE, holder, null, BODYSTORAGE_REMOVE_INTERNAL)
+	holder.allow_internal_release = FALSE
+
+	// Keep the hatchling trapped until the holder is fully out of organ storage.
+	if(holder.is_in_hole_storage())
+		var/removed_from_storage = FALSE
+		if(container)
+			removed_from_storage = SEND_SIGNAL(container, COMSIG_BODYSTORAGE_TRY_REMOVE, holder, null, BODYSTORAGE_REMOVE_INTERNAL)
+		if(!removed_from_storage)
+			removed_from_storage = holder.remove_from_hole_storage()
+		if(!removed_from_storage || holder.is_in_hole_storage())
+			return FALSE
+
+	holder.forceMove(release_location)
+	if(holder.is_inside_storage_organ())
+		return FALSE
 
 	holder.allow_internal_release = TRUE
-	holder.forceMove(release_location)
 
 	if(!silent && carrier)
 		var/message = birth_message || "[carrier] gives birth from [carrier.p_their()] [location_name]!"

@@ -201,4 +201,5 @@
 	icon = 'icons/roguetown/misc/thaumicdust.dmi'
 	desc = "An odd, sticky clump of various alchemical ingredients. Smelt this down to create an ingot of thaumic iron."
 	smeltresult = /obj/item/ingot/thaumic
+	melt_amount = 100
 	melting_material = /datum/material/thaumic_iron

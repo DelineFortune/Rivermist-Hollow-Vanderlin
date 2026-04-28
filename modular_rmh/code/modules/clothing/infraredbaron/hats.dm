@@ -13,6 +13,8 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	armor_class = AC_MEDIUM
 	smeltresult = /obj/item/ingot/steel
+	melting_material = /datum/material/steel
+	melt_amount = 100
 	body_parts_covered = HEAD|HAIR|EARS
 	flags_inv = HIDEHAIR
 	clothing_flags = CANT_SLEEP_IN

@@ -24,7 +24,7 @@
 	skel_outfit = null
 
 /mob/living/carbon/human/species/skeleton/npc
-	ai_controller = /datum/ai_controller/human_npc
+	ai_controller = /datum/ai_controller/human_npc/undead
 	simpmob_attack = 40
 	simpmob_defend = 0
 	wander = TRUE

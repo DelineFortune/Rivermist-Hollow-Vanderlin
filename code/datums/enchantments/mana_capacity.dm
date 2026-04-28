@@ -43,3 +43,16 @@
 
 	user.mana_pool?.set_max_mana(user.mana_pool.maximum_mana_capacity - hardcap_increase)
 	user.mana_overload_threshold -= hardcap_increase
+
+/datum/enchantment/mana_capacity/Destroy(force, ...)
+	for(var/source in affecting_mobs)
+		var/list/source_mobs = affecting_mobs[source]
+		if(!islist(source_mobs))
+			continue
+		for(var/mob/living/carbon/user as anything in source_mobs)
+			if(QDELETED(user))
+				continue
+			user.mana_pool?.set_max_mana(user.mana_pool.maximum_mana_capacity - hardcap_increase)
+			user.mana_overload_threshold -= hardcap_increase
+	affecting_mobs = null
+	return ..()

@@ -23,6 +23,10 @@
 /datum/enchantment/mana_regeneration/proc/on_drop(obj/item/i, mob/living/user)
 	STOP_PROCESSING(SSobj, src)
 
+/datum/enchantment/mana_regeneration/Destroy(force, ...)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /datum/enchantment/mana_regeneration/process()
 	if(!iscarbon(enchanted_item.loc))
 		return

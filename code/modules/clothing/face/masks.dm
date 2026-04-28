@@ -635,6 +635,7 @@
 	sewrepair = FALSE
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/copper
+	melting_material = /datum/material/copper
 
 //................ Druids Mask ............... //
 /obj/item/clothing/face/druid
@@ -676,6 +677,7 @@
 	max_integrity = 150
 	sellprice = 100
 	smeltresult = /obj/item/ingot/gold
+	melting_material = /datum/material/gold
 
 /obj/item/clothing/face/operavisage
 	name = "opera visage"

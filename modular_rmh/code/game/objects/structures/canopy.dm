@@ -43,7 +43,7 @@
 		return 0
 	return .
 
-/obj/structure/fluff/canopy/booth/CanAStarPass(ID, to_dir, caller)
+/obj/structure/fluff/canopy/booth/CanAStarPass(ID, to_dir, call_source)
 	if(to_dir == dir)
 		return FALSE
 	return ..()

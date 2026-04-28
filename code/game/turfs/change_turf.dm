@@ -343,8 +343,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		return FALSE
 	if(!istype(src, /turf/open/floor/naturalstone))
 		return FALSE
+	if(!length(weighted_rocks))
+		return FALSE
 
 	var/turf/closed/mineral/random/picked = pickweight(weighted_rocks)
+	if(!picked)
+		return FALSE
 	GLOB.mined_resource_loc -= src
 
 	ChangeTurf(picked)
@@ -355,7 +359,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			continue
 		if(!(turf in GLOB.mined_resource_loc))
 			continue
-		turf.try_respawn_mined_chunks(chance - 25, list(picked = 10))
+		var/list/next_rocks = list()
+		next_rocks[picked] = 10
+		turf.try_respawn_mined_chunks(chance - 25, next_rocks)
 		if(!prob(chance))
 			return TRUE
 	return TRUE

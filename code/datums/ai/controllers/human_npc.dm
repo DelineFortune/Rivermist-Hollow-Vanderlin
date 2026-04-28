@@ -3,6 +3,7 @@
 	movement_delay = 0.5 SECONDS
 	max_target_distance = 13
 	ai_movement = /datum/ai_movement/hybrid_pathing
+	horny_pref_family_flag = HORNY_MOB_TYPE_HUMANOIDS
 	blackboard = list(
 		BB_WEAPON_TYPE = /obj/item/weapon,
 		BB_ARMOR_CLASS = 2,

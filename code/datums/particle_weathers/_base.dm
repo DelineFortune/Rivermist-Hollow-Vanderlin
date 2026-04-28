@@ -141,12 +141,8 @@
 	return
 
 /datum/particle_weather/Destroy()
-	for(var/mob/living/M as anything in currentSounds)
-		var/datum/looping_sound/looping_sound = currentSounds[M]
-		if(istype(looping_sound))
-			looping_sound.stop()
-			currentSounds -= M
-			qdel(looping_sound)
+	for(var/mob/living/M as anything in currentSounds.Copy())
+		stop_weather_sound_effect(M)
 	return ..()
 
 /**
@@ -224,9 +220,8 @@
  */
 /datum/particle_weather/proc/end()
 	running = FALSE
-	for(var/mob/living/M as anything in currentSounds)
-		if(M.client)
-			stop_weather_sound_effect(M)
+	for(var/mob/living/M as anything in currentSounds.Copy())
+		stop_weather_sound_effect(M)
 	SSParticleWeather.stopWeather()
 
 
@@ -300,17 +295,29 @@
 	if(tempSound)
 		currentSound = new tempSound(L, FALSE, TRUE, CHANNEL_WEATHER)
 		currentSounds[L] = currentSound
+		RegisterSignal(L, COMSIG_PARENT_QDELETING, PROC_REF(handle_weather_sound_owner_deleted))
 		//SET VOLUME
 		if(scale_vol_with_severity)
 			currentSound.volume = initial(currentSound.volume) * severityMod()
 		currentSound.start()
 
 /datum/particle_weather/proc/stop_weather_sound_effect(mob/living/L)
+	if(!L)
+		return
+	UnregisterSignal(L, COMSIG_PARENT_QDELETING)
 	var/datum/looping_sound/currentSound = currentSounds[L]
-	if(currentSound)
-		currentSounds[L] = null
-		currentSound.stop()
-		qdel(currentSound)
+	currentSounds -= L
+	if(!currentSound)
+		return
+	currentSound.stop()
+	qdel(currentSound)
+
+/datum/particle_weather/proc/handle_weather_sound_owner_deleted(datum/source)
+	SIGNAL_HANDLER
+	if(!isliving(source))
+		return
+	var/mob/living/living_source = source
+	stop_weather_sound_effect(living_source)
 
 
 /datum/particle_weather/proc/can_weather_act_obj(obj/obj_to_check)

@@ -346,19 +346,7 @@
 	return FALSE
 
 /datum/trap_pocket_tracker/proc/get_rune_controller(mob/living/carbon/captive = get_captive())
-	if(!ishuman(captive))
-		return null
-
-	var/mob/living/carbon/human/human_captive = captive
-	if(!human_captive.rune_linked)
-		return null
-
-	var/obj/structure/resurrection_rune/linked_rune = find_resurrection_rune_by_tag(human_captive.rune_linked)
-	if(!linked_rune)
-		return null
-	if(!linked_rune.main_rune_link && !linked_rune.is_main)
-		linked_rune.find_master()
-	return linked_rune.resrunecontroler
+	return get_resurrection_rune_controller_for_user(captive)
 
 /datum/trap_pocket_tracker/proc/can_offer_rune_rescue(mob/living/carbon/captive = get_captive())
 	var/datum/resurrection_rune_controller/rune_controller = get_rune_controller(captive)

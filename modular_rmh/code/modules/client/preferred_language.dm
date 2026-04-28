@@ -1,6 +1,16 @@
 /client
 	var/preferred_ui_language = "en"
 
+/proc/sanitize_preferred_ui_language(language)
+	var/selected_language = lowertext("[language || "en"]")
+	if(!(selected_language in list("en", "ru")))
+		return "en"
+	return selected_language
+
+/proc/get_preferred_ui_language(mob/user)
+	var/client/user_client = user?.client
+	return sanitize_preferred_ui_language(user_client?.preferred_ui_language)
+
 /client/verb/change_prefered_language()
 	set name = "Change Preferred Language"
 	set category = "OOC"
@@ -18,5 +28,6 @@
 	if(!selection)
 		return
 
-	preferred_ui_language = language_choices[selection]
+	preferred_ui_language = sanitize_preferred_ui_language(language_choices[selection])
+	prefs?.save_preferences()
 	to_chat(src, span_notice("Preferred UI language set to [selection]. Reopen interfaces to apply it."))

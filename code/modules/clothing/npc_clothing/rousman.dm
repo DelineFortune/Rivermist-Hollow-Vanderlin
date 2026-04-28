@@ -3,6 +3,8 @@
 	icon_state = "stomachgutter_helm_item"
 	item_state = "stomachgutter_helm"
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 100
 	icon = 'icons/roguetown/mob/monster/rousman.dmi'
 	allowed_race = list(SPEC_ID_ROUSMAN)
 	armor = list("blunt" = 80, "slash" = 80, "stab" = 80,  "piercing" = 0, "fire" = 0, "acid" = 0)
@@ -15,6 +17,7 @@
 	item_state = "stomachgutter_armor"
 	icon = 'icons/roguetown/mob/monster/rousman.dmi'
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
 	armor = list("blunt" = 80, "slash" = 80, "stab" = 80,  "piercing" = 0, "fire" = 0, "acid" = 0)
 	allowed_race = list(SPEC_ID_ROUSMAN)
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|VITALS

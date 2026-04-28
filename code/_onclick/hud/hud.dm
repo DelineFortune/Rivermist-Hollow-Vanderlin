@@ -129,8 +129,43 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 		var/atom/movable/plane_master_controller/controller_instance = new mytype(null, src)
 		plane_master_controllers[controller_instance.name] = controller_instance
 
+/datum/hud/proc/clear_hud_from_client_screen(mob/screenmob)
+	if(!screenmob?.client)
+		return
+	var/client/screen_client = screenmob.client
+	if(length(static_inventory))
+		screen_client.screen -= static_inventory
+	if(length(toggleable_inventory))
+		screen_client.screen -= toggleable_inventory
+	if(length(hotkeybuttons))
+		screen_client.screen -= hotkeybuttons
+	if(length(infodisplay))
+		screen_client.screen -= infodisplay
+	if(length(screenoverlays))
+		screen_client.screen -= screenoverlays
+	if(length(team_finder_arrows))
+		screen_client.screen -= team_finder_arrows
+	if(toggle_palette)
+		screen_client.screen -= toggle_palette
+	if(palette_down)
+		screen_client.screen -= palette_down
+	if(palette_up)
+		screen_client.screen -= palette_up
+	if(mouse_over_text)
+		screen_client.screen -= mouse_over_text
+	if(vis_holder)
+		screen_client.screen -= vis_holder
+	for(var/plane in plane_masters)
+		var/atom/movable/screen/plane_master/plane_master = plane_masters[plane]
+		if(plane_master)
+			screen_client.screen -= plane_master
+
 /datum/hud/Destroy()
-	if(mymob.hud_used == src)
+	if(mymob)
+		clear_hud_from_client_screen(mymob)
+		for(var/mob/dead/observer/observer as anything in mymob.observers)
+			clear_hud_from_client_screen(observer)
+	if(mymob && mymob.hud_used == src)
 		mymob.hud_used = null
 
 	QDEL_NULL(module_store_icon)
@@ -334,6 +369,7 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 		var/atom/movable/screen/inventory/hand/H = hand_slots[h]
 		if(H)
 			static_inventory -= H
+			qdel(H)
 	if(hand_slots)
 		hand_slots.Cut()
 	else

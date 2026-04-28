@@ -21,6 +21,8 @@
 	outfit = /datum/outfit/adventurer_sorcerer/wild_magic
 	category_tags = list(CAT_ADVENTURER_SORCERER)
 
+	total_positions = 0
+
 	spells = list(
 		/datum/action/cooldown/spell/undirected/touch/prestidigitation,
 		/datum/action/cooldown/spell/undirected/conjure_item/light,

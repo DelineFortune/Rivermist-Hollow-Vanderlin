@@ -563,7 +563,7 @@
 
 	return new_member
 
-/datum/heritage/proc/AddToFamily(mob/living/carbon/human/person, datum/family_member/parent1, datum/family_member/parent2, adopt = FALSE)
+/datum/heritage/proc/AddToFamily(mob/living/carbon/human/person, datum/family_member/parent1, datum/family_member/parent2, adopt = FALSE, confirmed_biological = FALSE)
 	var/datum/family_member/new_member = CreateFamilyMember(person)
 	if(!new_member)
 		return FALSE
@@ -579,9 +579,10 @@
 	if(!adopt && parent1 && parent2)
 		if(SpeciesCalculation(person, parent1.person, parent2.person))
 			person?.MixDNA(parent1.person, parent2.person, override = TRUE)
-		else
+		else if(!confirmed_biological)
 			new_member.adoption_status = TRUE
 
+	AddFamilyIcon(person)
 	to_chat(person, span_notice("You have been added to the [housename] family."))
 	InheritCurses(new_member)
 	return new_member

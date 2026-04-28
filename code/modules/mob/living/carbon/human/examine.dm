@@ -60,7 +60,11 @@
 
 	if(!self_inspect)
 		var/is_family = FALSE
-		if(family_datum && family_datum == H?.family_datum)
+		var/parenthood_text = GetParenthoodExamineText(H)
+		if(parenthood_text)
+			. += parenthood_text
+			is_family = TRUE
+		else if(family_datum && family_datum == H?.family_datum)
 			var/family_text = ReturnRelation(user)
 			if(family_text)
 				. += family_text
