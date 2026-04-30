@@ -352,10 +352,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	var/char_theme = "grimshart"
 	var/static/list/char_themes = list(
-		"dusty",
 		"grimshart",
-		"paper",
-		"parchment",
 	)
 
 	// I beg for datumised prefs
@@ -503,17 +500,19 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			transform-origin: top left;
 		}
 		.sprite { position: absolute; background-repeat: no-repeat; cursor: pointer; }
+		.sprite-placeholder { cursor: default; }
+		.sprite-button:hover { filter: brightness(1.15); }
 
 		.header-bg   { top: 5px;   left: 6px;   width: 260px; height: 52px; background-image: url('0_header_bg.png'); }
 		.preview-bg  { top: 50px;  left: 8px;   width: 99px;  height: 83px; background-image: url('charpreview_bg.png'); }
 		.body-bg     { top: 58px;  left: 110px; width: 118px; height: 75px; background-image: url('0_body_bg.png'); }
-		.voice-bg    { top: 137px; left: 2px;   width: 107px; height: 41px; background-image: url('0_voice_bg.png'); }
-		.family-bg   { top: 137px; left: 114px; width: 86px;  height: 74px; background-image: url('0_family_bg.png'); }
+		.voice-bg    { top: 137px; left: 2px;   width: 107px; height: 72px; background-image: url('0_voice_bg.png'); }
 		.flavour-bg  { top: 137px; left: 201px; width: 65px;  height: 95px; background-image: url('0_flavour_bg.png'); }
-		.loadout-bg  { top: 181px; left: 3px;   width: 64px;  height: 74px; background-image: url('0_loadout_bg.png'); }
-		.triumphs-bg { top: 182px; left: 74px;  width: 37px;  height: 34px; background-image: url('0_triumphs_bg.png'); }
-		.headshot-bg { top: 213px; left: 119px; width: 76px;  height: 76px; background-image: url('headshot_bg.png'); }
-		.ooc-bg      { top: 236px; left: 201px; width: 54px;  height: 48px; background-image: url('0_ooc_bg.png'); }
+		.loadout-bg  { top: 213px; left: 3px;   width: 64px;  height: 74px; background-image: url('0_loadout_bg.png'); }
+		.stats-bg    { top: 213px; left: 71px;  width: 39px;  height: 74px; background-image: url('0_stats_bg.png'); }
+		.headshot-bg { top: 137px; left: 114px; width: 86px;  height: 74px; background-image: url('headshot_bg.png'); }
+		.nsfw-headshot-bg { top: 213px; left: 114px; width: 86px;  height: 76px; background-image: url('nsfw_headshot_bg.png'); }
+		.ooc-bg      { top: 236px; left: 201px; width: 54px;  height: 66px; background-image: url('0_ooc_bg.png'); }
 
 		.features-bg { top: 60px; left: 231px; width: 36px; height: 48px; background-image: url('0_features_bg.png'); }
 		#silhouette  { top: 3px;  left: 10px;  width: 15px; height: 28px; background-image: url('features_bodytype_f.png'); }
@@ -535,11 +534,63 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		.ooc-notes:hover { background-image: url('ooc_notes_hover.png'); }
 		.ooc-extra { top: 270px; left: 207px; width: 40px; height: 10px; background-image: url('ooc_extra.png'); }
 		.ooc-extra:hover { background-image: url('ooc_extra_hover.png'); }
-		.btn-roles { top: 284px; left: 200px; width: 55px; height: 30px; background-image: url('ooc_specialroles.png'); }
-		.btn-roles:hover { background-image: url('ooc_specialroles_hover.png'); }
+		.ooc-erp { top: 288px; left: 207px; width: 40px; height: 10px; background-image: url('ooc_erp.png'); }
+		.ooc-erp:hover { background-image: url('ooc_erp_hover.png'); }
 
-		.tri-shop { top: 202px; left: 75px; width: 34px; height: 26px; background-image: url('triumphs_shop.png'); }
-		.tri-shop:hover { background-image: url('triumphs_shop_hover.png'); }
+		.ui-label {
+			position: absolute;
+			font-weight: bold;
+			font-size: 7px;
+			line-height: 7px;
+			color: #161418;
+			text-transform: uppercase;
+			pointer-events: none;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
+		.field-box {
+			position: absolute;
+			height: 9px;
+			background-color: #503f34;
+			overflow: hidden;
+		}
+
+		.pixel-button {
+			position: absolute;
+			height: 10px;
+			background-color: #1f1e1b;
+			border: 1px solid #6f5c4d;
+			box-sizing: border-box;
+			color: #d8cf9f;
+			font-weight: bold;
+			font-size: 7px;
+			line-height: 8px;
+			text-align: center;
+			text-transform: uppercase;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
+		.pixel-button:hover {
+			color: #f1e78b;
+			border-color: #8a715d;
+		}
+
+		.preview-placeholder {
+			color: #c9bd91;
+			opacity: 0.75;
+		}
+
+		.stats-title {
+
+			width: 31px;
+			height: 14px;
+			color: #161418;
+			font-size: 10px;
+			line-height: 14px;
+			text-align: center;
+		}
 
 		.clickable-text {
 			font-weight: bold;
@@ -572,11 +623,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			.auto-shrink { font-size: 7px; }
 		}
 
-		#bespecial   { top: 230px; left: 76px; width: 34px; height: 23px; background-image: url('bespecial_no.png'); }
-		#bespecial:hover {background-image: url('bespecial_no_hover.png');}
-		#bespecial.yes:hover {background-image: url('bespecial_yes_hover.png');}
-		#bespecial.yes { background-image: url('bespecial_yes.png'); }
-
 		.menu-ready  { top: 258px; left: 4px;   width: 88px; height: 10px; background-image: url('ready_order.png'); }
 		.menu-ready:hover { background-image: url('ready_order_hover.png'); }
 		.menu-change { top: 269px; left: 4px;   width: 69px; height: 10px; background-image: url('change_character.png'); }
@@ -595,7 +641,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 		.menu-keybinds {
 			top: 280px;
-			left: 78px;
+			left: 73px;
 			width: 39px;
 			height: 10px;
 			background-image: url('keybinds.png');
@@ -606,7 +652,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 		.menu-toggles {
 			top: 269px;
-			left: 83px;
+			left: 78px;
 			width: 34px;
 			height: 10px;
 			background-image: url('toggles.png');
@@ -716,8 +762,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			}
 		}
 
-		function updateHeadshot(url) {
-			var img = document.getElementById('headshot-img');
+		function updateImagePreview(imageId, url) {
+			var img = document.getElementById(imageId);
 			if(img) {
 				img.src = url || '';
 				img.style.display = url ? 'block' : 'none';
@@ -811,7 +857,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			if('faith' in data) updateField('char-faith', data.faith || '');
 			if('species' in data) updateField('char-species', data.species || '');
 			if('patron' in data) updateField('char-patron', data.patron || '');
-			if('pq' in data) updateField('char-pq', data.pq || '');
 			if('age' in data) updateField('char-age', data.age || '');
 			if('domhand' in data) updateField('char-domhand', data.domhand || '');
 			if('pronouns' in data) updateField('char-pronouns', data.pronouns || '');
@@ -824,7 +869,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			if('triumphs' in data) updateField('char-triumphs', data.triumphs || '0');
 			if('culture' in data) updateField('char-culture', data.culture || 'None');
 
-			if('headshot' in data) updateHeadshot(data.headshot);
+			if('headshot' in data) updateImagePreview('headshot-img', data.headshot);
+			if('nsfw_headshot' in data) updateImagePreview('nsfw-headshot-img', data.nsfw_headshot);
 			if('bespecial' in data) updateBeSpecial(data.bespecial === '1');
 			if('preview_sheet' in data) updatePreviewSheet(data.preview_sheet);
 
@@ -865,121 +911,129 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	</div>
 	<div class="sprite body-bg"></div>
 	<div class="sprite voice-bg"></div>
-	<div class="sprite family-bg"></div>
 	<div class="sprite flavour-bg"></div>
 	<div class="sprite loadout-bg"></div>
-	<div class="sprite triumphs-bg"></div>
-	<div class="sprite headshot-bg" style="padding: 3px; box-sizing: border-box;">
+	<div class="sprite stats-bg sprite-placeholder"></div>
+	<div class="sprite headshot-bg" style="padding: 14px 3px 3px; box-sizing: border-box;">
 		<a href='?_src_=prefs;preference=headshot;task=input' style="display: block; width: 100%; height: 100%;">
 			<img id="headshot-img" src="[headshot_link || ""]"
 				 style="width: 100%; height: 100%; object-fit: cover; cursor: pointer; image-rendering: auto;"
 				 onerror="this.style.display='none';">
 		</a>
 	</div>
+	<div class="sprite nsfw-headshot-bg" style="padding: 14px 3px 3px; box-sizing: border-box;">
+		<a href='?_src_=prefs;preference=nsfw_headshot;task=input' style="display: block; width: 100%; height: 100%;">
+			<img id="nsfw-headshot-img" src="[nsfw_headshot_link || ""]"
+				 style="width: 100%; height: 100%; object-fit: cover; cursor: pointer; image-rendering: auto;"
+				 onerror="this.style.display='none';">
+		</a>
+	</div>
 	<div class="sprite ooc-bg"></div>
 
-	<div class="sprite" style="top:26px; left:23px; width:92px; height:9px; background-image: url('header_charname.png');">
+	<div class="ui-label" style="top:15px; left:23px; width:39px;">Pronouns</div>
+	<div class="ui-label" style="top:15px; left:63px; width:50px; text-align:right;">Name</div>
+	<div class="field-box" style="top:26px; left:23px; width:37px;">
+		<a href='?_src_=prefs;preference=pronouns;task=input' style="text-decoration: none; display: block; width: 100%; height: 100%;">
+			<div id="char-pronouns" class="clickable-text auto-shrink" style="width:37px; height:9px;">[pronouns]</div>
+		</a>
+	</div>
+	<div class="field-box" style="top:26px; left:62px; width:53px;">
 		<a href='?_src_=prefs;preference=name;task=input' style="text-decoration: none; display: block; width: 100%; height: 100%;">
-			<div id="char-name" class="clickable-text auto-shrink" style="width:92px; height:9px;">[real_name]</div>
+			<div id="char-name" class="clickable-text auto-shrink" style="width:53px; height:9px;">[real_name]</div>
 		</a>
 	</div>
-	<div class="sprite" style="top:11px; left:122px; width:46px; height:9px; background-image: url('header_class.png');">
+	<div class="ui-label" style="top:15px; left:122px; width:35px; text-align:left;">Class</div>
+	<div class="ui-label" style="top:15px; left:185px; width:35px; text-align:left;">View</div>
+	<div class="ui-label" style="top:34px; left:122px; width:35px; text-align:left;">Race</div>
+	<div class="ui-label" style="top:34px; left:185px; width:35px; text-align:left;">Patron</div>
+	<div class="field-box" style="top:12px; left:147px; width:35px;">
 		<a href='?_src_=prefs;preference=job;task=menu' style="text-decoration: none; display: block; width: 100%; height: 100%;">
-			<div id="char-job" class="clickable-text auto-shrink" style="width:46px; height:9px;">[high_job || "None"]</div>
+			<div id="char-job" class="clickable-text auto-shrink" style="width:35px; height:9px;">[high_job || "None"]</div>
 		</a>
 	</div>
-	<div class="sprite" style="top:11px; left:172px; width:42px; height:9px; background-image: url('header_faith.png');">
+	<div class="field-box" style="top:12px; left:215px; width:35px;">
 		<a href='?_src_=prefs;preference=faith;task=input' style="text-decoration: none; display: block; width: 100%; height: 100%;">
-			<div id="char-faith" class="clickable-text auto-shrink" style="width:42px; height:9px;">[selected_faith?.name || ""]</div>
+			<div id="char-faith" class="clickable-text auto-shrink" style="width:35px; height:9px;">[selected_faith?.name || ""]</div>
 		</a>
 	</div>
-	<div class="sprite" style="top:11px; left:220px; width:31px; height:9px; background-image: url('header_playerckey.png');">
-		<div id="char-ckey" class="clickable-text" style="width:31px; height:9px; cursor: default;">[user.ckey]</div>
-	</div>
-	<div class="sprite" style="top:30px; left:122px; width:46px; height:9px; background-image: url('header_species.png');">
+	<div class="field-box" style="top:31px; left:147px; width:35px;">
 		<a href='?_src_=prefs;preference=species;task=input' style="text-decoration: none; display: block; width: 100%; height: 100%;">
-			<div id="char-species" class="clickable-text auto-shrink" style="width:46px; height:9px;">[pref_species.name]</div>
+			<div id="char-species" class="clickable-text auto-shrink" style="width:35px; height:9px;">[pref_species.name]</div>
 		</a>
 	</div>
-	<div class="sprite" style="top:30px; left:172px; width:42px; height:9px; background-image: url('header_patron.png');">
+	<div class="field-box" style="top:32px; left:215px; width:35px;">
 		<a href='?_src_=prefs;preference=patron;task=input' style="text-decoration: none; display: block; width: 100%; height: 100%;">
-			<div id="char-patron" class="clickable-text auto-shrink" style="width:42px; height:9px;">[selected_patron.name]</div>
-		</a>
-	</div>
-	<div class="sprite" style="top:30px; left:220px; width:31px; height:9px; background-image: url('header_pq.png');">
-		<a href='?_src_=prefs;preference=playerquality;task=menu' style="text-decoration: none; display: block; width: 100%; height: 100%;">
-			<div id="char-pq" class="clickable-text auto-shrink" style="width:31px; height:9px;">[get_playerquality(user.ckey, text = TRUE)]</div>
+			<div id="char-patron" class="clickable-text auto-shrink" style="width:35px; height:8px; text-align:center">[selected_patron.name]</div>
 		</a>
 	</div>
 
-	<div class="sprite" style="top:70px; left:118px; width:46px; height:9px; background-image: url('body_age.png');">
+	<div class="ui-label" style="top:72px; left:140px; width:24px; text-align:right;">Age</div>
+	<div class="ui-label" style="top:72px; left:193px; width:28px; text-align:right;">Quirks</div>
+	<div class="ui-label" style="top:91px; left:120px; width:44px; text-align:right;">Dominance</div>
+	<div class="ui-label" style="top:91px; left:168px; width:53px; text-align:right;">Skin Tone</div>
+	<div class="ui-label" style="top:110px; left:119px; width:46px; text-align:right;">Form</div>
+	<div class="ui-label" style="top:110px; left:169px; width:53px; text-align:right;">Body Type</div>
+	<div class="sprite" style="top:78px; left:118px; width:46px; height:9px; background-image: url('body_age.png');">
 		<a href='?_src_=prefs;preference=age;task=input' style="text-decoration: none; display: block; width: 100%; height: 100%;">
 			<div id="char-age" class="clickable-text auto-shrink" style="width:46px; height:9px;">[age]</div>
 		</a>
 	</div>
-	<div class="sprite" style="top:70px; left:168px; width:53px; height:9px; background-image: url('body_flaw.png');">
+	<div class="sprite" style="top:78px; left:168px; width:53px; height:9px; background-image: url('body_flaw.png');">
 		<a href='?_src_=prefs;preference=select_quirks' style="text-decoration: none; display: block; width: 100%; height: 100%;">
 			<div class="clickable-text auto-shrink" style="width:53px; height:9px;">Select Quirks</div>
 		</a>
 	</div>
-	<div class="sprite" style="top:89px; left:119px; width:46px; height:9px; background-image: url('body_dominanthand.png');">
+	<div class="sprite" style="top:97px; left:119px; width:46px; height:9px; background-image: url('body_dominanthand.png');">
 		<a href='?_src_=prefs;preference=domhand' style="text-decoration: none; display: block; width: 100%; height: 100%;">
-			<div id="char-domhand" class="clickable-text auto-shrink" style="width:46px; height:9px;">[domhand == 1 ? "Left" : "Right"]</div>
+			<div id="char-domhand" class="clickable-text auto-shrink" style="width:46px; height:9px;">[domhand == 1 ? "Left" : "Right"] Handed</div>
 		</a>
 	</div>
-	<div class="sprite" style="top:89px; left:168px; width:53px; height:9px; background-image: url('body_ancestry.png');">
+	<div class="sprite" style="top:97px; left:168px; width:53px; height:9px; background-image: url('body_ancestry.png');">
 		<a href='?_src_=prefs;preference=s_tone;task=input' style="text-decoration: none; display: block; width: 100%; height: 100%;">
 			<div class="clickable-text auto-shrink" style="width:53px; height:9px;">Change</div>
 		</a>
 	</div>
-	<div class="sprite" style="top:108px; left:119px; width:46px; height:9px; background-image: url('body_pronouns.png');">
-		<a href='?_src_=prefs;preference=pronouns;task=input' style="text-decoration: none; display: block; width: 100%; height: 100%;">
-			<div id="char-pronouns" class="clickable-text auto-shrink" style="width:46px; height:9px;">[pronouns]</div>
+	<div class="sprite" style="top:116px; left:119px; width:46px; height:9px; background-image: url('body_customize.png');">
+		<a href='?_src_=prefs;preference=body_customize;task=menu' style="text-decoration: none; display: block; width: 100%; height: 100%;">
+			<div class="clickable-text auto-shrink" style="width:46px; height:9px;">Customize</div>
 		</a>
 	</div>
-	<a href='?_src_=prefs;preference=gender'><div class="sprite" style="top:108px; left:169px; width:53px; height:9px; background-image: url('body_bodytype.png');">
-		<div id="char-gender" class="clickable-text auto-shrink" style="width:53px; height:9px;">[gender == MALE ? "M" : "F"]</div>
-	</div></a>
-
-	<a href='?_src_=prefs;preference=family'><div class="sprite" style="top:150px; left:120px; width:73px; height:9px; background-image: url('family_type.png');">
-		<div id="char-family" class="clickable-text auto-shrink" style="width:73px; height:9px;">[family ? family : "None"]</div>
-	</div></a>
-	<a href='?_src_=prefs;preference=gender_choice'><div class="sprite" style="top:169px; left:120px; width:73px; height:9px; background-image: url('gender_pref.png');">
-		<div id="char-genderpref" class="clickable-text auto-shrink" style="width:73px; height:9px;">[gender_choice ? gender_choice : "Any"]</div>
-	</div></a>
-	<a href='?_src_=prefs;preference=setspouse'><div class="sprite" style="top:188px; left:120px; width:73px; height:9px; background-image: url('spouse_pref.png');">
-		<div id="char-spouse" class="clickable-text auto-shrink" style="width:73px; height:9px;">[setspouse ? setspouse : "None"]</div>
+	<a href='?_src_=prefs;preference=gender'><div class="sprite" style="top:116px; left:169px; width:53px; height:9px; background-image: url('body_bodytype.png');">
+		<div id="char-gender" class="clickable-text auto-shrink" style="width:53px; height:9px;">[gender == MALE ? "Masc" : "Fem"]</div>
 	</div></a>
 
 	<a href='?_src_=prefs;preference=culture;task=input'><div class="sprite" style="top:150px; left:207px; width:51px; height:9px; background-image: url('flavour_culture.png');">
 		<div id="char-culture" class="clickable-text auto-shrink" style="width:51px; height:9px;">[culture ? culture::name : "None"]</div>
 	</div></a>
 
-	<a href='?_src_=prefs;preference=voicetype;task=input'><div class="sprite" style="top:154px; left:10px; width:46px; height:9px; background-image: url('voice_type.png');">
+	<div class="ui-label" style="top:144px; left:8px; width:26px;">Voice</div>
+	<div class="ui-label" style="top:150px; left:10px; width:24px;">Type</div>
+	<a href='?_src_=prefs;preference=voicetype;task=input'><div class="sprite" style="top:159px; left:10px; width:46px; height:9px; background-image: url('voice_type.png');">
 		<div id="char-voicetype" class="clickable-text auto-shrink" style="width:46px; height:9px;">[voice_type]</div>
 	</div></a>
-	<a href='?_src_=prefs;preference=moanselection;task=input'><div class="sprite" style="top:154px; left:60px; width:42px; height:9px; background-image: url('voice_accent.png');">
+	<div class="pixel-button preview-placeholder sprite-placeholder" style="top:159px; left:61px; width:42px;">Preview</div>
+	<div class="ui-label" style="top:178px; left:11px; width:32px;">Moans</div>
+	<a href='?_src_=prefs;preference=moanselection;task=input'><div class="sprite" style="top:186px; left:10px; width:46px; height:9px; background-image: url('voice_moans.png');">
 		<div id="char-moan" class="clickable-text auto-shrink" style="width:42px; height:9px;">[moan_selection]</div>
 	</div></a>
+	<div class="pixel-button preview-placeholder sprite-placeholder" style="top:186px; left:61px; width:42px;">Preview</div>
 
-	<a href='?_src_=prefs;preference=loadout_item;task=input'><div class="sprite" style="top:194px; left:10px; width:51px; height:9px; background-image: url('loadout_item1.png');">
+	<a href='?_src_=prefs;preference=loadout_item;task=input'><div class="sprite" style="top:226px; left:10px; width:51px; height:9px; background-image: url('loadout_item1.png');">
 		<div id="char-loadout1" class="clickable-text auto-shrink" style="width:51px; height:9px;">Open Loadout Menu</div>
 	</div></a>
+	<div class="ui-label stats-title"style="top: 216px; left: 75px;">Stats</div>
+	<a href='?_src_=prefs;preference=stat_config;task=input'><div class="sprite" style="top:236px; left:76px; width:28px; height:28px; background-image: url('loadout_item1.png');">
+		<div id="char-classes" class="clickable-text auto-shrink" style="width:28px; height:9px;">Configure</div>
+	</div></a>
+	<a href='?_src_=prefs;preference=gallery;task=menu;tab=regular'><div class="pixel-button sprite-button" style="top:293px; left:130px; width:54px;">Gallery</div></a>
 
-	<div class="sprite" style="top:195px; left:82px; width:22px; height:7px; background-image: url('triumphs_display.png');">
-		<a href='?_src_=prefs;preference=triumphs;task=menu' style="text-decoration: none; display: block; width: 100%; height: 100%;">
-			<div id="char-triumphs" class="clickable-text" style="width:22px; height:7px; font-size: 5px;">[user.get_triumphs() ? "\Roman [user.get_triumphs()]" : "0"]</div>
-		</a>
-	</div>
-
-	<a href='?_src_=prefs;preference=triumph_buy_menu'><div class="sprite tri-shop"></div></a>
 	<a href='?_src_=prefs;preference=descriptors;task=menu'><div class="sprite flav-desc"></div></a>
 	<a href='?_src_=prefs;preference=flavortext;task=input'><div class="sprite flav-text"></div></a>
 	<a href='?_src_=prefs;preference=misc;task=menu'><div class="sprite flav-misc"></div></a>
 	<a href='?_src_=prefs;preference=ooc_preview;task=input'><div class="sprite flav-prev"></div></a>
 	<a href='?_src_=prefs;preference=ooc_notes;task=input'><div class="sprite ooc-notes"></div></a>
 	<a href='?_src_=prefs;preference=ooc_extra;task=input'><div class="sprite ooc-extra"></div></a>
-	<a href='?_src_=prefs;preference=antag;task=menu'><div class="sprite btn-roles"></div></a>
+	<a href='?_src_=prefs;preference=erp;task=menu'><div class="sprite ooc-erp"></div></a>
 	<a href='?_src_=prefs;preference=customizers;task=menu'><div class="sprite f-btn"></div></a>
 	<a href='?_src_=prefs;preference=randomiseappearanceprefs;'><div class="sprite f-random"></div></a>
 
@@ -990,7 +1044,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			<div id="voice-blob" class="sprite v-blob" style="background-color: [voice_color];"></div>
 		</a>
 	</div>
-	<a href='?_src_=prefs;preference=bespecial'><div id="bespecial" class="sprite [next_special_trait ? "yes" : ""]"></div></a>
 	<a href='?_src_=prefs;preference=multi;task=menu'><div class="sprite menu-ready"></div></a>
 	<a href='?_src_=prefs;preference=changeslot;'><div class="sprite menu-change"></div></a>
 	<a href='?_src_=prefs;preference=keybinds;task=menu'><div class="sprite menu-keybinds"></div></a>
@@ -1066,7 +1119,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	if(update_all || ("pronouns" in fields_to_update))
 		params["pronouns"] = pronouns
 	if(update_all || ("gender" in fields_to_update))
-		params["gender"] = gender == MALE ? "M" : "F"
+		params["gender"] = gender == MALE ? "Masc" : "Fem"
 	if(update_all || ("family" in fields_to_update))
 		params["family"] = family ? family : "None"
 	if(update_all || ("genderpref" in fields_to_update))
@@ -1089,6 +1142,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		params["triumphs"] = user.get_triumphs() ? "\Roman [user.get_triumphs()]" : "0"
 	if(update_all || ("headshot" in fields_to_update))
 		params["headshot"] = headshot_link || ""
+	if(update_all || ("nsfw_headshot" in fields_to_update))
+		params["nsfw_headshot"] = nsfw_headshot_link || ""
 	if(update_all || ("voice_color" in fields_to_update))
 		params["voice_color"] = voice_color
 	if(update_all || ("bespecial" in fields_to_update))
@@ -1103,7 +1158,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 
 /datum/preferences/proc/set_ui_theme(new_theme)
-	if(new_theme in list("dusty", "grimshart", "paper", "parchment"))
+	if(new_theme == "grimshart")
 		char_theme = new_theme
 		return TRUE
 	return FALSE
@@ -1730,6 +1785,22 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		show_misc_pref_ui(user)
 		return
 
+	else if(href_list["preference"] == "body_customize")
+		show_body_customize_ui(user)
+		return
+
+	else if(href_list["preference"] == "gallery")
+		var/gallery_tab = href_list["tab"] == "nsfw" ? "nsfw" : "regular"
+		switch(href_list["task"])
+			if("add")
+				add_gallery_image(user, gallery_tab == "nsfw")
+			if("remove")
+				remove_gallery_image(user, gallery_tab == "nsfw", text2num(href_list["index"]))
+			if("clear")
+				clear_gallery_images(user, gallery_tab == "nsfw")
+		show_gallery_ui(user, gallery_tab)
+		return
+
 	else if(href_list["preference"] == "triumphs")
 		user.show_triumphs_list()
 
@@ -1880,6 +1951,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			else if(toggle_type == "Maptext Toggles")
 				toggles_maptext = new_toggles
 
+	var/return_to_body_customize = href_list["return"] == "body_customize"
 	switch(href_list["task"])
 		if("erp_pref")
 			handle_erp_pref_topic(user, href_list)
@@ -2257,38 +2329,38 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 					var/obj/item/bodypart/taur/tt = taur_type
 					to_chat(user, span_red("Your character now has [tt ? tt::name : "no taurtype."]."))
-					show_misc_pref_ui(user)
+					show_body_customize_or_misc_ui(user, return_to_body_customize)
 
 				if("taur_color")
 					var/new_taur_color = tgui_color_picker(user, "Choose your character's taur color:", "Character Preference", "#[taur_color]")
 					if(new_taur_color)
 						if(is_body_color_picker_choice_valid(user, new_taur_color))
 							taur_color = sanitize_hexcolor(new_taur_color)
-					show_misc_pref_ui(user)
+					show_body_customize_or_misc_ui(user, return_to_body_customize)
 
 				if("taur_markings")
 					var/new_taur_markings = tgui_color_picker(user, "Choose your character's taur markings color:", "Character Preference", "#[taur_markings]")
 					if(new_taur_markings)
 						taur_markings = sanitize_hexcolor(new_taur_markings)
-					show_misc_pref_ui(user)
+					show_body_customize_or_misc_ui(user, return_to_body_customize)
 
 				if("taur_tertiary")
 					var/new_taur_tertiary = tgui_color_picker(user, "Choose your character's taur tertiary markings color:", "Character Preference", "#[taur_tertiary]")
 					if(new_taur_tertiary)
 						taur_tertiary = sanitize_hexcolor(new_taur_tertiary)
-					show_misc_pref_ui(user)
+					show_body_customize_or_misc_ui(user, return_to_body_customize)
 
 				if("mutant_color")
 					pick_mutant_color(user, 1)
-					show_misc_pref_ui(user)
+					show_body_customize_or_misc_ui(user, return_to_body_customize)
 
 				if("mutant_color2")
 					pick_mutant_color(user, 2)
-					show_misc_pref_ui(user)
+					show_body_customize_or_misc_ui(user, return_to_body_customize)
 
 				if("mutant_color3")
 					pick_mutant_color(user, 3)
-					show_misc_pref_ui(user)
+					show_body_customize_or_misc_ui(user, return_to_body_customize)
 
 				if("skin_choice_pick")
 					var/prompt = alert(user, "Choose skin/scales color",, "Custom", "Predefined")
@@ -2301,7 +2373,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 							skin_tone = listy[new_mutantcolor]
 							features["mcolor"] = listy[new_mutantcolor]
 							try_update_mutant_colors()
-					show_misc_pref_ui(user)
+					show_body_customize_or_misc_ui(user, return_to_body_customize)
 				if("race_title")
 					var/list/titles = pref_species.race_titles
 					var/list/choices = list("None", "Custom")
@@ -2317,7 +2389,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 								selected_title = "None"
 							else
 								selected_title = result
-					show_misc_pref_ui(user)
+					show_body_customize_or_misc_ui(user, return_to_body_customize)
 
 				if("flavortext")
 					to_chat(user, span_notice("["<span class='bold'>Flavortext should not include nonphysical nonsensory attributes such as backstory or the character's internal thoughts. NSFW descriptions are prohibited.</span>"]"))
@@ -2483,84 +2555,20 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						log_game("[user] has set their Song URL to '[song_link]'.")
 
 				if("img_gallery")
-
-					if(img_gallery.len >= 3)
-						to_chat(user, "You already have three images in your gallery!")
-						return
-
-					to_chat(user, "<span class='notice'>Please use an image ["<span class='bold'>of your character</span>"] to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
-					to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
-					to_chat(user, "<span class='notice'>Keep in mind that all three images are displayed next to eachother and justified to fill a horizontal rectangle. As such, vertical images work best.</span>")
-					to_chat(user, "<span class='notice'>You can only have a maximum of ["<span class='bold'>THREE IMAGES</span>"] in your gallery at a time.</span>")
-
-					var/new_galleryimg = tgui_input_text(user, "Input the image link (https, hosts: gyazo, lensdump, imgbox, catbox):", "Gallery Image",  encode = FALSE)
-
-					if(new_galleryimg == null)
-						return
-					if(new_galleryimg == "")
-						new_galleryimg = null
-						update_menu_data(user)
-						return
-					if(!is_valid_headshot_link(user, new_galleryimg))
-						to_chat(user, "<span class='notice'>Invalid image link. Make sure it's a direct link from a valid host (gyazo, lensdump, imgbox, catbox).</span>")
-						new_galleryimg = null
-						update_menu_data(user)
-						return
-					img_gallery += new_galleryimg
-					to_chat(user, "<span class='notice'>Successfully added image to gallery.</span>")
-					log_game("[user] has added an image to their gallery: '[new_galleryimg]'.")
+					add_gallery_image(user, FALSE)
+					show_gallery_ui(user, "regular")
 
 				if("nsfw_img_gallery")
-
-					if(nsfw_img_gallery.len >= 3)
-						to_chat(user, "You already have three images in your gallery!")
-						return
-
-					to_chat(user, "<span class='notice'>Please use an image ["<span class='bold'>of your character</span>"] to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
-					to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
-					to_chat(user, "<span class='notice'>Keep in mind that all three images are displayed next to eachother and justified to fill a horizontal rectangle. As such, vertical images work best.</span>")
-					to_chat(user, "<span class='notice'>You can only have a maximum of ["<span class='bold'>THREE IMAGES</span>"] in your gallery at a time.</span>")
-
-					var/new_galleryimg = tgui_input_text(user, "Input the image link (https, hosts: gyazo, lensdump, imgbox, catbox):", "Gallery Image",  encode = FALSE)
-
-					if(new_galleryimg == null)
-						return
-					if(new_galleryimg == "")
-						new_galleryimg = null
-						update_menu_data(user)
-						return
-					if(!is_valid_headshot_link(user, new_galleryimg))
-						to_chat(user, "<span class='notice'>Invalid image link. Make sure it's a direct link from a valid host (gyazo, lensdump, imgbox, catbox).</span>")
-						new_galleryimg = null
-						update_menu_data(user)
-						return
-					nsfw_img_gallery += new_galleryimg
-					to_chat(user, "<span class='notice'>Successfully added image to nsfw gallery.</span>")
-					log_game("[user] has added an image to their nsfw gallery: '[new_galleryimg]'.")
+					add_gallery_image(user, TRUE)
+					show_gallery_ui(user, "nsfw")
 
 				if("clear_gallery")
-					if(!img_gallery.len)
-						to_chat(user, "You don't have any images in your gallery to clear!")
-						return
-					var/dachoice = tgui_alert(user, "Do you really want to clear your image gallery?", "Clear Gallery", list("Yae", "Nae"))
-					if(dachoice == "Nae")
-						update_menu_data(user)
-						return
-					img_gallery = list()
-					to_chat(user, "<span class='notice'>Successfully cleared image gallery.</span>")
-					log_game("[user] has cleared their image gallery.")
+					clear_gallery_images(user, FALSE)
+					show_gallery_ui(user, "regular")
 
 				if("clear_nsfw_gallery")
-					if(!nsfw_img_gallery.len)
-						to_chat(user, "You don't have any images in your nsfw gallery to clear!")
-						return
-					var/dachoice = tgui_alert(user, "Do you really want to clear your nsfw image gallery?", "Clear nsfw Gallery", list("Yae", "Nae"))
-					if(dachoice == "Nae")
-						update_menu_data(user)
-						return
-					nsfw_img_gallery = list()
-					to_chat(user, "<span class='notice'>Successfully cleared their nsfw image gallery.</span>")
-					log_game("[user] has cleared their nsfw image gallery.")
+					clear_gallery_images(user, TRUE)
+					show_gallery_ui(user, "nsfw")
 
 				if("ooc_preview")
 					var/datum/examine_panel/preview_examine_panel = new(user)
@@ -3027,115 +3035,545 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	return 1
 
 
+/datum/preferences/proc/get_gallery_images(nsfw_gallery = FALSE)
+	if(nsfw_gallery)
+		if(!islist(nsfw_img_gallery))
+			nsfw_img_gallery = list()
+		return nsfw_img_gallery
+
+	if(!islist(img_gallery))
+		img_gallery = list()
+	return img_gallery
+
+/datum/preferences/proc/add_gallery_image(mob/user, nsfw_gallery = FALSE)
+	var/list/gallery = get_gallery_images(nsfw_gallery)
+	var/gallery_name = nsfw_gallery ? "NSFW gallery" : "gallery"
+
+	if(length(gallery) >= 3)
+		to_chat(user, "You already have three images in your [gallery_name]!")
+		return FALSE
+
+	to_chat(user, "<span class='notice'>Please use an image ["<span class='bold'>of your character</span>"] to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
+	to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
+	to_chat(user, "<span class='notice'>Keep in mind that all three images are displayed next to eachother and justified to fill a horizontal rectangle. As such, vertical images work best.</span>")
+	to_chat(user, "<span class='notice'>You can only have a maximum of ["<span class='bold'>THREE IMAGES</span>"] in each gallery at a time.</span>")
+
+	var/title = nsfw_gallery ? "NSFW Gallery Image" : "Gallery Image"
+	var/new_galleryimg = tgui_input_text(user, "Input the image link (https, hosts: gyazo, lensdump, imgbox, catbox):", title, encode = FALSE)
+	if(new_galleryimg == null)
+		return FALSE
+	if(new_galleryimg == "")
+		return FALSE
+	if(!is_valid_headshot_link(user, new_galleryimg))
+		to_chat(user, "<span class='notice'>Invalid image link. Make sure it's a direct link from a valid host (gyazo, lensdump, imgbox, catbox).</span>")
+		return FALSE
+
+	gallery += new_galleryimg
+	to_chat(user, "<span class='notice'>Successfully added image to [gallery_name].</span>")
+	log_game("[user] has added an image to their [gallery_name]: '[new_galleryimg]'.")
+	return TRUE
+
+/datum/preferences/proc/remove_gallery_image(mob/user, nsfw_gallery = FALSE, image_index)
+	var/list/gallery = get_gallery_images(nsfw_gallery)
+	var/gallery_name = nsfw_gallery ? "NSFW gallery" : "gallery"
+
+	if(!image_index || image_index < 1 || image_index > length(gallery))
+		to_chat(user, "<span class='warning'>That gallery image no longer exists.</span>")
+		return FALSE
+
+	var/image_link = gallery[image_index]
+	var/choice = tgui_alert(user, "Remove image #[image_index] from your [gallery_name]?", "Remove Gallery Image", list("Remove", "Cancel"))
+	if(choice != "Remove")
+		return FALSE
+
+	gallery.Cut(image_index, image_index + 1)
+	to_chat(user, "<span class='notice'>Successfully removed image from [gallery_name].</span>")
+	log_game("[user] has removed an image from their [gallery_name]: '[image_link]'.")
+	return TRUE
+
+/datum/preferences/proc/clear_gallery_images(mob/user, nsfw_gallery = FALSE)
+	var/list/gallery = get_gallery_images(nsfw_gallery)
+	var/gallery_name = nsfw_gallery ? "NSFW gallery" : "gallery"
+
+	if(!length(gallery))
+		to_chat(user, "You don't have any images in your [gallery_name] to clear!")
+		return FALSE
+
+	var/choice = tgui_alert(user, "Do you really want to clear your [gallery_name]?", "Clear Gallery", list("Clear", "Cancel"))
+	if(choice != "Clear")
+		return FALSE
+
+	if(nsfw_gallery)
+		nsfw_img_gallery = list()
+	else
+		img_gallery = list()
+	to_chat(user, "<span class='notice'>Successfully cleared [gallery_name].</span>")
+	log_game("[user] has cleared their [gallery_name].")
+	return TRUE
+
+/datum/preferences/proc/show_gallery_ui(mob/user, selected_tab = "regular")
+	selected_tab = selected_tab == "nsfw" ? "nsfw" : "regular"
+	var/nsfw_gallery = selected_tab == "nsfw"
+	var/list/gallery = get_gallery_images(nsfw_gallery)
+	var/gallery_title = nsfw_gallery ? "NSFW Gallery" : "Image Gallery"
+	var/regular_tab_class = nsfw_gallery ? "tab" : "tab active"
+	var/nsfw_tab_class = nsfw_gallery ? "tab active" : "tab"
+	var/list/dat = list()
+
+	dat += {"
+	<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<style>
+			body {
+				margin: 0;
+				background: #1a1a1a;
+				color: #d8cf9f;
+				font-family: Verdana, Geneva, sans-serif;
+				font-size: 12px;
+			}
+			.wrap {
+				padding: 12px;
+			}
+			.panel {
+				background: #2a2723;
+				border: 2px solid #5b4b40;
+				box-shadow: inset 0 0 0 1px #141211;
+				padding: 12px;
+			}
+			h2 {
+				margin: 0 0 10px;
+				color: #eee69c;
+				font-size: 16px;
+				text-transform: uppercase;
+				letter-spacing: 0;
+			}
+			.tabs {
+				margin-bottom: 10px;
+				border-bottom: 1px solid #5b4b40;
+			}
+			.tab {
+				display: inline-block;
+				padding: 7px 12px;
+				color: #d8cf9f;
+				text-decoration: none;
+				font-weight: bold;
+				text-transform: uppercase;
+				border: 1px solid #5b4b40;
+				border-bottom: 0;
+				background: #1f1e1b;
+				margin-right: 4px;
+			}
+			.tab.active {
+				background: #705d4f;
+				color: #161418;
+			}
+			.toolbar {
+				margin: 10px 0 12px;
+			}
+			.button {
+				display: inline-block;
+				padding: 6px 9px;
+				margin-right: 6px;
+				background: #705d4f;
+				border: 1px solid #171515;
+				color: #161418;
+				font-weight: bold;
+				text-decoration: none;
+			}
+			.button:hover {
+				background: #8b735f;
+			}
+			.button.danger {
+				color: #d8cf9f;
+				background: #3a1f1f;
+				border-color: #6f3a33;
+			}
+			.button.disabled {
+				color: #8f846c;
+				background: #1f1e1b;
+				border-color: #3a332d;
+			}
+			.note {
+				color: #bcae82;
+				margin-bottom: 10px;
+			}
+			.card {
+				display: inline-block;
+				vertical-align: top;
+				width: 176px;
+				margin: 0 8px 10px 0;
+				background: #1f1e1b;
+				border: 1px solid #5b4b40;
+			}
+			.preview {
+				height: 150px;
+				line-height: 150px;
+				text-align: center;
+				background: #080808;
+				overflow: hidden;
+			}
+			.preview img {
+				max-width: 100%;
+				max-height: 150px;
+				vertical-align: middle;
+			}
+			.card-body {
+				padding: 7px;
+			}
+			.url {
+				color: #bcae82;
+				font-size: 10px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				margin-bottom: 7px;
+			}
+			.remove {
+				color: #eee69c;
+				font-weight: bold;
+				text-decoration: none;
+			}
+			.empty {
+				padding: 24px;
+				text-align: center;
+				color: #8f846c;
+				border: 1px dashed #5b4b40;
+				background: #1f1e1b;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="panel">
+				<h2>[gallery_title]</h2>
+				<div class="tabs">
+					<a class="[regular_tab_class]" href='?_src_=prefs;preference=gallery;task=menu;tab=regular'>Regular</a>
+					<a class="[nsfw_tab_class]" href='?_src_=prefs;preference=gallery;task=menu;tab=nsfw'>NSFW</a>
+				</div>
+				<div class="note">Direct image links from approved hosts are stored here. Each tab holds up to three images.</div>
+				<div class="toolbar">
+	"}
+
+	if(length(gallery) < 3)
+		dat += "<a class='button' href='?_src_=prefs;preference=gallery;task=add;tab=[selected_tab]'>Add Image</a>"
+	else
+		dat += "<span class='button disabled'>Gallery Full</span>"
+	if(length(gallery))
+		dat += "<a class='button danger' href='?_src_=prefs;preference=gallery;task=clear;tab=[selected_tab]'>Clear Tab</a>"
+	dat += "<span>[length(gallery)]/3 images</span></div>"
+
+	if(length(gallery))
+		for(var/i in 1 to length(gallery))
+			var/image_link = gallery[i]
+			if(!length(image_link))
+				continue
+			var/safe_link = html_encode(image_link)
+			dat += {"
+				<div class="card">
+					<div class="preview"><img src="[safe_link]" alt="Gallery image #[i]"></div>
+					<div class="card-body">
+						<div class="url">[safe_link]</div>
+						<a class="remove" href='?_src_=prefs;preference=gallery;task=remove;tab=[selected_tab];index=[i]'>Remove</a>
+					</div>
+				</div>
+			"}
+	else
+		dat += "<div class='empty'>No images in this tab yet.</div>"
+
+	dat += {"
+			</div>
+		</div>
+	</body>
+	</html>
+	"}
+
+	var/datum/browser/popup = new(user, "image_gallery", "<div align='center'>Image Gallery</div>", 640, 560)
+	popup.set_content(dat.Join())
+	popup.open(FALSE)
+
+/datum/preferences/proc/show_body_customize_or_misc_ui(mob/user, return_to_body_customize)
+	if(return_to_body_customize)
+		show_body_customize_ui(user)
+	else
+		show_misc_pref_ui(user)
+
+/datum/preferences/proc/show_body_customize_ui(mob/user)
+	var/list/dat = list()
+	dat += {"
+	<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<style>
+			body {
+				margin: 0;
+				background: #1a1a1a;
+				color: #d8cf9f;
+				font-family: Verdana, Geneva, sans-serif;
+				font-size: 12px;
+			}
+			.wrap {
+				padding: 14px;
+			}
+			.panel {
+				background: #2a2723;
+				border: 2px solid #5b4b40;
+				box-shadow: inset 0 0 0 1px #141211;
+				padding: 12px;
+			}
+			h2 {
+				margin: 0 0 10px;
+				color: #eee69c;
+				font-size: 16px;
+				text-transform: uppercase;
+				letter-spacing: 0;
+			}
+			.section-title {
+				margin: 14px 0 6px;
+				color: #bcae82;
+				font-weight: bold;
+				text-transform: uppercase;
+				border-bottom: 1px solid #5b4b40;
+				padding-bottom: 3px;
+			}
+			.option-row {
+				display: block;
+				background: #705d4f;
+				border: 1px solid #171515;
+				color: #161418;
+				font-weight: bold;
+				text-decoration: none;
+				margin: 5px 0;
+				padding: 7px 8px;
+				min-height: 18px;
+			}
+			.option-row:hover {
+				background: #8b735f;
+				color: #161418;
+			}
+			.option-row small {
+				display: block;
+				color: #262020;
+				font-weight: normal;
+				margin-top: 2px;
+			}
+			.swatch {
+				display: inline-block;
+				width: 28px;
+				height: 14px;
+				border: 1px solid #161616;
+				margin-right: 8px;
+				vertical-align: middle;
+			}
+			.muted {
+				color: #8f846c;
+				margin: 5px 0;
+			}
+			.footer {
+				margin-top: 12px;
+				text-align: right;
+			}
+			.footer a {
+				color: #eee69c;
+				font-weight: bold;
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="panel">
+				<h2>Customize Appearance</h2>
+	"}
+
+	dat += "<div class='section-title'>Body Details</div>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=markings;task=menu'>Markings<small>Edit scars, tattoos, body markings, and their colors.</small></a>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=underwear;task=menu'>Smallclothes<small>Choose underlayers and smallclothes preferences.</small></a>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=customizers;task=menu'>Features<small>Adjust available body accessories and feature colors.</small></a>"
+
+	if(pref_species?.use_skintones)
+		var/skin_color_value = length(skin_tone) == 6 ? skin_tone : "000000"
+		dat += "<div class='section-title'>Skin</div>"
+		dat += "<a class='option-row' href='?_src_=prefs;preference=s_tone;task=input;return=body_customize'><span class='swatch' style='background-color: #[skin_color_value];'></span>[pref_species.skin_tone_wording]<small>Pick a predefined skin or scale color.</small></a>"
+		dat += "<a class='option-row' href='?_src_=prefs;preference=skin_color_ref_list;task=input'>Color Reference<small>Open the available skin color reference list.</small></a>"
+
+	if(has_mutant_color_preferences())
+		dat += "<div class='section-title'>Mutant Colors</div>"
+		for(var/color_slot in 1 to 3)
+			var/feature_key = get_mutant_color_feature_key(color_slot)
+			if(!feature_key)
+				continue
+			var/color_value = features[feature_key]
+			if(length(color_value) != 6)
+				color_value = "000000"
+			dat += "<a class='option-row' href='?_src_=prefs;preference=mutant_color[color_slot == 1 ? "" : color_slot];task=input;return=body_customize'><span class='swatch' style='background-color: #[color_value];'></span>Mutant Color #[color_slot]<small>Change this character color slot.</small></a>"
+	else
+		dat += "<div class='section-title'>Mutant Colors</div>"
+		dat += "<div class='muted'>This species has no mutant color slots.</div>"
+
+	if(LAZYLEN(pref_species.allowed_taur_types))
+		var/obj/item/bodypart/taur/T = taur_type
+		var/taur_name = ispath(T) ? T::name : "None"
+		dat += "<div class='section-title'>Taur Body</div>"
+		dat += "<a class='option-row' href='?_src_=prefs;preference=taur_type;task=input;return=body_customize'>Body Type<small>[taur_name]</small></a>"
+		dat += "<a class='option-row' href='?_src_=prefs;preference=taur_color;task=input;return=body_customize'><span class='swatch' style='background-color: #[taur_color];'></span>Taur Color</a>"
+		dat += "<a class='option-row' href='?_src_=prefs;preference=taur_markings;task=input;return=body_customize'><span class='swatch' style='background-color: #[taur_markings];'></span>Taur Markings</a>"
+		dat += "<a class='option-row' href='?_src_=prefs;preference=taur_tertiary;task=input;return=body_customize'><span class='swatch' style='background-color: #[taur_tertiary];'></span>Taur Tertiary</a>"
+
+	if(pref_species?.use_titles)
+		var/display_title = selected_title ? selected_title : "None"
+		dat += "<div class='section-title'>Race Title</div>"
+		dat += "<a class='option-row' href='?_src_=prefs;preference=race_title;task=input;return=body_customize'>Race Title<small>[display_title]</small></a>"
+
+	dat += {"
+				<div class="footer"><a href='?_src_=prefs;preference=misc;task=menu'>Extra Prefs</a></div>
+			</div>
+		</div>
+	</body>
+	</html>
+	"}
+
+	var/datum/browser/popup = new(user, "body_customization", "<div align='center'>Customize Appearance</div>", 460, 560)
+	popup.set_content(dat.Join())
+	popup.open(FALSE)
+
 /datum/preferences/proc/show_misc_pref_ui(mob/user)
 	var/list/dat = list()
 	dat += {"
 	<html lang="en">
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<style>
 			body {
-				background-color: #1a1a1a;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
 				margin: 0;
+				background: #1a1a1a;
+				color: #d8cf9f;
+				font-family: Verdana, Geneva, sans-serif;
+				font-size: 12px;
 				image-rendering: pixelated;
 			}
-			.ui-container {
-				position: relative;
-				width: 272px;
-				height: 293px;
-				background-image: url('Charsheet_BG.1.png');
-				background-size: cover;
-				transform: scale(3);
-				zoom: [100 / user.client?.window_scaling]%;
+			.wrap {
+				padding: 14px;
+			}
+			.panel {
+				background: #2a2723;
+				border: 2px solid #5b4b40;
+				box-shadow: inset 0 0 0 1px #141211;
+				padding: 12px;
+			}
+			h2 {
+				margin: 0 0 10px;
+				color: #eee69c;
+				font-size: 16px;
+				text-transform: uppercase;
+				letter-spacing: 0;
+			}
+			.section-title {
+				margin: 14px 0 6px;
+				color: #bcae82;
+				font-weight: bold;
+				text-transform: uppercase;
+				border-bottom: 1px solid #5b4b40;
+				padding-bottom: 3px;
+			}
+			.option-row {
+				display: block;
+				background: #705d4f;
+				border: 1px solid #171515;
+				color: #161418;
+				font-weight: bold;
+				text-decoration: none;
+				margin: 5px 0;
+				padding: 7px 8px;
+				min-height: 18px;
+			}
+			.option-row:hover {
+				background: #8b735f;
+				color: #161418;
+			}
+			.option-row small {
+				display: block;
+				color: #262020;
+				font-weight: normal;
+				margin-top: 2px;
+			}
+			.inline-actions {
+				margin-top: 5px;
+			}
+			.inline-actions a {
+				display: inline-block;
+				background: #171515;
+				border: 1px solid #5b4b40;
+				color: #eee69c;
+				font-weight: bold;
+				text-decoration: none;
+				margin: 0 4px 5px 0;
+				padding: 5px 8px;
+			}
+			.inline-actions a:hover {
+				background: #2f2924;
+			}
+			.preview-image {
+				display: block;
+				width: 125px;
+				height: 175px;
+				object-fit: cover;
+				border: 2px solid #171515;
+				margin-top: 6px;
+			}
+			.footer {
+				margin-top: 12px;
+				text-align: right;
+			}
+			.footer a {
+				color: #eee69c;
+				font-weight: bold;
+				text-decoration: none;
 			}
 		</style>
-	</head>"}
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="panel">
+				<h2>Extra Preferences</h2>
+	"}
 
-	dat += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
-	// Encapsulating table
-	dat += "<table width = '100%'>"
-	// Only one Row
-	dat += "<tr>"
-	// Leftmost Column, 40% width
-	dat += "<td width=45% valign='top'>"
+	var/musicname = combat_music?.shortname ? combat_music.shortname : combat_music?.name
+	if(!musicname)
+		musicname = "Default"
+	musicname = html_encode(musicname)
 
-	//-----------START OF IDENT TABLE-----------//
-	dat += "<h2 style='padding-left: 4px'>Identity</h2>"
-	dat += "<table width='100%'><tr><td width='75%' valign='top'>"
-	dat += "<br>"
-	dat += "<b>Food Preferences:</b> <a href='?_src_=prefs;preference=culinary;task=menu'>Change</a><BR>"
-	var/musicname = (combat_music.shortname ? combat_music.shortname : combat_music.name)
-	dat += "<b>Combat Music:</b> <a href='?_src_=prefs;preference=combat_music;task=input'>[musicname || "FUCK!"]</a><BR>"
-	dat += "<br><b>NSFW Flavortext:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=nsfwflavortext;task=input'>Change</a>"
-	dat += "<br><b>ERP:</b> <a href='?_src_=prefs;preference=erp;task=menu'>Change</a>"
-	dat += "<br><b>NSFW Headshot:</b> <a href='?_src_=prefs;preference=nsfw_headshot;task=input'>Change</a>"
-	if(nsfw_headshot_link != null)
-		dat += "<br><img src='[nsfw_headshot_link]' width='125px' height='175px'>"
-	dat += "<br><b>Song:</b> <a href='?_src_=prefs;preference=song_link;task=input'>Change URL</a>"
-	dat += "<a href='?_src_=prefs;preference=change_title;task=input'>Change Title</a>"
-	dat += "<a href='?_src_=prefs;preference=change_artist;task=input'>Change Artist</a>"
-	dat += "<br><B>Image Gallery:</b> <a href='?_src_=prefs;preference=img_gallery;task=input'>Add</a>"
-	dat+= "<a href='?_src_=prefs;preference=clear_gallery;task=input'>Clear Gallery</a>"
-	dat += "<br><B>Nsfw Image Gallery:</b> <a href='?_src_=prefs;preference=nsfw_img_gallery;task=input'>Add</a>"
-	dat+= "<a href='?_src_=prefs;preference=clear_nsfw_gallery;task=input'>Clear Nsfw Gallery</a>"
-	dat += "</tr></table>"
-	//-----------END OF IDENT TABLE-----------//
+	var/song_status = song_link ? "URL set" : "No URL set"
+	var/song_title_display = song_title ? html_encode(song_title) : "No title set"
+	var/song_artist_display = song_artist ? html_encode(song_artist) : "No artist set"
 
+	dat += "<div class='section-title'>Personal</div>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=culinary;task=menu'>Food Preferences<small>Change favored foods and culinary preferences.</small></a>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=combat_music;task=input'>Combat Music<small>[musicname]</small></a>"
 
-	// Middle dummy Column, 20% width
-	dat += "</td>"
-	dat += "<td width=10% valign='top'>"
-	// Rightmost column, 40% width
-	dat += "<td width=45% valign='top'>"
-	dat += "<h2 style='padding-left: 4px'>Body</h2>"
+	dat += "<div class='section-title'>Expression</div>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=rumour;task=input'>Rumours<small>Set what others may hear about this character.</small></a>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=gossip;task=input'>Noble Gossip<small>Set noble gossip tied to this character.</small></a>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=rumour_preview;task=input'>Preview Rumours<small>Check how rumours and gossip will render.</small></a>"
 
-	//-----------START OF BODY TABLE-----------
-	dat += "<table width='100%'><tr><td width='1%' valign='top'>"
+	dat += "<div class='section-title'>NSFW</div>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=nsfwflavortext;task=input'>NSFW Flavortext<small>Edit the private flavortext field.</small></a>"
+	dat += "<div class='inline-actions'><a href='?_src_=prefs;preference=formathelp;task=input'>Formatting Help</a></div>"
 
-	// Rumours / Gossip
-	dat += "<br><b>Rumours & Noble Gossip:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><br><a href='?_src_=prefs;preference=rumour;task=input'>Set Rumours</a><a href='?_src_=prefs;preference=gossip;task=input'>Set Gossip</a><a href='?_src_=prefs;preference=rumour_preview;task=input'><i>Preview</i></a><br>"
+	dat += "<div class='section-title'>Examine Song</div>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=song_link;task=input'>Song URL<small>[song_status]</small></a>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=change_title;task=input'>Song Title<small>[song_title_display]</small></a>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=change_artist;task=input'>Song Artist<small>[song_artist_display]</small></a>"
 
-	var/use_skintones = pref_species.use_skintones
-	if(use_skintones)
+	dat += {"
+				<div class="footer"><a href='?_src_=prefs;preference=body_customize;task=menu'>Customize Appearance</a></div>
+			</div>
+		</div>
+	</body>
+	</html>
+	"}
 
-		//dat += APPEARANCE_CATEGORY_COLUMN
-		var/skin_tone_wording = pref_species.skin_tone_wording // Both the skintone names and the word swap here is useless fluff
-
-		dat += "<b>[skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>Change </a> | <a href='?_src_=prefs;preference=skin_color_ref_list;task=input'>Reference</a>"
-		//dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SKIN_TONE]'>[(randomise[RANDOM_SKIN_TONE]) ? "Lock" : "Unlock"]</A>"
-
-	dat += "<br>"
-	if(pref_species.use_titles)
-		var/display_title = selected_title ? selected_title : "None"
-		dat += "<b>Race Title:</b> <a href='?_src_=prefs;preference=race_title;task=input'>[display_title]</a><BR>"
-	dat += "<br><b>Markings:</b> <a href='?_src_=prefs;preference=markings;task=menu'>Change</a>"
-	dat += "<br><b>Smallclothes:</b> <a href='?_src_=prefs;preference=underwear;task=menu'>Change</a>"
-
-	if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
-
-		dat += "<br><b>Mutant Color #1:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
-		dat += "<b>Mutant Color #2:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
-		dat += "<b>Mutant Color #3:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
-
-	if(LAZYLEN(pref_species.allowed_taur_types))
-		var/obj/item/bodypart/taur/T = taur_type
-		var/name = ispath(T) ? T::name : "None"
-		dat += "<br><b>Taur Body Type:</b> <a href='?_src_=prefs;preference=taur_type;task=input'>[name]</a><BR>"
-		dat += "<b>Taur Color:</b> <span style='border: 1px solid #161616; background-color: #[taur_color];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_color;task=input'>Change</a><BR>"
-		dat += "<b>Taur Markings:</b> <span style='border: 1px solid #161616; background-color: #[taur_markings];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_markings;task=input'>Change</a><BR>"
-		dat += "<b>Taur Tertiary:</b> <span style='border: 1px solid #161616; background-color: #[taur_tertiary];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_tertiary;task=input'>Change</a><BR>"
-
-	dat += "<br></td>"
-
-	dat += "</tr></table>"
-	//-----------END OF BODY TABLE-----------//
-	dat += "</td>"
-	dat += "</tr>"
-	dat += "</table>"
-	var/datum/browser/popup = new(user, "misc_customization", "<div align='center'>Miscellaneous Preferences</div>", 480, 500)
+	var/datum/browser/popup = new(user, "misc_customization", "<div align='center'>Extra Preferences</div>", 460, 560)
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
 
