@@ -201,7 +201,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	// Custom hotkeys
 	S["key_bindings"]		>> key_bindings
 
-	if(!char_theme)
+	if(!(char_theme in char_themes))
 		char_theme = "grimshart"
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
