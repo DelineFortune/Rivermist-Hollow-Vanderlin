@@ -38,6 +38,8 @@
 		var/datum/customizer_choice/customizer_choice = CUSTOMIZER_CHOICE(entry.customizer_choice_type)
 		customizer_choice.validate_entry(src, entry)
 
+	enforce_required_genital_set()
+
 /datum/preferences/proc/print_customizers_page()
 	var/list/dat = list()
 	. = dat
@@ -50,6 +52,11 @@
 	var/list/customizers = pref_species.customizers
 	if(!customizers)
 		return
+	dat += "<table align='center' width='100%' style='background-color:#1c1313; border:1px solid #4e3b32; margin-bottom:10px;'><tr><td align='center'>"
+	dat += "<b>Genital Set:</b> [get_current_genital_set_label()]"
+	dat += "<br><a href='?_src_=prefs;task=change_customizer;customizer_task=toggle_genital_set'>Toggle Genitals</a>"
+	dat += "<br><small>You must keep either a complete masculine or feminine set.</small>"
+	dat += "</td></tr></table>"
 	dat += "<table width='100%'>"
 	dat += "<td valign='top' width='33%'>"
 	var/iterated_customizers = 0
@@ -102,11 +109,90 @@
 		if(entry.customizer_type == customizer_type)
 			return entry
 
+/datum/preferences/proc/get_customizer_entry_for_entry_type(entry_type)
+	for(var/datum/customizer_entry/entry as anything in customizer_entries)
+		if(istype(entry, entry_type))
+			return entry
+
+/datum/preferences/proc/has_enabled_customizer_entry_type(entry_type)
+	var/datum/customizer_entry/entry = get_customizer_entry_for_entry_type(entry_type)
+	return entry && !entry.disabled
+
+/datum/preferences/proc/set_customizer_entry_type_enabled(entry_type, enabled)
+	var/datum/customizer_entry/entry = get_customizer_entry_for_entry_type(entry_type)
+	if(entry)
+		entry.disabled = !enabled
+
+/datum/preferences/proc/species_has_masculine_genital_set()
+	return get_customizer_entry_for_entry_type(/datum/customizer_entry/organ/genitals/penis) && get_customizer_entry_for_entry_type(/datum/customizer_entry/organ/genitals/testicles)
+
+/datum/preferences/proc/species_has_feminine_genital_set()
+	return get_customizer_entry_for_entry_type(/datum/customizer_entry/organ/genitals/breasts) && get_customizer_entry_for_entry_type(/datum/customizer_entry/organ/genitals/vagina)
+
+/datum/preferences/proc/has_masculine_genital_set()
+	return has_enabled_customizer_entry_type(/datum/customizer_entry/organ/genitals/penis) && has_enabled_customizer_entry_type(/datum/customizer_entry/organ/genitals/testicles)
+
+/datum/preferences/proc/has_feminine_genital_set()
+	return has_enabled_customizer_entry_type(/datum/customizer_entry/organ/genitals/breasts) && has_enabled_customizer_entry_type(/datum/customizer_entry/organ/genitals/vagina)
+
+/datum/preferences/proc/get_preferred_genital_set()
+	if(has_masculine_genital_set())
+		return "masculine"
+	if(has_feminine_genital_set())
+		return "feminine"
+	if(gender == FEMALE)
+		return "feminine"
+	return "masculine"
+
+/datum/preferences/proc/get_current_genital_set_label()
+	var/has_masculine = has_masculine_genital_set()
+	var/has_feminine = has_feminine_genital_set()
+	if(has_masculine && has_feminine)
+		return "Mixed"
+	if(has_masculine)
+		return "Masculine"
+	if(has_feminine)
+		return "Feminine"
+	return "Unset"
+
+/datum/preferences/proc/set_genital_set(genital_set)
+	var/masculine = genital_set == "masculine"
+	set_customizer_entry_type_enabled(/datum/customizer_entry/organ/genitals/penis, masculine)
+	set_customizer_entry_type_enabled(/datum/customizer_entry/organ/genitals/testicles, masculine)
+	set_customizer_entry_type_enabled(/datum/customizer_entry/organ/genitals/breasts, !masculine)
+	set_customizer_entry_type_enabled(/datum/customizer_entry/organ/genitals/vagina, !masculine)
+
+/datum/preferences/proc/toggle_genital_set()
+	if(has_masculine_genital_set() && !has_feminine_genital_set())
+		set_genital_set("feminine")
+	else
+		set_genital_set("masculine")
+
+/datum/preferences/proc/enforce_required_genital_set(preferred_set)
+	if(has_masculine_genital_set() || has_feminine_genital_set())
+		return FALSE
+	if(!preferred_set)
+		preferred_set = get_preferred_genital_set()
+	if(preferred_set == "feminine" && species_has_feminine_genital_set())
+		set_genital_set("feminine")
+		return TRUE
+	if(preferred_set == "masculine" && species_has_masculine_genital_set())
+		set_genital_set("masculine")
+		return TRUE
+	if(species_has_masculine_genital_set())
+		set_genital_set("masculine")
+		return TRUE
+	if(species_has_feminine_genital_set())
+		set_genital_set("feminine")
+		return TRUE
+	return FALSE
+
 /datum/preferences/proc/cleanup_quirks_for_customizer_entry(datum/customizer_entry/entry)
 	return FALSE
 
 /// Gets an associative list of organ slots to organ dna created from organ customization
 /datum/preferences/proc/get_organ_dna_list()
+	enforce_required_genital_set()
 	var/list/organ_list = list()
 	for(var/datum/customizer_entry/entry as anything in customizer_entries)
 		var/datum/customizer_choice/customizer_choice = CUSTOMIZER_CHOICE(entry.customizer_choice_type)
@@ -135,6 +221,7 @@
 		customizer_choice.customize_organ(organ, entry)
 
 /datum/preferences/proc/apply_customizers_to_character(mob/living/carbon/human/human)
+	enforce_required_genital_set()
 	for(var/datum/customizer_entry/entry as anything in customizer_entries)
 		var/datum/customizer_choice/customizer_choice = CUSTOMIZER_CHOICE(entry.customizer_choice_type)
 		var/datum/customizer/customizer = CUSTOMIZER(entry.customizer_type)
@@ -146,6 +233,11 @@
 
 /datum/preferences/proc/handle_customizer_topic(mob/user, href_list)
 	//needs_update = TRUE
+	if(href_list["customizer_task"] == "toggle_genital_set")
+		toggle_genital_set()
+		mark_preview_appearance_dirty()
+		return
+	var/previous_genital_set = get_preferred_genital_set()
 	var/customizer_type = text2path(href_list["customizer"])
 	var/datum/customizer_entry/entry = get_customizer_entry_for_customizer_type(customizer_type)
 	if(!entry)
@@ -175,6 +267,8 @@
 			cleanup_quirks_for_customizer_entry(entry)
 		else
 			choice.handle_topic(user, href_list, src, entry, customizer_type)
+	if(enforce_required_genital_set(previous_genital_set))
+		to_chat(user, span_warning("You must keep either a complete masculine or feminine genital set."))
 	mark_preview_appearance_dirty()
 
 /datum/preferences/proc/reset_all_customizer_accessory_colors()
@@ -256,6 +350,7 @@
 			else
 				entry.disabled = TRUE
 			break
+	enforce_required_genital_set()
 
 /datum/preferences/proc/clear_flavor()
 	flavortext = null
