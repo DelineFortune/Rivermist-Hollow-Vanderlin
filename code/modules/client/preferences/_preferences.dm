@@ -2809,7 +2809,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						var/new_gender_choice  = tgui_input_list(user, "SELECT YOUR HERO'S PREFERENCE", "TO LOVE AND TO CHERISH", gender_choice_option_list, gender_choice)
 						if(new_gender_choice)
 							gender_choice = new_gender_choice
-					genderize_customizer_entries()
 				if("alignment")
 					var/new_alignment = tgui_input_list(user, "SELECT YOUR HERO'S MORALITY", "CUT FROM THE SAME CLOTH", ALL_ALIGNMENTS_LIST, alignment)
 					if(new_alignment)

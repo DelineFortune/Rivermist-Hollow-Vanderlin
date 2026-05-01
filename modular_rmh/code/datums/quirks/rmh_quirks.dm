@@ -118,10 +118,6 @@
 		"Short Sword" = /obj/item/weapon/sword/short,
 	)
 
-/datum/quirk/duelist
-	parent_type = /datum/quirk/boon/duelist
-	abstract_type = /datum/quirk/duelist
-
 /datum/quirk/boon/fence
 	parent_type = /datum/quirk/boon/restored
 	name = "Fencer"

@@ -22,7 +22,8 @@
 /datum/customizer_choice/organ/genitals/belly/validate_entry(datum/preferences/prefs, datum/customizer_entry/entry)
 	..()
 	var/datum/customizer_entry/organ/genitals/belly/belly_entry = entry
-	belly_entry.belly_size = sanitize_integer(belly_entry.belly_size, MIN_BELLY_SIZE, MAX_BELLY_SIZE, DEFAULT_BELLY_SIZE)
+	var/max_belly_size = prefs.get_max_belly_size()
+	belly_entry.belly_size = prefs.sanitize_body_size_choice(belly_entry.belly_size, MIN_BELLY_SIZE, max_belly_size, DEFAULT_BELLY_SIZE)
 
 /datum/customizer_choice/organ/genitals/belly/imprint_organ_dna(datum/organ_dna/organ_dna, datum/customizer_entry/entry, datum/preferences/prefs)
 	..()
@@ -33,18 +34,20 @@
 /datum/customizer_choice/organ/genitals/belly/generate_pref_choices(list/dat, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
 	..()
 	var/datum/customizer_entry/organ/genitals/belly/belly_entry = entry
-	dat += "<br>Belly size: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=belly_size''>[find_key_by_value(BELLY_SIZES_BY_NAME, belly_entry.belly_size)]</a>"
+	var/list/belly_sizes = prefs.get_belly_size_choices()
+	dat += "<br>Belly size: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=belly_size''>[find_key_by_value(belly_sizes, belly_entry.belly_size)]</a>"
 
 /datum/customizer_choice/organ/genitals/belly/handle_topic(mob/user, list/href_list, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
 	..()
 	var/datum/customizer_entry/organ/genitals/belly/belly_entry = entry
 	switch(href_list["customizer_task"])
 		if("belly_size")
-			var/named_size = browser_input_list(user, "Choose your butt size:", "Character Preference", BELLY_SIZES_BY_NAME, belly_entry.belly_size)
+			var/list/belly_sizes = prefs.get_belly_size_choices()
+			var/named_size = browser_input_list(user, "Choose your belly size:", "Character Preference", belly_sizes, belly_entry.belly_size)
 			if(isnull(named_size))
 				return
-			var/new_size = BELLY_SIZES_BY_NAME[named_size]
-			belly_entry.belly_size = sanitize_integer(new_size, MIN_BELLY_SIZE, MAX_BELLY_SIZE, DEFAULT_BELLY_SIZE)
+			var/new_size = belly_sizes[named_size]
+			belly_entry.belly_size = prefs.sanitize_body_size_choice(new_size, MIN_BELLY_SIZE, prefs.get_max_belly_size(), DEFAULT_BELLY_SIZE)
 
 /datum/customizer/organ/genitals/belly/human
 	customizer_choices = list(/datum/customizer_choice/organ/genitals/belly/human)

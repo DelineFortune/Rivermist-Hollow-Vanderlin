@@ -25,6 +25,8 @@
 	S["quirks"] >> quirk_data
 
 	if(!quirk_data || !islist(quirk_data))
+		if(pref_species && islist(customizer_entries))
+			validate_customizer_entries()
 		return
 
 	for(var/entry in quirk_data)
@@ -42,6 +44,8 @@
 				quirk_extra_customizations[quirk_type] = extra_val.Copy()
 
 	validate_quirks()
+	if(pref_species && islist(customizer_entries))
+		validate_customizer_entries()
 
 
 /datum/preferences/proc/set_quirk_customization(quirk_type, value)
@@ -237,6 +241,7 @@
 	quirks += quirk_type
 	if(custom_value)
 		quirk_customizations[quirk_type] = custom_value
+	validate_customizer_entries()
 	save_character()
 	return TRUE
 
@@ -260,6 +265,7 @@
 			else
 				break
 
+		validate_customizer_entries()
 		save_character()
 		return TRUE
 	return FALSE

@@ -143,11 +143,8 @@
 		return
 
 	if(istype(entry, /datum/customizer_entry/organ/genitals/penis))
-		var/datum/customizer_entry/organ/genitals/penis/penis_entry = entry
-		var/is_ovipositor_choice = (penis_entry.customizer_choice_type == /datum/customizer_choice/organ/genitals/penis/ovipositor)
-		if(penis_entry.disabled || !is_ovipositor_choice)
-			if(remove_quirk(/datum/quirk/peculiarity/ovipositor))
-				. = TRUE
+		if(has_selected_quirk(/datum/quirk/peculiarity/ovipositor))
+			. |= force_ovipositor_genital_entry()
 
 /datum/quirk/peculiarity/ovipositor
 	name = "Oviposition"
@@ -179,17 +176,13 @@
 	if(!prefs)
 		return TRUE
 
-	var/datum/customizer_entry/organ/genitals/penis/penis_entry = prefs.get_customizer_entry_of_type(/datum/customizer_entry/organ/genitals/penis)
-	if(!penis_entry || penis_entry.disabled)
-		return FALSE
-
-	return penis_entry.customizer_choice_type == /datum/customizer_choice/organ/genitals/penis/ovipositor
+	return prefs.can_support_ovipositor_genitals()
 
 /datum/quirk/peculiarity/ovipositor/on_spawn()
 	if(!customization_value || !(customization_value in customization_options))
 		customization_value = OVI_EGG_NORMAL
 
-	var/obj/item/organ/genitals/penis/ovipositor/ovipositor_organ = owner?.getorganslot(ORGAN_SLOT_PENIS)
+	var/obj/item/organ/genitals/penis/ovipositor/ovipositor_organ = ensure_typed_ovipositor(owner, customization_value)
 	if(!ovipositor_organ)
 		return
 	ovipositor_organ.set_egg_type(customization_value)

@@ -40,6 +40,11 @@
 	H.transform = H.transform.Scale(1.11, 1.11)
 	H.update_transform()
 
+/datum/quirk/peculiarity/generous_figure
+	name = "Generous Figure"
+	desc = "I can select the largest breast, butt, and belly sizes in the body feature customizer."
+	random_exempt = TRUE
+	preview_render = FALSE
 
 /datum/quirk/peculiarity/witless_pixie
 	name = "Witless Pixie"

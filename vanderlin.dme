@@ -3849,6 +3849,7 @@
 #include "modular_rmh\code\datums\ai\horny_ai\horny_subtrees.dm"
 #include "modular_rmh\code\datums\components\darkling.dm"
 #include "modular_rmh\code\datums\quirks\rmh_quirks.dm"
+#include "modular_rmh\code\datums\quirks\extra_genitals.dm"
 #include "modular_rmh\code\datums\religion\faiths\evil_gods.dm"
 #include "modular_rmh\code\datums\religion\faiths\good_gods.dm"
 #include "modular_rmh\code\datums\religion\faiths\neutral_gods.dm"
