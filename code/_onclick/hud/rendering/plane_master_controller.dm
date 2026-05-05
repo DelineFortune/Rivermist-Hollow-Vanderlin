@@ -50,10 +50,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 		. += pm_iterator.get_filter(name)
 
 ///Transitions all filters owned by this plane master controller
-// /atom/movable/plane_master_controller/transition_filter(name, time, list/new_params, easing, loop)
-// 	. = ..()
-// 	for(var/atom/movable/screen/plane_master/pm_iterator as anything in get_planes())
-// 		pm_iterator.transition_filter(name, time, new_params, easing, loop)
+/atom/movable/plane_master_controller/transition_filter(name, time, list/new_params, easing, loop)
+	. = ..()
+	for(var/atom/movable/screen/plane_master/pm_iterator as anything in get_planes())
+		pm_iterator.transition_filter(name, time, new_params, easing, loop)
 
 ///Full override so we can just use filterrific
 /atom/movable/plane_master_controller/add_atom_colour(coloration, colour_priority)
@@ -75,11 +75,19 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 /atom/movable/plane_master_controller/game
 	name = PLANE_MASTERS_GAME
 	controlled_planes = list(
+		FIELD_OF_VISION_MASK_PLANE,
 		OPENSPACE_PLANE,
+		OPENSPACE_BACKDROP_PLANE,
+		TRANSPARENT_FLOOR_PLANE,
 		FLOOR_PLANE,
+		WALL_PLANE,
+		REFLECTION_PLANE,
+		GAME_PLANE_LOWER,
 		GAME_PLANE,
 		GAME_PLANE_UPPER,
 		GAME_PLANE_FOV_HIDDEN,
+		GAME_PLANE_OBJECT_PERMANENCE,
+		SEETHROUGH_PLANE,
 		AREA_PLANE,
 		MASSIVE_OBJ_PLANE,
 		GHOST_PLANE,

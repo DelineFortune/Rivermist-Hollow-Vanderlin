@@ -19,7 +19,6 @@
 				hud_typing = TRUE
 			add_overlay(typing_indicator)
 			typing = TRUE
-			update_vision_cone()
 		if(hudt)
 			hud_typing = TRUE
 	else
@@ -27,7 +26,6 @@
 			cut_overlay(typing_indicator)
 			typing = FALSE
 			hud_typing = FALSE
-			update_vision_cone()
 	return state
 
 /mob/living/key_down(_key, client/user)

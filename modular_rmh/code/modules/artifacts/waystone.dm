@@ -157,7 +157,7 @@
 	if(!user.mind.known_waystones)
 		user.show_message("<span class='warning'>You don't know any waystone to teleport on them.</span>")
 		return
-	if(listclearnulls(user.mind.known_waystones))
+	if(list_clear_nulls(user.mind.known_waystones))
 		user.show_message("<span class='warning'>You feel that your thoughts about some waystones are confused and lost.</span>")
 
 	var/obj/structure/rmh_waystone/choosed_waystone = tgui_input_list(user, "Select a waystone:", "Waystone teleport", user.mind.known_waystones)

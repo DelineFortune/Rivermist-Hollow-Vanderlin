@@ -106,15 +106,20 @@
 #define GAME_PLANE -9
 #define GAME_PLANE_RENDER_TARGET "GAME_PLANE_RENDER_TARGET"
 #define GAME_PLANE_FOV_HIDDEN -8
-#define GAME_PLANE_UPPER -7
+#define GAME_PLANE_OBJECT_PERMANENCE -7
+#define GAME_PLANE_UPPER -6
 
-#define SEETHROUGH_PLANE -6
+#define SEETHROUGH_PLANE -5
 
-#define WEATHER_EFFECT_PLANE -5
-#define GAME_PLANE_HIGHEST -4
+#define WEATHER_EFFECT_PLANE -4
 #define STRATEGY_PLANE -3
 #define LEYLINE_PLANE -2
 //#define FLOAT_PLANE -1 // byond record keeping
+
+/// Yeah, FoV does require quite a few planes to work with 513 filters to a decent degree.
+#define FIELD_OF_VISION_MASK_PLANE -1
+#define FIELD_OF_VISION_MASK_RENDER_TARGET "FIELD_OF_VISION_MASK_PLANE"
+#define FIELD_OF_VISION_MASK_LAYER 20
 
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 #define BLACKNESS_PLANE_RENDER_TARGET "BLACKNESS_RENDER_TARGET"
@@ -195,9 +200,21 @@
 #define ECHO_LAYER 7
 #define BACKHUD_LAYER 8
 
+//-------------------- Rendering ---------------------
+#define RENDER_PLANE_GAME 990
+#define RENDER_PLANE_GAME_RENDER_TARGET "RENDER_PLANE_GAME"
+#define RENDER_PLANE_GAME_PROCESSING 991
+#define RENDER_PLANE_GAME_POST_PROCESSING 992
+#define RENDER_PLANE_NON_GAME 995
+#define RENDER_PLANE_NON_GAME_RENDER_TARGET "RENDER_PLANE_NON_GAME"
+#define RENDER_PLANE_NON_GAME_PROCESSING 996
+#define RENDER_PLANE_NON_GAME_POST_PROCESSING 997
+#define RENDER_PLANE_MASTER 999
+
 //-------------------- HUD ---------------------
 //HUD layer defines
 #define HUD_PLANE 1000
+#define VISUAL_HUD_PLANE 1001
 #define HUD_RENDER_TARGET "HUD_RENDER_TARGET"
 
 #define ABOVE_HUD_PLANE 1100
@@ -218,8 +235,7 @@
 #define LOBBY_BOTTOM_BUTTON_LAYER 6
 
 ///Plane of the "splash" icon used that shows on the lobby screen. Nothing should ever be above this.
-#define SPLASHSCREEN_PLANE 9999
-#define SPLASHSCREEN_RENDER_TARGET "SPLASHSCREEN_RENDER_TARGET"
+#define SPLASHSCREEN_PLANE 9900
 
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"

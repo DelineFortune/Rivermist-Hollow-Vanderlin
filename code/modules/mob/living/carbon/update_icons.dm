@@ -31,7 +31,6 @@
 		client?.pixel_x = pixel_x
 		client?.pixel_y = pixel_y
 		dir = final_dir
-		update_vision_cone()
 	else
 		animate(src, time = 0.2 SECONDS, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset())
 		client?.pixel_x = pixel_x
@@ -45,8 +44,6 @@
 /mob/living/proc/apply_overlay(cache_index)
 	if((. = overlays_standing[cache_index]))
 		add_overlay(.)
-	if(client)
-		update_vision_cone()
 	SEND_SIGNAL(src, COMSIG_LIVING_APPLY_OVERLAY, cache_index, .)
 
 /mob/living/proc/remove_overlay(cache_index)
@@ -54,8 +51,6 @@
 	if(I)
 		cut_overlay(I)
 		overlays_standing[cache_index] = null
-	if(client)
-		update_vision_cone()
 	SEND_SIGNAL(src, COMSIG_LIVING_REMOVE_OVERLAY, cache_index, I)
 
 /mob/living/carbon/regenerate_icons()

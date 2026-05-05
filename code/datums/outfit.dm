@@ -337,7 +337,7 @@
 /datum/outfit/proc/get_chameleon_disguise_info()
 	var/list/types = list(suit, belt, gloves, shoes, head, mask, neck, glasses, ring, l_pocket, r_pocket, r_hand, l_hand, underwear, bra, undershirt, garter, choker, earring_l, earring_r, legwear_socks)
 	types += chameleon_extras
-	listclearnulls(types)
+	list_clear_nulls(types)
 	return types
 
 /// Return a json list of this outfit

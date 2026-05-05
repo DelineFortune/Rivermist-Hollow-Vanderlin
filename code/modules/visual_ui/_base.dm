@@ -253,8 +253,8 @@ GLOBAL_LIST_INIT(visual_ui_id_to_type, list())
 	name = "Undefined UI Element"
 	icon = 'icons/visual_ui/32x32.dmi'
 	icon_state = ""
-	mouse_opacity = 1
-	plane = HUD_PLANE
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	plane = VISUAL_HUD_PLANE
 
 	var/datum/visual_ui/parent = null
 	var/element_flags = 0

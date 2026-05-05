@@ -7,6 +7,7 @@
 	return
 
 //Force mob to rest, does NOT do stamina damage.
+//It's really not recommended to use this proc to give feedback, hence why silent is defaulting to true.
 /mob/living/carbon/KnockToFloor(knockdown_amt = 1, ignore_canknockdown = FALSE, silent = TRUE)
 	if(!silent && (body_position != LYING_DOWN))
 		to_chat(src, span_warning("I am knocked to the floor!"))
@@ -395,6 +396,117 @@
 		else if(amount > 0)
 			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount)
 		return S
+
+/mob/living/proc/IsConcussion()
+	return has_status_effect(STATUS_EFFECT_CONCUSSION)
+
+/mob/living/proc/AmountConcussion()
+	var/datum/status_effect/incapacitating/concussion/I = IsConcussion()
+	if(I)
+		return I.duration - world.time
+	return 0
+
+/mob/living/proc/Concussion(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_CONCUSSION, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(!ignore_canstun && (!(status_flags & CANSTUN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/concussion/I = IsConcussion()
+	if(I)
+		I.duration = max(world.time + CEILING(amount, 4 SECONDS), I.duration)
+	else if(amount > 0)
+		I = apply_status_effect(STATUS_EFFECT_CONCUSSION, CEILING(amount, 4), updating)
+	return I
+
+/mob/living/proc/SetConcussion(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_CONCUSSION, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(!ignore_canstun && (!(status_flags & CANSTUN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	var/datum/status_effect/incapacitating/concussion/I = IsConcussion()
+	if(amount <= 0)
+		if(I)
+			qdel(I)
+	else
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		if(I)
+			I.duration = world.time + amount
+		else
+			I = apply_status_effect(STATUS_EFFECT_CONCUSSION, CEILING(amount, 4 SECONDS), updating)
+	return I
+
+/mob/living/proc/AdjustConcussion(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_CONCUSSION, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(!ignore_canstun && (!(status_flags & CANSTUN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/concussion/I = IsConcussion()
+	if(I)
+		I.duration += amount
+	else if(amount > 0)
+		I = apply_status_effect(STATUS_EFFECT_CONCUSSION, CEILING(amount, 4 SECONDS), updating)
+	return I
+
+//STUMBLE
+/mob/living/proc/IsStumble() //If we're stumbling
+	return has_status_effect(STATUS_EFFECT_STUMBLE)
+
+/mob/living/proc/AmountStumble() //How many deciseconds remain in our Dazed status effect
+	var/datum/status_effect/incapacitating/stumble/I = IsStumble()
+	if(I)
+		return I.duration - world.time
+	return 0
+
+/mob/living/proc/Stumble(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUMBLE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/stumble/I = IsStumble()
+	if(I)
+		I.duration = max(world.time + amount, I.duration)
+	else if(amount > 0)
+		I = apply_status_effect(STATUS_EFFECT_STUMBLE, amount, updating)
+	return I
+
+/mob/living/proc/SetStumble(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUMBLE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	var/datum/status_effect/incapacitating/stumble/I = IsStumble()
+	if(amount <= 0)
+		if(I)
+			qdel(I)
+	else
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		if(I)
+			I.duration = world.time + amount
+		else
+			I = apply_status_effect(STATUS_EFFECT_STUMBLE, amount, updating)
+	return I
+
+/mob/living/proc/AdjustStumble(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUMBLE, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+		return
+	if(!ignore_canstun && (!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE)))
+		return
+	if(absorb_stun(amount, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/stumble/I = IsStumble()
+	if(I)
+		I.duration += amount
+	else if(amount > 0)
+		I = apply_status_effect(STATUS_EFFECT_STUMBLE, amount, updating)
+	return I
 
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
