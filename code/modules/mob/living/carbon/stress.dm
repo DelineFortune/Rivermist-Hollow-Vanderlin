@@ -123,6 +123,7 @@
 		if(new_stress_level != stress_level)
 			stress_level = new_stress_level
 			attributes.add_or_update_variable_diceroll_modifier(/datum/diceroll_modifier/stress, stress_level)
+			add_or_update_variable_actionspeed_modifier(/datum/actionspeed_modifier/stress, -(stress_level * 0.1))
 
 /mob/living/carbon/get_stress_amount()
 	if(HAS_TRAIT(src, TRAIT_NOMOOD))

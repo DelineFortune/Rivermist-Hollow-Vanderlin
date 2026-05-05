@@ -3,6 +3,11 @@
 	desc = "Patient's teeth have been violently ripped off due to blunt trauma."
 	severity = WOUND_SEVERITY_LIGHT
 	sound_effect = list('sound/combat/wound_tear.ogg')
+	associated_bclasses = FRACTURE_BCLASSES
+	viable_zones = list(BODY_ZONE_PRECISE_MOUTH)
+
+/datum/wound/teeth/get_crit_prob(bclass, dam, damage_dividend, mob/living/user, obj/item/bodypart/affected, zone_precise, list/modifiers)
+	return ..() / 3
 
 /datum/wound/teeth/can_apply_to_bodypart(obj/item/bodypart/mouth/affected)
 	. = ..()

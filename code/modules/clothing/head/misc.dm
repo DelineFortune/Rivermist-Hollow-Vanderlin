@@ -150,10 +150,11 @@
 	desc = "The pain it causes perhaps can distract from the whispers of a mad God overpowering your sanity..."
 	icon_state = "briarthorns"
 
-/obj/item/clothing/head/padded/briarthorns/pickup(mob/living/user)
+/obj/item/clothing/head/padded/briarthorns/pickup(mob/living/carbon/user)
 	. = ..()
 	to_chat(user, span_warning ("The thorns prick me."))
-	user.adjustBruteLoss(4)
+	var/obj/item/bodypart/arm = user.get_active_hand()
+	arm?.bodypart_attacked_by(BCLASS_CUT, 7)
 
 //................ Hennin ............... //
 /obj/item/clothing/head/hennin

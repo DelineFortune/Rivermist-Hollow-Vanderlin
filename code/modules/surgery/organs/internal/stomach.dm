@@ -1,6 +1,3 @@
-//The contant in the rate of reagent transfer on life ticks
-#define STOMACH_METABOLISM_CONSTANT 0.5
-
 /obj/item/organ/stomach
 	name = "stomach"
 	icon_state = "stomach"
@@ -210,7 +207,3 @@
 /obj/item/organ/guts/Insert(mob/living/carbon/M, special = 0)
 	..()
 	add_bodystorage(M, null, /datum/component/body_storage/mouth)
-
-
-
-#undef STOMACH_METABOLISM_CONSTANT

@@ -13,12 +13,12 @@
 
 	var/list/missing_bodyparts_zones = get_missing_limbs()
 
-	var/obj/item/cavity_object
+	var/list/cavity_objects = list()
 
 	var/obj/item/bodypart/chest/CH = get_bodypart(BODY_ZONE_CHEST)
-	if(CH.cavity_item)
-		cavity_object = CH.cavity_item
-		CH.cavity_item = null
+	for(var/atom/movable/item as anything in CH?.cavity_items)
+		cavity_objects += item
+		CH.cavity_items -= item
 
 	if(tr_flags & TR_KEEPITEMS)
 		var/Itemlist = get_equipped_items(TRUE)
@@ -79,9 +79,12 @@
 			I.Insert(O, 1)
 
 	var/obj/item/bodypart/chest/torso = O.get_bodypart(BODY_ZONE_CHEST)
-	if(cavity_object)
-		torso.cavity_item = cavity_object //cavity item is given to the new chest
-		cavity_object.forceMove(O)
+	if(length(cavity_objects) && torso)
+		if(!torso.cavity_items)
+			torso.cavity_items = list()
+		for(var/obj/item/cavity_object as anything in cavity_objects)
+			torso.cavity_items += cavity_object
+			cavity_object.forceMove(torso)
 
 	for(var/missing_zone in missing_bodyparts_zones)
 		var/obj/item/bodypart/BP = O.get_bodypart(missing_zone)
@@ -135,12 +138,12 @@
 
 	var/list/missing_bodyparts_zones = get_missing_limbs()
 
-	var/obj/item/cavity_object
+	var/list/cavity_objects = list()
 
 	var/obj/item/bodypart/chest/CH = get_bodypart(BODY_ZONE_CHEST)
-	if(CH.cavity_item)
-		cavity_object = CH.cavity_item
-		CH.cavity_item = null
+	for(var/atom/movable/item as anything in CH?.cavity_items)
+		cavity_objects += item
+		CH.cavity_items -= item
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
@@ -209,10 +212,13 @@
 			I.Insert(O, 1)
 
 
-	var/obj/item/bodypart/chest/torso = get_bodypart(BODY_ZONE_CHEST)
-	if(cavity_object)
-		torso.cavity_item = cavity_object //cavity item is given to the new chest
-		cavity_object.forceMove(O)
+	var/obj/item/bodypart/chest/torso = O.get_bodypart(BODY_ZONE_CHEST)
+	if(length(cavity_objects) && torso)
+		if(!torso.cavity_items)
+			torso.cavity_items = list()
+		for(var/obj/item/cavity_object as anything in cavity_objects)
+			torso.cavity_items += cavity_object
+			cavity_object.forceMove(torso)
 
 	for(var/missing_zone in missing_bodyparts_zones)
 		var/obj/item/bodypart/BP = O.get_bodypart(missing_zone)

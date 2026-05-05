@@ -9,6 +9,22 @@
 	metabolization_rate = REAGENTS_METABOLISM
 	alpha = 173
 
+/datum/reagent/medicine/healthpot/on_bodypart_absorb(obj/item/bodypart/bodypart, mob/living/carbon/M, amount_to_transfer)
+	for(var/datum/injury/injury in bodypart.injuries)
+		if(injury.damage_type == WOUND_DIVINE)
+			continue
+		injury.heal_damage(1)
+
+/datum/reagent/medicine/healthpot/on_mob_metabolize(mob/living/L)
+	. = ..()
+	L.add_chem_effect(CE_BLOODRESTORE, 5, "[type]")
+	L.add_chem_effect(CE_STABLE, 1, "[type]")
+
+/datum/reagent/medicine/healthpot/on_mob_end_metabolize(mob/living/L)
+	. = ..()
+	L.remove_chem_effect(CE_BLOODRESTORE, "[type]")
+	L.remove_chem_effect(CE_STABLE, "[type]")
+
 /datum/reagent/medicine/healthpot/on_mob_life(mob/living/carbon/M)
 	if(volume >= 60)
 		M.remove_reagent(/datum/reagent/medicine/healthpot, 2) //No overhealing.
@@ -31,6 +47,26 @@
 	taste_description = "rich lifeblood"
 	scent_description = "metal"
 	metabolization_rate = REAGENTS_METABOLISM * 3
+
+/datum/reagent/medicine/stronghealth/on_bodypart_absorb(obj/item/bodypart/bodypart, mob/living/carbon/M, amount_to_transfer)
+	for(var/datum/injury/injury in bodypart.injuries)
+		if(injury.damage_type == WOUND_DIVINE)
+			continue
+		injury.heal_damage(2)
+	for(var/datum/wound/wound in bodypart.wounds)
+		wound.heal_wound(2)
+
+/datum/reagent/medicine/stronghealth/on_mob_metabolize(mob/living/L)
+	. = ..()
+	L.add_chem_effect(CE_BLOODRESTORE, 30, "[type]")
+	L.add_chem_effect(CE_STABLE, 1, "[type]")
+	L.add_chem_effect(CE_BRAIN_REGEN, 1, "[type]")
+
+/datum/reagent/medicine/stronghealth/on_mob_end_metabolize(mob/living/L)
+	. = ..()
+	L.remove_chem_effect(CE_BLOODRESTORE, "[type]")
+	L.remove_chem_effect(CE_STABLE, "[type]")
+	L.remove_chem_effect(CE_BRAIN_REGEN, "[type]")
 
 /datum/reagent/medicine/stronghealth/on_mob_life(mob/living/carbon/M)
 	if(volume >= 60)
@@ -256,6 +292,20 @@
 	scent_description = "saiga droppings"
 	metabolization_rate = REAGENTS_METABOLISM * 3
 
+/datum/reagent/medicine/diseasecure/on_bodypart_absorb(obj/item/bodypart/BP, mob/living/carbon/M, amount_to_transfer)
+	BP.disinfect_limb(20 MINUTES)
+	for(var/datum/injury/injury in BP.injuries)
+		injury.adjust_germ_level(-30)
+	BP.adjust_germ_level(-30)
+
+/datum/reagent/medicine/diseasecure/on_mob_metabolize(mob/living/L)
+	. = ..()
+	L.add_chem_effect(CE_ANTIBIOTIC, 40, "[type]")
+
+/datum/reagent/medicine/diseasecure/on_mob_end_metabolize(mob/living/L)
+	. = ..()
+	L.remove_chem_effect(CE_ANTIBIOTIC, "[type]")
+
 /datum/reagent/medicine/diseasecure/on_mob_life(mob/living/carbon/M)
 	if(volume > 0.99)
 		M.adjustToxLoss(-16, 0)
@@ -458,8 +508,8 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 					if(prob(30))
 						to_chat(graggar_lover, span_bloody("More... More..."))
 					var/obj/item/bodypart/bp = graggar_lover.get_bodypart()
-					bp?.lingering_pain += 10
-					bp?.bodypart_attacked_by(BCLASS_BLUNT, 12, null, BODY_ZONE_CHEST, crit_message = FALSE, reduce_crit = 10)
+					bp?.add_pain(10)
+					bp?.bodypart_attacked_by(BCLASS_BLUNT, 12, null, BODY_ZONE_CHEST, crit_message = FALSE, modifiers = list(CRIT_MOD_CHANCE = -10))
 					M.do_jitter_animation(100)
 				if(60)
 					M.do_jitter_animation(150)
@@ -597,3 +647,58 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 		M.IgniteMob()
 	return ..()
 
+// "Second wind" reagent generated when someone suffers a wound. Epinephrine, adrenaline, and stimulants are all already taken so here we are
+/datum/reagent/adrenaline
+	name = "Adrenaline"
+	description = "Adrenaline is a hormone used as a drug to treat cardiac arrest and other cardiac dysrhythmias resulting in diminished or absent cardiac output."
+	taste_description = "rush"
+	reagent_state = LIQUID
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	color = "#c8a5dc"
+	self_consuming = TRUE
+
+/datum/reagent/adrenaline/on_mob_metabolize(mob/living/L)
+	. = ..()
+	L.add_chem_effect(CE_BLOODRESTORE, 1, "[type]")
+	L.add_chem_effect(CE_STIMULANT, 1, "[type]")
+	L.add_chem_effect(CE_PULSE, 1, "[type]")
+	L.add_chem_effect(CE_PAINKILLER, min(3*holder.get_reagent_amount(/datum/reagent/adrenaline), 10), "[type]")
+
+/datum/reagent/adrenaline/on_mob_end_metabolize(mob/living/carbon/M)
+	. = ..()
+	M.remove_chem_effect(CE_BLOODRESTORE, "[type]")
+	M.remove_chem_effect(CE_STIMULANT, "[type]")
+	M.remove_chem_effect(CE_PULSE, "[type]")
+	M.remove_chem_effect(CE_PAINKILLER, "[type]")
+
+
+//Naturally synthesized painkiller, similar to epinephrine
+/datum/reagent/medicine/endorphin
+	name = "Endorphin"
+	description = "Endorphins are chemically similar to morphine, but naturally synthesized by the human body. \
+				They are typically produced as a bodily response to pain, but can also be produced under favorable circumstances. \
+				Overdosing will cause drowsyness and jitteriness."
+	reagent_state = LIQUID
+	color = "#ff799679"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 30
+	taste_description = "euphoria"
+
+/datum/reagent/medicine/endorphin/on_mob_metabolize(mob/living/carbon/M)
+	. = ..()
+	M.add_chem_effect(CE_PAINKILLER, 20, "[type]")
+
+/datum/reagent/medicine/endorphin/on_mob_end_metabolize(mob/living/carbon/M)
+	. = ..()
+	M.remove_chem_effect(CE_PAINKILLER, "[type]")
+
+/datum/reagent/medicine/endorphin/overdose_start(mob/living/M)
+	to_chat(M, span_userdanger("I feel EUPHORIC!"))
+
+/datum/reagent/medicine/endorphin/overdose_process(mob/living/M, delta_time, times_fired)
+	. = ..()
+	if(DT_PROB(40, delta_time))
+		M.adjust_drowsiness(5)
+	if(DT_PROB(20, delta_time))
+		M.adjust_disgust(5)
+	M.adjust_jitter(3)

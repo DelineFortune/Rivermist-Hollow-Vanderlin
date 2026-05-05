@@ -315,6 +315,19 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 
 	return TRUE
 
+/datum/hud/proc/update_chromatic_aberration(intensity = 0, \
+											time = 2 SECONDS, \
+											easing = LINEAR_EASING, \
+											loop = 0,
+											red_x = 0, \
+											red_y = 0, \
+											green_x = 0, \
+											green_y = 0, \
+											blue_x = 0, \
+											blue_y = 0)
+	return
+
+
 /datum/hud/proc/plane_masters_update()
 	// Plane masters are always shown to OUR mob, never to observers
 	for(var/thing in plane_masters)

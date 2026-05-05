@@ -456,7 +456,7 @@
 
 	var/list/runes = list("Servantry", "Transmutation", "Fleshcrafting")
 
-	if(!bloody_hands)
+	if(!bloody_hands || get_bleed_rate())
 		to_chat(src, span_danger("My hands aren't bloody enough."))
 		return
 

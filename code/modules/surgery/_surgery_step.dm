@@ -247,6 +247,7 @@
 
 /datum/surgery_step/proc/initiate(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent, try_to_fail = FALSE)
 	LAZYSET(target.surgeries, target_zone, src)
+	//var/obj/item/bodypart/affecting = target.get_bodypart(target_zone)
 	if(!preop(user, target, target_zone, tool, intent))
 		LAZYREMOVE(target.surgeries, target_zone)
 		return FALSE

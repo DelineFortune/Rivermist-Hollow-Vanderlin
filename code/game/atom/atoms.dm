@@ -24,6 +24,8 @@
 
 	///Reagents holder
 	var/datum/reagents/reagents = null
+	/// Dirtiness carried by this atom. Wounds and organs use this for infection checks.
+	var/germ_level = GERM_LEVEL_AMBIENT
 
 	///This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
@@ -533,6 +535,9 @@
 						. += span_notice("I can identity this smell as [full_reagents.Join(", ")].")
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
+/atom/proc/get_mechanics_examine(mob/user)
+	return list()
+
 /**
  * Updates the appearence of the icon
  *
@@ -894,6 +899,12 @@
 	atom_colours[colour_priority] = null
 	update_atom_colour()
 
+/atom/proc/adjust_germ_level(add_germs, minimum_germs = 0, maximum_germs = GERM_LEVEL_MAXIMUM)
+	germ_level = clamp(germ_level + add_germs, minimum_germs, maximum_germs)
+
+/atom/proc/set_germ_level(germs)
+	var/delta = germs - germ_level
+	return adjust_germ_level(delta)
 
 ///Resets the atom's color to null, and then sets it to the highest priority colour available
 /atom/proc/update_atom_colour()

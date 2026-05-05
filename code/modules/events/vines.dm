@@ -169,13 +169,27 @@
 /datum/vine_mutation/thorns/on_cross(obj/structure/vine/holder, mob/living/crosser)
 	if(prob(severity) && istype(crosser) && !isvineimmune(holder))
 		var/mob/living/M = crosser
-		M.adjustBruteLoss(5)
+		if(iscarbon(M))
+			var/mob/living/carbon/H = M
+			var/obj/item/bodypart/l_leg/left = H.get_bodypart(BODY_ZONE_L_LEG)
+			var/obj/item/bodypart/r_leg/right = H.get_bodypart(BODY_ZONE_R_LEG)
+			if(prob(50))
+				left.bodypart_attacked_by(BCLASS_CUT, 6)
+			else
+				right.bodypart_attacked_by(BCLASS_CUT, 6)
+		else
+			M.adjustBruteLoss(5)
 		to_chat(M, "<span class='alert'>I cut myself on the thorny vines.</span>")
 
 /datum/vine_mutation/thorns/on_hit(obj/structure/vine/holder, mob/living/hitter, obj/item/I, expected_damage)
 	if(prob(severity) && istype(hitter) && !isvineimmune(holder))
 		var/mob/living/M = hitter
-		M.adjustBruteLoss(5)
+		if(iscarbon(M))
+			var/mob/living/carbon/H = M
+			var/obj/item/bodypart/arm = H.get_active_hand()
+			arm.bodypart_attacked_by(BCLASS_CUT, 6)
+		else
+			M.adjustBruteLoss(5)
 		to_chat(M, "<span class='alert'>I cut myself on the thorny vines.</span>")
 	. =	expected_damage
 
@@ -265,8 +279,13 @@
 			SM.on_cross(src, crosser)
 	if(prob(23) && istype(crosser) && !isvineimmune(crosser))
 		var/mob/living/M = crosser
-		M.adjustBruteLoss(5)
-		to_chat(M, "<span class='warning'>I nick myself on the thorny vines.</span>")
+		if(iscarbon(M))
+			var/mob/living/carbon/H = M
+			var/obj/item/bodypart/leg = H.get_bodypart(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+			leg?.bodypart_attacked_by(BCLASS_CUT, 6)
+		else
+			M.adjustBruteLoss(5, damage_type = BCLASS_CUT)
+		to_chat(M, span_warning("I nick myself on the thorny vines."))
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/vine/attack_hand(mob/user)

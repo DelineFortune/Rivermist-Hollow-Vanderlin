@@ -597,6 +597,8 @@ BLIND     // can't see anything
 		if(HAS_TRAIT(C, TRAIT_NOBLE) && wet.water_stacks == 0)
 			C.add_stress(/datum/stress_event/noble_tarnished_cloth)
 
+		if(wet.dirty_water)
+			C.adjust_germ_level_directed(0.5 * wet.water_stacks, body_zone = slot2body_zone(slot_flags))
 		if(C.mind?.assigned_role == /datum/job/advclass/towner/farmhand || HAS_TRAIT(C, TRAIT_LEECHIMMUNE) || istriton(C))
 			return
 

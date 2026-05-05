@@ -1,3 +1,11 @@
+/datum/attribute_modifier/lobotomy
+	id = "Lobotomy"
+	attribute_list = list(STAT_INTELLIGENCE = -3)
+
+/datum/attribute_modifier/lobotomite
+	id = "Super Lobotomy"
+	attribute_list = list(STAT_INTELLIGENCE = -5)
+
 /obj/item/organ/brain
 	name = "brain"
 	desc = ""
@@ -7,6 +15,8 @@
 	layer = ABOVE_MOB_LAYER
 	zone = BODY_ZONE_PRECISE_SKULL
 	slot = ORGAN_SLOT_BRAIN
+	unique_slot = ORGAN_SLOT_BRAIN
+	organ_efficiency = list(ORGAN_SLOT_BRAIN = 100)
 	organ_flags = ORGAN_VITAL
 	attack_verb = list("attacked", "slapped", "whacked")
 
@@ -17,6 +27,7 @@
 	low_threshold = 45
 	high_threshold = 120
 
+	var/damage_threshold_value = BRAIN_DAMAGE_DEATH / 10
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
 	var/brain_death = FALSE //if the brainmob was intentionally killed by attacking the brain after removal, or by severe braindamage
@@ -56,6 +67,137 @@
 	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
 		transfer_identity(C)
 	C.update_body()
+
+
+/obj/item/organ/brain/handle_blood(delta_time, times_fired)
+	var/effective_blood_oxygenation = GET_EFFECTIVE_BLOOD_VOL(owner.get_blood_oxygenation(), owner.total_blood_req)
+	var/arterial_efficiency = get_slot_efficiency(ORGAN_SLOT_ARTERY)
+	var/in_bleedout = owner.in_bleedout()
+	if(arterial_efficiency && !is_failing())
+		// Arteries get an extra flat 5 blood regen
+		current_blood = min(current_blood + 5 * (0.5 * delta_time) * (arterial_efficiency/ORGAN_OPTIMAL_EFFICIENCY), max_blood_storage)
+		return
+	if(!blood_req)
+		return
+	if(!in_bleedout && (effective_blood_oxygenation >= BLOOD_VOLUME_SAFE))
+		current_blood = min(current_blood + (blood_req * (0.5 * delta_time)), max_blood_storage)
+		return
+	if(in_bleedout)
+		current_blood = max(current_blood - (blood_req * (0.5 * delta_time)), 0)
+	else
+		current_blood = max(current_blood - (blood_req * ((BLOOD_VOLUME_NORMAL-effective_blood_oxygenation)/BLOOD_VOLUME_NORMAL) * (0.5 * delta_time)), 0)
+	// When all blood is lost, take blood from blood vessels
+	if(!current_blood)
+		var/obj/item/organ/artery
+		var/obj/item/bodypart/parent = owner.get_bodypart(current_zone)
+		for(var/thing in shuffle(parent?.getorganslotlist(ORGAN_SLOT_ARTERY)))
+			var/obj/item/organ/candidate = thing
+			if(candidate.current_blood && (candidate.get_slot_efficiency(ORGAN_SLOT_ARTERY) >= ORGAN_FAILING_EFFICIENCY))
+				artery = candidate
+				break
+		if(artery?.current_blood)
+			var/prev_blood = artery.current_blood
+			artery.current_blood = max(artery.current_blood - (blood_req * 0.5 * delta_time), 0)
+			current_blood = max(prev_blood - artery.current_blood, 0)
+		//Don't apply damage, this is handled by the organ process datum, if necessary
+
+/obj/item/organ/brain/get_mechanics_examine(mob/user)
+	. = ..()
+
+	if(owner)
+		. += "Use a hemostat to perform a lobotomy on this brain."
+
+/obj/item/organ/brain/handle_organ_attack(obj/item/tool, mob/living/user, params)
+	if(owner && DOING_INTERACTION_WITH_TARGET(user, owner))
+		return TRUE
+	else if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return TRUE
+	if(owner && CHECK_BITFIELD(organ_flags, ORGAN_CUT_AWAY))
+		for(var/thing in attaching_items)
+			if(istype(tool, thing))
+				handle_attaching_item(tool, user, params)
+				return TRUE
+	for(var/thing in healing_items)
+		if(istype(tool, thing))
+			handle_healing_item(tool, user, params)
+			return TRUE
+	for(var/thing in healing_tools)
+		if(tool.tool_behaviour == thing)
+			handle_healing_item(tool, user, params)
+			return TRUE
+	// LOBOTOMITE
+	if(owner && (tool.tool_behaviour == TOOL_HEMOSTAT))
+		handle_lobotomy(tool, user, params)
+		return TRUE
+	if(owner && (tool.sharpness == IS_SHARP || tool.tool_behaviour == TOOL_SCALPEL) && !CHECK_BITFIELD(organ_flags, ORGAN_CUT_AWAY))
+		handle_cutting_away(tool, user, params)
+		return TRUE
+	if(tool.tool_behaviour == TOOL_CAUTERY)
+		handle_burning_rot(tool, user, params)
+		return TRUE
+
+/obj/item/organ/brain/handle_healing_item(obj/item/tool, mob/living/user, params)
+	var/obj/item/natural/stack = tool
+	if(!damage && !length(traumas))
+		to_chat(user, span_notice("\The [src] is in pristine quality already."))
+		return
+	user.visible_message(span_notice("<b>[user]</b> starts healing \the [src]..."), \
+					span_notice("I start healing \the [src]..."), \
+					vision_distance = COMBAT_MESSAGE_RANGE)
+
+	var/time = 5 SECONDS
+	time *= (SKILL_MIDDLING/max(GET_MOB_SKILL_VALUE(user, /datum/attribute/skill/misc/medicine), 1))
+
+	if(owner)
+		owner.custom_pain("OH GOD! There are needles inside my [src]!", 30, FALSE, owner.get_bodypart(current_zone))
+		if(!do_after(user, time, owner))
+			to_chat(user, span_warning("I must stand still!"))
+			return
+	else
+		if(!do_after(user, time, src))
+			to_chat(user, span_warning("I must stand still!"))
+			return
+	if(istype(stack))
+		if(!stack.use(2))
+			to_chat(user, span_warning("I don't have enough to heal \the [src]!"))
+			return
+	user.visible_message(span_notice("<b>[user]</b> healing \the [src]."), \
+						span_notice("I heal \the [src]."))
+	applyOrganDamage(-min(maxHealth/2, 50))
+	cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
+
+
+/obj/item/organ/brain/proc/handle_lobotomy(obj/item/tool, mob/living/user, params)
+	user.visible_message(span_notice("<b>[user]</b> starts lobotomizing \the [src]..."), \
+					span_notice("I start lobotomizing \the [src]..."), \
+					vision_distance = COMBAT_MESSAGE_RANGE)
+	owner.custom_pain("OH GOD! My [src] is being SLASHED IN TWAIN!", 30, FALSE, owner.get_bodypart(current_zone))
+
+	var/time = 10 SECONDS
+	time *= (SKILL_MIDDLING/max(GET_MOB_SKILL_VALUE(user, /datum/attribute/skill/misc/medicine), 1))
+
+	if(!do_after(user, time, owner))
+		to_chat(user, span_warning("I must stand still!"))
+		return TRUE
+	user.visible_message(span_notice("<b>[user]</b> lobotomizes \the [src]."), \
+					span_notice("I lobotomize \the [src]."), \
+					vision_distance = COMBAT_MESSAGE_RANGE)
+	switch(owner.diceroll(GET_MOB_ATTRIBUTE_VALUE(owner, STAT_ENDURANCE), context = DICE_CONTEXT_MENTAL))
+		// Cure all traumas, no penalties
+		if(DICE_CRIT_SUCCESS)
+			cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
+		// Cure all traumas, but gain a mild one
+		if(DICE_SUCCESS)
+			cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
+			gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_SURGERY)
+		// Cure nothing, lose intelligence, go fuck yourself
+		if(DICE_FAILURE)
+			owner.attributes.add_attribute_modifier(/datum/attribute_modifier/lobotomy, TRUE)
+		// Cure nothing, lose intelligence, gain another brain trauma, go fuck yourself
+		if(DICE_CRIT_FAILURE)
+			owner.attributes.add_attribute_modifier(/datum/attribute_modifier/lobotomite, TRUE)
+			gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
+	return TRUE
 
 /obj/item/organ/brain/prepare_eat(mob/living/carbon/human/H)
 	if( HAS_TRAIT(H, TRAIT_ROTMAN))//braaaaaains... otherwise, too important to eat.
@@ -175,7 +317,8 @@
 	QDEL_LIST(traumas)
 	return ..()
 
-/obj/item/organ/brain/on_life()
+/obj/item/organ/brain/on_life(delta_time, times_fired)
+	. = ..()
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(owner, "<span class='danger'>The last spark of life in your brain fizzles out...</span>")
 		owner.death()
@@ -217,6 +360,71 @@
 	desc = ""
 	icon_state = "brain-x"
 
+/obj/item/organ/brain/can_heal(delta_time, times_fired)
+	. = TRUE
+	if(!owner)
+		return FALSE
+	if(healing_factor <= 0)
+		return FALSE
+	if(is_dead())
+		return FALSE
+	if(current_blood <= 0)
+		return FALSE
+	if(owner.undergoing_cardiac_arrest())
+		return FALSE
+	var/effective_blood_oxygenation = GET_EFFECTIVE_BLOOD_VOL(owner.get_blood_oxygenation(), owner.total_blood_req)
+	if(effective_blood_oxygenation < BLOOD_VOLUME_SAFE)
+		return FALSE
+	// if stable and not too damaged we can heal
+	if(!past_damage_threshold(3) && owner.get_chem_effect(CE_STABLE))
+		return TRUE
+	// else, we only naturally regen to basically get rounded
+	if(!(damage % damage_threshold_value) || owner.get_chem_effect(CE_BRAIN_REGEN))
+		return FALSE
+
+/obj/item/organ/brain/proc/past_damage_threshold(threshold)
+	return (get_current_damage_threshold() > threshold)
+
+/obj/item/organ/brain/proc/get_current_damage_threshold()
+	return FLOOR(damage / damage_threshold_value, 1)
+
+/obj/item/organ/brain/applyOrganDamage(amount, maximum = maxHealth, silent = FALSE)
+	if(!amount) //Micro-optimization.
+		return
+	if(maximum < damage)
+		damage = maximum
+	if(damage < 0 && owner?.get_chem_effect(CE_BRAIN_REGEN))
+		damage *= 2
+	prev_damage = damage
+	damage = clamp(damage + amount, 0, maximum)
+	var/mess = check_damage_thresholds(owner)
+	if(owner)
+		if(mess && !silent)
+			to_chat(owner, mess)
+		if(organ_flags & ORGAN_LIMB_SUPPORTER)
+			var/obj/item/bodypart/affected = owner.get_bodypart(current_zone)
+			affected?.update_limb_efficiency()
+		if(amount >= 10)
+			var/damage_side_effect = CEILING(amount/2, 1)
+			if(damage_side_effect >= 1)
+				//owner.flash_pain(damage_side_effect*4)
+				owner.adjust_eye_blur(damage_side_effect)
+				owner.adjust_confusion(damage_side_effect)
+				switch(rand(1,3))
+					if(1)
+						owner.stuttering += damage_side_effect
+					if(2)
+						owner.slurring += damage_side_effect
+					if(3)
+						owner.cultslurring += damage_side_effect
+				owner.CombatKnockdown(damage_side_effect*2, damage_side_effect, (damage_side_effect >= 5 ? damage_side_effect : null), damage_side_effect >= 5)
+		if(!is_failing())
+			REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
+	if(owner)
+		if(damage >= 60)
+			owner.add_stress(/datum/stress_event/brain_damage)
+		else
+			owner.remove_stress(/datum/stress_event/brain_damage)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

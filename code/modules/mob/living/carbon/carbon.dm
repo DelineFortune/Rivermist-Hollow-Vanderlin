@@ -25,32 +25,29 @@
 	if(prob(66))
 		affecting = get_bodypart("[pick("r","l")]_leg")
 		to_chat(src, "<span class='warning'>I land on my leg!</span>")
-		if(affecting && apply_damage((levels * 10), BRUTE, affecting))		// 100 brute damage
+		if(affecting && apply_damage((levels * 10), BRUTE, affecting, damage_type = BCLASS_BLUNT))
 			update_damage_overlays()
 	else
 		switch(rand(1,3))
 			if(1)
 				affecting = get_bodypart("[pick("r","l")]_arm")
 				to_chat(src, "<span class='warning'>I land on my arm!</span>")
-				if(affecting && apply_damage((levels * 10), BRUTE, affecting))		// 100 brute damage
+				if(affecting && apply_damage((levels * 10), BRUTE, affecting, damage_type = BCLASS_BLUNT))
 					update_damage_overlays()
 			if(2)
 				affecting = get_bodypart("chest")
 				to_chat(src, "<span class='warning'>I land on my chest!</span>")
 				adjustOxyLoss(50)
 				emote("breathgasp")
-				if(affecting && apply_damage((levels * 10), BRUTE, affecting))		// 100 brute damage
+				if(affecting && apply_damage((levels * 10), BRUTE, affecting, damage_type = BCLASS_BLUNT))
 					update_damage_overlays()
 			if(3)
 				affecting = get_bodypart("head")
 				to_chat(src, "<span class='warning'>I land on my head!</span>")
 				if(levels > 2)
-					AdjustUnconscious(levels * 100)
-					if(affecting && apply_damage((levels * 10), BRUTE, affecting))		// 100 brute damage
-						update_damage_overlays()
-				else
-					if(affecting && apply_damage((levels * 10), BRUTE, affecting))		// 100 brute damage
-						update_damage_overlays()
+					AdjustUnconscious(levels * 10 SECONDS)
+				if(affecting && apply_damage((levels * 10), BRUTE, affecting, damage_type = BCLASS_BLUNT))
+					update_damage_overlays()
 
 	AdjustStun(levels * 20)
 	AdjustKnockdown(levels * 20)
@@ -623,7 +620,8 @@
 			adjust_nutrition(-lost_nutrition)
 			adjust_hydration(-lost_nutrition)
 	if(harm)
-		adjustBruteLoss(3)
+		var/obj/item/bodypart/stomach = getorganslot(ORGAN_SLOT_STOMACH)
+		stomach?.take_damage(3)
 
 	for(var/i=0 to distance)
 		if(blood)
@@ -706,6 +704,8 @@
 		used_damage = total_oxy
 	set_health(round(maxHealth - used_damage, DAMAGE_PRECISION))
 	update_stat()
+	update_pain()
+	update_shock()
 
 	if(stat == SOFT_CRIT)
 		add_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE, multiplicative_slowdown = SOFTCRIT_ADD_SLOWDOWN)
@@ -909,7 +909,7 @@
 	else
 		clear_fullscreen("oxy")
 
-	var/hurtdamage = ((get_complex_pain() / max(1, (GET_MOB_ATTRIBUTE_VALUE(src, STAT_ENDURANCE) * 10))) * 100) //what percent out of 100 to max pain
+	var/hurtdamage = ((getPainLoss() / max(1, (GET_MOB_ATTRIBUTE_VALUE(src, STAT_ENDURANCE) * 10))) * 100) //what percent out of 100 to max pain
 	if(hurtdamage)
 		var/severity = 0
 		switch(hurtdamage)
@@ -1028,8 +1028,10 @@
 		regenerate_limbs()
 		if(heal_flags & HEAL_ADMIN) //reset rot on admin revives
 			for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-				bodypart.rotted = FALSE
+				bodypart.revive_limb()
+				bodypart.germ_level = 0
 				bodypart.skeletonized = FALSE
+				bodypart.remove_pain(bodypart.pain_dam)
 
 	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ORGANS))
 		// regenerate_organs(regenerate_existing = (heal_flags & HEAL_REFRESH_ORGANS))

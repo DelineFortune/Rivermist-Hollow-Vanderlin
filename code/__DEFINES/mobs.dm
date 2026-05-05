@@ -11,6 +11,11 @@
 #define DAMAGE_ATTACK_CONTEXT_WINDOW (2 SECONDS)
 #define RESURRECTION_TRAUMA_SOURCE_WINDOW (5 MINUTES)
 
+// Organ/bodypart side markers.
+#define NO_SIDE 0
+#define RIGHT_SIDE (1<<0)
+#define LEFT_SIDE (1<<1)
+
 //for vision cone
 #define FOV_DEFAULT 	           	(1<<0)
 #define FOV_RIGHT 	            	(1<<1)
@@ -199,6 +204,7 @@
 #define HYDRATION_LEVEL_SMALLTHIRST 1200
 #define HYDRATION_LEVEL_THIRSTY 700
 #define HYDRATION_LEVEL_DEHYDRATED 200
+#define THIRST_FACTOR 0.05
 
 #define NUTRITION_LEVEL_START_MIN 1000
 #define NUTRITION_LEVEL_START_MAX 1800

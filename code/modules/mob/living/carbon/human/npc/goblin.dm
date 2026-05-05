@@ -265,8 +265,7 @@
 		QDEL_NULL(eyes)
 	eyes = new /obj/item/organ/eyes/night_vision/nightmare
 	eyes.Insert(src)
-	for(var/slot in internal_organs_slot)
-		var/obj/item/organ/organ = internal_organs_slot[slot]
+	for(var/obj/item/organ/organ as anything in internal_organs)
 		organ.sellprice = 5
 	if(length(quirks))
 		clear_quirks()
@@ -316,10 +315,10 @@
 				should_update = TRUE
 	else if(amount > 12 MINUTES)
 		for(var/obj/item/bodypart/B in C.bodyparts)
-			if(!B.rotted)
-				B.rotted = TRUE
+			if(!HAS_TRAIT(B, TRAIT_ROTTEN))
+				B.kill_limb()
 				should_update = TRUE
-			if(B.rotted && amount < 16 MINUTES && !is_matthios)
+			if(HAS_TRAIT(B, TRAIT_ROTTEN) && amount < 16 MINUTES && !is_matthios)
 				var/turf/open/T = C.loc
 				if(istype(T))
 					T.pollute_turf(/datum/pollutant/rot, 4)

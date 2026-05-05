@@ -884,7 +884,7 @@
 		return FALSE
 
 	for(var/obj/item/bodypart/bodypart as anything in target.bodyparts)
-		if(bodypart.rotted)
+		if(HAS_TRAIT(bodypart, TRAIT_ROTTEN))
 			return TRUE
 	return FALSE
 
@@ -898,7 +898,7 @@
 		rot.amount = 0
 
 	for(var/obj/item/bodypart/bodypart as anything in target.bodyparts)
-		bodypart.rotted = FALSE
+		REMOVE_TRAIT(bodypart, TRAIT_ROTTEN, GERM_LEVEL_TRAIT)
 		bodypart.update_limb()
 		if(bodypart.can_be_disabled)
 			bodypart.update_disabled()

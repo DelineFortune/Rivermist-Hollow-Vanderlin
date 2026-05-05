@@ -106,7 +106,7 @@
 		stat = CONSCIOUS
 		update_icon()
 
-/mob/living/simple_animal/hostile/retaliate/wolf_undead/apply_damage(damage, damagetype, def_zone, blocked, forced = FALSE, spread_damage = FALSE)
+/mob/living/simple_animal/hostile/retaliate/wolf_undead/apply_damage(damage, damagetype, def_zone, blocked, forced = FALSE, spread_damage = FALSE, damage_type, skip_dtype, can_crit = TRUE)
 	. = ..()
 	if(is_downed)
 		if(def_zone == "head" || \

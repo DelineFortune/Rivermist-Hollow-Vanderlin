@@ -11,14 +11,16 @@
 	else if(islist(target))
 		vv_do_list(target, href_list)
 	if(href_list["Vars"])
-		debug_variables(locate(href_list["Vars"]))
+		var/datum/vars_target = locate(href_list["Vars"])
+		if(href_list["special_varname"]) // Some special vars can't be located even if you have their ref, you have to use this instead
+			vars_target = vars_target.vars[href_list["special_varname"]]
+		debug_variables(vars_target)
 
 //Stuff below aren't in dropdowns/etc.
 
 	if(check_rights(R_VAREDIT))
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
-
 		if(href_list["rename"])
 			if(!check_rights(NONE))
 				return
@@ -92,16 +94,16 @@
 			var/newamt
 			switch(Text)
 				if("brute")
-					L.adjustBruteLoss(amount)
+					L.adjustBruteLoss(amount, forced = TRUE, damage_type = WOUND_DIVINE, true_heal = TRUE)
 					newamt = L.getBruteLoss()
 				if("fire")
-					L.adjustFireLoss(amount)
+					L.adjustFireLoss(amount, forced = TRUE)
 					newamt = L.getFireLoss()
 				if("toxin")
-					L.adjustToxLoss(amount)
+					L.adjustToxLoss(amount, forced = TRUE)
 					newamt = L.getToxLoss()
 				if("oxygen")
-					L.adjustOxyLoss(amount)
+					L.adjustOxyLoss(amount, forced = TRUE)
 					newamt = L.getOxyLoss()
 				if("brain")
 					L.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount)

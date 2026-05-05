@@ -282,6 +282,47 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	var/datum/attribute_holder/sheet/statsheet_male
 	var/datum/attribute_holder/sheet/statsheet_female
 
+	/// Can we be a youngling?
+	var/can_be_youngling = TRUE
+	/// Icon override for children male and female is the same
+	var/child_icon = 'icons/roguetown/mob/bodies/c/child.dmi'
+	/// Child damage icons
+	var/child_dam_icon = 'icons/roguetown/mob/bodies/dam/dam_child.dmi'
+
+	/// Child feature offset lists
+	var/list/offset_features_child = list(
+		OFFSET_RING = list(0,0),\
+		OFFSET_GLOVES = list(0,0),\
+		OFFSET_WRISTS = list(0,0),\
+		OFFSET_HANDS = list(0,-3),\
+		OFFSET_CLOAK = list(0,-4),\
+		OFFSET_FACEMASK = list(0,-4),\
+		OFFSET_HEAD = list(0,-4),\
+		OFFSET_FACE = list(0,-4),\
+		OFFSET_BELT = list(0,0),\
+		OFFSET_BACK = list(0,0),\
+		OFFSET_NECK = list(0,-4),\
+		OFFSET_MOUTH = list(0,-4),\
+		OFFSET_PANTS = list(0,0),\
+		OFFSET_SHIRT = list(0,0),\
+		OFFSET_ARMOR = list(0,0),\
+		OFFSET_UNDIES = list(0,0),\
+	)
+
+	/// List of emotes caused by pain, indexed by pain amount
+	var/list/pain_emote_by_power = list(
+		"100" = "agonyscream",
+		"90" = "whimper",
+		"80" = "moan",
+		"70" = "cry",
+		"60" = "gargle",
+		"50" = "moan",
+		"40" = "moan",
+		"30" = "groan",
+		"20" = "groan",
+		"10" = "grunt",
+	) //Below 10 pain, we shouldn't emote
+
 	/// Amount of times we got autocorrected?? why is this a thing?
 	var/amtfail = 0
 
@@ -331,6 +372,14 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		if("Undead Chant")
 			return
 	return
+
+/datum/species/proc/get_pain_emote(power)
+	if(power < PAIN_EMOTE_MINIMUM)
+		return
+	power = FLOOR(min(100, power), 10)
+	var/emote_string
+	emote_string = LAZYACCESS(pain_emote_by_power, "[power]")
+	return emote_string
 
 /datum/species/proc/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
@@ -1533,13 +1582,13 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		target.next_attack_msg.Cut()
 
 		var/nodmg = FALSE
-		var/actual_damage = target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
+		var/actual_damage = target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block, skip_dtype = TRUE)
 		target.clear_damage_attack_context()
 		if(!actual_damage)
 			nodmg = TRUE
 			target.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
 		else
-			affecting.bodypart_attacked_by(user.used_intent.blade_class, damage, user, selzone, crit_message = TRUE)
+			affecting.bodypart_attacked_by(user.used_intent.blade_class, actual_damage, user, selzone, crit_message = TRUE, pre_applied = TRUE)
 			if(affecting.body_zone == BODY_ZONE_HEAD)
 				SEND_SIGNAL(user, COMSIG_HEAD_PUNCHED, target)
 		log_combat(user, target, "punched")
@@ -1547,7 +1596,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 
 		if(!nodmg)
 			if(user.limb_destroyer)
-				var/easy_dismember = HAS_TRAIT(target, TRAIT_EASYDISMEMBER) || affecting.rotted
+				var/easy_dismember = HAS_TRAIT(target, TRAIT_EASYDISMEMBER) || HAS_TRAIT(affecting, TRAIT_ROTTEN)
 				if(prob(damage/2) || (easy_dismember && prob(damage/2))) //try twice
 					if(affecting.brute_dam > 0)
 						affecting.dismember()
@@ -1753,7 +1802,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 						target.visible_message("<span class='danger'>[user] puts their foot on [target]'s neck!</span>", \
 										"<span class='danger'>I get my throat stepped on by [user]! I can't breathe!</span>", "<span class='hear'>I hear a sickening sound of pugilism!</span>", COMBAT_MESSAGE_RANGE, user)
 					else
-						affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, user.zone_selected, crit_message = TRUE)
+						affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, user.zone_selected, crit_message = TRUE, pre_applied = TRUE)
 						target.visible_message("<span class='danger'>[user] stomps [target]![target.next_attack_msg.Join()]</span>", \
 										"<span class='danger'>I'm stomped by [user]![target.next_attack_msg.Join()]</span>", "<span class='hear'>I hear a sickening kick!</span>", COMBAT_MESSAGE_RANGE, user)
 						to_chat(user, "<span class='danger'>I stomp on [target]![target.next_attack_msg.Join()]</span>")
@@ -1933,48 +1982,58 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 
 //	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>My armor has protected my [hit_area]!</span>", "<span class='warning'>My armor has softened a hit to my [hit_area]!</span>",pen)
 
-	var/Iforce = get_complex_damage(I, user) //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
-	var/armor_block = H.run_armor_check(selzone, I.damage_type, "", "",pen, damage = Iforce, blade_dulling=user.used_intent.blade_class)
-
+	var/item_force = get_complex_damage(I, user) //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 	var/nodmg = FALSE
+	if(!item_force)
+		I.funny_attack_effects(H, user, nodmg)
+		SEND_SIGNAL(I, COMSIG_ITEM_SPEC_ATTACKEDBY, H, user, affecting, 0)
+		return
 
-	var/actual_damage = Iforce
-	if(Iforce)
+	var/knockout_modifier = 0
+	if(!H.cmode && !H.stat && H.body_position != LYING_DOWN && user.m_intent == MOVE_INTENT_SNEAK && (H.dir == REVERSE_DIR(get_dir(H, user))))
+		var/blunt = (user.used_intent.blade_class == BCLASS_BLUNT)
+		var/attacker_sneaking = GET_MOB_SKILL_VALUE(user, /datum/attribute/skill/misc/sneaking)
+		if((blunt || I.wbalance >= HARD_TO_DODGE) && attacker_sneaking >= 10)
+			H.next_attack_msg += " [span_userdanger("SNEAK ATTACK!")]"
+			var/percentage = attacker_sneaking / (SKILL_LEVEL_LEGENDARY * 10)
+			if(blunt)
+				knockout_modifier = FLOOR(15 * percentage, 1)
+			item_force += (item_force * 0.5) * percentage
+			pen = 100
 
-		var/weakness = H.check_weakness(I, user)
-		actual_damage = apply_damage(Iforce * weakness, I.damtype, def_zone, armor_block, H)
-		H.next_attack_msg.Cut()
-		if(!actual_damage)
-			nodmg = TRUE
-			H.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
-			if(!QDELETED(I))
-				I.take_damage(1, BRUTE, I.damage_type)
-		if(!nodmg)
-			var/datum/wound/crit_wound = affecting.bodypart_attacked_by(user.used_intent.blade_class, (Iforce * weakness) * ((100-(armor_block))/100), user, selzone, crit_message = TRUE)
-			if(crit_wound?.should_embed(I))
-				var/can_impale = TRUE
-				if(!affecting)
-					can_impale = FALSE
-				else if(I.wlength > WLENGTH_SHORT && !(affecting.body_zone in list(BODY_ZONE_CHEST, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)))
-					can_impale = FALSE
-				if(can_impale && user.Adjacent(H))
-					affecting.add_embedded_object(I, silent = FALSE, crit_message = TRUE)
-					H.emote("embed")
-					affecting.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
-					user.put_in_hands(I)
-					H.emote("pain", TRUE)
-					playsound(H, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
-			I.do_special_attack_effect(user, affecting, intent, H, selzone)
-			if(istype(user.used_intent, /datum/intent/effect) && selzone)
-				var/datum/intent/effect/effect_intent = user.used_intent
-				if(LAZYLEN(effect_intent.target_parts))
-					if(selzone in effect_intent.target_parts)
-						H.apply_status_effect(effect_intent.intent_effect)
-				else
+	var/armor_block = H.run_armor_check(selzone, I.damage_type, "", "", pen, damage = item_force, blade_dulling = user.used_intent.blade_class)
+	var/weakness = H.check_weakness(I, user)
+	var/actual_damage = apply_damage(item_force * weakness, I.damtype, def_zone, armor_block, H, skip_dtype = TRUE)
+
+	if(!actual_damage)
+		nodmg = TRUE
+		H.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+		if(!QDELETED(I))
+			I.take_damage(1, BRUTE, I.damage_type)
+	else
+		var/datum/wound/bodypart_wound = affecting.bodypart_attacked_by(user.used_intent.blade_class, actual_damage, user, selzone, crit_message = TRUE, modifiers = list(CRIT_MOD_KNOCKOUT_CHANCE = knockout_modifier), incoming_germ = I.germ_level, pre_applied = TRUE)
+		if(bodypart_wound?.should_embed(I))
+			var/can_impale = TRUE
+			if(!affecting)
+				can_impale = FALSE
+			else if(I.wlength > WLENGTH_SHORT && !(affecting.body_zone in list(BODY_ZONE_CHEST, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)))
+				can_impale = FALSE
+			if(can_impale && user.Adjacent(H))
+				affecting.add_embedded_object(I, silent = FALSE, crit_message = TRUE)
+				H.emote("embed")
+				affecting.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier * I.w_class)//It hurts to rip it out, get surgery you dingus.
+				user.put_in_hands(I)
+				H.emote("pain", TRUE)
+				playsound(H, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
+
+		I.do_special_attack_effect(user, affecting, intent, H, selzone)
+		if(istype(user.used_intent, /datum/intent/effect) && selzone)
+			var/datum/intent/effect/effect_intent = user.used_intent
+			if(LAZYLEN(effect_intent.target_parts))
+				if(selzone in effect_intent.target_parts)
 					H.apply_status_effect(effect_intent.intent_effect)
-//		if(H.used_intent.blade_class == BCLASS_BLUNT && I.force >= 15 && affecting.body_zone == "chest")
-//			var/turf/target_shove_turf = get_step(H.loc, get_dir(user.loc,H.loc))
-//			H.throw_at(target_shove_turf, 1, 1, H, spin = FALSE)
+			else
+				H.apply_status_effect(effect_intent.intent_effect)
 
 	I.funny_attack_effects(H, user, nodmg)
 	knockback(I, H, user, nodmg, actual_damage)
@@ -2028,12 +2087,12 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 						H.wear_pants.add_mob_blood(H)
 						H.update_inv_pants()
 
-		if(Iforce > 10 || Iforce >= 5 && prob(Iforce))
+		if(item_force > 10 || item_force >= 5 && prob(item_force))
 			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, flashes = TRUE)
-	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, flashes = TRUE, damage_type, skip_dtype, can_crit = TRUE)
+	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
 	var/hit_percent = 1
 	damage = max(damage - (blocked),0)
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
@@ -2052,6 +2111,9 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 				BP = H.bodyparts[1]
 
 	var/damage_amount = damage
+	var/list/mods = list()
+	if(!can_crit)
+		mods = list(CRIT_MOD_CHANCE = -100)
 	switch(damagetype)
 		if(BRUTE)
 			H.damageoverlaytemp = 20
@@ -2079,8 +2141,12 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 					else if(damage_amount >= 20)
 						H.flash_fullscreen("redflash3")
 			if(BP)
-				if(BP.receive_damage(damage_amount, 0))
+				if(damage_type)
+					BP.bodypart_attacked_by(damage_type, damage_amount, modifiers = mods)
 					H.update_damage_overlays()
+				else
+					if(BP.receive_damage(damage_amount, 0))
+						H.update_damage_overlays()
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage_amount)
 		if(BURN)
@@ -2096,7 +2162,11 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 				else if(damage_amount >= 20)
 					H.flash_fullscreen("redflash3")
 			if(BP)
-				if(BP.receive_damage(0, damage_amount, flashes = flashes))
+				if(skip_dtype)
+					if(BP.receive_damage(0, damage_amount, flashes = flashes))
+						H.update_damage_overlays()
+				else
+					BP.bodypart_attacked_by(BCLASS_BURN, damage_amount, modifiers = list(CRIT_MOD_CHANCE = -100)) // burns can't crit
 					H.update_damage_overlays()
 			else
 				H.adjustFireLoss(damage_amount)

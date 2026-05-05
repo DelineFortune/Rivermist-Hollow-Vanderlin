@@ -2,6 +2,34 @@
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
 // eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
+//KNOCKDOWN
+/mob/living/proc/KnockToFloor(silent = TRUE, ignore_canknockdown = FALSE, knockdown_amt = 1)
+	return
+
+//Force mob to rest, does NOT do stamina damage.
+/mob/living/carbon/KnockToFloor(knockdown_amt = 1, ignore_canknockdown = FALSE, silent = TRUE)
+	if(!silent && (body_position != LYING_DOWN))
+		to_chat(src, span_warning("I am knocked to the floor!"))
+	Knockdown(knockdown_amt, ignore_canknockdown)
+
+/mob/living/proc/CombatKnockdown(stamina_damage, knockdown_amount, paralyze_amount, disarm = FALSE, ignore_canknockdown = FALSE)
+	if(!stamina_damage)
+		return
+	return Paralyze((paralyze_amount ? paralyze_amount : stamina_damage))
+
+/mob/living/carbon/CombatKnockdown(stamina_damage, knockdown_amount, paralyze_amount, disarm = FALSE, ignore_canknockdown = FALSE)
+	if(!stamina_damage && !knockdown_amount && !paralyze_amount)
+		return
+	if(!ignore_canknockdown && !(status_flags & CANKNOCKDOWN))
+		return FALSE
+	if(isnull(knockdown_amount))
+		knockdown_amount = stamina_damage
+	KnockToFloor(max(1, knockdown_amount), ignore_canknockdown)
+	adjust_stamina(stamina_damage)
+	if(disarm)
+		drop_all_held_items()
+	if(paralyze_amount)
+		Paralyze(paralyze_amount)
 
 ///Set the slowdown of a mob
 /mob/living/Slowdown(amount)

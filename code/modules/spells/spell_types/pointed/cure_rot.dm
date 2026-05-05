@@ -50,7 +50,7 @@
 	var/has_rot = FALSE
 	if(!was_zombie)
 		for(var/obj/item/bodypart/bodypart as anything in cast_on.bodyparts)
-			if(bodypart.rotted)
+			if(HAS_TRAIT(bodypart, TRAIT_ROTTEN))
 				has_rot = TRUE
 				break
 	if(!has_rot && !was_zombie)
@@ -66,7 +66,8 @@
 		rot.amount = 0
 
 	for(var/obj/item/bodypart/rotty in cast_on.bodyparts)
-		rotty.rotted = FALSE
+		rotty.revive_limb()
+		rotty.germ_level = 0
 		rotty.update_limb()
 		if(rotty.can_be_disabled)
 			rotty.update_disabled()

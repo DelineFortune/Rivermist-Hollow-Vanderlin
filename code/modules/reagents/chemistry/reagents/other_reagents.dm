@@ -15,6 +15,9 @@
 	glows = TRUE
 
 /datum/reagent/blood/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
+	if(method & TOUCH)
+		L.adjust_germ_level(GERM_PER_UNIT_BLOOD * reac_volume * 0.1)
+
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/datum/blood_type/blood = L.get_blood_type()
@@ -61,6 +64,7 @@
 	glass_desc = ""
 	shot_glass_icon_state = "shotglassclear"
 	var/hydration = 12
+	var/sanitization = SANITIZATION_PER_UNIT_WATER
 	alpha = 100
 	taste_mult = 0.1
 
@@ -83,6 +87,12 @@
 /datum/reagent/water/gross
 	taste_description = "lead"
 	color = "#98934bc6"
+	sanitization = -SANITIZATION_PER_UNIT_WATER
+
+/datum/reagent/water/gross/on_bodypart_absorb(obj/item/bodypart/BP, mob/living/carbon/M, amount_to_transfer)
+	BP.undisinfect_limb()
+	for(var/datum/injury/injury in BP.injuries)
+		injury.adjust_germ_level(SANITIZATION_PER_UNIT_WATER)
 
 /datum/reagent/water/gross/on_aeration(volume, turf/turf)
 	turf.pollute_turf(/datum/pollutant/rot/sewage, volume * 3)
@@ -186,6 +196,7 @@
 		if(!istype(turf_check, /turf/open/water))
 			M.adjust_fire_stacks(-(reac_volume / 10))
 			M.SoakMob(FULL_BODY)
+		M.adjust_germ_level(-reac_volume * sanitization * 0.1)
 	return ..()
 
 

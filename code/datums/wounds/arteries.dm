@@ -19,12 +19,26 @@
 	critical = TRUE
 	sleep_healing = 0
 	embed_chance = 0
-
 	werewolf_infection_probability = 0
+	associated_bclasses = ARTERY_BCLASSES
+	min_damage = 5
+	min_damage_dividend = 0
+	strong_intent_bonus = TRUE
+	aimed_intent_bonus = TRUE
+	var/artery_type_override
+
+/datum/wound/artery/get_crit_prob(bclass, dam, damage_dividend, mob/living/user, obj/item/bodypart/affected, zone_precise, list/modifiers)
+	if(affected.limb_flags & BODYPART_BONE_ENCASED && !affected.has_wound(/datum/wound/fracture))
+		return 0
+	return ..()
 
 /datum/wound/artery/can_apply_to_bodypart(obj/item/bodypart/affected)
 	. = ..()
 	if(affected.status == BODYPART_ROBOTIC)
+		return FALSE
+	if(!affected.get_incision())
+		return FALSE
+	if(affected.limb_flags & BODYPART_BONE_ENCASED && !affected.has_wound(/datum/wound/fracture))
 		return FALSE
 
 /datum/wound/artery/can_stack_with(datum/wound/other)
@@ -42,6 +56,28 @@
 	. = ..()
 	affected.temporary_crit_paralysis(10 SECONDS)
 
+/datum/wound/artery/apply_to_bodypart(obj/item/bodypart/affected, silent, crit_message)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/organ/artery/artery
+	for(var/obj/item/organ/possible_artery in shuffle(affected.getorganslotlist(ORGAN_SLOT_ARTERY)))
+		if(!possible_artery)
+			continue
+		if(possible_artery.damage >= possible_artery.maxHealth)
+			continue
+		if(artery_type_override && !istype(possible_artery, artery_type_override))
+			continue
+		artery = possible_artery
+		break
+	var/dissection = (severity >= WOUND_SEVERITY_CRITICAL) || (artery?.damage >= (artery.maxHealth * 0.5))
+	if(artery)
+		if(dissection)
+			artery.dissect()
+		else
+			artery.tear()
+	qdel(src)
+
 /datum/wound/artery/neck
 	name = "torn carotid"
 	check_name = "<span class='artery'><B>CAROTID</B></span>"
@@ -55,16 +91,8 @@
 	sewn_woundpain = 20
 	mob_overlay = "s1_throat"
 	mortal = TRUE
-
-/datum/wound/artery/neck/on_mob_gain(mob/living/affected)
-	. = ..()
-	ADD_TRAIT(affected, TRAIT_GARGLE_SPEECH, "[type]")
-	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS))
-		affected.death()
-
-/datum/wound/artery/neck/on_mob_loss(mob/living/affected)
-	. = ..()
-	REMOVE_TRAIT(affected, TRAIT_GARGLE_SPEECH, "[type]")
+	artery_type_override = /obj/item/organ/artery/neck
+	can_roll = FALSE //snowflake used for neck slit
 
 /datum/wound/artery/chest
 	name = "aortic dissection"
@@ -78,28 +106,16 @@
 	woundpain = 80
 	sewn_woundpain = 50
 	mortal = TRUE
+	artery_type_override = /obj/item/organ/artery/chest
+	associated_bclasses = ARTERY_HEART_BCLASSES
+	viable_zones = list(BODY_ZONE_CHEST)
 
-/datum/wound/artery/chest/on_mob_gain(mob/living/affected)
-	. = ..()
-	if(iscarbon(affected))
-		var/mob/living/carbon/carbon_affected = affected
-		carbon_affected.vomit(blood = TRUE)
-	var/static/list/heartaches = list(
-		"OOHHHH MY HEART!",
-		"MY HEART! IT HURTS!",
-		"I AM DYING!",
-		"MY HEART IS TORN!",
-		"MY HEART IS BLEEDING!",
-	)
-	to_chat(affected, "<span class='userdanger'>[pick(heartaches)]</span>")
+/datum/wound/artery/dissect
+	severity = WOUND_SEVERITY_CRITICAL
 
-/datum/wound/artery/chest/on_life()
-	. = ..()
-	if(!iscarbon(owner))
-		return
-	var/mob/living/carbon/carbon_owner = owner
-	if(!carbon_owner.stat && prob(10))
-		carbon_owner.vomit(1, blood = TRUE, stun = TRUE)
+/datum/wound/artery/dissect/neck
+	artery_type_override = /obj/item/organ/artery/neck
+	can_roll = FALSE //snowflake used for neck slit
 
 /datum/wound/artery/reattachment
 	name = "replantation"

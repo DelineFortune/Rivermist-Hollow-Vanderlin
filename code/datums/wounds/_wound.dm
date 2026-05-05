@@ -47,8 +47,26 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	/// How much pain this wound causes while on a mob
 	var/woundpain = 0
 
+	/// How much this wound increases the damage on organ damage rolls
+	var/organ_damage_increase = 0
+	/// How much this wound reduces organ_damage_minimum in /obj/item/bodypart/damage_internal_organs()
+	var/organ_minimum_reduction = 0
+	/// How much this wound reduces organ_damaged_required in /obj/item/bodypart/damage_internal_organs()
+	var/organ_required_reduction = 0
+
+	/// Will apply this amount of damage to attached organs if set
+	var/apply_organ_damage = 0
+	/// How much this reduces an attached organ's efficiency, if it does it at all
+	var/list/organ_efficiency_reduction
+
 	/// How much this reduces the limb's efficiency
 	var/limb_efficiency_reduction = 0
+	/// Using this limb in a do_after interaction will multiply the length by this duration (arms and hands)
+	var/interaction_efficiency_penalty = 1
+	/// Incoming damage on this limb will be multiplied by this, to simulate tenderness and vulnerability
+	var/damage_multiplier_penalty = 1.25
+	/// If set and this wound is applied to a leg/foot, we take this many deciseconds extra per step on this leg/foot
+	var/limp_slowdown = 0
 
 	/// If TRUE, this wound can be sewn
 	var/can_sew = FALSE
@@ -100,6 +118,30 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	/// Primary use is for wound application
 	var/list/associated_bclasses = list()
 
+	///list of viable zones for this
+	var/list/viable_zones = ALL_BODYPARTS
+
+	/// These are effectively try_crit moved onto the wound
+
+	/// Minimum damage required to attempt this wound
+	var/min_damage = 5
+	/// Minimum damage_dividend (current/max) required
+	var/min_damage_dividend = 0
+	/// Base probability modifier added to the rolled chance
+	var/base_prob_weight = 0
+	/// If TRUE, strong RMB intent adds +10 dam before prob calc
+	var/strong_intent_bonus = FALSE
+	/// If TRUE, aimed RMB intent adds +10 dam before prob calc
+	var/aimed_intent_bonus = FALSE
+	/// If TRUE, TRAIT_BRITTLE adds +10 dam
+	var/brittle_bonus = FALSE
+	///if we are able to roll natively
+	var/can_roll = TRUE
+	///how much we multiply our dividend by for odds
+	var/dividend_multi = 20
+	///how much we divide our calculated damage by for odds
+	var/damage_divisor = 6
+
 /datum/wound/Destroy(force)
 	. = ..()
 	if(bodypart_owner)
@@ -124,8 +166,24 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	return visible_name
 
 /// Description of this wound returned to the player when the bodypart is checked with check_for_injuries()
-/datum/wound/proc/get_check_name(mob/user)
+/datum/wound/proc/get_check_name(mob/user, advanced)
 	return check_name
+
+/datum/wound/proc/apply_organ_modifications()
+	if(!bodypart_owner || !length(organ_efficiency_reduction))
+		return
+
+	for(var/organ_slot as anything in organ_efficiency_reduction)
+		var/obj/item/organ/organ = bodypart_owner.getorganslot(organ_slot)
+		organ?.apply_efficiency_modification(organ_efficiency_reduction[organ_slot], organ_slot, src)
+
+/datum/wound/proc/remove_organ_modifications()
+	if(!bodypart_owner || !length(organ_efficiency_reduction))
+		return
+
+	for(var/organ_slot as anything in organ_efficiency_reduction)
+		var/obj/item/organ/organ = bodypart_owner.getorganslot(organ_slot)
+		organ?.remove_efficiency_modification(organ_slot, src)
 
 /// Crit message that should be appended when this wound is applied in combat
 /datum/wound/proc/get_crit_message(mob/living/affected, obj/item/bodypart/affected_bodypart)
@@ -145,6 +203,38 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(critical)
 		final_message = "<span class='crit'><b>Critical hit!</b> [final_message]</span>"
 	return final_message
+
+/datum/wound/proc/get_crit_prob(bclass, dam, damage_dividend, mob/living/user, obj/item/bodypart/affected, zone_precise, list/modifiers)
+	if(!can_roll)
+		return 0
+	if(!(bclass in associated_bclasses))
+		return 0
+	if(dam < min_damage)
+		return 0
+	if(damage_dividend < min_damage_dividend)
+		if(!(brittle_bonus && HAS_TRAIT(affected, TRAIT_BRITTLE))) // brittle skips the dividend gate
+			return 0
+	if(length(viable_zones) && !(zone_precise in viable_zones) && viable_zones != ALL_BODYPARTS)
+		return 0
+
+	var/used = base_prob_weight + (modifiers?[CRIT_MOD_CHANCE] || 0)
+	var/calc_dam = dam
+
+	if(strong_intent_bonus && user && istype(user.rmb_intent, /datum/rmb_intent/strong))
+		calc_dam += 10
+	if(aimed_intent_bonus && user && istype(user.rmb_intent, /datum/rmb_intent/aimed))
+		calc_dam += 10
+	if(brittle_bonus && HAS_TRAIT(affected, TRAIT_BRITTLE))
+		calc_dam += 10
+	if(HAS_TRAIT(affected, TRAIT_CRITICAL_RESISTANCE))
+		used -= 10
+
+	used += round(damage_dividend * dividend_multi + (calc_dam / damage_divisor), 1)
+	return used
+
+/// Override per wound to add post-application effects
+/datum/wound/proc/on_crit_applied(obj/item/bodypart/affected, mob/living/user, zone_precise, list/modifiers)
+	return
 
 /// Sound that plays when this wound is applied to a mob
 /datum/wound/proc/get_sound_effect(mob/living/affected, obj/item/bodypart/affected_bodypart)
@@ -175,8 +265,11 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		remove_from_bodypart()
 	else if(owner)
 		remove_from_mob()
+	apply_organ_modifications()
 	LAZYADD(affected.wounds, src)
 	sortTim(affected.wounds, GLOBAL_PROC_REF(cmp_wound_severity_dsc))
+	affected.update_wounds(FALSE)
+	affected.update_limb_efficiency()
 	bodypart_owner = affected
 	owner = bodypart_owner.owner
 	on_bodypart_gain(affected)
@@ -202,6 +295,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 /datum/wound/proc/remove_from_bodypart()
 	if(!bodypart_owner)
 		return FALSE
+	remove_organ_modifications()
 	var/obj/item/bodypart/was_bodypart = bodypart_owner
 	var/mob/living/was_owner = owner
 	LAZYREMOVE(bodypart_owner.wounds, src)
@@ -209,6 +303,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	owner = null
 	on_bodypart_loss(was_bodypart, was_owner)
 	on_mob_loss(was_owner)
+	was_bodypart.update_wounds(FALSE)
+	was_bodypart.update_limb_efficiency()
 	return TRUE
 
 /// Effects when a wound is lost on a bodypart
@@ -233,6 +329,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		remove_from_bodypart()
 	else if(owner)
 		remove_from_mob()
+
 	LAZYADD(affected.simple_wounds, src)
 	sortTim(affected.simple_wounds, GLOBAL_PROC_REF(cmp_wound_severity_dsc))
 	owner = affected

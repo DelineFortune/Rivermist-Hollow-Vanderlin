@@ -217,6 +217,11 @@
 #define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-y)/s)) + 1/2 )
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
+
+/// Returns the probability, as a decimal, for an event with prob_per_second to happen across delta_time seconds.
+#define DT_PROB_RATE(prob_per_second, delta_time) (1 - (1 - (prob_per_second)) ** (delta_time))
+/// Probability helper for subsystem/life procs that receive delta_time.
+#define DT_PROB(prob_per_second_percent, delta_time) (prob(100*DT_PROB_RATE((prob_per_second_percent)/100, (delta_time))))
 // )
 
 /// Avoids division by zero by returning 0 if the divisor is 0 or null.

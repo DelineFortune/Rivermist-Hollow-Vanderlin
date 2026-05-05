@@ -88,9 +88,45 @@
 	var/next_smell = 0
 
 	var/advsetup = 0
+	/// Pulse is shared across all hearts and circulation effects.
+	var/pulse = PULSE_NORM
+	/// How long an external heart pump counts for circulation.
+	var/heart_pump_duration = 5 SECONDS
+	/// CPR/blood circulation pump record: time key mapped to effectiveness.
+	var/list/recent_heart_pump
+	/// Current immune system strength.
+	var/immunity = 100
+	var/default_immunity = 100
 
 	var/datum/party/current_party
 	var/list/party_hud_elements = list()
+
+	/// To reduce processing, this list is used to associate body zone with all organs inside that zone
+	var/list/organs_by_zone = list()
+
+	/// A collection of organs (eyes) used to see
+	var/list/eye_organs = list()
+
+	/// Total sum of organ and bodypart blood requirement
+	var/total_blood_req = DEFAULT_TOTAL_BLOOD_REQ
+	/// Total sum of organ and bodypart oxygen requirement
+	var/total_oxygen_req = DEFAULT_TOTAL_OXYGEN_REQ
+	/// Total sum of organ and bodypart nutriment requirement
+	var/total_nutriment_req = DEFAULT_TOTAL_NUTRIMENT_REQ
+	/// Total sum of organ and bodypart hydration requirement
+	var/total_hydration_req  = DEFAULT_TOTAL_HYDRATION_REQ
+
+	// ~INJURY PENALTIES
+	/// Timer for injury penalty, should reset if we take more damage
+	var/shock_penalty_timer = null
+	/// How much our injury penalty currently affects our DX and IQ
+	var/shock_penalty = 0
+	COOLDOWN_DECLARE(adrenaline_burst)
+
+	/// All injuries we have accumulated on our body
+	var/list/datum/injury/all_injuries
+	/// Descriptive string used in combat messages
+	var/wound_message = ""
 
 	/// if they get a mana pool
 	has_initial_mana_pool = TRUE

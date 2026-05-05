@@ -137,9 +137,9 @@
 		spilled.remove_and_drop(gutted, drop_location)
 	if(istype(affected, /obj/item/bodypart/chest))
 		var/obj/item/bodypart/chest/cavity = affected
-		if(cavity.cavity_item)
-			cavity.cavity_item.forceMove(drop_location)
-			cavity.cavity_item = null
+		for(var/atom/movable/item as anything in cavity.cavity_items)
+			item.forceMove(drop_location)
+			cavity.cavity_items -= item
 	SEND_SIGNAL(affected.owner, COMSIG_LIVING_DISEMBOWELED)
 
 /datum/wound/slash/incision

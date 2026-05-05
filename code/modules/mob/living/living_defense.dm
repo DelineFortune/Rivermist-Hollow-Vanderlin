@@ -134,7 +134,8 @@
 			if(isliving(throwingdatum?.thrower))
 				var/mob/living/thrower = throwingdatum.thrower
 				set_damage_attack_context(thrower)
-			if(!apply_damage(I.throwforce, damagetype, zone, armor))
+			var/real_damage = apply_damage(I.throwforce, damagetype, zone, armor)
+			if(!real_damage)
 				nodmg = TRUE
 				next_attack_msg += span_warning(" Armor stops the damage.")
 			clear_damage_attack_context()
@@ -145,7 +146,7 @@
 						var/throwee = null
 						if(throwingdatum)
 							throwee = isliving(throwingdatum.thrower) ? throwingdatum.thrower : null
-						affecting.bodypart_attacked_by(I.thrown_bclass, I.throwforce, throwee, affecting.body_zone, crit_message = TRUE)
+						affecting.bodypart_attacked_by(I.thrown_bclass, real_damage, throwee, affecting.body_zone, crit_message = TRUE, incoming_germ = I.germ_level, pre_applied = TRUE)
 					I.do_special_attack_effect(I.thrownby, affecting, null, src, zone, thrown = TRUE)
 				else
 					simple_woundcritroll(I.thrown_bclass, I.throwforce, null, zone, crit_message = TRUE)

@@ -233,6 +233,10 @@
 	if(affecting)
 		affecting.heal_damage(amount_healed, amount_healed)
 		affecting.heal_wounds(amount_healed * wound_modifier)
+		for(var/datum/injury/injury as anything in affecting.injuries)
+			if(injury.damage_type == WOUND_DIVINE)
+				continue
+			injury.heal_damage(amount_healed)
 		C.update_damage_overlays()
 
 /datum/action/cooldown/spell/healing/profane

@@ -29,3 +29,5 @@
 #define ACCOUNT_SEC_NAME "Defense Budget"
 
 #define NO_FREEBIES "commies go home"
+
+#define DEFAULT_ORGAN_VALUE 10
