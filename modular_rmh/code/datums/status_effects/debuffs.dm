@@ -92,6 +92,8 @@
 /atom/movable/screen/alert/status_effect/close_to_orgasm
 	name = "Close"
 	desc = "<span class='love_low'>I feel the pleasure building, I am really close...</span>"
+	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
+	icon_state = "emberwine"
 
 /datum/status_effect/edging_overstimulation
 	id = "edging_overstimulation"
@@ -146,7 +148,8 @@
 /atom/movable/screen/alert/status_effect/debuff/orgasmbroken
 	name = "Orgasm Broken"
 	desc = "My legs are shaking, but I need more."
-	icon_state = "debuff"
+	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
+	icon_state = "fentanyl"
 
 /datum/status_effect/debuff/nympho_addiction
 	id = "nympho_addiction"
@@ -172,7 +175,8 @@
 /atom/movable/screen/alert/status_effect/debuff/nympho_addiction
 	name = "Addicted to Sex"
 	desc = "I want to do it again. And again. And again."
-	icon_state = "debuff"
+	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
+	icon_state = "fentanyl"
 
 /datum/status_effect/debuff/cumbrained
 	id = "cumbrained"
@@ -286,7 +290,8 @@
 /atom/movable/screen/alert/status_effect/bloatone
 	name = "Bloated"
 	desc = "Bit full..."
-	icon_state = "status"
+	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
+	icon_state = "bloat1"
 
 /datum/status_effect/debuff/bloattwo
 	id = "bloattwo"
@@ -308,7 +313,8 @@
 /atom/movable/screen/alert/status_effect/bloattwo
 	name = "Bloated"
 	desc = "So full..."
-	icon_state = "status"
+	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
+	icon_state = "bloat2"
 
 /datum/stress_event/loinache
 	timer = 1 MINUTES
@@ -426,14 +432,14 @@
 /atom/movable/screen/alert/status_effect/debuff/largeboobs
 	name = "Big breasts" //was gonna name it a curse but it isn't a technically one.
 	desc = "They feel as heavy as iron and are massive... My back hurts a little."
-	//icon = 'modular_stonehedge/licensed-eaglephntm/icons/mob/screen_alert.dmi'
-	icon_state = "status"
+	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
+	icon_state = "bigboobslite"
 
 /atom/movable/screen/alert/status_effect/debuff/bigboobs
 	name = "Huge Breasts" //was gonna name it a curse but it isn't a technically one.
 	desc = "They feel as heavy as gold and are massive... My back hurts."
-	//icon = 'modular_stonehedge/licensed-eaglephntm/icons/mob/screen_alert.dmi'
-	icon_state = "status"
+	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
+	icon_state = "bigboobs"
 
 //---------------------------------------------------------------------------------------------------------------------------------
 

@@ -598,6 +598,7 @@
 	var/current_speed_name = plain_quick_control_text(get_speed_string())
 	var/current_force_name = plain_quick_control_text(get_force_string())
 	var/current_resist_name = plain_quick_control_text(get_resist_string())
+	var/current_manual_arousal_name = plain_quick_control_text(get_manual_arousal_string())
 	var/lying_direction_name = user.get_lying_direction_name()
 
 	for(var/datum/sex_action/candidate_action as anything in get_all_menu_actions())
@@ -667,6 +668,8 @@
 	content += render_interaction_quick_stepper("Speed", current_speed_name, "speed_down", "speed_up", selected_tab)
 	content += render_interaction_quick_stepper("Force", current_force_name, "force_down", "force_up", selected_tab)
 	content += render_interaction_quick_stepper("Hold", current_resist_name, "resist_down", "resist_up", selected_tab)
+	if(user.getorganslot(ORGAN_SLOT_PENIS))
+		content += render_interaction_quick_stepper("Arousal", current_manual_arousal_name, "manual_arousal_down", "manual_arousal_up", selected_tab)
 	content += "</div>"
 	content += "<div class='quick-row'>"
 	content += "<a class='quick-toggle[do_until_finished ? " active" : ""]' href='?src=[REF(src)];task=toggle_finished;tab=[selected_tab]'>[do_until_finished ? "Until I'm Finished" : "Until I Stop"]</a>"
