@@ -109,7 +109,7 @@
 /datum/sprite_accessory/body_hair/pubic
 	abstract_type = /datum/sprite_accessory/body_hair/pubic
 	icon = 'modular_rmh/icons/mob/sprite_accessory/bodyhair/bodyhair.dmi'
-	layer = BODY_FRONT_LAYER
+	layer = BODY_ADJ_LAYER
 
 /datum/sprite_accessory/body_hair/pubic/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	..()
