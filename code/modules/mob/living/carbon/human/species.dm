@@ -597,6 +597,38 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 /datum/species/proc/get_hexcolor(list/L)
 	return L
 
+/datum/species/proc/normalize_body_color(color)
+	var/list/rgb_values = ReadRGB(color)
+	if(!rgb_values)
+		return null
+	return copytext(rgb(rgb_values[1], rgb_values[2], rgb_values[3]), 2)
+
+/datum/species/proc/get_body_color(mob/living/carbon/human/H)
+	if(use_skintones)
+		if(H)
+			. = normalize_body_color(H.skin_tone)
+			if(.)
+				return
+			if(H.dna?.features && ((MUTCOLORS in species_traits) || (MUTCOLORS_PARTSONLY in species_traits)))
+				. = normalize_body_color(H.dna.features["mcolor"])
+				if(.)
+					return
+		return normalize_body_color(default_color)
+
+	if(fixed_mut_color)
+		. = normalize_body_color(fixed_mut_color)
+		if(.)
+			return
+		return normalize_body_color(default_color)
+
+	if(H?.dna?.features && ((MUTCOLORS in species_traits) || (MUTCOLORS_PARTSONLY in species_traits)))
+		. = normalize_body_color(H.dna.features["mcolor"])
+		if(.)
+			return
+		return normalize_body_color(default_color)
+
+	return null
+
 /datum/species/proc/get_skin_list() as /list
 	RETURN_TYPE(/list)
 	return GLOB.skin_tones

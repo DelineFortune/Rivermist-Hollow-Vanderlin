@@ -2121,15 +2121,10 @@ generate/load female uniform sprites matching all previously decided variables
 /mob/living/carbon/human/generate_icon_render_key()
 	. = list(dna.species.limbs_id)
 
-	if(dna.species.use_skintones)
+	var/body_color = dna.species.get_body_color(src)
+	if(body_color)
 		. += "coloured"
-		. += skin_tone
-	else if(dna.species.fixed_mut_color)
-		. += "coloured"
-		. += dna.species.fixed_mut_color
-	else if(dna.features["mcolor"])
-		. += "coloured"
-		. += dna.features["mcolor"]
+		. += body_color
 	else
 		. += "not_coloured"
 

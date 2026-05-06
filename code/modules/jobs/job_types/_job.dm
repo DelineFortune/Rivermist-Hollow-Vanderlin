@@ -483,8 +483,6 @@
 	var/datum/attribute_holder/sheet/sheet_to_apply
 	if(attribute_sheet_old && spawned_human.age == AGE_OLD)
 		sheet_to_apply = attribute_sheet_old
-	else if(attribute_sheet_child && spawned_human.age == AGE_CHILD)
-		sheet_to_apply = attribute_sheet_child
 	else if(attribute_sheet_adult && spawned_human.age == AGE_ADULT)
 		sheet_to_apply = attribute_sheet_adult
 	else if(attribute_sheet)

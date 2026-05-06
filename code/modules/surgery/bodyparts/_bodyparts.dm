@@ -1211,23 +1211,23 @@
 			species_icon = S.limbs_icon_m
 		else
 			species_icon = S.limbs_icon_f
-		if(H.age == AGE_CHILD)
-			species_icon = S.child_icon
 		species_flags_list = H.dna.species.species_traits
-
-
-		if(S.use_skintones)
-			skin_tone = H.skin_tone
-			should_draw_greyscale = TRUE
-		else
-			skin_tone = ""
 
 		body_gender = H.gender
 		should_draw_gender = S.sexes
 
+		skin_tone = ""
 		species_color = ""
-
 		mutation_color = ""
+		var/body_color = S.get_body_color(H)
+		if(body_color)
+			should_draw_greyscale = TRUE
+			if(S.use_skintones)
+				skin_tone = body_color
+			else if(S.fixed_mut_color)
+				species_color = body_color
+			else
+				mutation_color = body_color
 
 		dmg_overlay_type = S.damage_overlay_type
 
@@ -1395,7 +1395,7 @@
 			. += overlays
 
 	if(should_draw_greyscale && !skeletonized)
-		var/draw_color =  mutation_color || species_color || skin_tone
+		var/draw_color = mutation_color || species_color || skin_tone
 		if(HAS_TRAIT(src, TRAIT_ROTTEN) || (owner && HAS_TRAIT(owner, TRAIT_ROTMAN)))
 			draw_color = SKIN_COLOR_ROT
 		if(draw_color)

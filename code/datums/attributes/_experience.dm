@@ -240,8 +240,6 @@ GLOBAL_VAR_INIT(sleep_experience_modifier, 1.0)
 	var/mob/living/carbon/human/H = parent
 	if(H.age == AGE_OLD)
 		boon -= 0.2
-	else if(H.age == AGE_CHILD)
-		boon += 0.2
 	return boon
 
 /**

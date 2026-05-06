@@ -94,15 +94,6 @@
 		STAT_SPEED     = -1,
 	)
 
-/datum/attribute_holder/sheet/age/child
-	raw_attribute_list = list(
-		STAT_STRENGTH     = -2,
-		STAT_CONSTITUTION = -2,
-		STAT_PERCEPTION   = 1,
-		STAT_ENDURANCE    = 1,
-		STAT_SPEED        = 1
-	)
-
 /datum/attribute_holder/sheet/job/random_stats
 	attribute_variance = list(
 		STAT_STRENGTH = list(-1, 1),
@@ -156,8 +147,6 @@
 				attributes?.subtract_sheet(/datum/attribute_holder/sheet/age/middleaged)
 			if(AGE_OLD)
 				attributes?.subtract_sheet(/datum/attribute_holder/sheet/age/old)
-			if(AGE_CHILD)
-				attributes?.subtract_sheet(/datum/attribute_holder/sheet/age/child)
 	if(only_remove)
 		return
 	switch(age)
@@ -165,8 +154,6 @@
 			attributes?.add_sheet(/datum/attribute_holder/sheet/age/middleaged)
 		if(AGE_OLD)
 			attributes?.add_sheet(/datum/attribute_holder/sheet/age/old)
-		if(AGE_CHILD)
-			attributes?.add_sheet(/datum/attribute_holder/sheet/age/child)
 
 
 /**

@@ -3394,7 +3394,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	dat += "<a class='option-row' href='?_src_=prefs;preference=customizers;task=menu'>Features<small>Adjust available body accessories and feature colors.</small></a>"
 
 	if(pref_species?.use_skintones)
-		var/skin_color_value = length(skin_tone) == 6 ? skin_tone : "000000"
+		var/skin_color_value = pref_species.normalize_body_color(skin_tone) || "000000"
 		dat += "<div class='section-title'>Skin</div>"
 		dat += "<a class='option-row' href='?_src_=prefs;preference=s_tone;task=input;return=body_customize'><span class='swatch' style='background-color: #[skin_color_value];'></span>[pref_species.skin_tone_wording]<small>Pick a predefined skin or scale color.</small></a>"
 		dat += "<a class='option-row' href='?_src_=prefs;preference=skin_color_ref_list;task=input'>Color Reference<small>Open the available skin color reference list.</small></a>"
@@ -3405,9 +3405,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			var/feature_key = get_mutant_color_feature_key(color_slot)
 			if(!feature_key)
 				continue
-			var/color_value = features[feature_key]
-			if(length(color_value) != 6)
-				color_value = "000000"
+			var/color_value = pref_species.normalize_body_color(features[feature_key]) || "000000"
 			dat += "<a class='option-row' href='?_src_=prefs;preference=mutant_color[color_slot == 1 ? "" : color_slot];task=input;return=body_customize'><span class='swatch' style='background-color: #[color_value];'></span>Mutant Color #[color_slot]<small>Change this character color slot.</small></a>"
 	else
 		dat += "<div class='section-title'>Mutant Colors</div>"
@@ -3800,12 +3798,22 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	if(!feature_key)
 		return
 
-	if(length(features[feature_key]) == 6)
-		skin_tone = features[feature_key]
+	var/feature_color = pref_species.normalize_body_color(features[feature_key])
+	if(feature_color)
+		features[feature_key] = feature_color
+		skin_tone = feature_color
 		return
 
-	if(length(skin_tone) == 6)
-		features[feature_key] = skin_tone
+	var/skin_color = pref_species.normalize_body_color(skin_tone)
+	if(skin_color)
+		skin_tone = skin_color
+		features[feature_key] = skin_color
+		return
+
+	var/default_color = pref_species.normalize_body_color(pref_species.default_color)
+	if(default_color)
+		skin_tone = default_color
+		features[feature_key] = default_color
 
 /datum/preferences/proc/pick_mutant_color(mob/user, color_slot, prompt)
 	if(!has_mutant_color_preferences())
