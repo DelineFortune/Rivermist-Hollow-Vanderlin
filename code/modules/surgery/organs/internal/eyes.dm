@@ -186,22 +186,52 @@
 	actions_types = list(/datum/action/item_action/organ_action/use)
 	var/night_vision = TRUE
 
+/mob/living/carbon/proc/sync_night_vision_eye_actions()
+	var/datum/action/item_action/organ_action/use/kept_action
+	for(var/obj/item/organ/eyes/night_vision/eye as anything in getorganslotlist(ORGAN_SLOT_EYES))
+		for(var/datum/action/item_action/organ_action/use/eye_action as anything in eye.actions)
+			if(!kept_action)
+				kept_action = eye_action
+				if(eye_action.owner != src)
+					eye_action.Grant(src)
+				continue
+			eye_action.Remove(src)
+
 /obj/item/organ/eyes/night_vision/left
 	zone = BODY_ZONE_PRECISE_L_EYE
 	side = LEFT_SIDE
 
-/obj/item/organ/eyes/night_vision/ui_action_click()
-	sight_flags = initial(sight_flags)
+/obj/item/organ/eyes/night_vision/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE, new_zone = null)
+	. = ..()
+	if(M)
+		M.sync_night_vision_eye_actions()
+
+/obj/item/organ/eyes/night_vision/Remove(mob/living/carbon/M, special = 0)
+	. = ..()
+	if(M)
+		M.sync_night_vision_eye_actions()
+
+/obj/item/organ/eyes/night_vision/ui_action_click(mob/user, datum/action/actiontype)
+	if(!owner)
+		return
+	var/new_lighting_alpha
+	var/remove_blackness = FALSE
 	switch(lighting_alpha)
 		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+			new_lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		else
-			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-			sight_flags &= ~SEE_BLACKNESS
+			new_lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			remove_blackness = TRUE
+
+	for(var/obj/item/organ/eyes/night_vision/eye as anything in owner.getorganslotlist(ORGAN_SLOT_EYES))
+		eye.sight_flags = initial(eye.sight_flags)
+		eye.lighting_alpha = new_lighting_alpha
+		if(remove_blackness)
+			eye.sight_flags &= ~SEE_BLACKNESS
 	owner.update_sight()
 
 /obj/item/organ/eyes/night_vision/alien
