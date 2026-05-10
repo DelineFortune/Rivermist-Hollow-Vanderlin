@@ -2,6 +2,7 @@
 
 /datum/intent/whip/punish
 	name = "punish"
+	blade_class = BCLASS_BLUNT
 	attack_verb = list("lashes", "whips")
 	hitsound = list('modular_rmh/sound/effects/slap1.ogg', 'modular_rmh/sound/effects/slap2.ogg')
 	swingdelay = 2
@@ -78,6 +79,7 @@
 
 /datum/intent/belt/punish
 	name = "punish"
+	blade_class = BCLASS_BLUNT
 	attack_verb = list("lashes", "whips")
 	swingdelay = 2
 	clickcd = 14
