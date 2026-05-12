@@ -39,6 +39,7 @@
  * this can be extended if you wish to undo unique effects on level up for wizards.
  * - [update_spell_name][/datum/action/cooldown/spell/update_spell_name] updates the prefix of the spell name based on its level.
  */
+
 /datum/action/cooldown/spell
 	name = "Spell"
 	desc = "A wizard spell."

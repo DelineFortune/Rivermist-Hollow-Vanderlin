@@ -156,11 +156,12 @@
 	display_icon_state = "egg_color"
 	display_color = "#d7a29d"
 	incubation_stage_duration = 8 MINUTES
-	stage_messages = list(
+	stage_messages = alist(
 		1 = "Something fertile settles deep in my %CONTAINER%.",
 		2 = "The embryo in my %CONTAINER% grows heavier and more alive.",
 		3 = "A tight, restless pressure builds in my %CONTAINER%.",
 	)
+
 	ready_message = "The embryo in my %CONTAINER% is fully grown and about to hatch inside me."
 	hatch_message = "Something alive hatches from %EGG% inside my %CONTAINER%!"
 	auto_hatch_when_laid = FALSE

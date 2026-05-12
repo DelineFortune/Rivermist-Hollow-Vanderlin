@@ -409,7 +409,7 @@
 
 
 /mob/living/carbon/proc/check_obscured_slots(transparent_protection)
-	var/list/obscured = list(SLOT_CHECK_REGULAR = NONE, SLOT_CHECK_EXTRA = NONE)
+	var/list/obscured = alist(SLOT_CHECK_REGULAR = NONE, SLOT_CHECK_EXTRA = NONE)
 	var/hidden_slots = NONE
 
 	for(var/obj/item/I in get_equipped_items())
@@ -451,7 +451,7 @@
 * Checks if slots are covered with armor heavier than
 */
 /mob/living/proc/check_armor_obscured_slots(transparent_protection)
-	var/list/obscured = list(SLOT_CHECK_REGULAR = NONE, SLOT_CHECK_EXTRA = NONE)
+	var/list/obscured = alist(SLOT_CHECK_REGULAR = NONE, SLOT_CHECK_EXTRA = NONE)
 	var/hidden_slots = NONE
 
 	for(var/obj/item/I in get_equipped_items())
