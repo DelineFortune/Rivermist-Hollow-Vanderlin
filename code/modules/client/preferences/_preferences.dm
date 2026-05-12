@@ -3932,6 +3932,20 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		return loadout_2_hex
 	if (loadout3 && (item_path == loadout3.item_path) && loadout_3_hex)
 		return loadout_3_hex
+	if (loadout4 && (item_path == loadout4.item_path) && loadout_4_hex)
+		return loadout_4_hex
+	if (loadout5 && (item_path == loadout5.item_path) && loadout_5_hex)
+		return loadout_5_hex
+	if (loadout6 && (item_path == loadout6.item_path) && loadout_6_hex)
+		return loadout_6_hex
+	if (loadout7 && (item_path == loadout7.item_path) && loadout_7_hex)
+		return loadout_7_hex
+	if (loadout8 && (item_path == loadout8.item_path) && loadout_8_hex)
+		return loadout_8_hex
+	if (loadout9 && (item_path == loadout9.item_path) && loadout_9_hex)
+		return loadout_9_hex
+	if (loadout10 && (item_path == loadout10.item_path) && loadout_10_hex)
+		return loadout_10_hex
 
 	return FALSE
 
