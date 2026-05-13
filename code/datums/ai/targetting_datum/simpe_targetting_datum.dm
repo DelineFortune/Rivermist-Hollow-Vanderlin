@@ -1,4 +1,23 @@
 ///Datum for basic mobs to define what they can attack.
+/proc/is_ai_disarmable_held_item(obj/item/held_item)
+	if(!held_item)
+		return FALSE
+	if(held_item.item_flags & (ABSTRACT | DROPDEL))
+		return FALSE
+	if(HAS_TRAIT(held_item, TRAIT_NODROP))
+		return FALSE
+	return TRUE
+
+/proc/mob_has_ai_disarmable_held_item(mob/living/living_target)
+	if(!living_target)
+		return FALSE
+
+	for(var/obj/item/held_item as anything in living_target.held_items)
+		if(is_ai_disarmable_held_item(held_item))
+			return TRUE
+
+	return FALSE
+
 /datum/targetting_datum
 
 ///Returns true or false depending on if the target can be attacked by the mob
@@ -46,16 +65,6 @@
 
 /datum/targetting_datum/proc/has_any_horny_mob_pref_enabled(mob/living/carbon/human/human_target)
 	return !!get_horny_mob_pref_flags(human_target)
-
-/datum/targetting_datum/proc/human_has_any_held_item(mob/living/carbon/human/human_target)
-	if(!human_target)
-		return FALSE
-
-	for(var/obj/item/held_item as anything in human_target.held_items)
-		if(held_item)
-			return TRUE
-
-	return FALSE
 
 /datum/targetting_datum/proc/should_use_nonlethal_mob_erp_handling(mob/living/living_mob, mob/living/carbon/human/human_target)
 	if(!living_mob || !human_target)
@@ -267,7 +276,7 @@
 		var/mob/living/carbon/human/human_target = living_target
 		if(human_target.handcuffed)
 			return FALSE
-		if((human_target.body_position == LYING_DOWN) && human_has_any_held_item(human_target) && human_target.ckey)
+		if((human_target.body_position == LYING_DOWN) && mob_has_ai_disarmable_held_item(human_target) && human_target.ckey)
 			return TRUE
 
 	if((living_target.body_position == LYING_DOWN) && !living_target.get_active_held_item() && living_target.ckey && !living_target.cmode)
@@ -434,7 +443,7 @@
 				return can_nonlethally_subdue_mob_erp_target(living_mob, hum)
 			if(hum.handcuffed)
 				return FALSE
-		if((L.body_position == LYING_DOWN) && human_has_any_held_item(L) && L.ckey)
+		if((L.body_position == LYING_DOWN) && mob_has_ai_disarmable_held_item(L) && L.ckey)
 			return TRUE
 
 	return FALSE

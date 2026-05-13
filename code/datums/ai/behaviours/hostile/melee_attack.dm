@@ -26,7 +26,7 @@
 	if(attacker.next_click >= world.time)
 		return TRUE
 
-	if(targetting_datum.human_has_any_held_item(human_target))
+	if(mob_has_ai_disarmable_held_item(human_target))
 		var/static/datum/intent/unarmed/shove/disarm_intent = new()
 		var/datum/intent/cached_intent = attacker.used_intent
 		attacker.used_intent = disarm_intent
@@ -38,10 +38,14 @@
 				human_target.visible_message(span_danger("[attacker] swats at [human_target]'s hands, but fails to disarm them!"), \
 					span_userdanger("[attacker] swats at my hands, but I keep hold of my weapon!"), span_hear("I hear a rough struggle over a weapon!"), COMBAT_MESSAGE_RANGE)
 			else
+				var/disarmed_anything = FALSE
 				for(var/obj/item/held_item as anything in human_target.held_items)
-					if(!held_item)
+					if(!is_ai_disarmable_held_item(held_item))
 						continue
-					human_target.dropItemToGround(held_item, force = FALSE, silent = FALSE)
+					if(human_target.dropItemToGround(held_item, force = FALSE, silent = FALSE))
+						disarmed_anything = TRUE
+				if(!disarmed_anything)
+					return TRUE
 				human_target.Stun(2)
 				human_target.visible_message(span_danger("[attacker] disarms [human_target]!"), \
 					span_userdanger("[attacker] disarms me!"), span_hear("I hear someone getting punished!"), COMBAT_MESSAGE_RANGE)

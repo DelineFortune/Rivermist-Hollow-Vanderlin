@@ -263,6 +263,7 @@
 	var/mob/living/carbon/human/species/werewolf/new_werewolf = generate_werewolf(human_user)
 	new_werewolf.apply_status_effect(/datum/status_effect/shapechange_mob/die_with_form, human_user, FALSE)
 	transfer_skill_state_to_werewolf(human_user, new_werewolf)
+	apply_werewolf_transformation_bonuses(new_werewolf)
 	new_werewolf.dna?.species.after_creation(new_werewolf) // funny accented werewolf
 	new_werewolf.set_patron(human_user.patron)
 	human_user.rage_datum.grant_to_secondary(new_werewolf)
@@ -332,6 +333,21 @@
 		return
 
 	new_werewolf.attributes.copy_skill_state(human_user.attributes)
+
+/datum/antagonist/werewolf/proc/apply_werewolf_transformation_bonuses(mob/living/carbon/human/species/werewolf/new_werewolf)
+	var/datum/attribute_holder/werewolf_attributes = new_werewolf?.attributes
+	var/datum/species/werewolf/werewolf_species = new_werewolf?.dna?.species
+	if(!werewolf_attributes || !istype(werewolf_species))
+		return
+
+	var/datum/attribute_holder/sheet/inherent_sheet = werewolf_species.get_inherent_attribute_sheet()
+	if(inherent_sheet)
+		werewolf_attributes.add_sheet(inherent_sheet)
+
+	var/datum/attribute_holder/sheet/gender_sheet = werewolf_species.get_gender_attribute_sheet(new_werewolf.gender)
+	if(gender_sheet)
+		werewolf_attributes.add_sheet(gender_sheet)
+
 	apply_werewolf_skill_floor(new_werewolf, /datum/attribute/skill/combat/wrestling, 50)
 	apply_werewolf_skill_floor(new_werewolf, /datum/attribute/skill/combat/unarmed, 50)
 	apply_werewolf_skill_floor(new_werewolf, /datum/attribute/skill/misc/climbing, 60)

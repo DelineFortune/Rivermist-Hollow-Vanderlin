@@ -124,6 +124,10 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 	for(var/el in phrases_list)
 		phrases_list[el] = generate_slave_code()
 
+/obj/item/clothing/neck/slave_collar/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_pre_unequip))
+
 // ---- Equip / Drop / Destroy ----
 
 /obj/item/clothing/neck/slave_collar/equipped(mob/living/carbon/human/human)
@@ -133,12 +137,15 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 	var/mob/living/carbon/human/wearer = loc
 	if(!ismob(wearer) || wearer.wear_neck != src)
 		return
+	if(bearer && bearer != wearer)
+		cleanup_bearer()
 	RegisterSignal(human, COMSIG_MOVABLE_HEAR, PROC_REF(process_phrase), override = TRUE)
 	list_name = wearer.name
 	if(wearer.job)
 		list_name += " the [wearer.job]"
 	GLOB.slave_collars[list_name] = src
 	bearer = wearer
+	apply_collar_traits(wearer)
 
 /obj/item/clothing/neck/slave_collar/dropped(mob/user)
 	. = ..()
@@ -146,20 +153,31 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 
 /obj/item/clothing/neck/slave_collar/Destroy()
 	cleanup_bearer()
+	UnregisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP)
 	stuck = FALSE
 	return ..()
 
-/// Shared cleanup: unregister signals, remove from global list, clear silence.
+/// Shared cleanup: unregister signals, remove from global list, clear traits.
 /obj/item/clothing/neck/slave_collar/proc/cleanup_bearer()
 	if(!bearer)
 		return
 	GLOB.slave_collars.Remove(list_name)
 	UnregisterSignal(bearer, COMSIG_MOVABLE_HEAR)
-	// Clear silence if active.
 	if(silenced)
 		REMOVE_TRAIT(bearer, TRAIT_MUTE, "slave_collar")
 		silenced = FALSE
+	remove_collar_traits(bearer)
 	bearer = null
+
+/obj/item/clothing/neck/slave_collar/proc/apply_collar_traits(mob/living/carbon/human/wearer)
+	ADD_TRAIT(wearer, TRAIT_ANTIMAGIC, "slave_collar")
+	ADD_TRAIT(wearer, TRAIT_NO_SELF_MAGIC, "slave_collar")
+	wearer.update_action_buttons()
+
+/obj/item/clothing/neck/slave_collar/proc/remove_collar_traits(mob/living/carbon/human/wearer)
+	REMOVE_TRAIT(wearer, TRAIT_ANTIMAGIC, "slave_collar")
+	REMOVE_TRAIT(wearer, TRAIT_NO_SELF_MAGIC, "slave_collar")
+	wearer.update_action_buttons()
 
 // ---- Ring Binding ----
 
@@ -399,6 +417,23 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 		sleep(3)
 
 // ---- Stuck / Lock Checks ----
+
+/obj/item/clothing/neck/slave_collar/proc/on_pre_unequip(force, atom/newloc, no_move, invdrop, silent)
+	SIGNAL_HANDLER
+
+	if(force || !stuck)
+		return
+
+	if(!iscarbon(loc))
+		return
+
+	var/mob/living/carbon/wearer = loc
+	if(src != wearer.get_item_by_slot(ITEM_SLOT_NECK))
+		return
+
+	if(!silent)
+		to_chat(wearer, span_userdanger("The collar's arcane lock refuses to release!"))
+	return COMPONENT_ITEM_BLOCK_UNEQUIP
 
 /// Returns TRUE if the collar is locked and worn by the user (blocks removal).
 /obj/item/clothing/neck/slave_collar/proc/stuck_check(mob/living/user)

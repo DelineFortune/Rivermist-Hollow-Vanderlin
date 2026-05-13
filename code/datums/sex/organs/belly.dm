@@ -258,9 +258,9 @@
 /datum/component/belly_fullness/proc/fluid_fullness_counts_for_organ(obj/item/organ/genitals/filling_organ/filling_organ)
 	if(!istype(filling_organ, /obj/item/organ/genitals/filling_organ/anus) && !istype(filling_organ, /obj/item/organ/genitals/filling_organ/vagina))
 		return TRUE
-	if(!carrier?.client?.prefs)
-		return TRUE
-	return carrier.get_erp_pref(/datum/erp_preference/boolean/allow_belly_inflation)
+	if(!carrier)
+		return FALSE
+	return carrier.get_cached_allow_belly_inflation()
 
 /datum/component/belly_fullness/proc/growth_steps_from_fullness(current_bulk, capacity)
 	if(current_bulk <= 0 || capacity <= 0)
