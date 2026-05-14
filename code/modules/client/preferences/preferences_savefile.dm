@@ -200,6 +200,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	// Custom hotkeys
 	S["key_bindings"]		>> key_bindings
+	S["player_language"]		>> player_language
 
 	if(!(char_theme in char_themes))
 		char_theme = "grimshart"
@@ -306,6 +307,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["key_bindings"], key_bindings)
 	WRITE_FILE(S["multi_char_ready"], multi_char_ready)
 	WRITE_FILE(S["multi_ready_slots"], multi_ready_slots)
+	WRITE_FILE(S["player_language"], player_language)
 	save_erp_preferences(S)
 	return TRUE
 
