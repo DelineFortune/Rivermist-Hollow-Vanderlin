@@ -2518,7 +2518,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 				if("player_language")
 					to_chat(user, "<span class='notice'>["<span class='bold'>Let players know what language you speak (ex. RU or EN)</span>"]</span>")
 					to_chat(user, "<font color = '#d6d6d6'>Set the language code for indicating what language you speak to other players.</font>")
-					var/new_player_language = tgui_input_text(user, "Input your language code (ex. RU or EN):", "Player Language", player_language, encode = FALSE)
+					var/new_player_language = tgui_input_text(user, "Input your language code (ex. RU or EN):", "Player Language", player_language, encode = FALSE, max_length = 3)
 					if(new_player_language == null)
 						return
 					if(length(new_player_language) > 3)
@@ -3542,7 +3542,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	dat += "<a class='option-row' href='?_src_=prefs;preference=change_artist;task=input'>Song Artist<small>[song_artist_display]</small></a>"
 
 	dat += "<div class='section-title'>OOC</div>"
-	dat += "<a class='option-row' href='?_src_=prefs;preference=player_language;task=input'>Player's Language Code (ex. RU or EN)<small>Set the language code for spoken dialogue.</small></a>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=player_language;task=input'>Player's Language<small>Set the language you understand oocly and prefer to speak in if possible, this will be shown in your examine to other players.</small></a>"
 
 	dat += {"
 				<div class="footer"><a href='?_src_=prefs;preference=body_customize;task=menu'>Customize Appearance</a></div>
