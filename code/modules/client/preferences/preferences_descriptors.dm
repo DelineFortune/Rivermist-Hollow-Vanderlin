@@ -1,23 +1,53 @@
+/datum/preferences/proc/get_default_descriptor_for_choice(datum/descriptor_choice/choice)
+	if(!choice)
+		return null
+	if(choice.default_descriptor)
+		return choice.default_descriptor
+	if(length(choice.descriptors))
+		return pick(choice.descriptors)
+	return null
+
+/datum/preferences/proc/make_default_descriptor_entry(choice_type)
+	var/datum/descriptor_choice/choice = DESCRIPTOR_CHOICE(choice_type)
+	var/default_descriptor = get_default_descriptor_for_choice(choice)
+	if(!default_descriptor)
+		return null
+	var/datum/descriptor_entry/entry = new /datum/descriptor_entry()
+	entry.set_values(choice_type, default_descriptor)
+	return entry
+
+/datum/preferences/proc/get_or_create_descriptor_entry_for_choice(choice_type)
+	var/datum/descriptor_entry/entry = get_descriptor_entry_for_choice(choice_type)
+	if(entry)
+		return entry
+	entry = make_default_descriptor_entry(choice_type)
+	if(entry)
+		descriptor_entries += entry
+	return entry
+
 /datum/preferences/proc/validate_descriptors()
+	descriptor_entries = SANITIZE_LIST(descriptor_entries)
+	listclearnulls(descriptor_entries)
+	if(!pref_species)
+		return
 	for(var/choice_type in pref_species.descriptor_choices)
 		var/datum/descriptor_choice/choice = DESCRIPTOR_CHOICE(choice_type)
+		if(!choice)
+			continue
 		var/datum/descriptor_entry/entry = get_descriptor_entry_for_choice(choice_type)
 		if(entry)
 			continue
-		entry = new /datum/descriptor_entry()
-		if(choice.default_descriptor)
-			entry.set_values(choice_type, choice.default_descriptor)
-		else
-			entry.set_values(choice_type, pick(choice.descriptors))
-		descriptor_entries += entry
+		entry = make_default_descriptor_entry(choice_type)
+		if(entry)
+			descriptor_entries += entry
 
 	for(var/datum/descriptor_entry/entry as anything in descriptor_entries)
 		var/datum/descriptor_choice/choice = DESCRIPTOR_CHOICE(entry.descriptor_choice_type)
+		if(!choice)
+			descriptor_entries -= entry
+			continue
 		if(entry.descriptor_type == null || !(entry.descriptor_type in choice.descriptors))
-			if(choice.default_descriptor)
-				entry.descriptor_type = choice.default_descriptor
-			else
-				entry.descriptor_type = pick(choice.descriptors)
+			entry.descriptor_type = get_default_descriptor_for_choice(choice)
 	for(var/i in 1 to CUSTOM_DESCRIPTOR_AMOUNT)
 		if(length(custom_descriptors) >= i)
 			continue
@@ -32,13 +62,9 @@
 	descriptor_entries = list()
 	custom_descriptors = list()
 	for(var/choice_type in pref_species.descriptor_choices)
-		var/datum/descriptor_choice/choice = DESCRIPTOR_CHOICE(choice_type)
-		var/datum/descriptor_entry/entry = new /datum/descriptor_entry()
-		if(choice.default_descriptor)
-			entry.set_values(choice_type, choice.default_descriptor)
-		else
-			entry.set_values(choice_type, pick(choice.descriptors))
-		descriptor_entries += entry
+		var/datum/descriptor_entry/entry = make_default_descriptor_entry(choice_type)
+		if(entry)
+			descriptor_entries += entry
 	for(var/i in 1 to CUSTOM_DESCRIPTOR_AMOUNT)
 		var/datum/custom_descriptor_entry/custom_entry = new /datum/custom_descriptor_entry()
 		custom_descriptors += custom_entry
@@ -61,7 +87,9 @@
 			if(!picked_descriptor_name)
 				return
 			var/picked_type = picklist[picked_descriptor_name]
-			var/datum/descriptor_entry/entry = get_descriptor_entry_for_choice(choice_type)
+			var/datum/descriptor_entry/entry = get_or_create_descriptor_entry_for_choice(choice_type)
+			if(!entry)
+				return
 			entry.descriptor_type = picked_type
 		if("custom_descriptor_prefix")
 			var/static/list/translation = CUSTOM_PREFIX_TRANSLATION_LIST
@@ -118,6 +146,7 @@
 	return dat
 
 /datum/preferences/proc/show_descriptors_ui(mob/user)
+	validate_descriptors()
 	var/list/dat = list()
 	dat += print_descriptors_page()
 	var/datum/browser/popup = new(user, "descriptors_customization", "<div align='center'>Describe myself</div>", 350, 510)
@@ -139,6 +168,7 @@
 	return null
 
 /datum/preferences/proc/apply_descriptors(mob/living/character)
+	validate_descriptors()
 	character.clear_mob_descriptors()
 	for(var/choice_type in pref_species.descriptor_choices)
 		var/datum/descriptor_entry/entry = get_descriptor_entry_for_choice(choice_type)

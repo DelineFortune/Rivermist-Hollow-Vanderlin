@@ -245,18 +245,20 @@
 		//Drunkenness
 		var/drunk_msg
 		switch(drunkenness)
-			if(11 to 21)
-				drunk_msg = span_tinynoticeital("[P[THEY]] look[pl] slightly flushed.")
+			if(3 to 11)
+				drunk_msg = span_tinynoticeital("[P[THEYRE]] tipsy.")
+			if(11.01 to 21)
+				drunk_msg = span_tinynoticeital("[P[THEY]] look[pl] a little drunk.")
 			if(21.01 to 41) //.01s are used in case drunkenness ends up to be a small decimal
-				drunk_msg = span_tinynotice("[P[THEY]] look[pl] flushed.")
+				drunk_msg = span_tinynotice("[P[THEYRE]] visibly drunk.")
 			if(41.01 to 51)
-				drunk_msg = span_smallnotice("[P[THEY]] look[pl] quite flushed and [P[THEIR]] breath smells of ale.")
+				drunk_msg = span_smallnotice("[P[THEYRE]] drunk, flushed, and [P[THEIR]] breath smells of ale.")
 			if(51.01 to 61)
 				drunk_msg = span_notice("[P[THEY]] look[pl] very flushed, with breath reeking of ale.")
 			if(61.01 to 91)
-				drunk_msg = span_boldnotice("[P[THEY]] look[pl] like a drunken mess.")
+				drunk_msg = span_boldnotice("[P[THEYRE]] a drunken mess.")
 			if(91.01 to INFINITY)
-				drunk_msg = span_bignotice(html_tag("B", "[P[THEYRE]] a shitfaced, slobbering wreck."))
+				drunk_msg = span_bignotice(html_tag("B", "[P[THEYRE]] completely shitfaced."))
 		if(drunk_msg)
 			. += drunk_msg
 		// Closed eyes

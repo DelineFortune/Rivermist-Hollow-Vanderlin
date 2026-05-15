@@ -23,7 +23,10 @@
 	adding_new_zlevel = TRUE
 	var/new_z = z_list.len + 1
 	if (world.maxz < new_z)
-		world.incrementMaxZ()
+		if(!world.incrementMaxZ())
+			adding_new_zlevel = FALSE
+			stack_trace("Unable to allocate z-level [new_z] for [name].")
+			return null
 		CHECK_TICK
 	// TODO: sleep here if the Z level needs to be cleared
 	var/datum/space_level/S = new z_type(new_z, name, traits)

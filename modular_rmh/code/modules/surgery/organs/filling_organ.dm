@@ -131,9 +131,12 @@
 		if(world.time > last_damagespill_alert + 30 SECONDS)
 			last_damagespill_alert = world.time
 			owner.visible_message(span_info("[owner]'s [pick(altnames)] can not hold all of the liquids in anymore and spill some of it's contents!"),span_info("My [pick(altnames)] can not hold all of the liquids in anymore and spill some of it's contents!!"),span_unconscious("I hear a splash."))
-		var/turf/ownerloc = owner.loc
-		ownerloc.add_liquid_from_reagents(reagents, amount = reagents.maximum_volume-reagents.total_volume+15)
-		reagents.remove_all(reagents.maximum_volume-reagents.total_volume+15)
+		var/turf/ownerloc = get_turf(owner)
+		var/overflow_amount = reagents.total_volume - reagents.maximum_volume
+		var/spill_amount = min(reagents.total_volume, overflow_amount + 15)
+		if(ownerloc && spill_amount > 0)
+			ownerloc.add_liquid_from_reagents(reagents, amount = spill_amount)
+			reagents.remove_all(spill_amount)
 
 	// modify nutrition to generate reagents
 	if(istype(src, /obj/item/organ/genitals/filling_organ/vagina)) //generate lube from arousal

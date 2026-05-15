@@ -41,6 +41,7 @@
 		/datum/mob_descriptor/testicles,
 		/datum/mob_descriptor/breasts,
 		/datum/mob_descriptor/vagina,
+		/datum/mob_descriptor/butt,
 		///datum/mob_descriptor/defiant,
 		)
 

@@ -79,15 +79,22 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	// We can runtime before config is initialized because BYOND initialize objs/map before a bunch of other stuff happens.
 	// This is a bunch of workaround code for that. Hooray!
-	var/configured_error_cooldown
-	var/configured_error_limit
-	var/configured_error_silence_time
-	if(config && config.entries)
-		configured_error_cooldown = CONFIG_GET(number/error_cooldown)
-		configured_error_limit = CONFIG_GET(number/error_limit)
-		configured_error_silence_time = CONFIG_GET(number/error_silence_time)
-	else
-		var/datum/config_entry/CE = /datum/config_entry/number/error_cooldown
+	var/datum/config_entry/CE = /datum/config_entry/number/error_cooldown
+	var/configured_error_cooldown = initial(CE.config_entry_value)
+	CE = /datum/config_entry/number/error_limit
+	var/configured_error_limit = initial(CE.config_entry_value)
+	CE = /datum/config_entry/number/error_silence_time
+	var/configured_error_silence_time = initial(CE.config_entry_value)
+
+	try
+		var/datum/controller/configuration/config_controller = config
+		if(config_controller?.entries)
+			configured_error_cooldown = config_controller.Get(/datum/config_entry/number/error_cooldown)
+			configured_error_limit = config_controller.Get(/datum/config_entry/number/error_limit)
+			configured_error_silence_time = config_controller.Get(/datum/config_entry/number/error_silence_time)
+	catch
+		// If the config controller is already being torn down, keep logging the original runtime with defaults.
+		CE = /datum/config_entry/number/error_cooldown
 		configured_error_cooldown = initial(CE.config_entry_value)
 		CE = /datum/config_entry/number/error_limit
 		configured_error_limit = initial(CE.config_entry_value)

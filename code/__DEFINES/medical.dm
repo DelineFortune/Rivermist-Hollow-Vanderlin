@@ -65,6 +65,9 @@
 #define BODYPART_FEATURE_LEGWEAR "legwear"
 #define BODYPART_FEATURE_BODY_HAIR "bodyhair"
 #define BODYPART_FEATURE_PUBIC_HAIR "pubichair"
+#define BODYPART_FEATURE_BLUSH "blush"
+#define BODYPART_FEATURE_TONGUE_EMOTE "tongue_emote"
+#define BODYPART_FEATURE_CRY_EMOTE "cry_emote"
 
 #define HAIRINESS_SHAVED 1
 #define HAIRINESS_STUBBLE 2

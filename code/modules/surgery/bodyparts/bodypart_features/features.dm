@@ -92,3 +92,122 @@
 	accessory_colors = COLOR_RED
 	accessory_type = /datum/sprite_accessory/brand/vampire_seal
 
+#define DRUNK_BLUSH_THRESHOLD 41
+
+/mob/living/carbon/human
+	var/tmp/list/visual_emote_overlay_expiries
+	var/tmp/list/visual_emote_overlays
+
+/mob/living/carbon/human/proc/show_visual_emote_overlay(datum/bodypart_feature/visual_emote/overlay_typepath, duration)
+	if(!ispath(overlay_typepath, /datum/bodypart_feature/visual_emote))
+		return
+	var/feature_slot = overlay_typepath::feature_slot
+	if(duration)
+		LAZYINITLIST(visual_emote_overlay_expiries)
+		var/expires_at = world.time + duration
+		var/current_expiry = LAZYACCESS(visual_emote_overlay_expiries, feature_slot)
+		if(!current_expiry || current_expiry < expires_at)
+			visual_emote_overlay_expiries[feature_slot] = expires_at
+		addtimer(CALLBACK(src, PROC_REF(expire_visual_emote_overlay), overlay_typepath, expires_at), duration)
+	return ensure_visual_emote_overlay(overlay_typepath)
+
+/mob/living/carbon/human/proc/ensure_visual_emote_overlay(datum/bodypart_feature/visual_emote/overlay_typepath)
+	var/feature_slot = overlay_typepath::feature_slot
+	var/mutable_appearance/current_overlay = LAZYACCESS(visual_emote_overlays, feature_slot)
+	if(current_overlay)
+		return current_overlay
+	var/mutable_appearance/new_overlay = build_visual_emote_overlay(overlay_typepath)
+	if(!new_overlay)
+		return
+	LAZYSET(visual_emote_overlays, feature_slot, new_overlay)
+	add_overlay(new_overlay)
+	return new_overlay
+
+/mob/living/carbon/human/proc/expire_visual_emote_overlay(datum/bodypart_feature/visual_emote/overlay_typepath, expected_expiry)
+	var/feature_slot = overlay_typepath::feature_slot
+	if(LAZYACCESS(visual_emote_overlay_expiries, feature_slot) > expected_expiry)
+		return
+	visual_emote_overlay_expiries -= feature_slot
+	if(!length(visual_emote_overlay_expiries))
+		visual_emote_overlay_expiries = null
+	if(feature_slot == BODYPART_FEATURE_BLUSH && should_have_drunk_blush_overlay())
+		return
+	remove_visual_emote_overlay(feature_slot)
+
+/mob/living/carbon/human/proc/remove_visual_emote_overlay(feature_slot)
+	var/mutable_appearance/overlay = LAZYACCESS(visual_emote_overlays, feature_slot)
+	if(!overlay)
+		return
+	cut_overlay(overlay)
+	visual_emote_overlays -= feature_slot
+	if(!length(visual_emote_overlays))
+		visual_emote_overlays = null
+
+/mob/living/carbon/human/proc/has_temporary_visual_emote_overlay(feature_slot)
+	var/expires_at = LAZYACCESS(visual_emote_overlay_expiries, feature_slot)
+	return expires_at && expires_at > world.time
+
+/mob/living/carbon/human/proc/should_have_drunk_blush_overlay()
+	return drunkenness >= DRUNK_BLUSH_THRESHOLD && stat != DEAD
+
+/mob/living/carbon/human/proc/update_drunk_blush_overlay()
+	if(should_have_drunk_blush_overlay())
+		ensure_visual_emote_overlay(/datum/bodypart_feature/visual_emote/blush)
+	else if(!has_temporary_visual_emote_overlay(BODYPART_FEATURE_BLUSH))
+		remove_visual_emote_overlay(BODYPART_FEATURE_BLUSH)
+
+/mob/living/carbon/human/proc/show_visual_emote_animation(icon_state, duration)
+	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', src, icon_state, BODY_FRONT_LAYER)
+	flick_overlay(emote_animation, GLOB.clients, duration)
+
+#undef DRUNK_BLUSH_THRESHOLD
+
+/datum/bodypart_feature/visual_emote
+	name = "Visual Emote"
+	body_zone = BODY_ZONE_HEAD
+	var/icon_state
+	var/draw_color
+	var/draw_alpha = 255
+
+/mob/living/carbon/human/proc/build_visual_emote_overlay(datum/bodypart_feature/visual_emote/overlay_typepath)
+	if(!get_bodypart(overlay_typepath::body_zone))
+		return
+	var/mutable_appearance/emote_overlay = mutable_appearance('icons/mob/human/emote_visuals.dmi', overlay_typepath::icon_state, BODY_FRONT_LAYER)
+	emote_overlay.color = overlay_typepath::draw_color
+	emote_overlay.alpha = overlay_typepath::draw_alpha
+
+	var/datum/species/species = dna?.species
+	var/list/offsets
+	if(species)
+		var/use_female_sprites = MALE_SPRITES
+		if(species.sexes)
+			if(gender == FEMALE && !species.swap_female_clothes || gender == MALE && species.swap_male_clothes || gender == MALE && species.swap_male_clothes_but_not_offsets)
+				use_female_sprites = FEMALE_SPRITES
+		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
+			offsets = species.offset_features_f
+		else
+			offsets = species.offset_features_m
+	if(LAZYACCESS(offsets, OFFSET_FACE))
+		emote_overlay.pixel_x += offsets[OFFSET_FACE][1]
+		emote_overlay.pixel_y += offsets[OFFSET_FACE][2]
+	return emote_overlay
+
+/datum/bodypart_feature/visual_emote/tongue
+	name = "Tongue"
+	feature_slot = BODYPART_FEATURE_TONGUE_EMOTE
+	icon_state = "tongue"
+	draw_color = "#ff6ea0"
+
+/datum/bodypart_feature/visual_emote/blush
+	name = "Blush"
+	feature_slot = BODYPART_FEATURE_BLUSH
+	icon_state = "blush"
+	draw_color = "#DE5D83"
+	draw_alpha = 200
+
+/datum/bodypart_feature/visual_emote/cry
+	name = "Tears"
+	feature_slot = BODYPART_FEATURE_CRY_EMOTE
+	icon_state = "tears"
+	draw_color = "#008B8B"
+

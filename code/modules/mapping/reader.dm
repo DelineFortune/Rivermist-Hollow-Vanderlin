@@ -462,7 +462,8 @@
 	var/z_threshold = world.maxz
 	if(z_upper_parsed > z_threshold && crop_map)
 		for(var/i in z_threshold + 1 to z_upper_parsed) //create a new z_level if needed
-			world.incrementMaxZ()
+			if(!world.incrementMaxZ())
+				return FALSE
 		if(!no_changeturf)
 			WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 
@@ -578,7 +579,8 @@
 				continue
 			else
 				while (zcrd > world.maxz) //create a new z_level if needed
-					world.incrementMaxZ()
+					if(!world.incrementMaxZ())
+						return FALSE
 			if(!no_changeturf)
 				WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 				no_afterchange = TRUE

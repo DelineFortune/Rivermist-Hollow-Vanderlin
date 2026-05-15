@@ -1,3 +1,7 @@
+#define CONTROL_RING_VIEW_RANGE 9
+#define CONTROL_RING_RADIAL_LIFETIME 4 SECONDS
+#define CONTROL_RING_RADIAL_RADIUS 48
+
 /obj/item/clothing/ring/slave_control
 	name = "Slave control ring"
 	desc = "An ominous-looking ring with arcane engravings. \n Click with the middle mouse button to invoke a command."
@@ -7,56 +11,206 @@
 	var/list/phrases_list = list()
 	var/ring_bound = FALSE
 	var/obj/item/clothing/neck/slave_collar/bound_collar
+	var/datum/weakref/worn_owner_ref
+	var/list/radial_viewers = list()
+
+/obj/item/clothing/ring/slave_control/Destroy()
+	clear_worn_owner()
+	clear_bound_collar()
+	radial_viewers = null
+	return ..()
+
+/obj/item/clothing/ring/slave_control/equipped(mob/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_RING)
+		set_worn_owner(user)
+	else
+		clear_worn_owner()
+
+/obj/item/clothing/ring/slave_control/dropped(mob/user, silent)
+	. = ..()
+	clear_worn_owner()
+
+/obj/item/clothing/ring/slave_control/proc/set_worn_owner(mob/user)
+	clear_worn_owner()
+	if(!isliving(user))
+		return
+	worn_owner_ref = WEAKREF(user)
+	RegisterSignal(user, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(on_worn_owner_unequipped))
+	RegisterSignal(user, COMSIG_KB_LIVING_VIEW_PET_COMMANDS, PROC_REF(on_view_command_key_down))
+	RegisterSignal(user, DEACTIVATE_KEYBIND(COMSIG_KB_LIVING_VIEW_PET_COMMANDS), PROC_REF(on_view_command_key_up))
+
+/obj/item/clothing/ring/slave_control/proc/clear_worn_owner()
+	var/mob/living/worn_owner = worn_owner_ref?.resolve()
+	if(worn_owner)
+		UnregisterSignal(worn_owner, list(
+			COMSIG_MOB_UNEQUIPPED_ITEM,
+			COMSIG_KB_LIVING_VIEW_PET_COMMANDS,
+			DEACTIVATE_KEYBIND(COMSIG_KB_LIVING_VIEW_PET_COMMANDS),
+			COMSIG_USER_MOUSE_ENTERED,
+		))
+		radial_viewers -= REF(worn_owner)
+	worn_owner_ref = null
+
+/obj/item/clothing/ring/slave_control/proc/on_worn_owner_unequipped(mob/living/wearer, obj/item/removed_item)
+	SIGNAL_HANDLER
+	if(removed_item != src)
+		return
+	clear_worn_owner()
+
+/obj/item/clothing/ring/slave_control/proc/on_view_command_key_down(mob/living/wearer)
+	SIGNAL_HANDLER
+	if(!is_worn_by(wearer))
+		return
+	RegisterSignal(wearer, COMSIG_USER_MOUSE_ENTERED, PROC_REF(on_worn_owner_mouse_hover))
+
+/obj/item/clothing/ring/slave_control/proc/on_view_command_key_up(mob/living/wearer)
+	SIGNAL_HANDLER
+	UnregisterSignal(wearer, COMSIG_USER_MOUSE_ENTERED)
+	radial_viewers -= REF(wearer)
+
+/obj/item/clothing/ring/slave_control/proc/on_worn_owner_mouse_hover(mob/living/wearer, atom/mouse_hovered)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/human/bearer = get_bound_collar_bearer()
+	if(mouse_hovered == bearer)
+		display_linked_collar_menu(wearer)
+		return
+	if(isliving(mouse_hovered))
+		radial_viewers -= REF(wearer)
+
+/obj/item/clothing/ring/slave_control/proc/can_use_control_ring(mob/user, show_feedback = FALSE)
+	if(!ismob(user))
+		return FALSE
+	if(user.is_holding(src))
+		return TRUE
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.get_item_by_slot(ITEM_SLOT_RING) == src)
+			return TRUE
+	if(show_feedback)
+		to_chat(user, span_warning("You need to hold or wear the ring to use it."))
+	return FALSE
+
+/obj/item/clothing/ring/slave_control/proc/is_worn_by(mob/user)
+	if(!ishuman(user))
+		return FALSE
+	var/mob/living/carbon/human/human_user = user
+	return human_user.get_item_by_slot(ITEM_SLOT_RING) == src
+
+/obj/item/clothing/ring/slave_control/proc/get_bound_collar_bearer()
+	if(!bound_collar || QDELETED(bound_collar) || bound_collar.bound_ring != src)
+		return null
+	return bound_collar.get_worn_bearer()
+
+/obj/item/clothing/ring/slave_control/proc/clear_bound_collar(clear_collar = TRUE)
+	var/obj/item/clothing/neck/slave_collar/old_collar = bound_collar
+	bound_collar = null
+	ring_bound = FALSE
+	phrases_list = list()
+	if(clear_collar && old_collar?.bound_ring == src)
+		old_collar.bound_ring = null
+		old_collar.collar_bound = FALSE
 
 /obj/item/clothing/ring/slave_control/attack(mob/living/M, mob/living/user, def_zone)
 	. = ..()
+	if(!can_use_control_ring(user, TRUE))
+		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/I = H.wear_neck
 		if(istype(I, /obj/item/clothing/neck/slave_collar))
 			var/obj/item/clothing/neck/slave_collar/sc = I
-			sc.bind_collar(src, user, TRUE)
+			sc.bind_collar(src, user, istype(src, /obj/item/clothing/ring/slave_control/master))
 
 /obj/item/clothing/ring/slave_control/attackby(obj/item/I, mob/living/user)
 	if(!ismob(user))
 		return
 	if(istype(I, /obj/item/clothing/neck/slave_collar))
 		var/obj/item/clothing/neck/slave_collar/sc = I
-		sc.bind_collar(src, user, FALSE)
+		sc.bind_collar(src, user, istype(src, /obj/item/clothing/ring/slave_control/master))
 		return
 	return ..()
 
 /// Opens a radial menu of slave collar commands when middle-clicked.
 /obj/item/clothing/ring/slave_control/MiddleClick(mob/user, params)
+	if(!can_use_control_ring(user, TRUE))
+		return
 	if(!bound_collar)
+		to_chat(user, span_warning("The ring has no collar bound."))
 		return ..()
 	invoke_collar_command_radial(user, bound_collar)
 	return
 
 /// Shared radial menu for invoking commands on a slave collar.
-/// Used by both the ring's MiddleClick and the leash's MiddleClick.
-/obj/item/clothing/ring/slave_control/proc/invoke_collar_command_radial(mob/user, obj/item/clothing/neck/slave_collar/collar)
-	if(!collar || !collar.phrases_list)
+/// Used by direct ring interaction and the shift-hover linked slave menu.
+/obj/item/clothing/ring/slave_control/proc/invoke_collar_command_radial(mob/user, obj/item/clothing/neck/slave_collar/collar, atom/menu_anchor = null, datum/callback/custom_check = null, radius = null, button_animation_flags = BUTTON_SLIDE_IN, display_close_button = TRUE)
+	if(!can_use_control_ring(user, TRUE))
+		return
+	if(!collar || QDELETED(collar) || !collar.phrases_list)
 		to_chat(user, span_warning("The ring has no collar bound."))
 		return
+	var/list/command_options = collar.get_radial_command_options()
 	var/list/choices = list()
-	for(var/translation_key in GLOB.slave_phrases_translations)
-		var/display_name = GLOB.slave_phrases_translations[translation_key]
+	for(var/display_name in command_options)
 		choices[display_name] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_slice")
-	var/chosen = show_radial_menu(user, src, choices, tooltips = TRUE, require_near = FALSE)
+	var/chosen = show_radial_menu(user, menu_anchor || src, choices, radius = radius, custom_check = custom_check, tooltips = TRUE, require_near = FALSE, button_animation_flags = button_animation_flags, display_close_button = display_close_button)
 	if(!chosen)
 		return
-	var/internal_key = GLOB.reverse_slave_phrases_translations[chosen]
-	if(!internal_key || !collar.phrases_list[internal_key])
+	var/internal_key = command_options[chosen]
+	if(!internal_key)
 		return
-	if(collar.perform_command(normalize_slave_phrase(collar.phrases_list[internal_key])))
+	if(collar.perform_command(internal_key, user, src, "ring"))
 		to_chat(user, "<font size='1' color='grey'>The ring vibrates imperceptibly — the command was a success.</font>")
 	else
 		to_chat(user, "<font size='1' color='red'>The ring lies still — command failed to perform.</font>")
 
+/obj/item/clothing/ring/slave_control/proc/display_linked_collar_menu(mob/living/wearer)
+	if(!is_worn_by(wearer) || wearer.stat != CONSCIOUS)
+		return
+	if(radial_viewers[REF(wearer)])
+		return
+	var/mob/living/carbon/human/bearer = get_bound_collar_bearer()
+	if(!bearer || !can_see(wearer, bearer, CONTROL_RING_VIEW_RANGE))
+		return
+	INVOKE_ASYNC(src, PROC_REF(display_linked_collar_radial), wearer)
+
+/obj/item/clothing/ring/slave_control/proc/display_linked_collar_radial(mob/living/wearer)
+	var/mob/living/carbon/human/bearer = get_bound_collar_bearer()
+	if(!bearer)
+		return
+	radial_viewers[REF(wearer)] = world.time + CONTROL_RING_RADIAL_LIFETIME
+	invoke_collar_command_radial(
+		wearer,
+		bound_collar,
+		menu_anchor = bearer,
+		custom_check = CALLBACK(src, PROC_REF(check_radial_viewer), wearer),
+		radius = CONTROL_RING_RADIAL_RADIUS,
+		button_animation_flags = BUTTON_FADE_IN | BUTTON_FADE_OUT,
+		display_close_button = FALSE,
+	)
+	radial_viewers -= REF(wearer)
+
+/obj/item/clothing/ring/slave_control/proc/check_radial_viewer(mob/living/wearer)
+	if(QDELETED(wearer) || !radial_viewers[REF(wearer)])
+		return FALSE
+	if(world.time > radial_viewers[REF(wearer)])
+		return FALSE
+	if(!is_worn_by(wearer) || wearer.stat != CONSCIOUS)
+		return FALSE
+	var/mob/living/carbon/human/bearer = get_bound_collar_bearer()
+	if(!bearer || !can_see(wearer, bearer, CONTROL_RING_VIEW_RANGE))
+		return FALSE
+	return TRUE
+
 /obj/item/clothing/ring/slave_control/examine(mob/user)
 	. = ..()
-	. += span_userdanger("You notice three engraved phrases on the ring:")
+	if(bound_collar && !QDELETED(bound_collar))
+		. += span_notice("It is bound to [bound_collar.get_control_display_name()].")
+	else
+		. += span_warning("It is not bound to a collar.")
+	if(!length(phrases_list))
+		return
+	. += span_userdanger("You notice engraved phrases on the ring:")
 	for(var/el in phrases_list)
 		. += "<br><b>[GLOB.slave_phrases_translations[el]]:</b> \"[phrases_list[el]]\""
 
@@ -76,13 +230,50 @@
 
 /obj/item/clothing/ring/slave_control/master/attack_self(mob/user, params)
 	. = ..()
-	var/command_input = browser_input_list(user, "CHOOSE YOUR SERVANT", "SERVANTS", GLOB.slave_collars, null)
+	if(!can_use_control_ring(user, TRUE))
+		return
+	var/list/collar_choices = get_slave_collar_choices()
+	if(!length(collar_choices))
+		to_chat(user, span_warning("No active collars answer the ring."))
+		return
+	var/command_input = browser_input_list(user, "CHOOSE YOUR SERVANT", "SERVANTS", collar_choices, null)
 	if(command_input)
-		var/obj/item/clothing/neck/slave_collar/collar = GLOB.slave_collars[command_input]
-		if(collar.bind_collar(src, user, TRUE))
+		var/datum/weakref/collar_ref = collar_choices[command_input]
+		var/obj/item/clothing/neck/slave_collar/collar = collar_ref?.resolve()
+		if(istype(collar) && collar.bind_collar(src, user, TRUE))
 			to_chat(user, "<font size='1' color='grey'>The ring vibrates imperceptably - the linking was a success.</font>")
 		else
 			to_chat(user, "<font size='1' color='red'>The ring lies still - the linking failed to perform.</font>")
+
+/proc/get_master_slave_control_ring(mob/living/user)
+	if(!ishuman(user))
+		return null
+	var/mob/living/carbon/human/human_user = user
+	var/obj/item/clothing/ring/slave_control/master/worn_ring = human_user.get_item_by_slot(ITEM_SLOT_RING)
+	if(istype(worn_ring))
+		return worn_ring
+	for(var/obj/item/held_item as anything in human_user.held_items)
+		if(istype(held_item, /obj/item/clothing/ring/slave_control/master))
+			return held_item
+	return null
+
+/mob/living/carbon/human/AltClick(mob/user, list/modifiers)
+	. = ..()
+	if(!isliving(user))
+		return
+	var/mob/living/living_user = user
+	var/obj/item/clothing/neck/slave_collar/collar = wear_neck
+	if(!istype(collar))
+		return
+	var/obj/item/clothing/ring/slave_control/master/ring = get_master_slave_control_ring(living_user)
+	if(!ring)
+		return
+	if(!can_see(living_user, src, CONTROL_RING_VIEW_RANGE))
+		to_chat(living_user, span_warning("The collar is too far away for the ring to bind."))
+		return
+	if(!ring.can_use_control_ring(living_user, TRUE))
+		return
+	collar.bind_collar(ring, living_user, TRUE)
 
 /datum/anvil_recipe/slave_control_master
 	name = "Master Slaver ring"
@@ -92,3 +283,7 @@
 	created_item = /obj/item/clothing/ring/slave_control/master
 	craftdiff = 6
 	i_type = "Valuables"
+
+#undef CONTROL_RING_VIEW_RANGE
+#undef CONTROL_RING_RADIAL_LIFETIME
+#undef CONTROL_RING_RADIAL_RADIUS

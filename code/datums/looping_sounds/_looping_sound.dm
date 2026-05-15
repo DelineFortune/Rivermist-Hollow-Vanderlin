@@ -120,6 +120,7 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 	stop(TRUE)
 	if(channel)
 		SSsounds.free_datum_channels(src)
+	thingshearing?.Cut()
 	return ..()
 
 /**
@@ -144,12 +145,22 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
  * * null_parent - Whether or not we should set the parent to null (useful when destroying the `looping_sound` itself). Defaults to FALSE.
  */
 /datum/looping_sound/proc/stop(null_parent)
-	if(!stopped)
-		stopped = TRUE
+	if(stopped)
+		if(timerid)
+			deltimer(timerid)
+			timerid = null
 		if(null_parent)
 			set_parent(null)
-		on_stop()
-		loop_started = FALSE
+		return
+
+	if(timerid)
+		deltimer(timerid)
+		timerid = null
+	stopped = TRUE
+	if(null_parent)
+		set_parent(null)
+	on_stop()
+	loop_started = FALSE
 //		if(!timerid)
 //			return
 //		deltimer(timerid)
@@ -237,13 +248,19 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 	if(start_sound)
 		play(start_sound, start_volume)
 		start_wait = start_length
-	addtimer(CALLBACK(src, PROC_REF(begin_loop)), start_wait, TIMER_CLIENT_TIME)
+	if(timerid)
+		deltimer(timerid)
+	timerid = addtimer(CALLBACK(src, PROC_REF(begin_loop)), start_wait, TIMER_CLIENT_TIME | TIMER_STOPPABLE)
 	if(persistent_loop && !(src in GLOB.persistent_sound_loops))
 		GLOB.persistent_sound_loops |= src
 
 /// The proc that handles starting the actual core sound loop.
 /datum/looping_sound/proc/begin_loop()
-	sound_loop()
+	timerid = null
+	if(stopped)
+		return
+	if(sound_loop())
+		return
 	START_PROCESSING(SSsoundloopers, src)
 
 /// Simple proc that's executed when the looping sound is stopped, so that the `end_sound` can be played, if there's one.

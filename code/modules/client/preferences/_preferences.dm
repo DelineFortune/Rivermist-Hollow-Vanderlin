@@ -224,11 +224,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/list/quirk_customizations = list() // Maps quirk_type -> customization_value
 	var/list/quirk_extra_customizations = list() // Maps quirk_type -> list(key = value, ...)
 
-	/// Family system
-	var/family = FAMILY_NONE
-	var/setspouse = ""
-	var/gender_choice = ANY_GENDER
-
 	var/crt = FALSE
 
 	var/list/customizer_entries = list()
@@ -860,9 +855,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			if('age' in data) updateField('char-age', data.age || '');
 			if('domhand' in data) updateField('char-domhand', data.domhand || '');
 			if('pronouns' in data) updateField('char-pronouns', data.pronouns || '');
-			if('family' in data) updateField('char-family', data.family || 'None');
-			if('genderpref' in data) updateField('char-genderpref', data.genderpref || 'Any');
-			if('spouse' in data) updateField('char-spouse', data.spouse || 'None');
 			if('voicetype' in data) updateField('char-voicetype', data.voicetype || '');
 			if('accent' in data) updateField('char-accent', data.accent || '');
 			if('moan' in data) updateField('char-moan', data.moan || '');
@@ -1123,12 +1115,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		params["pronouns"] = pronouns
 	if(update_all || ("gender" in fields_to_update))
 		params["gender"] = gender == MALE ? "Masc" : "Fem"
-	if(update_all || ("family" in fields_to_update))
-		params["family"] = family ? family : "None"
-	if(update_all || ("genderpref" in fields_to_update))
-		params["genderpref"] = gender_choice ? gender_choice : "Any"
-	if(update_all || ("spouse" in fields_to_update))
-		params["spouse"] = setspouse ? setspouse : "None"
 	if(update_all || ("voicetype" in fields_to_update))
 		params["voicetype"] = voice_type
 	if(update_all || ("accent" in fields_to_update))
@@ -2775,40 +2761,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						to_chat(user, span_warning("This will be applied on your next game join."))
 						to_chat(user, span_warning("You may switch your character and choose any role, if you don't meet the requirements (if any are specified) it won't be applied"))
 
-				if("family")
-					var/list/famtree_options_list = list(FAMILY_NONE, FAMILY_PARTIAL, FAMILY_NEWLYWED, FAMILY_FULL, "EXPLAIN THIS TO ME")
-					var/new_family = tgui_input_list(user, "SELECT YOUR HERO'S BOND", "BLOOD IS THICKER THAN WATER", famtree_options_list, family)
-					if(new_family == "EXPLAIN THIS TO ME")
-						to_chat(user, span_purple("\
-						--[FAMILY_NONE] will disable this feature.<br>\
-						--[FAMILY_PARTIAL] will assign you as a progeny of a local house based on your species. This feature will instead assign you as a aunt or uncle to a local family if your older than ADULT.<br>\
-						--[FAMILY_NEWLYWED] assigns you a spouse without adding you to a family. Setspouse will prioritize pairing you with another newlywed with the same name as your setspouse.<br>\
-						--[FAMILY_FULL] will attempt to assign you as matriarch or patriarch of one of the local houses of the kingdom/town. Setspouse will will prevent \
-						players with the setspouse = None from matching with you unless their name equals your setspouse."))
-
-					else if(new_family)
-						family = new_family
-				//Setspouse is part of the family subsystem. It will check existing families for this character and attempt to place you in this family.
-				if("setspouse")
-					var/newspouse = tgui_input_text(user, "INPUT THE IDENTITY OF ANOTHER HERO", "TIL DEATH DO US PART", max_length = MAX_MESSAGE_LEN)
-					if(newspouse)
-						setspouse = newspouse
-					else
-						setspouse = null
-				//Gender_choice is part of the family subsytem. It will check existing families members with the same preference of this character and attempt to place you in this family.
 				if("select_quirks")
 					open_quirk_menu(user)
-
-				if("gender_choice")
-					// If pronouns are neutral, lock to ANY_GENDER
-					if(pronouns == THEY_THEM || pronouns == IT_ITS)
-						to_chat(user, span_warning("With neutral pronouns, you may only choose [ANY_GENDER]."))
-						gender_choice = ANY_GENDER
-					else
-						var/list/gender_choice_option_list = list(ANY_GENDER, SAME_GENDER, DIFFERENT_GENDER)
-						var/new_gender_choice  = tgui_input_list(user, "SELECT YOUR HERO'S PREFERENCE", "TO LOVE AND TO CHERISH", gender_choice_option_list, gender_choice)
-						if(new_gender_choice)
-							gender_choice = new_gender_choice
 				if("alignment")
 					var/new_alignment = tgui_input_list(user, "SELECT YOUR HERO'S MORALITY", "CUT FROM THE SAME CLOTH", ALL_ALIGNMENTS_LIST, alignment)
 					if(new_alignment)
@@ -3666,8 +3620,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	character.domhand = domhand
 	character.set_patron(selected_patron)
-	character.familytree_pref = family
-	character.gender_choice_pref = gender_choice
 
 	if(smallclothes_preferences)
 		apply_smallclothes_preferences(character)
@@ -3686,7 +3638,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		character.cmode_music_override = combat_music.musicpath
 		character.cmode_music_override_name = combat_music.name
 		character.voice_color = voice_color
-		character.setspouse = setspouse
 		if(length(quirks))
 			// ???
 			apply_quirks_to_character(character)
@@ -3981,6 +3932,20 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		return loadout_2_hex
 	if (loadout3 && (item_path == loadout3.item_path) && loadout_3_hex)
 		return loadout_3_hex
+	if (loadout4 && (item_path == loadout4.item_path) && loadout_4_hex)
+		return loadout_4_hex
+	if (loadout5 && (item_path == loadout5.item_path) && loadout_5_hex)
+		return loadout_5_hex
+	if (loadout6 && (item_path == loadout6.item_path) && loadout_6_hex)
+		return loadout_6_hex
+	if (loadout7 && (item_path == loadout7.item_path) && loadout_7_hex)
+		return loadout_7_hex
+	if (loadout8 && (item_path == loadout8.item_path) && loadout_8_hex)
+		return loadout_8_hex
+	if (loadout9 && (item_path == loadout9.item_path) && loadout_9_hex)
+		return loadout_9_hex
+	if (loadout10 && (item_path == loadout10.item_path) && loadout_10_hex)
+		return loadout_10_hex
 
 	return FALSE
 

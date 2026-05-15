@@ -32,6 +32,7 @@
 
 	if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
 		adjust_bloodpool(3)
+	process_mortal_vitae_regen()
 
 	if (QDELETED(src))
 		return 0

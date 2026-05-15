@@ -171,6 +171,17 @@
 	key_third_person = "blushes"
 	message = "blushes."
 
+/mob/living/carbon/human/verb/emote_blush()
+	set name = "Blush"
+	set category = "Emotes.Silent"
+	emote("blush", intentional = TRUE)
+
+/datum/emote/living/blush/run_emote(mob/user, params, type_override, intentional, targetted)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		human_user.show_visual_emote_overlay(/datum/bodypart_feature/visual_emote/blush, 5.2 SECONDS)
+
 /datum/emote/living/breathgasp
 	key = "breathgasp"
 	key_third_person = "breathgasps"
@@ -1068,12 +1079,18 @@
 	key_third_person = "sighs"
 	message = "sighs."
 	message_muffled = "makes a muffled sigh."
-	emote_type = EMOTE_AUDIBLE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /mob/living/carbon/human/verb/emote_sigh()
 	set name = "Sigh"
 	set category = "Emotes.Noises"
 	emote("sigh", intentional = TRUE)
+
+/datum/emote/living/sigh/run_emote(mob/user, params, type_override, intentional, targetted)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		human_user.show_visual_emote_animation("sigh", 2 SECONDS)
 
 /datum/emote/living/snore
 	key = "snore"
@@ -1146,6 +1163,26 @@
 	emote_type = EMOTE_AUDIBLE
 
 // ............... T ..................
+/datum/emote/living/tongue
+	key = "tongue"
+	key_third_person = "tongues"
+	message = "sticks their tongue out."
+	emote_type = EMOTE_VISIBLE
+
+/mob/living/carbon/human/verb/emote_tongue()
+	set name = "Tongue"
+	set category = "Emotes.Silent"
+	emote("tongue", intentional = TRUE)
+
+/datum/emote/living/tongue/run_emote(mob/user, params, type_override, intentional, targetted)
+	var/mob/living/carbon/human/human_user = user
+	if(istype(human_user) && !human_user.getorganslot(ORGAN_SLOT_TONGUE))
+		to_chat(human_user, span_warning("You don't have a tongue!"))
+		return
+	. = ..()
+	if(. && istype(human_user))
+		human_user.show_visual_emote_overlay(/datum/bodypart_feature/visual_emote/tongue, 5.2 SECONDS)
+
 /datum/emote/living/tremble
 	key = "tremble"
 	key_third_person = "trembles"

@@ -35,8 +35,8 @@
 /obj/item/organ/snout/synth
 	name = "synthetic snout"
 
-/obj/item/organ/snout/akula
-	name = "axian snout"
+/obj/item/organ/snout/lamia
+	name = "lamian snout"
 	accessory_type = /datum/sprite_accessory/snout/sergal
 
 /obj/item/organ/snout/lizard/psy_vault_guard

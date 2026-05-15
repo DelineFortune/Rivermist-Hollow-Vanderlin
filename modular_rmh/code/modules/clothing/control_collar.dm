@@ -57,6 +57,23 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 	text = trim(text)
 	return text
 
+/proc/get_slave_collar_choices()
+	var/list/choices = list()
+	var/list/stale_keys = list()
+	for(var/collar_key in GLOB.slave_collars)
+		var/datum/weakref/collar_ref = GLOB.slave_collars[collar_key]
+		var/obj/item/clothing/neck/slave_collar/collar = collar_ref?.resolve()
+		if(!istype(collar) || !collar.get_worn_bearer())
+			stale_keys += collar_key
+			continue
+		var/display_name = collar.get_control_display_name()
+		if(display_name in choices)
+			display_name = "[display_name] ([collar_key])"
+		choices[display_name] = collar_ref
+	for(var/stale_key in stale_keys)
+		GLOB.slave_collars.Remove(stale_key)
+	return choices
+
 // ---- Slave Collar ----
 
 /obj/item/clothing/neck/slave_collar
@@ -100,7 +117,7 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 	var/silenced = FALSE
 	/// The mob currently wearing this collar.
 	var/mob/living/carbon/human/bearer
-	/// Display name used as the key in GLOB.slave_collars.
+	/// Stable key used in GLOB.slave_collars.
 	var/list_name
 	COOLDOWN_DECLARE(collar_phrase_usage)
 
@@ -124,6 +141,10 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 	for(var/el in phrases_list)
 		phrases_list[el] = generate_slave_code()
 
+/obj/item/clothing/neck/slave_collar/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_pre_unequip))
+
 // ---- Equip / Drop / Destroy ----
 
 /obj/item/clothing/neck/slave_collar/equipped(mob/living/carbon/human/human)
@@ -133,12 +154,13 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 	var/mob/living/carbon/human/wearer = loc
 	if(!ismob(wearer) || wearer.wear_neck != src)
 		return
+	if(bearer && bearer != wearer)
+		cleanup_bearer()
 	RegisterSignal(human, COMSIG_MOVABLE_HEAR, PROC_REF(process_phrase), override = TRUE)
-	list_name = wearer.name
-	if(wearer.job)
-		list_name += " the [wearer.job]"
-	GLOB.slave_collars[list_name] = src
+	list_name = REF(src)
+	GLOB.slave_collars[list_name] = WEAKREF(src)
 	bearer = wearer
+	apply_collar_traits(wearer)
 
 /obj/item/clothing/neck/slave_collar/dropped(mob/user)
 	. = ..()
@@ -146,20 +168,102 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 
 /obj/item/clothing/neck/slave_collar/Destroy()
 	cleanup_bearer()
+	clear_bound_ring()
+	UnregisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP)
 	stuck = FALSE
 	return ..()
 
-/// Shared cleanup: unregister signals, remove from global list, clear silence.
+/// Shared cleanup: unregister signals, remove from global list, clear traits.
 /obj/item/clothing/neck/slave_collar/proc/cleanup_bearer()
 	if(!bearer)
 		return
 	GLOB.slave_collars.Remove(list_name)
 	UnregisterSignal(bearer, COMSIG_MOVABLE_HEAR)
-	// Clear silence if active.
 	if(silenced)
 		REMOVE_TRAIT(bearer, TRAIT_MUTE, "slave_collar")
 		silenced = FALSE
+	remove_collar_traits(bearer)
 	bearer = null
+
+/obj/item/clothing/neck/slave_collar/proc/apply_collar_traits(mob/living/carbon/human/wearer)
+	ADD_TRAIT(wearer, TRAIT_ANTIMAGIC, "slave_collar")
+	ADD_TRAIT(wearer, TRAIT_NO_SELF_MAGIC, "slave_collar")
+	wearer.update_action_buttons()
+
+/obj/item/clothing/neck/slave_collar/proc/remove_collar_traits(mob/living/carbon/human/wearer)
+	REMOVE_TRAIT(wearer, TRAIT_ANTIMAGIC, "slave_collar")
+	REMOVE_TRAIT(wearer, TRAIT_NO_SELF_MAGIC, "slave_collar")
+	wearer.update_action_buttons()
+
+/obj/item/clothing/neck/slave_collar/proc/get_worn_bearer()
+	var/mob/living/carbon/human/wearer = loc
+	if(istype(wearer) && wearer.wear_neck == src)
+		return wearer
+	return null
+
+/obj/item/clothing/neck/slave_collar/proc/get_control_display_name()
+	var/mob/living/carbon/human/wearer = get_worn_bearer()
+	var/display_name = wearer ? wearer.name : name
+	if(wearer?.job)
+		display_name += " the [wearer.job]"
+	var/list/state_text = list(stuck ? "locked" : "unlocked")
+	if(silenced)
+		state_text += "silenced"
+	var/state_description = jointext(state_text, ", ")
+	return "[display_name] ([state_description])"
+
+/obj/item/clothing/neck/slave_collar/proc/get_command_key_from_phrase(msg)
+	for(var/command_key in phrases_list)
+		if(normalize_slave_phrase(phrases_list[command_key]) == msg)
+			return command_key
+	return null
+
+/obj/item/clothing/neck/slave_collar/proc/get_radial_command_options()
+	var/list/options = list()
+	for(var/command_key in GLOB.slave_phrases_translations)
+		if(command_key == "lock_phrase")
+			options[stuck ? "Unlock" : "Lock"] = stuck ? "unlock_command" : "lock_command"
+			continue
+		if(command_key == "silence_phrase")
+			options[silenced ? "Unsilence" : "Silence"] = silenced ? "unsilence_command" : "silence_command"
+			continue
+		options[GLOB.slave_phrases_translations[command_key]] = command_key
+	return options
+
+/obj/item/clothing/neck/slave_collar/proc/is_valid_command_key(command_key)
+	if(command_key in phrases_list)
+		return TRUE
+	switch(command_key)
+		if("lock_command", "unlock_command", "silence_command", "unsilence_command")
+			return TRUE
+	return FALSE
+
+/obj/item/clothing/neck/slave_collar/proc/controller_has_bound_ring(mob/living/controller)
+	if(!bound_ring || !ishuman(controller))
+		return FALSE
+	var/mob/living/carbon/human/human_controller = controller
+	return (human_controller.get_item_by_slot(ITEM_SLOT_RING) == bound_ring) || human_controller.is_holding(bound_ring)
+
+/obj/item/clothing/neck/slave_collar/proc/fail_command(mob/living/controller, message)
+	if(controller && message)
+		to_chat(controller, span_warning(message))
+	return FALSE
+
+/obj/item/clothing/neck/slave_collar/proc/can_invoke_command(command_key, mob/living/controller, atom/source_item, command_source)
+	if(!is_valid_command_key(command_key))
+		return fail_command(controller, "The collar does not recognize that command.")
+	if(!get_worn_bearer())
+		return fail_command(controller, "The collar is not being worn.")
+	if(command_source != "leash")
+		if(!bound_ring)
+			return fail_command(controller, "The collar is not bound to a ring.")
+		if(source_item && source_item != bound_ring)
+			return fail_command(controller, "That ring is not bound to this collar.")
+		if(!controller_has_bound_ring(controller))
+			return fail_command(controller, "You must hold or wear the bound ring to command this collar.")
+	if(!COOLDOWN_FINISHED(src, collar_phrase_usage))
+		return fail_command(controller, "The collar is still resonating for [DisplayTimeText(COOLDOWN_TIMELEFT(src, collar_phrase_usage))].")
+	return TRUE
 
 // ---- Ring Binding ----
 
@@ -167,13 +271,15 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 	if(!ismob(user))
 		return ..()
 	if(istype(I, /obj/item/clothing/ring/slave_control))
-		bind_collar(I, user)
+		bind_collar(I, user, istype(I, /obj/item/clothing/ring/slave_control/master))
 		return
 	return ..()
 
 /// Bind a control ring to this collar, transferring phrase codes.
 /obj/item/clothing/neck/slave_collar/proc/bind_collar(obj/item/clothing/ring/slave_control/ring, mob/living/user, master_ring = FALSE)
-	if(collar_bound && !master_ring)
+	if(!istype(ring))
+		return FALSE
+	if(collar_bound && bound_ring && !QDELETED(bound_ring) && !master_ring)
 		to_chat(user, span_warning("The collar is already bound."))
 		return FALSE
 
@@ -184,15 +290,26 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 		to_chat(bearer, span_info("<b>Some unknown force seems to *yank* you by your collar.</b>"))
 
 	// Unbind old ring if one exists — clear its data safely.
-	if(bound_ring)
-		bound_ring.bound_collar = null
-		bound_ring.phrases_list = list()
+	if(bound_ring && bound_ring != ring)
+		bound_ring.clear_bound_collar(FALSE)
+	if(ring.bound_collar && ring.bound_collar != src)
+		ring.clear_bound_collar(FALSE)
 	collar_bound = TRUE
 	bound_ring = ring
 
-	ring.phrases_list = phrases_list
+	ring.phrases_list = phrases_list.Copy()
+	ring.ring_bound = TRUE
 	ring.bound_collar = src
 	return TRUE
+
+/obj/item/clothing/neck/slave_collar/proc/clear_bound_ring()
+	var/obj/item/clothing/ring/slave_control/old_ring = bound_ring
+	bound_ring = null
+	collar_bound = FALSE
+	if(old_ring)
+		old_ring.bound_collar = null
+		old_ring.ring_bound = FALSE
+		old_ring.phrases_list = list()
 
 // ---- Voice Phrase Processing ----
 
@@ -212,20 +329,14 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 
 	var/msg = normalize_slave_phrase(raw_message)
 
-	// Check if the spoken phrase matches any command. Break on first match.
-	var/phrase_found = FALSE
-	for(var/el in phrases_list)
-		if(normalize_slave_phrase(phrases_list[el]) == msg)
-			phrase_found = TRUE
-			break
-
-	if(!phrase_found)
+	var/command_key = get_command_key_from_phrase(msg)
+	if(!command_key)
 		return
 
 	// Validate that the speaker has the bound ring equipped.
 	var/ring_found = FALSE
 	if(ishuman(speaker))
-		ring_found = speaker_has_ring(speaker)
+		ring_found = controller_has_bound_ring(speaker)
 
 	// Self-punishment: bearer says a command phrase without wearing the ring — mute them.
 	if(H == speaker && !ring_found)
@@ -237,35 +348,31 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 	if(!ring_found)
 		return
 
-	// Cooldown check comes AFTER ring validation — invalid speakers are always rejected,
-	// and the cooldown only gates legitimate commands.
-	if(!COOLDOWN_FINISHED(src, collar_phrase_usage))
-		return
+	INVOKE_ASYNC(src, PROC_REF(perform_command), command_key, speaker, bound_ring, "voice")
 
-	INVOKE_ASYNC(src, PROC_REF(perform_command), msg)
-
-/// Returns TRUE if the speaker is wearing/holding the bound ring.
+/// Returns TRUE if the speaker is wearing or holding the bound ring.
 /obj/item/clothing/neck/slave_collar/proc/speaker_has_ring(mob/living/carbon/human/speaker)
-	if(!bound_ring || !ishuman(speaker))
-		return FALSE
-	for(var/obj/item/I in speaker.get_equipped_items())
-		if(I == bound_ring)
-			return TRUE
-	return FALSE
+	return controller_has_bound_ring(speaker)
 
 // ---- Command Execution ----
 
-/// Execute a collar command by matching the normalized phrase. Returns TRUE on success.
-/obj/item/clothing/neck/slave_collar/proc/perform_command(msg)
-	if(!msg)
+/// Execute a collar command. Returns TRUE on success.
+/obj/item/clothing/neck/slave_collar/proc/perform_command(command_key, mob/living/controller = null, atom/source_item = null, command_source = "direct")
+	if(!can_invoke_command(command_key, controller, source_item, command_source))
 		return FALSE
 
-	var/mob/living/carbon/human/H = src.loc
-	if(!ismob(H))
-		return FALSE
+	var/mob/living/carbon/human/H = get_worn_bearer()
 
-	if(!COOLDOWN_FINISHED(src, collar_phrase_usage))
-		return FALSE
+	if(command_key == "lock_command" && stuck)
+		return fail_command(controller, "The collar is already locked.")
+	if(command_key == "unlock_command" && !stuck)
+		return fail_command(controller, "The collar is already unlocked.")
+	if(command_key == "silence_command" && silenced)
+		return fail_command(controller, "The collar is already silenced.")
+	if(command_key == "unsilence_command" && !silenced)
+		return fail_command(controller, "The collar is not silencing its bearer.")
+	if(command_key == "come_phrase" && (!controller || QDELETED(controller) || controller == H))
+		return fail_command(controller, "The collar needs a separate controller to call its bearer.")
 
 	COOLDOWN_START(src, collar_phrase_usage, 10 SECONDS)
 
@@ -273,7 +380,7 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 	to_chat(H, span_userdanger("Your collar compels you!"))
 
 	// Touch — forced masturbation.
-	if(msg == normalize_slave_phrase(phrases_list["touch_phrase"]))
+	if(command_key == "touch_phrase")
 		H.visible_message(span_danger("<b>[H] starts masturbating uncontrollably!</b>"))
 		H.emote("moan")
 		H.start_sex_session(H, FALSE)
@@ -289,7 +396,7 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 		return TRUE
 
 	// Orgasm — forced climax.
-	if(msg == normalize_slave_phrase(phrases_list["orgasm_phrase"]))
+	if(command_key == "orgasm_phrase")
 		H.visible_message(span_danger("<b>[H] convulses in a sudden orgasm!</b>"))
 		var/datum/component/arousal/aro = H.GetComponent(/datum/component/arousal)
 		if(aro)
@@ -301,25 +408,25 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 		return TRUE
 
 	// Fall — knockdown.
-	if(msg == normalize_slave_phrase(phrases_list["drop_phrase"]))
+	if(command_key == "drop_phrase")
 		H.visible_message(span_danger("<b>[H] falls prone!</b>"))
 		H.Knockdown(10 SECONDS)
 		return TRUE
 
 	// Sleep — forced unconsciousness.
-	if(msg == normalize_slave_phrase(phrases_list["sleep_phrase"]))
+	if(command_key == "sleep_phrase")
 		H.visible_message(span_danger("<b>[H] has their eyes shut — falling asleep instantly!</b>"))
 		H.Sleeping(15 SECONDS)
 		return TRUE
 
 	// Stay — immobilize.
-	if(msg == normalize_slave_phrase(phrases_list["stop_phrase"]))
+	if(command_key == "stop_phrase")
 		H.visible_message(span_danger("<b>[H] freezes in place, unable to move!</b>"))
 		H.apply_status_effect(/datum/status_effect/collar_stun)
 		return TRUE
 
 	// Lust — forced arousal.
-	if(msg == normalize_slave_phrase(phrases_list["pleasure_phrase"]))
+	if(command_key == "pleasure_phrase")
 		H.visible_message(span_danger("<b>[H] shivers, pleasure forced upon them!</b>"))
 		H.emote("moan")
 		SEND_SIGNAL(H, COMSIG_SEX_ADJUST_AROUSAL, 120)
@@ -328,7 +435,7 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 		return TRUE
 
 	// Submit — shock and choke with spark VFX. Oxyloss capped at 45 to prevent death.
-	if(msg == normalize_slave_phrase(phrases_list["submission_phrase"]))
+	if(command_key == "submission_phrase")
 		H.visible_message(span_warning("<b>[H] is shocked, the collar tightening!</b>"))
 		do_sparks(2, FALSE, get_turf(H))
 		playsound(H, 'sound/effects/sparks1.ogg', 50, TRUE)
@@ -341,49 +448,54 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 		return TRUE
 
 	// Toggle Lock — engage/disengage arcane lock.
-	if(msg == normalize_slave_phrase(phrases_list["lock_phrase"]))
-		if(!stuck)
-			H.visible_message(span_notice("<b>The collar around [H]'s neck engages its arcane lock.</b>"))
-			stuck = TRUE
-		else
-			H.visible_message(span_notice("<b>The collar around [H]'s neck releases its arcane lock.</b>"))
-			stuck = FALSE
+	if(command_key == "lock_phrase")
+		set_lock_state(H, !stuck)
+		return TRUE
+
+	if(command_key == "lock_command")
+		set_lock_state(H, TRUE)
+		return TRUE
+
+	if(command_key == "unlock_command")
+		set_lock_state(H, FALSE)
 		return TRUE
 
 	// Come — force the bearer to walk toward the ring-holder.
-	if(msg == normalize_slave_phrase(phrases_list["come_phrase"]))
-		if(!bound_ring)
-			return FALSE
-		// Find who is wearing the ring within view.
-		var/mob/living/ring_holder
-		for(var/mob/living/carbon/human/candidate in view(7, H))
-			if(candidate == H)
-				continue
-			for(var/obj/item/I in candidate.get_equipped_items())
-				if(I == bound_ring)
-					ring_holder = candidate
-					break
-			if(ring_holder)
-				break
-		if(!ring_holder)
-			return FALSE
-		H.visible_message(span_danger("<b>[H]'s legs move on their own, compelled toward [ring_holder]!</b>"))
-		come_to_master(H, ring_holder)
+	if(command_key == "come_phrase")
+		H.visible_message(span_danger("<b>[H]'s legs move on their own, compelled toward [controller]!</b>"))
+		come_to_master(H, controller)
 		return TRUE
 
 	// Silence — toggle mute on the bearer.
-	if(msg == normalize_slave_phrase(phrases_list["silence_phrase"]))
-		if(!silenced)
-			H.visible_message(span_warning("<b>The collar around [H]'s neck glows faintly — [H] has been silenced.</b>"))
-			ADD_TRAIT(H, TRAIT_MUTE, "slave_collar")
-			silenced = TRUE
-		else
-			H.visible_message(span_notice("<b>The collar around [H]'s neck dims — [H] may speak again.</b>"))
-			REMOVE_TRAIT(H, TRAIT_MUTE, "slave_collar")
-			silenced = FALSE
+	if(command_key == "silence_phrase")
+		set_silence_state(H, !silenced)
+		return TRUE
+
+	if(command_key == "silence_command")
+		set_silence_state(H, TRUE)
+		return TRUE
+
+	if(command_key == "unsilence_command")
+		set_silence_state(H, FALSE)
 		return TRUE
 
 	return FALSE
+
+/obj/item/clothing/neck/slave_collar/proc/set_lock_state(mob/living/carbon/human/H, locked)
+	stuck = locked
+	if(stuck)
+		H.visible_message(span_notice("<b>The collar around [H]'s neck engages its arcane lock.</b>"))
+	else
+		H.visible_message(span_notice("<b>The collar around [H]'s neck releases its arcane lock.</b>"))
+
+/obj/item/clothing/neck/slave_collar/proc/set_silence_state(mob/living/carbon/human/H, mute_state)
+	silenced = mute_state
+	if(silenced)
+		H.visible_message(span_warning("<b>The collar around [H]'s neck glows faintly — [H] has been silenced.</b>"))
+		ADD_TRAIT(H, TRAIT_MUTE, "slave_collar")
+	else
+		H.visible_message(span_notice("<b>The collar around [H]'s neck dims — [H] may speak again.</b>"))
+		REMOVE_TRAIT(H, TRAIT_MUTE, "slave_collar")
 
 // ---- Come Command Helper ----
 
@@ -400,6 +512,23 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 
 // ---- Stuck / Lock Checks ----
 
+/obj/item/clothing/neck/slave_collar/proc/on_pre_unequip(force, atom/newloc, no_move, invdrop, silent)
+	SIGNAL_HANDLER
+
+	if(force || !stuck)
+		return
+
+	if(!iscarbon(loc))
+		return
+
+	var/mob/living/carbon/wearer = loc
+	if(src != wearer.get_item_by_slot(ITEM_SLOT_NECK))
+		return
+
+	if(!silent)
+		to_chat(wearer, span_userdanger("The collar's arcane lock refuses to release!"))
+	return COMPONENT_ITEM_BLOCK_UNEQUIP
+
 /// Returns TRUE if the collar is locked and worn by the user (blocks removal).
 /obj/item/clothing/neck/slave_collar/proc/stuck_check(mob/living/user)
 	if(iscarbon(user))
@@ -408,6 +537,20 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 			to_chat(user, span_userdanger("I can't take it off!"))
 			return TRUE
 	return FALSE
+
+/obj/item/clothing/neck/slave_collar/canStrip(mob/stripper, mob/owner)
+	if(stuck && get_worn_bearer())
+		return FALSE
+	return ..()
+
+/obj/item/clothing/neck/slave_collar/doStrip(mob/stripper, mob/owner)
+	if(stuck && get_worn_bearer())
+		if(stripper)
+			to_chat(stripper, span_userdanger("The collar's arcane lock refuses to release."))
+		if(owner && owner != stripper)
+			to_chat(owner, span_userdanger("The collar tightens as [stripper] tries to remove it."))
+		return FALSE
+	return ..()
 
 /obj/item/clothing/neck/slave_collar/attack_hand(mob/user)
 	if(!stuck_check(user))
@@ -424,18 +567,19 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/h_user = user
+	var/lock_state = stuck ? "engaged" : "released"
 	// The ring holder and certain authority figures can read the phrases.
 	var/can_read = FALSE
-	if(bound_ring)
-		for(var/obj/item/I in h_user.get_equipped_items())
-			if(I == bound_ring)
-				can_read = TRUE
-				break
+	if(bound_ring && controller_has_bound_ring(h_user))
+		can_read = TRUE
 	if(!can_read)
 		var/job_lower = lowertext(h_user.job)
 		if(job_lower == "town master" || job_lower == "consort")
 			can_read = TRUE
 	if(can_read)
+		. += span_notice("The arcane lock is [lock_state]. ")
+		if(!COOLDOWN_FINISHED(src, collar_phrase_usage))
+			. += span_warning("The collar is still resonating for [DisplayTimeText(COOLDOWN_TIMELEFT(src, collar_phrase_usage))].")
 		. += span_userdanger("You notice engraved phrases on the collar:")
 		for(var/el in phrases_list)
 			. += "<br><b>[GLOB.slave_phrases_translations[el]]:</b> \"[phrases_list[el]]\""

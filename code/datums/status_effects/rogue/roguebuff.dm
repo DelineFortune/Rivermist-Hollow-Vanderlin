@@ -1,6 +1,15 @@
 /datum/status_effect/buff
 	status_type = STATUS_EFFECT_REFRESH
 
+#define DRUNK_STUMBLE_MIN_DRUNKENNESS 21
+#define DRUNK_STUMBLE_FULL_DRUNKENNESS 81
+#define DRUNK_STUMBLE_MIN_CHANCE 0.25
+#define DRUNK_STUMBLE_MAX_CHANCE 5
+#define DRUNK_STUMBLE_SPEED_BASELINE 10
+#define DRUNK_STUMBLE_COOLDOWN 8 SECONDS
+#define DRUNK_STUMBLE_MIN_KNOCKDOWN 0.8 SECONDS
+#define DRUNK_STUMBLE_MAX_KNOCKDOWN 1.6 SECONDS
+
 /datum/status_effect/buff/drunk
 	id = "drunk"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/drunk
@@ -32,11 +41,50 @@
 /datum/status_effect/buff/drunk/proc/on_drunk_move(datum/source)
 	if(!COOLDOWN_FINISHED(src, stumble_cooldown))
 		return
-	if(!prob(3)) // 3% chance per step to stumble
+	if(!iscarbon(owner))
 		return
-	COOLDOWN_START(src, stumble_cooldown, 5 SECONDS)
-	owner.Knockdown(20) // knock them down for 2 seconds
+	var/mob/living/carbon/drunkard = owner
+	if(drunkard.stat || drunkard.body_position == LYING_DOWN)
+		return
+	var/stumble_chance = get_stumble_chance(drunkard)
+	if(stumble_chance <= 0 || !prob(stumble_chance))
+		return
+	COOLDOWN_START(src, stumble_cooldown, DRUNK_STUMBLE_COOLDOWN)
+	owner.Knockdown(get_stumble_knockdown_duration(drunkard))
 	owner.visible_message(span_warning("[owner] stumbles drunkenly and falls over!"), span_warning("You stumble and fall over!"))
+
+/datum/status_effect/buff/drunk/proc/get_stumble_chance(mob/living/carbon/drunkard)
+	if(HAS_TRAIT(drunkard, TRAIT_DRUNKMASTER))
+		return 0
+	var/drunkenness_factor = get_stumble_drunkenness_factor(drunkard)
+	if(drunkenness_factor <= 0)
+		return 0
+	var/stumble_chance = DRUNK_STUMBLE_MIN_CHANCE + ((DRUNK_STUMBLE_MAX_CHANCE - DRUNK_STUMBLE_MIN_CHANCE) * drunkenness_factor)
+	var/speed_stat = GET_MOB_ATTRIBUTE_VALUE(drunkard, STAT_SPEED)
+	if(isnull(speed_stat))
+		speed_stat = DRUNK_STUMBLE_SPEED_BASELINE
+	var/speed_factor = clamp(1 - ((speed_stat - DRUNK_STUMBLE_SPEED_BASELINE) * 0.08), 0.35, 2)
+	return clamp(stumble_chance * speed_factor, 0, DRUNK_STUMBLE_MAX_CHANCE)
+
+/datum/status_effect/buff/drunk/proc/get_stumble_knockdown_duration(mob/living/carbon/drunkard)
+	var/knockdown_duration = DRUNK_STUMBLE_MIN_KNOCKDOWN + ((DRUNK_STUMBLE_MAX_KNOCKDOWN - DRUNK_STUMBLE_MIN_KNOCKDOWN) * get_stumble_drunkenness_factor(drunkard))
+	var/speed_stat = GET_MOB_ATTRIBUTE_VALUE(drunkard, STAT_SPEED)
+	if(isnull(speed_stat))
+		speed_stat = DRUNK_STUMBLE_SPEED_BASELINE
+	knockdown_duration -= max(speed_stat - DRUNK_STUMBLE_SPEED_BASELINE, 0) * 0.5
+	return max(DRUNK_STUMBLE_MIN_KNOCKDOWN, round(knockdown_duration))
+
+/datum/status_effect/buff/drunk/proc/get_stumble_drunkenness_factor(mob/living/carbon/drunkard)
+	return clamp((drunkard.drunkenness - DRUNK_STUMBLE_MIN_DRUNKENNESS) / (DRUNK_STUMBLE_FULL_DRUNKENNESS - DRUNK_STUMBLE_MIN_DRUNKENNESS), 0, 1)
+
+#undef DRUNK_STUMBLE_MIN_DRUNKENNESS
+#undef DRUNK_STUMBLE_FULL_DRUNKENNESS
+#undef DRUNK_STUMBLE_MIN_CHANCE
+#undef DRUNK_STUMBLE_MAX_CHANCE
+#undef DRUNK_STUMBLE_SPEED_BASELINE
+#undef DRUNK_STUMBLE_COOLDOWN
+#undef DRUNK_STUMBLE_MIN_KNOCKDOWN
+#undef DRUNK_STUMBLE_MAX_KNOCKDOWN
 
 /datum/status_effect/buff/foodbuff
 	id = "Food Buff"

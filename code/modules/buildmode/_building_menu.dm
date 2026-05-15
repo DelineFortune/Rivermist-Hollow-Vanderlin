@@ -7,6 +7,28 @@
 	if(item_browser)
 		item_browser.close()
 
+	var/item_contents = ""
+	switch(current_category)
+		if(BM_CATEGORY_TURF)
+			item_contents = generate_turf_list()
+		if(BM_CATEGORY_OBJ)
+			item_contents = generate_obj_list()
+		if(BM_CATEGORY_MOB)
+			item_contents = generate_mob_list()
+		if(BM_CATEGORY_ITEM)
+			item_contents = generate_item_list()
+		if(BM_CATEGORY_WEAPON)
+			item_contents = generate_weapon_list()
+		if(BM_CATEGORY_CLOTHING)
+			item_contents = generate_clothing_list()
+		if(BM_CATEGORY_REAGENT_CONTAINERS)
+			item_contents = generate_reagentcontainer_list()
+		if(BM_CATEGORY_FOOD)
+			item_contents = generate_food_list()
+		else
+			current_category = BM_CATEGORY_TURF
+			item_contents = generate_turf_list()
+
 	var/list/dat = list()
 	dat += "<div class='buildmode-browser'>"
 	dat += "<h3>BuildMode Item Selection</h3>"
@@ -24,7 +46,7 @@
 	dat += "</div>"
 
 	dat += "<div class='search-container'>"
-	dat += "<input type='text' class='search-bar' id='item-search' placeholder='Search items...'>"
+	dat += "<input type='text' class='search-bar' id='item-search' placeholder='Search this page...'>"
 	dat += "</div>"
 
 	dat += {"
@@ -87,30 +109,12 @@
 
 
 
+	dat += build_pagination_controls()
 	dat += "<div class='item-grid' id='item-grid'>"
-
-	switch(current_category)
-		if(BM_CATEGORY_TURF)
-			dat += generate_turf_list()
-		if(BM_CATEGORY_OBJ)
-			dat += generate_obj_list()
-		if(BM_CATEGORY_MOB)
-			dat += generate_mob_list()
-		if(BM_CATEGORY_ITEM)
-			dat += generate_item_list()
-		if(BM_CATEGORY_WEAPON)
-			dat += generate_weapon_list()
-		if(BM_CATEGORY_CLOTHING)
-			dat += generate_clothing_list()
-		if(BM_CATEGORY_REAGENT_CONTAINERS)
-			dat += generate_reagentcontainer_list()
-		if(BM_CATEGORY_FOOD)
-			dat += generate_food_list()
-		else
-			current_category = BM_CATEGORY_TURF
-			dat += generate_turf_list()
+	dat += item_contents
 
 	dat += "</div>"
+	dat += build_pagination_controls()
 
 	dat += "</div>"
 
@@ -143,8 +147,14 @@
 	if(href_list["category"])
 		var/new_category = text2num(href_list["category"])
 		if(new_category)
+			current_page = 1
 			change_category(new_category)
 			return TRUE
+
+	if(href_list["page"])
+		current_page = max(1, text2num(href_list["page"]))
+		open_item_browser()
+		return TRUE
 
 	if(href_list["item"])
 		var/path = text2path(href_list["item"])

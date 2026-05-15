@@ -686,6 +686,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(drunkenness >= 101)
 			adjustToxLoss(5) //Let's be honest you shouldn't be alive by now
 
+	if(ishuman(src))
+		var/mob/living/carbon/human/human_self = src
+		human_self.update_drunk_blush_overlay()
+
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature

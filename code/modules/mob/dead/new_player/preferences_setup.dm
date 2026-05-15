@@ -96,6 +96,8 @@
 	else
 		taur_type = null
 
+	validate_descriptors()
+
 	//if(randomise_flags & RANDOMIZE_FEATURES)
 		//features = random_features()
 
@@ -151,6 +153,7 @@
 		taur_type = pick(pref_species.allowed_taur_types)
 	else
 		taur_type = null
+	validate_descriptors()
 
 /datum/preferences/proc/get_preview_job()
 	var/datum/job/preview_job

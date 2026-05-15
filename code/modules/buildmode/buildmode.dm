@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
 	var/build_dir = SOUTH
 	var/datum/buildmode_mode/mode
 	var/client/holder
+	var/mob/registered_mob
 
 	// Login callback
 	var/li_cb
@@ -43,6 +44,9 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
 	// Item browser interface
 	var/datum/browser/item_browser = null
 	var/list/cached_icons = list() // Cache for item icons
+	var/current_page = 1
+	var/browser_total_items = 0
+	var/browser_page_count = 1
 
 	// Pixel positioning mode
 	var/pixel_positioning_mode = FALSE
@@ -67,8 +71,10 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
 	mode.enter_mode(src)
 	current_category = BM_CATEGORY_TURF
 	open_item_browser()
-	RegisterSignal(holder.mob, COMSIG_MOUSE_ENTERED, PROC_REF(on_mouse_moved))
-	RegisterSignal(holder.mob, COMSIG_ATOM_MOUSE_ENTERED, PROC_REF(on_mouse_moved_pre))
+	registered_mob = holder.mob
+	if(registered_mob)
+		RegisterSignal(registered_mob, COMSIG_MOUSE_ENTERED, PROC_REF(on_mouse_moved))
+		RegisterSignal(registered_mob, COMSIG_ATOM_MOUSE_ENTERED, PROC_REF(on_mouse_moved_pre))
 
 /**
  * Clean up and exit buildmode
@@ -83,11 +89,16 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
 	if(item_browser)
 		item_browser.close()
 		item_browser = null
-	if(holder?.mob)
-		UnregisterSignal(holder.mob, COMSIG_MOUSE_ENTERED)
-		UnregisterSignal(holder.mob, COMSIG_ATOM_MOUSE_ENTERED)
+	unregister_mouse_signals()
 
 	qdel(src)
+
+/datum/buildmode/proc/unregister_mouse_signals()
+	if(!registered_mob)
+		return
+	UnregisterSignal(registered_mob, COMSIG_MOUSE_ENTERED)
+	UnregisterSignal(registered_mob, COMSIG_ATOM_MOUSE_ENTERED)
+	registered_mob = null
 
 /**
  * Clean up resources when deleted
@@ -99,14 +110,20 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
 		holder.screen -= buttons
 		if(holder.click_intercept == src)
 			holder.click_intercept = null
-	if(holder?.mob)
-		UnregisterSignal(holder.mob, COMSIG_MOUSE_ENTERED)
-		UnregisterSignal(holder.mob, COMSIG_ATOM_MOUSE_ENTERED)
+	unregister_mouse_signals()
 	holder?.player_details?.post_login_callbacks -= li_cb
+	li_cb = null
 	QDEL_LIST(modeswitch_buttons)
+	modeswitch_buttons = null
 	QDEL_LIST(dirswitch_buttons)
+	dirswitch_buttons = null
 	QDEL_LIST(category_buttons)
+	category_buttons = null
 	QDEL_LIST(buttons)
+	buttons = null
+	modebutton = null
+	dirbutton = null
+	categorybutton = null
 	clear_preview()
 
 	if(item_browser)
@@ -114,7 +131,10 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
 		item_browser = null
 
 	cached_icons.Cut()
+	cached_icons = null
 	cached_buildmode_html.Cut()
+	cached_buildmode_html = null
+	selected_item = null
 	holder = null
 	QDEL_NULL(mode)
 	return ..()

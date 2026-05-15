@@ -26,6 +26,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/turf/unused_turfs = list()				//Not actually unused turfs they're unused but reserved for use for whatever requests them. "[zlevel_of_turf]" = list(turfs)
 	var/list/datum/turf_reservations		//list of turf reservations
 	var/list/used_turfs = list()				//list of turf = datum/turf_reservation
+	var/list/pocket_released_reservations = list()
 
 	var/list/reservation_ready = list()
 	var/clearing_reserved_turfs = FALSE
@@ -365,6 +366,10 @@ SUBSYSTEM_DEF(mapping)
 		//If we didn't return at this point, theres a good chance we ran out of room on the exisiting reserved z levels, so lets try a new one
 		num_of_res_levels += 1
 		var/datum/space_level/newReserved = add_new_zlevel("Transit/Reserved [num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
+		if(!newReserved)
+			num_of_res_levels = max(0, num_of_res_levels - 1)
+			QDEL_NULL(reserve)
+			return null
 		initialize_reserved_level(newReserved.z_value)
 		if(reserve.Reserve(width, height, newReserved.z_value))
 			return reserve
@@ -377,12 +382,121 @@ SUBSYSTEM_DEF(mapping)
 				return reserve
 	QDEL_NULL(reserve)
 
-/datum/controller/subsystem/mapping/proc/RequestPocketBlockReservation(width, height, type = /datum/turf_reservation, turf_type_override)
+/datum/controller/subsystem/mapping/proc/build_turf_reservation(type = /datum/turf_reservation, turf_type_override)
+	var/datum/turf_reservation/reserve = new type
+	if(turf_type_override)
+		reserve.turf_type = turf_type_override
+	return reserve
+
+/datum/controller/subsystem/mapping/proc/cache_released_pocket_reservation(list/bottom_left_coords, width, height)
+	if(!length(bottom_left_coords) || width < 1 || height < 1)
+		return
+
+	var/x = bottom_left_coords[1]
+	var/y = bottom_left_coords[2]
+	var/z = bottom_left_coords[3]
+	if(!x || !y || !z)
+		return
+
+	for(var/list/existing_slot as anything in pocket_released_reservations)
+		if(existing_slot["x"] != x || existing_slot["y"] != y || existing_slot["z"] != z)
+			continue
+		if(existing_slot["width"] != width || existing_slot["height"] != height)
+			continue
+		return
+
+	pocket_released_reservations += list(list(
+		"x" = x,
+		"y" = y,
+		"z" = z,
+		"width" = width,
+		"height" = height,
+	))
+
+/datum/controller/subsystem/mapping/proc/uncache_pocket_reservation(x, y, z, width = null, height = null)
+	for(var/list/cached_slot as anything in pocket_released_reservations.Copy())
+		if(cached_slot["x"] != x || cached_slot["y"] != y || cached_slot["z"] != z)
+			continue
+		if(!isnull(width) && cached_slot["width"] != width)
+			continue
+		if(!isnull(height) && cached_slot["height"] != height)
+			continue
+		pocket_released_reservations -= cached_slot
+
+/datum/controller/subsystem/mapping/proc/clear_pocket_reservation_cache()
+	pocket_released_reservations.Cut()
+
+/datum/controller/subsystem/mapping/proc/try_pocket_reservation_at(width, height, list/bottom_left_coords, type = /datum/turf_reservation, turf_type_override)
+	if(!length(bottom_left_coords))
+		return null
+
+	var/x = bottom_left_coords[1]
+	var/y = bottom_left_coords[2]
+	var/z = bottom_left_coords[3]
+	if(!x || !y || !z || !level_trait(z, ZTRAIT_RESERVED))
+		return null
+
+	var/datum/turf_reservation/reserve = build_turf_reservation(type, turf_type_override)
+	if(reserve.ReserveAt(width, height, x, y, z))
+		uncache_pocket_reservation(x, y, z, width, height)
+		return reserve
+
+	qdel(reserve)
+	return null
+
+/datum/controller/subsystem/mapping/proc/try_cached_pocket_reservation(width, height, type = /datum/turf_reservation, turf_type_override)
+	while(length(pocket_released_reservations))
+		var/list/best_slot
+		var/best_slot_index
+		var/best_waste = INFINITY
+
+		for(var/index in 1 to length(pocket_released_reservations))
+			var/list/cached_slot = pocket_released_reservations[index]
+			if(cached_slot["width"] < width || cached_slot["height"] < height)
+				continue
+
+			var/slot_waste = (cached_slot["width"] * cached_slot["height"]) - (width * height)
+			if(slot_waste >= best_waste)
+				continue
+
+			best_slot = cached_slot
+			best_slot_index = index
+			best_waste = slot_waste
+
+		if(!best_slot)
+			return null
+
+		pocket_released_reservations.Cut(best_slot_index, best_slot_index + 1)
+		var/datum/turf_reservation/reserve = build_turf_reservation(type, turf_type_override)
+		if(reserve.ReserveAt(width, height, best_slot["x"], best_slot["y"], best_slot["z"]))
+			return reserve
+
+		qdel(reserve)
+
+	return null
+
+/datum/controller/subsystem/mapping/proc/RequestPocketBlockReservation(width, height, type = /datum/turf_reservation, turf_type_override, list/preferred_bottom_left)
 	UNTIL(!clearing_reserved_turfs)
+	var/datum/turf_reservation/preferred_reserve = try_pocket_reservation_at(width, height, preferred_bottom_left, type, turf_type_override)
+	if(preferred_reserve)
+		return preferred_reserve
+
+	var/datum/turf_reservation/cached_reserve = try_cached_pocket_reservation(width, height, type, turf_type_override)
+	if(cached_reserve)
+		return cached_reserve
+
 	for(var/z_level in levels_by_trait(ZTRAIT_POCKET_RESERVED))
-		var/datum/turf_reservation/existing_reserve = new type
-		if(turf_type_override)
-			existing_reserve.turf_type = turf_type_override
+		var/datum/turf_reservation/existing_reserve = build_turf_reservation(type, turf_type_override)
+		if(existing_reserve.Reserve(width, height, z_level))
+			return existing_reserve
+		qdel(existing_reserve)
+
+	for(var/z_level in levels_by_trait(ZTRAIT_RESERVED))
+		if(level_trait(z_level, ZTRAIT_POCKET_RESERVED))
+			continue
+		if(level_trait(z_level, ZTRAIT_ISOLATED_RUINS))
+			continue
+		var/datum/turf_reservation/existing_reserve = build_turf_reservation(type, turf_type_override)
 		if(existing_reserve.Reserve(width, height, z_level))
 			return existing_reserve
 		qdel(existing_reserve)
@@ -392,11 +506,12 @@ SUBSYSTEM_DEF(mapping)
 		ZTRAIT_RESERVED = TRUE,
 		ZTRAIT_POCKET_RESERVED = TRUE,
 	))
+	if(!new_reserved)
+		num_of_pocket_res_levels = max(0, num_of_pocket_res_levels - 1)
+		return null
 	initialize_reserved_level(new_reserved.z_value)
 
-	var/datum/turf_reservation/new_reserve = new type
-	if(turf_type_override)
-		new_reserve.turf_type = turf_type_override
+	var/datum/turf_reservation/new_reserve = build_turf_reservation(type, turf_type_override)
 	if(new_reserve.Reserve(width, height, new_reserved.z_value))
 		return new_reserve
 	QDEL_NULL(new_reserve)
@@ -434,18 +549,33 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/reserve_turfs(list/turfs)
 	var/area/reserved_area = GLOB.areas_by_type[world.area]
 	for(var/turf/T as anything in turfs)
+		if(!istype(T))
+			continue
+
+		var/turf_x = T.x
+		var/turf_y = T.y
+		var/turf_z = T.z
 		var/area/old_area = get_area(T)
+		used_turfs -= T
 		T.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
+
+		var/turf/released_turf = locate(turf_x, turf_y, turf_z)
+		if(!released_turf)
+			stack_trace("Failed to relocate released reservation turf at ([turf_x], [turf_y], [turf_z]) after reset.")
+			continue
+
+		used_turfs -= released_turf
 		if(reserved_area)
-			ensure_reserved_area_tracks_z(T.z)
+			ensure_reserved_area_tracks_z(turf_z)
 			if(old_area && old_area != reserved_area)
-				T.change_area(old_area, reserved_area)
+				released_turf.change_area(old_area, reserved_area)
 			else
-				reserved_area.contents += T
-				reserved_area.turfs_by_zlevel[T.z] |= T
-		LAZYINITLIST(unused_turfs["[T.z]"])
-		unused_turfs["[T.z]"] |= T
-		T.turf_flags |= UNUSED_RESERVATION_TURF
+				reserved_area.contents += released_turf
+				reserved_area.turfs_by_zlevel[turf_z] |= released_turf
+		LAZYINITLIST(unused_turfs["[turf_z]"])
+		unused_turfs["[turf_z]"] -= T
+		unused_turfs["[turf_z]"] |= released_turf
+		released_turf.turf_flags |= UNUSED_RESERVATION_TURF
 		CHECK_TICK
 
 /datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
@@ -455,6 +585,8 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/get_isolated_ruin_z()
 	if(!isolated_ruins_z)
 		isolated_ruins_z = add_new_zlevel("Isolated Ruins/Reserved", list(ZTRAIT_RESERVED = TRUE, ZTRAIT_ISOLATED_RUINS = TRUE))
+		if(!isolated_ruins_z)
+			return null
 		initialize_reserved_level(isolated_ruins_z.z_value)
 	return isolated_ruins_z.z_value
 

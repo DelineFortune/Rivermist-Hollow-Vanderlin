@@ -87,6 +87,7 @@
 						if(VVictim)
 							victim.adjust_bloodpool(-used_vitae) //twice the loss
 						victim.adjust_bloodpool(-used_vitae)
+						victim.last_vitae_drain = world.time
 					else
 						clan?.handle_bloodsuck(src, blood_handle)
 				else
@@ -101,6 +102,7 @@
 							victim.adjustFireLoss(-50, TRUE)
 							return
 					if(ishuman(victim) && !victim.clan)
+						to_chat(src, span_warning("[victim]'s blood is warm, but spiritually spent."))
 						if(victim.stat != DEAD)
 							to_chat(src, "<span class='warning'>Your victim faints from the excessive draining.</span>")
 							victim.SetUnconscious(50 SECONDS)

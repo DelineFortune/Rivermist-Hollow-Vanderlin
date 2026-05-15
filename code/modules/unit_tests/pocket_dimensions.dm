@@ -26,6 +26,74 @@
 	TEST_ASSERT_NULL(SSpocket_dimensions.get_instance(REF(tester_scroll)), "Pocket dimension should unregister after deletion.")
 	TEST_ASSERT_EQUAL(get_turf(foreign_bag), moved_holder_turf, "Foreign items should be ejected to the holder's current turf before the pocket collapses.")
 
+/datum/unit_test/pocket_dimension_reuses_reserved_z/Run()
+	var/initial_maxz = world.maxz
+	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::reserved_z_reuse", /datum/map_template/pocket/test_chamber, POCKET_LIFECYCLE_HIBERNATE, 1)
+	TEST_ASSERT_NOTNULL(instance, "Pocket dimension instance should be created from existing reserved turf.")
+	TEST_ASSERT_EQUAL(world.maxz, initial_maxz, "Creating a small pocket should reuse existing reserved turf before allocating another z-level.")
+
+	TEST_ASSERT(SSpocket_dimensions.delete_instance(instance), "Reserved z reuse test pocket should be deletable.")
+
+/datum/unit_test/pocket_dimension_hibernate_releases_allocator_turfs/Run()
+	var/initial_maxz = world.maxz
+	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::hibernate_allocator_reuse", /datum/map_template/pocket/test_chamber, POCKET_LIFECYCLE_HIBERNATE, 1)
+	TEST_ASSERT_NOTNULL(instance, "Pocket dimension instance should be created for hibernate allocator testing.")
+	var/list/expected_bottom_left = instance.reservation.bottom_left_coords.Copy()
+
+	for(var/cycle in 1 to 20)
+		TEST_ASSERT_NOTNULL(instance.reservation, "Cycle [cycle]: active pocket should have a reservation.")
+		TEST_ASSERT_EQUAL(instance.reservation.bottom_left_coords[1], expected_bottom_left[1], "Cycle [cycle]: active pocket should reuse its original X slot.")
+		TEST_ASSERT_EQUAL(instance.reservation.bottom_left_coords[2], expected_bottom_left[2], "Cycle [cycle]: active pocket should reuse its original Y slot.")
+		TEST_ASSERT_EQUAL(instance.reservation.bottom_left_coords[3], expected_bottom_left[3], "Cycle [cycle]: active pocket should reuse its original Z slot.")
+
+		var/list/released_coords = list()
+		for(var/turf/reserved_turf as anything in instance.reservation.reserved_turfs)
+			released_coords += list(list(reserved_turf.x, reserved_turf.y, reserved_turf.z))
+
+		TEST_ASSERT(length(released_coords), "Cycle [cycle]: reservation should contain turfs before hibernating.")
+		TEST_ASSERT(instance.hibernate(), "Cycle [cycle]: pocket should hibernate cleanly.")
+		TEST_ASSERT(instance.is_hibernating(), "Cycle [cycle]: pocket should report hibernating after release.")
+
+		for(var/list/coords as anything in released_coords)
+			var/turf/released_turf = locate(coords[1], coords[2], coords[3])
+			var/list/unused_z_turfs = SSmapping.unused_turfs["[coords[3]]"]
+			TEST_ASSERT_NOTNULL(released_turf, "Cycle [cycle]: released turf should still exist after reset.")
+			TEST_ASSERT(istype(released_turf, RESERVED_TURF_TYPE), "Cycle [cycle]: released turf should reset to the reserved turf type.")
+			TEST_ASSERT(released_turf.turf_flags & UNUSED_RESERVATION_TURF, "Cycle [cycle]: released turf should be marked available to the allocator.")
+			TEST_ASSERT(length(unused_z_turfs) && (released_turf in unused_z_turfs), "Cycle [cycle]: released turf should be indexed in unused_turfs.")
+			TEST_ASSERT_NULL(SSmapping.used_turfs[released_turf], "Cycle [cycle]: released turf should not remain indexed as used.")
+
+		TEST_ASSERT(instance.activate(), "Cycle [cycle]: hibernating pocket should be able to reserve space again.")
+		TEST_ASSERT_EQUAL(world.maxz, initial_maxz, "Cycle [cycle]: repeated hibernation should not allocate a new z-level.")
+
+	TEST_ASSERT(SSpocket_dimensions.delete_instance(instance), "Hibernate allocator test pocket should be deletable.")
+
+/datum/unit_test/pocket_dimension_deleted_slot_reused/Run()
+	SSmapping.clear_pocket_reservation_cache()
+	var/initial_maxz = world.maxz
+
+	var/datum/pocket_dimension/first_instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::deleted_slot_first", /datum/map_template/pocket/test_chamber, POCKET_LIFECYCLE_HIBERNATE, 1)
+	TEST_ASSERT_NOTNULL(first_instance, "First pocket should be created for deleted slot reuse testing.")
+	TEST_ASSERT_NOTNULL(first_instance.reservation, "First pocket should reserve a slot.")
+
+	var/list/released_bottom_left = first_instance.reservation.bottom_left_coords.Copy()
+	var/released_width = first_instance.reservation.width
+	var/released_height = first_instance.reservation.height
+	TEST_ASSERT(SSpocket_dimensions.delete_instance(first_instance), "First pocket should delete and release its slot.")
+
+	var/datum/pocket_dimension/second_instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::deleted_slot_second", /datum/map_template/pocket/test_chamber, POCKET_LIFECYCLE_HIBERNATE, 1)
+	TEST_ASSERT_NOTNULL(second_instance, "Second pocket should be created from the released slot.")
+	TEST_ASSERT_NOTNULL(second_instance.reservation, "Second pocket should reserve a slot.")
+	TEST_ASSERT_EQUAL(second_instance.reservation.width, released_width, "Second pocket should reuse a slot with the same width.")
+	TEST_ASSERT_EQUAL(second_instance.reservation.height, released_height, "Second pocket should reuse a slot with the same height.")
+	TEST_ASSERT_EQUAL(second_instance.reservation.bottom_left_coords[1], released_bottom_left[1], "Second pocket should reuse the deleted pocket's X slot.")
+	TEST_ASSERT_EQUAL(second_instance.reservation.bottom_left_coords[2], released_bottom_left[2], "Second pocket should reuse the deleted pocket's Y slot.")
+	TEST_ASSERT_EQUAL(second_instance.reservation.bottom_left_coords[3], released_bottom_left[3], "Second pocket should reuse the deleted pocket's Z slot.")
+	TEST_ASSERT_EQUAL(world.maxz, initial_maxz, "Reusing a deleted pocket slot should not allocate a new z-level.")
+
+	TEST_ASSERT(SSpocket_dimensions.delete_instance(second_instance), "Second pocket should be deletable.")
+	SSmapping.clear_pocket_reservation_cache()
+
 /datum/unit_test/pocket_dimension_drop_spot/Run()
 	var/turf/origin = run_loc_floor_bottom_left
 	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::drop_spot", /datum/map_template/pocket/bag_of_holding, POCKET_LIFECYCLE_KEEP_LOADED, 0)

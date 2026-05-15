@@ -506,9 +506,14 @@ GLOBAL_PROTECT(tracy_init_reason)
 	maxy = new_maxy
 
 /world/proc/incrementMaxZ()
+	var/old_maxz = maxz
 	maxz++
+	if(maxz <= old_maxz)
+		stack_trace("Failed to increase world.maxz from [old_maxz] to [old_maxz + 1]. DreamDaemon may be out of address space for map allocation.")
+		return FALSE
 	SSmobs.MaxZChanged()
 	SSai_controllers.on_max_z_changed()
+	return TRUE
 
 
 /*

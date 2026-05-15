@@ -22,6 +22,23 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/next_page = FALSE
 	var/tooltips = FALSE
 
+/atom/movable/screen/radial/slice/proc/show_hover_label(mob/user)
+	if(next_page || !length(name))
+		return
+	closeToolTip(user)
+	var/label_text = html_encode(name)
+	label_text = replacetext(label_text, "\proper", "")
+	label_text = replacetext(label_text, "\improper", "")
+	maptext = MAPTEXT_CENTER("<span style='color: #d8e7f2; font-size: 8pt; -dm-text-outline: 1px #0b1117;'>[label_text]</span>")
+	maptext_width = 96
+	maptext_height = 32
+	maptext_x = (maptext_width - world.icon_size) * -0.5
+	maptext_y = 10
+
+/atom/movable/screen/radial/slice/proc/clear_hover_label(mob/user)
+	closeToolTip(user)
+	maptext = null
+
 /atom/movable/screen/radial/slice/set_parent(new_value)
 	. = ..()
 	if(parent)
@@ -34,7 +51,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	else
 		icon_state = "[parent.radial_slice_icon]_focus"
 	if(tooltips)
-		openToolTip(usr, src, params, title = name)
+		show_hover_label(usr)
 	if (click_on_hover && !isnull(usr) && !isnull(parent))
 		Click(location, control, params)
 
@@ -45,7 +62,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	else
 		icon_state = parent.radial_slice_icon
 	if(tooltips)
-		closeToolTip(usr)
+		clear_hover_label(usr)
 
 /atom/movable/screen/radial/slice/Click(location, control, params)
 	if(usr.client == parent.current_user)
@@ -160,10 +177,14 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		for(var/i in 1 to elements_to_add) //Create all elements
 			var/atom/movable/screen/radial/slice/new_element = new /atom/movable/screen/radial/slice
 			new_element.tooltips = use_tooltips
+			new_element.no_over_text = use_tooltips
 			new_element.set_parent(src)
 			if(button_animation_flags & BUTTON_FADE_IN)
 				new_element.alpha = 0
 			elements += new_element
+	for(var/atom/movable/screen/radial/slice/element as anything in elements)
+		element.tooltips = use_tooltips
+		element.no_over_text = use_tooltips
 
 	var/page = 1
 	page_data = list(null)
@@ -216,6 +237,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	E.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	E.choice = null
 	E.next_page = FALSE
+	E.no_over_text = TRUE
 
 /datum/radial_menu/proc/SetElement(atom/movable/screen/radial/slice/E, choice_id, angle, anim_flag, anim_order)
 	//Position
@@ -238,6 +260,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		E.alpha = 255
 
 	E.mouse_opacity = MOUSE_OPACITY_ICON
+	E.no_over_text = E.tooltips
 	E.cut_overlays()
 	E.vis_contents.Cut()
 	if(choice_id == NEXT_PAGE_ID)
@@ -252,22 +275,17 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		// Fixed name assignment logic - prioritize choice_datum.name, then original key, then fallbacks
 		if(choice_datum?.name)
 			E.name = choice_datum.name
-			E.no_over_text = FALSE
 		else if(choices_keys && choices_keys[choice_id])
 			// Use the stored original choice key
 			E.name = choices_keys[choice_id]
-			E.no_over_text = FALSE
 		else if(istext(choices_values[choice_id]))
 			E.name = choices_values[choice_id]
-			E.no_over_text = FALSE
 		else if(ispath(choices_values[choice_id],/atom))
 			var/atom/A = choices_values[choice_id]
 			E.name = initial(A.name)
-			E.no_over_text = FALSE
 		else
 			var/atom/movable/AM = choices_values[choice_id] //Movables only
 			E.name = AM.name
-			E.no_over_text = FALSE
 
 		E.choice = choice_id
 		E.maptext = null

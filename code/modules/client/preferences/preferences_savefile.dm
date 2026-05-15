@@ -493,9 +493,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["accessory"] >> accessory
 	S["detail"] >> detail
 	S["randomise"] >> randomise
-	S["family"] >> family
-	S["gender_choice"] >> gender_choice
-	S["setspouse"] >> setspouse
 	S["selected_accent"] >> selected_accent
 	S["moan_selection"]	>> moan_selection //RMH edit
 	S["feature_mcolor"]		>> features["mcolor"]
@@ -656,9 +653,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	voice_type = sanitize_text(voice_type, VOICE_TYPE_MASC)
 	moan_selection = sanitize_text(moan_selection, MOANPACK_TYPE_DEF)	//RMH edit
 	skin_tone = skin_tone
-	family = family
-	gender_choice = gender_choice
-	setspouse = setspouse
 	selected_accent ||= ACCENT_DEFAULT
 	selected_title  = selected_title
 
@@ -780,9 +774,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	WRITE_FILE(S["culinary_preferences"], culinary_preferences)
 	WRITE_FILE(S["smallclothes_preferences"], smallclothes_preferences)
-	WRITE_FILE(S["family"]				, family)
-	WRITE_FILE(S["gender_choice"]		, gender_choice)
-	WRITE_FILE(S["setspouse"]			, setspouse)
 	WRITE_FILE(S["selected_accent"]		, selected_accent)
 	WRITE_FILE(S["culture"]				, culture)
 	WRITE_FILE(S["feature_mcolor"]		, features["mcolor"])

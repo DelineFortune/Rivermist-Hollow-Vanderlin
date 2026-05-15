@@ -536,19 +536,17 @@
 	var/obj/item/clothing/neck/slave_collar/collar = leash_pet.get_item_by_slot(ITEM_SLOT_NECK)
 	if(!istype(collar))
 		return ..()
-	// Build radial menu from the collar's phrase translations.
+	var/list/command_options = collar.get_radial_command_options()
 	var/list/choices = list()
-	for(var/translation_key in GLOB.slave_phrases_translations)
-		var/display_name = GLOB.slave_phrases_translations[translation_key]
+	for(var/display_name in command_options)
 		choices[display_name] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_slice")
 	var/chosen = show_radial_menu(user, src, choices, tooltips = TRUE, require_near = TRUE)
 	if(!chosen || !leash_pet || !leash_master)
 		return
-	// Reverse-lookup the internal key from the display name.
-	var/internal_key = GLOB.reverse_slave_phrases_translations[chosen]
-	if(!internal_key || !collar.phrases_list[internal_key])
+	var/internal_key = command_options[chosen]
+	if(!internal_key)
 		return
-	if(collar.perform_command(normalize_slave_phrase(collar.phrases_list[internal_key])))
+	if(collar.perform_command(internal_key, user, src, "leash"))
 		to_chat(user, span_notice("You tug the leash with authority — the command takes hold."))
 	else
 		to_chat(user, span_warning("The collar doesn't respond."))

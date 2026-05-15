@@ -145,6 +145,18 @@
     background-color: #555;
 }
 
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+}
+
+.page-status {
+    color: #ccc;
+    font-size: 11px;
+}
+
 .preview-panel {
     margin-top: 10px;
     padding: 5px;

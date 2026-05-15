@@ -69,8 +69,9 @@
 	QDEL_NULL(defaultmap)
 
 /datum/controller/configuration/Destroy()
+	if(config == src)
+		config = null
 	full_wipe()
-	config = null
 
 	return ..()
 

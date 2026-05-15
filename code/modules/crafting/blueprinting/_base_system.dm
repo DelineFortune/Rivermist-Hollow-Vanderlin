@@ -1,5 +1,6 @@
 /datum/blueprint_system
 	var/client/holder
+	var/mob/registered_mob
 	var/datum/blueprint_recipe/selected_recipe
 	var/mutable_appearance/preview_appearance
 	var/image/preview_image
@@ -27,8 +28,10 @@
 	holder.screen += buttons
 	holder.click_intercept = src
 	init_blueprint_recipes()
-	RegisterSignal(holder.mob, COMSIG_USER_MOUSE_ENTERED, PROC_REF(on_mouse_moved))
-	RegisterSignal(holder?.mob, COMSIG_ATOM_MOUSE_ENTERED, PROC_REF(on_mouse_moved_pre))
+	registered_mob = holder.mob
+	if(registered_mob)
+		RegisterSignal(registered_mob, COMSIG_USER_MOUSE_ENTERED, PROC_REF(on_mouse_moved))
+		RegisterSignal(registered_mob, COMSIG_ATOM_MOUSE_ENTERED, PROC_REF(on_mouse_moved_pre))
 
 /datum/blueprint_system/proc/quit()
 	if(holder)
@@ -40,27 +43,37 @@
 	if(recipe_browser)
 		recipe_browser.close()
 		recipe_browser = null
-	if(holder?.mob)
-		UnregisterSignal(holder.mob, COMSIG_USER_MOUSE_ENTERED)
-		UnregisterSignal(holder.mob, COMSIG_ATOM_MOUSE_ENTERED)
+	unregister_mouse_signals()
 	qdel(src)
+
+/datum/blueprint_system/proc/unregister_mouse_signals()
+	if(!registered_mob)
+		return
+	UnregisterSignal(registered_mob, COMSIG_USER_MOUSE_ENTERED)
+	UnregisterSignal(registered_mob, COMSIG_ATOM_MOUSE_ENTERED)
+	registered_mob = null
 
 /datum/blueprint_system/Destroy()
 	if(holder)
 		holder.screen -= buttons
 		if(holder.click_intercept == src)
 			holder.click_intercept = null
-	if(holder?.mob)
-		UnregisterSignal(holder.mob, COMSIG_USER_MOUSE_ENTERED)
-		UnregisterSignal(holder.mob, COMSIG_ATOM_MOUSE_ENTERED)
+	unregister_mouse_signals()
 	holder?.player_details?.post_login_callbacks -= li_cb
+	li_cb = null
 	clear_preview()
 	clear_pixel_positioning_dummy()
 	if(recipe_browser)
 		recipe_browser.close()
 		recipe_browser = null
 	QDEL_LIST(recipe_buttons)
+	recipe_buttons = null
 	QDEL_LIST(buttons)
+	buttons = null
+	selected_recipe = null
+	recipe_button = null
+	dir_button = null
+	pixel_button = null
 	holder = null
 	return ..()
 

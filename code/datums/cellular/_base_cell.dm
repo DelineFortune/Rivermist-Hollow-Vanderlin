@@ -123,7 +123,13 @@
 		return
 
 	// Create the new cell
-	var/datum/automata_cell/C = new type(T)
+	var/cell_type = type
+	if(!ispath(cell_type, /datum/automata_cell))
+		var/cell_type_name = cell_type || "null"
+		stack_trace("Automata cell [src] attempted to propagate with invalid type: [cell_type_name]")
+		return
+
+	var/datum/automata_cell/C = new cell_type(T)
 	return C
 
 // Update the state of this cell

@@ -50,6 +50,9 @@
 	var/last_touched = 0
 	var/datum/turf_reservation/reservation
 	var/turf/load_turf
+	var/list/last_reservation_bottom_left
+	var/last_reservation_width = 0
+	var/last_reservation_height = 0
 	var/datum/weakref/pocket_holder_ref
 	var/turf/return_turf
 	var/datum/weakref/return_anchor_ref
@@ -97,6 +100,9 @@
 	pocket_holder_ref = null
 	return_turf = null
 	return_anchor_ref = null
+	last_reservation_bottom_left = null
+	last_reservation_width = 0
+	last_reservation_height = 0
 	return ..()
 
 /datum/pocket_dimension/proc/apply_lifecycle_settings(new_lifecycle_policy = null, new_idle_timeout = null)
@@ -128,6 +134,13 @@
 	var/datum/turf_reservation/current_reservation = reservation
 	reservation = null
 	if(!QDELETED(current_reservation))
+		current_reservation.RefreshTurfs()
+		if(length(current_reservation.bottom_left_coords))
+			last_reservation_bottom_left = current_reservation.bottom_left_coords.Copy()
+			last_reservation_width = current_reservation.width
+			last_reservation_height = current_reservation.height
+		if(current_reservation.Release())
+			SSmapping.cache_released_pocket_reservation(last_reservation_bottom_left, last_reservation_width, last_reservation_height)
 		qdel(current_reservation)
 
 /datum/pocket_dimension/proc/set_pocket_holder(atom/new_pocket_holder)
@@ -188,7 +201,10 @@
 
 	var/padded_width = template.width + (template.padding * 2)
 	var/padded_height = template.height + (template.padding * 2)
-	reservation = SSmapping.RequestPocketBlockReservation(padded_width, padded_height)
+	var/list/preferred_bottom_left
+	if(last_reservation_width == padded_width && last_reservation_height == padded_height && length(last_reservation_bottom_left))
+		preferred_bottom_left = last_reservation_bottom_left
+	reservation = SSmapping.RequestPocketBlockReservation(padded_width, padded_height, preferred_bottom_left = preferred_bottom_left)
 	if(!reservation)
 		return FALSE
 
@@ -197,12 +213,21 @@
 		reservation.bottom_left_coords[2] + template.padding,
 		reservation.bottom_left_coords[3],
 	)
+	var/load_x = load_turf?.x
+	var/load_y = load_turf?.y
+	var/load_z = load_turf?.z
 	if(!load_turf || !template.load(load_turf))
 		load_turf = null
 		release_reservation()
 		return FALSE
 
+	load_turf = locate(load_x, load_y, load_z)
+	if(!load_turf)
+		release_reservation()
+		return FALSE
+	reservation.RefreshTurfs()
 	seal_padding_ring()
+	reservation.RefreshTurfs()
 	cache_loaded_layout()
 	state = POCKET_STATE_ACTIVE
 	restore_hibernated_layout()
@@ -214,6 +239,7 @@
 	if(!SSlighting.initialized)
 		return
 
+	reservation?.RefreshTurfs()
 	var/list/turf/turfs_to_refresh = reservation?.reserved_turfs
 	if(!length(turfs_to_refresh))
 		turfs_to_refresh = affected_turfs
@@ -222,6 +248,7 @@
 		if(QDELETED(current_turf))
 			continue
 
+		clear_displaced_lighting_overlay(current_turf)
 		current_turf.lighting_build_overlay()
 
 		if(current_turf.light_system == STATIC_LIGHT && current_turf.light_power && current_turf.light_outer_range && current_turf.light_on)
@@ -234,6 +261,23 @@
 				continue
 
 			contained_atom.update_light()
+
+/datum/pocket_dimension/proc/clear_displaced_lighting_overlay(turf/current_turf)
+	var/atom/movable/lighting_object/light_overlay = current_turf?.lighting_object
+	if(!light_overlay || light_overlay.loc == current_turf)
+		return
+
+	current_turf.lighting_object = null
+	current_turf.luminosity = 1
+
+	var/turf/actual_turf = get_turf(light_overlay)
+	if(actual_turf?.lighting_object == light_overlay)
+		actual_turf.lighting_object = null
+		actual_turf.luminosity = 1
+
+	light_overlay.myturf = null
+	light_overlay.moveToNullspace()
+	qdel(light_overlay, force = TRUE)
 
 /datum/pocket_dimension/proc/seal_padding_ring()
 	if(!reservation || !load_turf || !template?.padding)

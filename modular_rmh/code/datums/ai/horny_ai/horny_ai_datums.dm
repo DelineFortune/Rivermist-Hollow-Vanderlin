@@ -605,7 +605,7 @@
 /datum/ai_behavior/horny/simple_mob/disarm_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
 	if(!human_target.Adjacent(basic_mob))
 		return FALSE
-	if(!human_target.get_active_held_item() && !human_target.get_inactive_held_item())
+	if(!mob_has_ai_disarmable_held_item(human_target))
 		return FALSE
 	var/datum/intent/disarm_intent = get_horny_disarm_intent()
 	var/datum/intent/cached_intent = basic_mob.used_intent
@@ -619,8 +619,14 @@
 				span_userdanger("[basic_mob] swats at my hands, but I keep hold of my weapon!"), span_hear("I hear a rough struggle over a weapon!"), COMBAT_MESSAGE_RANGE)
 		return TRUE
 
+	var/disarmed_anything = FALSE
 	for(var/obj/item/I in human_target.held_items)
-		human_target.dropItemToGround(I, force = FALSE, silent = FALSE)
+		if(!is_ai_disarmable_held_item(I))
+			continue
+		if(human_target.dropItemToGround(I, force = FALSE, silent = FALSE))
+			disarmed_anything = TRUE
+	if(!disarmed_anything)
+		return TRUE
 	human_target.Stun(5)
 	human_target.visible_message(span_danger("[basic_mob] bats at [human_target]'s hands and disarms them!"), \
 			span_userdanger("[basic_mob] bats at my hands and disarms me!"), span_hear("I hear someone getting disarmed!"), COMBAT_MESSAGE_RANGE)
@@ -868,7 +874,7 @@
 /datum/ai_behavior/horny/human/disarm_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
 	if(!human_target.Adjacent(basic_mob))
 		return FALSE
-	if(!human_target.get_active_held_item() && !human_target.get_inactive_held_item())
+	if(!mob_has_ai_disarmable_held_item(human_target))
 		return FALSE
 	var/datum/intent/disarm_intent = get_horny_disarm_intent()
 	var/datum/intent/cached_intent = basic_mob.used_intent
@@ -882,8 +888,14 @@
 				span_userdanger("[basic_mob] lunges for my weapon, but I keep hold of it!"), span_hear("I hear a struggle over a weapon!"), COMBAT_MESSAGE_RANGE)
 		return TRUE
 
+	var/disarmed_anything = FALSE
 	for(var/obj/item/I in human_target.held_items)
-		human_target.dropItemToGround(I, force = FALSE, silent = FALSE)
+		if(!is_ai_disarmable_held_item(I))
+			continue
+		if(human_target.dropItemToGround(I, force = FALSE, silent = FALSE))
+			disarmed_anything = TRUE
+	if(!disarmed_anything)
+		return TRUE
 	human_target.Stun(5)
 	human_target.visible_message(span_danger("[basic_mob] disarms [human_target]!"), \
 			span_userdanger("[basic_mob] disarms me!"), span_hear("I hear someone getting punished!"), COMBAT_MESSAGE_RANGE)
