@@ -77,6 +77,52 @@
 	if(slot == ORGAN_SLOT_ANUS || slot == ORGAN_SLOT_VAGINA)
 		SEND_SIGNAL(src, COMSIG_BODYSTORAGE_CHANGED)
 
+/obj/item/organ/genitals/filling_organ/on_body_storage_inserted(obj/item/inserted_item, target_layer)
+	. = ..()
+	if(target_layer == STORAGE_LAYER_OUTER || !inserted_item || !reagents?.total_volume)
+		return
+	spill_excess_reagents()
+
+/obj/item/organ/genitals/filling_organ/proc/get_reagent_capacity()
+	var/captarget
+	if(organ_sizeable)
+		captarget = storage_per_size + (storage_per_size * organ_size)
+	else
+		captarget = max_reagents
+	if(fertility && pregnant)
+		captarget *= 0.5
+	else if(has_oviposition_pregnancy())
+		captarget *= 0.5
+	if(length(contents))
+		for(var/obj/item/thing as anything in contents)
+			if(thing.type != /obj/item/dildo/plug) //plugs wont take space as they are especially for this.
+				captarget -= thing.w_class * 10
+	if(damage)
+		captarget = max(0, captarget - damage * 10)
+	return max(0, captarget)
+
+/obj/item/organ/genitals/filling_organ/proc/spill_reagents(amount)
+	if(!reagents || amount <= 0)
+		return 0
+	var/turf/ownerloc = get_turf(owner)
+	if(!ownerloc)
+		return 0
+	var/spill_amount = min(reagents.total_volume, amount)
+	ownerloc.add_liquid_from_reagents(reagents, amount = spill_amount)
+	reagents.remove_all(spill_amount)
+	return spill_amount
+
+/obj/item/organ/genitals/filling_organ/proc/spill_excess_reagents()
+	if(!reagents)
+		return 0
+	var/captarget = get_reagent_capacity()
+	if(captarget != reagents.maximum_volume)
+		reagents.maximum_volume = captarget
+	var/excess_amount = reagents.total_volume - captarget
+	if(excess_amount <= 0)
+		return 0
+	return spill_reagents(excess_amount)
+
 /obj/item/organ/genitals/filling_organ/on_life()
 	var/mob/living/carbon/human/H = owner
 
@@ -88,21 +134,7 @@
 	//updates size caps
 	var/captarget
 	if(!isanimal(H))
-		if(organ_sizeable)
-			captarget = storage_per_size + (storage_per_size * organ_size) // Updates the max_reagents in case the organ size changes
-		else
-			captarget = max_reagents
-		if(fertility && pregnant) //preg size reduce
-			captarget *= 0.5
-		else if(has_oviposition_pregnancy())
-			captarget *= 0.5
-		if(length(contents))
-			for(var/obj/item/thing as anything in contents)
-				if(thing.type != /obj/item/dildo/plug) //plugs wont take space as they are especially for this.
-					captarget -= thing.w_class*10 //anything else reduce space inside
-		if(damage)
-			captarget = max(0, captarget-damage*10)
-		captarget = max(0, captarget)
+		captarget = get_reagent_capacity()
 		if(captarget != reagents.maximum_volume)
 			if(!(reagents.has_reagent(/datum/reagent/consumable/femcum) && (reagents.get_reagent_amount(/datum/reagent/consumable/femcum) > captarget*0.8))) //so that vaginas don't spam messages
 				reagents.maximum_volume = captarget
@@ -131,12 +163,9 @@
 		if(world.time > last_damagespill_alert + 30 SECONDS)
 			last_damagespill_alert = world.time
 			owner.visible_message(span_info("[owner]'s [pick(altnames)] can not hold all of the liquids in anymore and spill some of it's contents!"),span_info("My [pick(altnames)] can not hold all of the liquids in anymore and spill some of it's contents!!"),span_unconscious("I hear a splash."))
-		var/turf/ownerloc = get_turf(owner)
 		var/overflow_amount = reagents.total_volume - reagents.maximum_volume
 		var/spill_amount = min(reagents.total_volume, overflow_amount + 15)
-		if(ownerloc && spill_amount > 0)
-			ownerloc.add_liquid_from_reagents(reagents, amount = spill_amount)
-			reagents.remove_all(spill_amount)
+		spill_reagents(spill_amount)
 
 	// modify nutrition to generate reagents
 	if(istype(src, /obj/item/organ/genitals/filling_organ/vagina)) //generate lube from arousal

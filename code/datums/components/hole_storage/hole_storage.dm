@@ -129,6 +129,7 @@
 	var/list/t_layer = all_layers[target_layer]
 	t_layer.Add(incoming_item)
 	layer_storage_cur_bulk[target_layer] += incoming_item.body_storage_bulk
+	organ_storing.on_body_storage_inserted(incoming_item, target_layer)
 	var/diff = layer_storage_cur_bulk[target_layer] - layer_storage_max_bulk[target_layer]
 	if(incoming_item.has_body_storage_overlay)
 		if(isnull(incoming_item.bstorage_visible_layer) || incoming_item.bstorage_visible_layer == target_layer)
@@ -406,6 +407,9 @@
 /obj/item/organ/proc/add_bodystorage(mob/living/the_mob, location = null, hole_type)
 	if(!GetComponent(hole_type))
 		AddComponent(hole_type, src, location, the_mob)
+
+/obj/item/organ/proc/on_body_storage_inserted(obj/item/inserted_item, target_layer)
+	return
 
 
 /mob/living/proc/get_organs_items()
