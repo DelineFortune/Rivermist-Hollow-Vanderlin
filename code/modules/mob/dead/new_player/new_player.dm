@@ -389,7 +389,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 		if(world.time < GLOB.job_respawn_delays[ckey])
 			return JOB_UNAVAILABLE_JOB_COOLDOWN
 
-	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
+	if(!job.has_open_position(latejoin))
 		return JOB_UNAVAILABLE_SLOTFULL
 
 	if(is_banned_from(ckey, rank))
@@ -437,7 +437,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
-	var/error = IsJobUnavailable(rank)
+	var/error = IsJobUnavailable(rank, TRUE)
 	if(error != JOB_AVAILABLE)
 		alert(src, get_job_unavailable_error_message(error, rank))
 		return FALSE
@@ -500,7 +500,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 /mob/dead/new_player/proc/LateChoices()
 	var/list/dat = list("<div class='notice' style='font-style: normal; font-size: 14px; margin-bottom: 2px; padding-bottom: 0px'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time, 1)]</div>")
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
-		if(prioritized_job.current_positions >= prioritized_job.total_positions)
+		if(!prioritized_job.has_open_position(TRUE))
 			SSjob.prioritized_jobs -= prioritized_job
 	dat += "<table><tr><td valign='top'>"
 	var/column_counter = 0
@@ -608,10 +608,11 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 					var/used_name = job_datum.title
 					if(client.prefs.gender == FEMALE && job_datum.f_title)
 						used_name = job_datum.f_title
+					var/current_positions = job_datum.get_position_count()
 					if(job_datum in SSjob.prioritized_jobs)
-						dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[used_name] ([job_datum.current_positions])</span></a>"
+						dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[used_name] ([current_positions])</span></a>"
 					else
-						dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[used_name] ([job_datum.current_positions])</a>"
+						dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[used_name] ([current_positions])</a>"
 
 			dat += "</fieldset><br>"
 			column_counter++

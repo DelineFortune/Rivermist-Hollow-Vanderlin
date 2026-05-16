@@ -727,6 +727,31 @@
 
 	current_positions = max(current_positions + offset, 0)
 
+/datum/job/proc/uses_adventurer_slot_pool()
+	if(!(department_flag & ADVENTURERS) || !length(GLOB.adventurers_positions))
+		return FALSE
+	return title in GLOB.adventurers_positions
+
+/datum/job/proc/get_position_count()
+	if(uses_adventurer_slot_pool())
+		return SSjob.get_adventurer_slot_count()
+	return current_positions
+
+/datum/job/proc/get_position_limit(latejoin = FALSE)
+	if(uses_adventurer_slot_pool())
+		return SSjob.get_adventurer_slot_limit(latejoin)
+	return latejoin ? total_positions : spawn_positions
+
+/datum/job/proc/has_open_position(latejoin = FALSE)
+	var/position_limit = get_position_limit(latejoin)
+	return position_limit == -1 || get_position_count() < position_limit
+
+/datum/job/proc/set_total_positions(new_total_positions)
+	if(uses_adventurer_slot_pool())
+		SSjob.set_adventurer_slot_limit(new_total_positions)
+		return
+	total_positions = new_total_positions
+
 /datum/job/proc/add_spells(mob/living/equipped_human)
 	for(var/datum/action/cooldown/spell/spell as anything in spells)
 		equipped_human.add_spell(spell, source = src)
@@ -766,7 +791,7 @@
 	return spawn_positions
 
 /datum/job/proc/get_total_positions(latejoin)
-	return latejoin ? total_positions : spawn_positions
+	return get_position_limit(latejoin)
 
 /datum/job/proc/get_json_data()
 	var/list/data = list()

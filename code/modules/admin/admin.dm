@@ -849,16 +849,18 @@
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		count++
 		var/J_title = html_encode(job.title)
-		var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
-		var/J_totPos = html_encode(job.total_positions)
-		dat += "<tr><td>[J_title]:</td> <td>[J_opPos]/[job.total_positions < 0 ? " (unlimited)" : J_totPos]"
+		var/current_positions = job.get_position_count()
+		var/total_positions = job.get_position_limit(TRUE)
+		var/J_opPos = html_encode(current_positions)
+		var/J_totPos = html_encode(total_positions)
+		dat += "<tr><td>[J_title]:</td> <td>[J_opPos]/[total_positions < 0 ? " (unlimited)" : J_totPos]"
 
 		dat += "</td>"
 		dat += "<td>"
-		if(job.total_positions >= 0)
+		if(total_positions >= 0)
 			dat += "<A href='byond://?src=[REF(src)];[HrefToken()];customjobslot=[job.title]'>Custom</A> | "
 			dat += "<A href='byond://?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add 1</A> | "
-			if(job.total_positions > job.current_positions)
+			if(total_positions > current_positions)
 				dat += "<A href='byond://?src=[REF(src)];[HrefToken()];removejobslot=[job.title]'>Remove</A> | "
 			else
 				dat += "Remove | "
