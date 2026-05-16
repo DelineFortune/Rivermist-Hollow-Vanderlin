@@ -69,7 +69,7 @@
 	edelay_type = 1 // Leaving as 1 so you get that small do_after for dramatic purposes
 	body_parts_covered = HEAD
 	resistance_flags = FLAMMABLE
-	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDETAIL //hide tail for more anonimity
 	block2add = FOV_BEHIND
 
 /obj/item/clothing/head/hooded/equipped(mob/user, slot)
