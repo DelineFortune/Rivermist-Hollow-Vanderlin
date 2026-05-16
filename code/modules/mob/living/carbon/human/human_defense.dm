@@ -657,9 +657,8 @@
 				examination += span_info("[user == src ? "my" : "[user.p_their()]"] [pick(forgan.altnames)] are <bold>[forgan.reagents.total_volume]/[forgan.reagents.maximum_volume] liguae</bold> full.[health_status]")
 			else
 				examination += span_info("[user == src ? "my" : "[user.p_their()]"] [pick(forgan.altnames)] has no fluids.[health_status]")
-			var/list/stored_items = list()
-			SEND_SIGNAL(userino, COMSIG_BODYSTORAGE_GET_2D_ITEM_LIST, stored_items, forgan.slot)
-			if(stored_items)
+			var/list/stored_items = forgan.contents
+			if(length(stored_items))
 				examination += span_info("There is <bold>[english_list(stored_items)]</bold> in [user == src ? "my" : "[user.p_their()]"] [pick(forgan.altnames)].")
 			continue
 		examination += "ø ------------ ø</span>"
