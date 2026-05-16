@@ -119,7 +119,8 @@
 	implements = list(
 		TOOL_RETRACTOR = 90,
 		TOOL_IMPROVISED_RETRACTOR = 60,
-		TOOL_HAND = 40,
+		TOOL_IMPROVISED_SCALPEL = 60,
+		TOOL_SCALPEL = 80,
 	)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(

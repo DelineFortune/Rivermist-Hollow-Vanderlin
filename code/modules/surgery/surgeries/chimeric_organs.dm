@@ -58,6 +58,7 @@
 	name = "perform chimeric ritual"
 	desc = "Transform a normal organ into a chimeric organ capable of accepting grafted nodes."
 	implements = list(
+		TOOL_IMPROVISED_SCALPEL = 60,
 		TOOL_SCALPEL = 80,
 		TOOL_SHARP = 60,
 	)
@@ -121,6 +122,7 @@
 	name = "graft humor"
 	desc = "Graft a harvested humor into a chimeric organ."
 	implements = list(
+		TOOL_IMPROVISED_SCALPEL = 60,
 		TOOL_SCALPEL = 80,
 		TOOL_SHARP = 60,
 	)
@@ -309,6 +311,7 @@
 	name = "attempt organ repair"
 	desc = "Try to repair a failed chimeric organ. Does not restore blood requirements."
 	implements = list(
+		TOOL_IMPROVISED_SCALPEL = 60,
 		TOOL_SCALPEL = 80,
 		TOOL_SHARP = 60,
 	)

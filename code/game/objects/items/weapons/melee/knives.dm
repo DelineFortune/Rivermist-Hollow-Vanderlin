@@ -214,6 +214,7 @@
 	force = DAMAGE_DAGGER
 	possible_item_intents = list(DAGGER_CUT, DAGGER_THRUST)
 	sellprice = 12
+	tool_behaviour = TOOL_IMPROVISED_SCALPEL
 
 	weapon_special = /datum/special_intent/triple_stab
 
