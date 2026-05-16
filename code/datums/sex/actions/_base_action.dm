@@ -377,7 +377,7 @@
 		user.mouth_blocked = TRUE
 	if(gags_target)
 		target.mouth_blocked = TRUE
-	if(requires_hole_storage)
+	if(requires_hole_storage && !issimple(target)) //simple mobs dont have anything so skip.
 		if(flipped)
 			if(!try_store_in_hole(target, user))
 				return FALSE

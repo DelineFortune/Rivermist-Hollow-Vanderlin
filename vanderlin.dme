@@ -3943,7 +3943,6 @@
 #include "modular_rmh\code\modules\antagonists\werewolf\werewolf_contract_ledger.dm"
 #include "modular_rmh\code\modules\antagonists\werewolf\werewolf_contract_tracking.dm"
 #include "modular_rmh\code\modules\clothing\nyctea_clothes.dm"
-#include "modular_rmh\code\modules\mapping\trap_pocket_dimensions.dm"
 #include "modular_rmh\code\modules\antagonists\werewolf\werewolf_lair.dm"
 #include "modular_rmh\code\modules\antagonists\werewolf\werewolf_objectives.dm"
 #include "modular_rmh\code\modules\antagonists\werewolf\werewolf_trap_lair.dm"

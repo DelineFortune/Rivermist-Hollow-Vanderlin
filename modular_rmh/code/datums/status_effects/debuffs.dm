@@ -269,7 +269,7 @@
 
 /datum/status_effect/debuff/bloatone
 	id = "bloatone"
-	duration = 5 MINUTES
+	duration = 8 SECONDS //will be reapplied by the organ if the conditions are still met continiously.
 	alert_type = /atom/movable/screen/alert/status_effect/bloatone
 	examine_text = span_notice("Their belly is bulging...")
 	effectedstats = list("constitution" = 1, "speed" = -1)
@@ -279,14 +279,6 @@
 	timer = 60 MINUTES
 	stress_change = -1
 
-/datum/status_effect/debuff/bloatone/on_apply()
-	owner.add_stress(/datum/stress_event/bloatsex)
-	. = ..()
-
-/datum/status_effect/debuff/bloatone/on_remove()
-	owner.remove_stress(/datum/stress_event/bloatsex)
-	. = ..()
-
 /atom/movable/screen/alert/status_effect/bloatone
 	name = "Bloated"
 	desc = "Bit full..."
@@ -295,7 +287,7 @@
 
 /datum/status_effect/debuff/bloattwo
 	id = "bloattwo"
-	duration = 5 MINUTES
+	duration = 8 SECONDS //will be reapplied by the organ if the conditions are still met continiously.
 	alert_type = /atom/movable/screen/alert/status_effect/bloattwo
 	examine_text = span_notice("Their belly is bulging largely...")
 	effectedstats = list("constitution" = 2, "speed" = -2)

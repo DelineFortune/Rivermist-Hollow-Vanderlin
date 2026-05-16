@@ -252,8 +252,13 @@
 			break
 
 		var/do_time = action.do_time / get_speed_multiplier()
-		var/do_after_flags = IGNORE_USER_DIR_CHANGE | IGNORE_HELD_ITEM | IGNORE_SLOWDOWNS | IGNORE_SLOWDOWNS | IGNORE_USER_DOING
+		var/do_after_flags = IGNORE_USER_DIR_CHANGE | IGNORE_HELD_ITEM | IGNORE_SLOWDOWNS | IGNORE_SLOWDOWNS | IGNORE_USER_DOING | IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE
 		var/interaction_key = "sex_action_[REF(action)]"
+		//loc check for proximity instead of move disruption.
+		if(!(target in view(1, user)))
+			if(current_action)
+				stop_current_action()
+			return
 		if(!do_after(user, do_time, target = target, timed_action_flags = do_after_flags, interaction_key = interaction_key))
 			break
 
