@@ -86,7 +86,7 @@
 		if(1)
 			to_fire.damage = 35
 			to_fire.exp_light = 2
-			to_fire.exp_fire = 2
+			to_fire.exp_fire = 1
 			to_fire.exp_heavy = 0
 			to_fire.speed = 3
 
@@ -169,10 +169,10 @@
 /obj/projectile/magic/aoe/fireball/rogue
 	name = "fireball"
 	exp_heavy = 0
-	exp_light = 3
+	exp_light = 2
 	exp_flash = 0
-	exp_fire = 3
-	damage = 50
+	exp_fire = 1
+	damage = 35
 	damage_type = BURN
 	nodamage = FALSE
 	flag = "magic"
