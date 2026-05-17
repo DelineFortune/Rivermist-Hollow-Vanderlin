@@ -165,7 +165,8 @@
 		/datum/supply_pack/seeds/strawberry,
 		// Narcotics
 		/datum/supply_pack/narcotics/ozium,
-		/datum/supply_pack/narcotics/poison
+		/datum/supply_pack/narcotics/poison,
+		/datum/supply_pack/medicine/antipregpot
 	)
 	exotic_pool = list(
 		/datum/supply_pack/apparel/silkcoat,

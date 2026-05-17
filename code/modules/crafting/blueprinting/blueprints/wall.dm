@@ -120,6 +120,35 @@
 	skillcraft = /datum/attribute/skill/craft/masonry
 	craftdiff = 2
 
+/datum/blueprint_recipe/wall/sandstone
+	name = "Sandstone Wall"
+	desc = "A wall of fitted sandstone."
+	result_type = /turf/closed/wall/mineral/sandstone
+	required_materials = list(
+		/obj/item/natural/stone = 3
+	)
+	construct_tool = /obj/item/weapon/hammer
+	category = "Walls"
+	floor_object = TRUE
+
+	skillcraft = /datum/attribute/skill/craft/masonry
+	craftdiff = 1
+
+/datum/blueprint_recipe/wall/sandbrick
+	name = "Sandbrick Wall"
+	desc = "A wall of clay-bound sandstone bricks."
+	result_type = /turf/closed/wall/mineral/sandbrick
+	required_materials = list(
+		/obj/item/natural/stoneblock = 2,
+		/obj/item/natural/clay = 1
+	)
+	construct_tool = /obj/item/weapon/hammer
+	category = "Walls"
+	floor_object = TRUE
+
+	skillcraft = /datum/attribute/skill/craft/masonry
+	craftdiff = 2
+
 /datum/blueprint_recipe/wall/fancyswall
 	name = "Decorated Stone Wall"
 	desc = "A decorated stone wall."

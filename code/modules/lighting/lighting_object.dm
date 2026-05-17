@@ -18,8 +18,10 @@
 	color = LIGHTING_BASE_MATRIX
 
 	myturf = loc
-	if(myturf.lighting_object)
-		qdel(myturf.lighting_object, force = TRUE)
+	var/atom/movable/lighting_object/old_lighting_object = myturf.lighting_object
+	if(old_lighting_object && old_lighting_object != src)
+		myturf.lighting_object = null
+		qdel(old_lighting_object, force = TRUE)
 	myturf.lighting_object = src
 	myturf.luminosity = 0
 
@@ -28,14 +30,20 @@
 
 /atom/movable/lighting_object/Destroy(force)
 	if (force)
+		needs_update = FALSE
 		SSlighting.objects_queue -= src
 		if (loc != myturf)
 			var/turf/oldturf = get_turf(myturf)
 			var/turf/newturf = get_turf(loc)
 			stack_trace("A lighting object was qdeleted with a different loc then it is suppose to have ([COORD(oldturf)] -> [COORD(newturf)])")
 		if (isturf(myturf))
-			myturf.lighting_object = null
+			if(myturf.lighting_object == src)
+				myturf.lighting_object = null
 			myturf.luminosity = 1
+		var/turf/current_turf = loc
+		if(isturf(current_turf) && current_turf.lighting_object == src)
+			current_turf.lighting_object = null
+			current_turf.luminosity = 1
 		myturf = null
 
 		return ..()

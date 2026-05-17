@@ -16,7 +16,9 @@
 
 /turf/proc/lighting_clear_overlay()
 	if (lighting_object)
-		qdel(lighting_object, TRUE)
+		var/atom/movable/lighting_object/old_lighting_object = lighting_object
+		lighting_object = null
+		qdel(old_lighting_object, TRUE)
 
 	var/datum/lighting_corner/C
 	var/thing
@@ -29,7 +31,9 @@
 // Builds a lighting object for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
 	if(lighting_object)
-		qdel(lighting_object, force=TRUE) //Shitty fix for lighting objects persisting after death
+		var/atom/movable/lighting_object/old_lighting_object = lighting_object
+		lighting_object = null
+		qdel(old_lighting_object, force=TRUE) //Shitty fix for lighting objects persisting after death
 
 	var/area/A = loc
 	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)
@@ -142,5 +146,4 @@
 			continue
 
 		corners[i] = new/datum/lighting_corner(src, GLOB.LIGHTING_CORNER_DIAGONAL[i])
-
 

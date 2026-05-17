@@ -76,6 +76,17 @@ abstract types are automatically excluded.
 		/obj/item/clothing/wrists/bracers/ancient,
 		/obj/item/clothing/head/menacing/mad_touched_treasure_hunter, //cursed
 		/obj/item/clothing/face/facemask/steel/mad_touched, //cursed
+		/obj/item/clothing/neck/psycross/silver/divine, // deity-specific alias, not player craftable
+		/obj/item/clothing/neck/psycross/silver/divine/astrata, // deity-specific alias, not player craftable
+		/obj/item/clothing/neck/psycross/silver/divine/noc, // deity-specific alias, not player craftable
+		/obj/item/clothing/neck/psycross/silver/divine/dendor, // deity-specific alias, not player craftable
+		/obj/item/clothing/neck/psycross/silver/divine/abyssor, // deity-specific alias, not player craftable
+		/obj/item/clothing/neck/psycross/silver/divine/necra, // deity-specific alias, not player craftable
+		/obj/item/clothing/neck/psycross/silver/divine/ravox, // deity-specific alias, not player craftable
+		/obj/item/clothing/neck/psycross/silver/divine/xylix, // deity-specific alias, not player craftable
+		/obj/item/clothing/neck/psycross/silver/divine/eora, // deity-specific alias, not player craftable
+		/obj/item/clothing/neck/psycross/silver/divine/pestra, // deity-specific alias, not player craftable
+		/obj/item/clothing/neck/psycross/silver/divine/malum, // deity-specific alias, not player craftable
 
 		/obj/item/clothing/wrists/bracers/naledi //Inqstuff
 	)

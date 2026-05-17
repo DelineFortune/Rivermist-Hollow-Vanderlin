@@ -144,7 +144,7 @@
 /area)
 "ci" = (
 /obj/structure/fluff/railing/border/west,
-/turf/closed/wall/mineral/rogue/sandbrick,
+/turf/closed/wall/mineral/sandbrick,
 /area)
 "cn" = (
 /obj/structure/chair/wood/alt{
@@ -405,7 +405,7 @@
 /turf/open/floor/sand/sandstone,
 /area)
 "ij" = (
-/turf/closed/wall/mineral/rogue/sandbrick,
+/turf/closed/wall/mineral/sandbrick,
 /area)
 "ip" = (
 /obj/structure/fluff/railing/wood,
@@ -1491,7 +1491,7 @@
 /area)
 "CS" = (
 /obj/structure/fluff/railing/border/east,
-/turf/closed/wall/mineral/rogue/sandbrick,
+/turf/closed/wall/mineral/sandbrick,
 /area)
 "CY" = (
 /obj/effect/decal/borderfall{
@@ -2536,7 +2536,7 @@
 /turf/closed/wall/mineral/desert_sandstone,
 /area)
 "YY" = (
-/turf/closed/wall/mineral/rogue/sandstone,
+/turf/closed/wall/mineral/sandstone,
 /area)
 "YZ" = (
 /obj/structure/rack,

@@ -65,7 +65,10 @@
 	var/obj/item/reagent_containers/food/snacks/produce/poppy/poppy = allocate(/obj/item/reagent_containers/food/snacks/produce/poppy)
 	human.vars["wear_mask"] = poppy
 
-	TEST_ASSERT_EQUAL(human.has_smoke_protection(), FALSE, "Human smoke protection should ignore non-clothing mask-slot contents.")
+	var/has_protection = human.has_smoke_protection()
+	human.vars["wear_mask"] = null
+
+	TEST_ASSERT_EQUAL(has_protection, FALSE, "Human smoke protection should ignore non-clothing mask-slot contents.")
 
 /datum/unit_test/carbon_cremation_handles_missing_chest
 #ifdef FOCUS_RUNTIME_REGRESSION_TEST
@@ -263,3 +266,79 @@
 	var/obj/effect/decal/marker_export/marker = allocate(/obj/effect/decal/marker_export, run_loc_floor_bottom_left)
 
 	TEST_ASSERT((marker in GLOB.quest_turn_in_markers), "Quest turn-in markers should be indexed instead of found by scanning the whole world.")
+
+/datum/unit_test/retrieval_quest_turn_in_defers_item_deletion
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/retrieval_quest_turn_in_defers_item_deletion/Run()
+	var/datum/quest/quest = allocate(/datum/quest)
+	quest.quest_type = QUEST_RETRIEVAL
+	quest.target_item_type = /obj/item/natural/stone
+	var/obj/item/natural/stone/stone = allocate(/obj/item/natural/stone, run_loc_floor_bottom_left)
+	var/datum/component/quest_object/retrieval/retrieval = stone.AddComponent(/datum/component/quest_object/retrieval, quest)
+	allocate(/obj/effect/decal/marker_export, run_loc_floor_bottom_left)
+
+	retrieval.on_item_dropped(stone, null)
+
+	TEST_ASSERT_EQUAL(quest.progress_current, 1, "Retrieval turn-in should count quest progress.")
+	TEST_ASSERT_EQUAL(quest.complete, TRUE, "Retrieval turn-in should complete the quest when enough progress is made.")
+	TEST_ASSERT(!QDELETED(stone), "Retrieval turn-in should not qdel the item inside the drop signal.")
+
+/datum/unit_test/smallrat_death_spawns_dead_rat_on_turf
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/smallrat_death_spawns_dead_rat_on_turf/Run()
+	var/turf/start_turf = get_turf(run_loc_floor_bottom_left)
+	var/obj/item/reagent_containers/food/snacks/smallrat/rat = allocate(/obj/item/reagent_containers/food/snacks/smallrat, start_turf)
+
+	rat.atom_destruction()
+
+	var/obj/item/reagent_containers/food/snacks/smallrat/dead/dead_rat = locate(/obj/item/reagent_containers/food/snacks/smallrat/dead) in start_turf
+	TEST_ASSERT_NOTNULL(dead_rat, "Killing a live smallrat should leave a dead smallrat on the turf instead of inside the qdeleted rat.")
+	TEST_ASSERT(QDELETED(rat), "The live smallrat should still be qdeleted after atom destruction.")
+	qdel(dead_rat)
+
+/datum/unit_test/piercing_feature_binds_existing_item
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/piercing_feature_binds_existing_item/Run()
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
+	var/datum/bodypart_feature/piercing/feature = allocate(/datum/bodypart_feature/piercing)
+	var/obj/item/piercings/rings/rings = allocate(/obj/item/piercings/rings, run_loc_floor_bottom_left)
+
+	feature.set_accessory_type(rings.sprite_acc, rings.color, null)
+	feature.set_piercings_item(rings, human)
+
+	TEST_ASSERT_EQUAL(human.piercings_item, rings, "Applying piercings should bind the worn item to the human.")
+	TEST_ASSERT_EQUAL(rings.piercings_feature, feature, "Applying piercings should bind the worn item to its bodypart feature.")
+
+	if(human.piercings_item == rings)
+		human.piercings_item = null
+	if(feature.piercings_item == rings)
+		feature.piercings_item = null
+	if(rings.piercings_feature == feature)
+		rings.piercings_feature = null
+
+/datum/unit_test/visual_ui_teardown_clears_mind_backrefs
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/visual_ui_teardown_clears_mind_backrefs/Run()
+	var/datum/mind/test_mind = allocate(/datum/mind)
+	var/datum/visual_ui/test_hello_world_parent/ui = new /datum/visual_ui/test_hello_world_parent(test_mind)
+	var/obj/abstract/visual_ui_element/first_element = ui.elements[1]
+
+	TEST_ASSERT_EQUAL(test_mind.active_uis[ui.uniqueID], ui, "Visual UIs should register on their owner mind.")
+
+	qdel(ui)
+
+	TEST_ASSERT(!("Hello World" in test_mind.active_uis), "Deleting a visual UI should remove it from the owner mind.")
+	TEST_ASSERT(!("Hello World Panel" in test_mind.active_uis), "Deleting a visual UI should remove child UIs from the owner mind.")
+	TEST_ASSERT_NULL(first_element.parent, "Deleting a visual UI should clear element parent backrefs.")

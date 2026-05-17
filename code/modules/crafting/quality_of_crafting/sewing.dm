@@ -192,6 +192,17 @@
 				/obj/item/natural/fibers = 1)
 	category = "Hat"
 
+/datum/repeatable_crafting_recipe/sewing/bunny_ears
+	name = "bunny ears"
+	output = /obj/item/clothing/head/bunny
+	requirements = list(
+		/obj/item/natural/cloth = 2,
+		/obj/item/natural/fibers = 2,
+		/obj/item/natural/fur = 1,
+	)
+	category = "Hat"
+	craftdiff = 1
+
 /datum/repeatable_crafting_recipe/sewing/turban
 	name = "turban"
 	output = /obj/item/clothing/head/turban

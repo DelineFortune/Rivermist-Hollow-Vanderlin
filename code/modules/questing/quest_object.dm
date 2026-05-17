@@ -199,6 +199,7 @@
 
 /// Component for retrieval quests - handles item collection
 /datum/component/quest_object/retrieval
+	var/completion_counted = FALSE
 
 /datum/component/quest_object/retrieval/Initialize(datum/quest/target_quest)
 	. = ..()
@@ -206,21 +207,29 @@
 		return
 
 /datum/component/quest_object/retrieval/on_item_dropped(obj/item/dropped_item, mob/user)
+	if(completion_counted || QDELETED(dropped_item))
+		return
+
 	var/datum/quest/Q = quest_ref.resolve()
 	if(!Q || Q.complete)
 		return
 
 	var/turf/drop_turf = get_turf(dropped_item)
+	if(!drop_turf)
+		return
 
 	var/obj/effect/decal/marker_export/marker = locate() in drop_turf
 
 	if(marker)
 		if(Q.target_item_type && istype(dropped_item, Q.target_item_type))
+			completion_counted = TRUE
 			// Notify quest of progress
 			Q.progress_current++
 			Q.on_progress_update()
 			do_sparks(3, TRUE, get_turf(dropped_item))
-			qdel(dropped_item)
+			Q.remove_tracked_atom(dropped_item)
+			QDEL_IN(dropped_item, 0)
+			qdel(src)
 			return
 
 /// Component for courier quests - handles delivery

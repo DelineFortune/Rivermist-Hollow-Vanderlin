@@ -279,14 +279,19 @@
 	. = ..()
 
 /obj/machinery/light/fueled/torchholder/Destroy()
-	if(torchy)
+	if(istype(torchy))
 		QDEL_NULL(torchy)
+	else
+		torchy = null
 	return ..()
 
 /obj/machinery/light/fueled/torchholder/OnCrafted(dirin, user)
 	if(dir == SOUTH)
 		pixel_y = base_pixel_y + 32
-	QDEL_NULL(torchy)
+	if(istype(torchy))
+		QDEL_NULL(torchy)
+	else
+		torchy = null
 	. = ..()
 
 /obj/machinery/light/fueled/torchholder/process()

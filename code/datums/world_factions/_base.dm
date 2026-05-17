@@ -187,7 +187,7 @@
 	return picks
 
 /datum/world_faction/proc/initialize_faction_stock()
-	faction_supply_packs.Cut() // Clear existing
+	QDEL_LIST_ASSOC_VAL(faction_supply_packs) // Clear existing stock datums
 
 	// Always add essential items first
 	for(var/pack_type in essential_packs)
@@ -233,6 +233,8 @@
 		var/datum/supply_pack/pack = new selected_pack()
 		if(pack.contains)
 			faction_supply_packs[selected_pack] = pack
+		else
+			qdel(pack)
 
 /**
  * Generates initial bounties using the weighted system
@@ -328,7 +330,9 @@
 			break
 		var/removed_pack = pick(items_to_remove)
 		items_to_remove -= removed_pack
+		var/datum/supply_pack/removed_supply_pack = faction_supply_packs[removed_pack]
 		faction_supply_packs -= removed_pack
+		qdel(removed_supply_pack)
 
 	// Calculate how many new items we need from each pool (reputation-scaled)
 	var/current_non_essential = length(faction_supply_packs) - length(essential_packs)
@@ -593,15 +597,13 @@
 
 	// First, find all compatible packs with this trader type
 	for(var/pack_type in all_packs)
-		var/passed = FALSE
-		var/datum/supply_pack/pack = new pack_type()
+		var/datum/supply_pack/pack = SSmerchant.supply_packs[pack_type]
+		if(!pack)
+			continue
 		for(var/datum/supply_pack/allowed_pack_type as anything in trader_data.base_type)
 			if(istype(pack, allowed_pack_type))
 				compatible_packs[pack_type] = pack
-				passed = TRUE
 				break
-		if(!passed)
-			qdel(pack)
 
 	// Determine how many items this trader should have based on reputation
 	var/tier = get_reputation_tier()
@@ -682,11 +684,6 @@
 				faction_products[pack.contains] = list(price, quantity)
 
 		unified_selection -= selected_entry
-
-	// Clean up all pack instances
-	for(var/pack_type in compatible_packs)
-		var/datum/supply_pack/pack = compatible_packs[pack_type]
-		qdel(pack)
 
 	if(length(faction_products))
 		trader_data.initial_products = faction_products

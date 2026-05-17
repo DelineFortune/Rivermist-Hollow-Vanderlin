@@ -142,10 +142,12 @@
 			var/delay = under_clothes ? 25 : 40
 			if(do_after(user, delay, target = src))
 				var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
-				chest.remove_bodypart_feature(piercings_item.piercings_feature)
-				piercings_item.forceMove(get_turf(src))
-				src.put_in_hands(piercings_item)
-				piercings_item = null
+				var/obj/item/piercings/removed_piercings = piercings_item
+				chest.remove_bodypart_feature(removed_piercings.piercings_feature)
+				removed_piercings.forceMove(get_turf(src))
+				src.put_in_hands(removed_piercings)
+				if(piercings_item == removed_piercings)
+					piercings_item = null
 				regenerate_icons()
 	if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE))
 		var/mob/living/livinguser = user
