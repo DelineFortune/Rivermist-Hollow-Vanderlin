@@ -149,7 +149,7 @@
 	name = "Orgasm Broken"
 	desc = "My legs are shaking, but I need more."
 	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
-	icon_state = "fentanyl"
+	icon_state = "orgasm_broken"
 
 /datum/status_effect/debuff/nympho_addiction
 	id = "nympho_addiction"
@@ -200,7 +200,8 @@
 /atom/movable/screen/alert/status_effect/debuff/cumbrained
 	name = "Cum Brained"
 	desc = "It's hard to think of anything but sex..."
-	icon_state = "debuff"
+	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
+	icon_state = "cum_brained"
 
 /datum/status_effect/debuff/cumbrained/tick()
 	. = ..()
@@ -243,6 +244,8 @@
 	name = "Spent Loins"
 	desc = "It's starting to hurt a bit..."
 	icon_state = "debuff"
+	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
+	icon_state = "spent_loins"
 
 
 /datum/status_effect/debuff/loinspent/tick()

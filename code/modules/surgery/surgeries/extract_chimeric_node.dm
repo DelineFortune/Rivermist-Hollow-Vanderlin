@@ -16,6 +16,7 @@
 /datum/surgery_step/extract_chimeric_node
 	name = "Extract Humors"
 	implements = list(
+		TOOL_IMPROVISED_SCALPEL = 60,
 		TOOL_SCALPEL = 80,
 		TOOL_SHARP = 60,
 		/obj/item/kitchen/spoon = 40

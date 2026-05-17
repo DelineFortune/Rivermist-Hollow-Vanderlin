@@ -324,3 +324,359 @@
 	if(!owner)
 		return
 	REMOVE_TRAIT(owner, TRAIT_BEAUTIFUL, "[type]")
+
+//prosthetic boons, since those limbs provide more resillience than normal.
+//iron is worst, steel is heavy punching and resillient, bronze is most durable by integrity and close to steel in damage, gold is just stylish and nearly just as bad as iron.
+/datum/quirk/boon/iron_arm_right
+	name = "Iron Arm (R)"
+	desc = "I lost my right arm long ago, but the iron arm doesn't bleed as much and work close enough."
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_arm_right,
+		/datum/quirk/boon/steel_arm_right,
+		/datum/quirk/boon/gold_arm_right,
+		/datum/quirk/boon/bronze_arm_right,
+	)
+	point_value = -1
+
+/datum/quirk/boon/iron_arm_right/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_ARM)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/r_arm/prosthetic/iron/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/iron_arm_left
+	name = "Iron Arm (L)"
+	desc = "I lost my left arm long ago, but the iron arm doesn't bleed as much and work close enough."
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_arm_left,
+		/datum/quirk/boon/steel_arm_left,
+		/datum/quirk/boon/gold_arm_left,
+		/datum/quirk/boon/bronze_arm_left,
+	)
+	point_value = -1
+
+/datum/quirk/boon/iron_arm_left/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_ARM)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/l_arm/prosthetic/iron/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/steel_arm_right
+	name = "Steel Arm (R)"
+	desc = "I lost my right arm long ago, but the steel arm doesn't bleed as much and work close enough."
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_arm_right,
+		/datum/quirk/boon/iron_arm_right,
+		/datum/quirk/boon/gold_arm_right,
+		/datum/quirk/boon/bronze_arm_right,
+	)
+	point_value = -2
+
+/datum/quirk/boon/steel_arm_right/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_ARM)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/r_arm/prosthetic/steel/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/steel_arm_left
+	name = "Steel Arm (L)"
+	desc = "I lost my left arm long ago, but the steel arm doesn't bleed as much and work close enough."
+	point_value = -2
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_arm_left,
+		/datum/quirk/boon/iron_arm_left,
+		/datum/quirk/boon/gold_arm_left,
+		/datum/quirk/boon/bronze_arm_left,
+	)
+
+/datum/quirk/boon/steel_arm_left/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_ARM)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/l_arm/prosthetic/steel/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/gold_arm_right
+	name = "Gold Arm (R)"
+	desc = "I lost my right arm long ago, but the gold arm doesn't bleed as much and work close enough."
+	point_value = -2
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_arm_right,
+		/datum/quirk/boon/iron_arm_right,
+		/datum/quirk/boon/steel_arm_right,
+		/datum/quirk/boon/bronze_arm_right,
+	)
+/datum/quirk/boon/gold_arm_right/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_ARM)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/r_arm/prosthetic/gold/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/gold_arm_left
+	name = "Gold Arm (L)"
+	desc = "I lost my left arm long ago, but the gold arm doesn't bleed as much and work close enough."
+	point_value = -2
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_arm_left,
+		/datum/quirk/boon/iron_arm_left,
+		/datum/quirk/boon/steel_arm_left,
+		/datum/quirk/boon/bronze_arm_left,
+	)
+
+/datum/quirk/boon/gold_arm_left/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_ARM)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/l_arm/prosthetic/gold/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/bronze_arm_right
+	name = "Bronze Arm (R)"
+	desc = "I lost my right arm long ago, but the bronze arm doesn't bleed as much and work close enough."
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_arm_right,
+		/datum/quirk/boon/iron_arm_right,
+		/datum/quirk/boon/steel_arm_right,
+		/datum/quirk/boon/gold_arm_right,
+	)
+	point_value = -2
+
+/datum/quirk/boon/bronze_arm_right/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_ARM)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/r_arm/prosthetic/bronze/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/bronze_arm_left
+	name = "Bronze Arm (L)"
+	desc = "I lost my left arm long ago, but the bronze arm doesn't bleed as much and work close enough."
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_arm_left,
+		/datum/quirk/boon/iron_arm_left,
+		/datum/quirk/boon/steel_arm_left,
+		/datum/quirk/boon/gold_arm_left,
+	)
+	point_value = -2
+
+/datum/quirk/boon/bronze_arm_left/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_ARM)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/l_arm/prosthetic/bronze/L = new()
+	L.attach_limb(H)
+
+//legs
+/datum/quirk/boon/iron_leg_right
+	name = "Iron Leg (R)"
+	desc = "I lost my right leg long ago, but the iron leg doesn't bleed as much and work close enough."
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_leg_right,
+		/datum/quirk/boon/steel_leg_right,
+		/datum/quirk/boon/gold_leg_right,
+		/*
+		/datum/quirk/boon/bronze_leg_right,
+		*/
+	)
+	point_value = -1
+
+/datum/quirk/boon/iron_leg_right/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/r_leg/prosthetic/iron/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/iron_leg_left
+	name = "Iron Leg (L)"
+	desc = "I lost my left leg long ago, but the iron leg doesn't bleed as much and work close enough."
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_leg_left,
+		/datum/quirk/boon/steel_leg_left,
+		/datum/quirk/boon/gold_leg_left,
+		/*
+		/datum/quirk/boon/bronze_leg_left,
+		*/
+	)
+	point_value = -1
+
+/datum/quirk/boon/iron_leg_left/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/l_leg/prosthetic/iron/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/steel_leg_right
+	name = "Steel Leg (R)"
+	desc = "I lost my right leg long ago, but the steel leg doesn't bleed as much and work close enough."
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_leg_right,
+		/datum/quirk/boon/iron_leg_right,
+		/datum/quirk/boon/gold_leg_right,
+		/*
+		/datum/quirk/boon/bronze_leg_right,
+		*/
+	)
+	point_value = -2
+
+/datum/quirk/boon/steel_leg_right/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/r_leg/prosthetic/steel/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/steel_leg_left
+	name = "Steel Leg (L)"
+	desc = "I lost my left leg long ago, but the steel leg doesn't bleed as much and work close enough."
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_leg_left,
+		/datum/quirk/boon/iron_leg_left,
+		/datum/quirk/boon/gold_leg_left,
+		/*
+		/datum/quirk/boon/bronze_leg_left,
+		*/
+	)
+	point_value = -2
+
+/datum/quirk/boon/steel_leg_left/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/l_leg/prosthetic/steel/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/gold_leg_right
+	name = "Gold Leg (R)"
+	desc = "I lost my right leg long ago, but the gold leg doesn't bleed as much and work close enough."
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_leg_right,
+		/datum/quirk/boon/iron_leg_right,
+		/datum/quirk/boon/steel_leg_right,
+		/*
+		/datum/quirk/boon/bronze_leg_right,
+		*/
+	)
+	point_value = -2
+
+/datum/quirk/boon/gold_leg_right/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/r_leg/prosthetic/gold/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/gold_leg_left
+	name = "Gold Leg (L)"
+	desc = "I lost my left leg long ago, but the gold leg doesn't bleed as much and work close enough."
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_leg_left,
+		/datum/quirk/boon/iron_leg_left,
+		/datum/quirk/boon/steel_leg_left,
+		/*
+		/datum/quirk/boon/bronze_leg_left,
+		*/
+	)
+	point_value = -2
+
+/datum/quirk/boon/gold_leg_left/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/l_leg/prosthetic/gold/L = new()
+	L.attach_limb(H)
+
+/* those dont exist for some reason
+/datum/quirk/boon/bronze_leg_right
+	name = "Bronze Leg (R)"
+	desc = "I lost my right leg long ago, but the bronze leg doesn't bleed as much and work close enough."
+	point_value = -2
+
+/datum/quirk/boon/bronze_leg_right/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/r_leg/prosthetic/bronze/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/boon/bronze_leg_left
+	name = "Bronze Leg (L)"
+	desc = "I lost my left leg long ago, but the bronze leg doesn't bleed as much and work close enough."
+	point_value = -2
+
+/datum/quirk/boon/bronze_leg_left/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/l_leg/prosthetic/bronze/L = new()
+	L.attach_limb(H)
+*/
