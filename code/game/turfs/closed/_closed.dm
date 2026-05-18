@@ -84,19 +84,6 @@
 			user.setDir(EAST)
 			user.set_mob_offsets("wall_press", _x = -12, _y = 0)
 
-/mob/living/proc/get_wallpress_alpha()
-	var/skill_level = src.get_skill_level(/datum/skill/misc/sneaking)
-
-	switch(skill_level)
-		if(1) return 128 //50%
-		if(2) return 115 //55%
-		if(3) return 102 //60%
-		if(4) return 90  //65%
-		if(5) return 77  //70%
-		if(6) return 64  //75%
-
-	return 255
-
 /turf/closed/proc/wallshove(mob/living/user)
 	if(user.wallpressed)
 		return
