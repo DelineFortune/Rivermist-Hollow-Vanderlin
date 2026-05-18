@@ -269,3 +269,16 @@
 #undef DND_SPELL_SLOT_MIN
 #undef DND_SPELL_SLOT_MAX
 #undef DND_SPELL_SLOT_ICON_MAX
+
+
+/mob/living/carbon/human/verb/debug_grant_dnd_fireball()
+	set name = "Grant DND Fireball"
+	set category = "Debug"
+
+	setup_default_dnd_spell_slots()
+	grant_dnd_spell_slot_hud()
+
+	var/datum/action/cooldown/spell/projectile/fireball/F = new
+	F.Grant(src)
+
+	to_chat(src, span_notice("DND Fireball granted."))
