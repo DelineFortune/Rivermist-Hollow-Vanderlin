@@ -135,6 +135,9 @@
 		return FALSE
 	return user.ckey == original_owner_ckey
 
+/obj/item/penis_fake/can_random_body_storage_layer_swap()
+	return FALSE
+
 
 /obj/item/organ/genitals/penis/knotted
 	name = "knotted penis"

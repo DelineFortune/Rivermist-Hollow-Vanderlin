@@ -144,7 +144,10 @@
 
 /obj/item/reagent_containers/food/snacks/smallrat/atom_destruction(damage_flag)
 	if(!dead)
-		new /obj/item/reagent_containers/food/snacks/smallrat/dead(src)
+		var/atom/dead_rat_location = get_turf(src)
+		if(!dead_rat_location)
+			dead_rat_location = loc
+		new /obj/item/reagent_containers/food/snacks/smallrat/dead(dead_rat_location)
 		playsound(src, 'sound/vo/mobs/rat/rat_death.ogg', 100, FALSE, -1)
 		qdel(src)
 		return 1

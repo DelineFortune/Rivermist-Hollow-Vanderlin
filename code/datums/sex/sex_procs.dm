@@ -50,6 +50,8 @@
 /mob/living/proc/start_sex_session(mob/living/target, show_ui = TRUE)
 	if(!target)
 		return
+	if(src != target && !target.allows_player_erp_while_disconnected())
+		return
 	if(!GetComponent(/datum/component/arousal))
 		AddComponent(/datum/component/arousal)
 	if(!target.GetComponent(/datum/component/arousal))
@@ -412,10 +414,14 @@
 	return highest_session
 
 /mob/proc/get_erp_pref(pref_type)
-	if(!client?.prefs)
+	if(!ispath(pref_type, /datum/erp_preference))
 		return FALSE
 
-	if(!ispath(pref_type, /datum/erp_preference))
+	if(isliving(src))
+		var/mob/living/living_mob = src
+		return living_mob.get_cached_erp_pref(pref_type)
+
+	if(!client?.prefs)
 		return FALSE
 
 	var/datum/erp_preference/pref = new pref_type()
@@ -441,16 +447,16 @@
 		return FALSE
 	if(actor.client)
 		return FALSE
-	if(!target.client)
-		return FALSE
-	return TRUE
+	if(target.client || target.mind?.key || target.mind?.cached_erp_preferences || target.cached_erp_preferences)
+		return TRUE
+	return FALSE
 
 /proc/target_allows_mob_erp_action(mob/living/actor, mob/living/target, pref_type)
 	if(!ispath(pref_type, /datum/erp_preference))
 		return TRUE
 	if(!should_apply_mob_erp_target_pref(actor, target))
 		return TRUE
-	return target.get_erp_pref(pref_type)
+	return target.get_cached_erp_pref(pref_type)
 
 /mob/proc/get_all_erp_prefs()
 	if(!client?.prefs)
@@ -488,20 +494,49 @@
 	return TRUE
 
 /mob/living/proc/has_kink(kink_name)
-	if(!client?.prefs?.erp_preferences)
-		return FALSE
-	var/list/kink_prefs = client.prefs.erp_preferences["kinks"]
+	refresh_erp_preference_cache()
+	var/list/kink_prefs = cached_erp_preferences?["kinks"]
 	if(!kink_prefs || !kink_prefs[kink_name])
 		return FALSE
 	return kink_prefs[kink_name]["enabled"]
 
+/mob/living/proc/is_disconnected_player_erp_body()
+	if(client)
+		return FALSE
+	if(!mind)
+		return FALSE
+	return !!(mind.key || mind.cached_erp_preferences || cached_erp_preferences)
+
+/mob/living/proc/allows_player_erp_while_disconnected()
+	if(!is_disconnected_player_erp_body())
+		return TRUE
+	return get_cached_erp_pref(/datum/erp_preference/boolean/allow_player_erp_when_disconnected) == TRUE
+
+/datum/mind
+	var/tmp/list/cached_erp_preferences
+	var/tmp/cached_erp_preferences_revision = -1
+
+/datum/mind/proc/cache_erp_preferences_from_prefs(datum/preferences/prefs)
+	if(!prefs?.erp_preferences)
+		return FALSE
+	set_cached_erp_preferences(prefs.erp_preferences, prefs.erp_preferences_revision)
+	return TRUE
+
+/datum/mind/proc/set_cached_erp_preferences(list/preferences, revision = -1)
+	cached_erp_preferences = islist(preferences) ? deep_copy_list_alt(preferences) : null
+	cached_erp_preferences_revision = revision
+	if(isliving(current))
+		var/mob/living/current_living = current
+		current_living.set_cached_erp_preferences(cached_erp_preferences, cached_erp_preferences_revision)
 
 /mob/living
 	var/list/attached_sex_toys = list()
+	var/tmp/list/cached_erp_preferences
 	var/tmp/erp_preferences_revision_seen = -1
 	var/tmp/cached_horny_mob_pref_flags = NONE
 	var/tmp/cached_horny_mob_family_flags = NONE
 	var/tmp/cached_allow_belly_inflation = null
+	var/tmp/cached_nonmatching_horny_mobs_are_nonlethal = null
 
 	///npc organs to use
 	var/ball_organ = /obj/item/organ/genitals/filling_organ/testicles
@@ -533,36 +568,73 @@
 
 /mob/living/proc/invalidate_erp_preference_cache()
 	erp_preferences_revision_seen = -1
+	cached_erp_preferences = null
+	refresh_erp_preference_cache()
+
+/mob/living/proc/rebuild_cached_erp_preference_shortcuts()
 	cached_horny_mob_pref_flags = NONE
 	cached_horny_mob_family_flags = NONE
-	cache_allow_belly_inflation_pref(client?.prefs)
-
-/mob/living/proc/cache_allow_belly_inflation_pref(datum/preferences/prefs)
-	if(!prefs?.erp_preferences)
+	cached_allow_belly_inflation = null
+	cached_nonmatching_horny_mobs_are_nonlethal = null
+	if(!cached_erp_preferences)
 		return
 	var/datum/erp_preference/boolean/allow_belly_inflation/belly_pref = new
-	cached_allow_belly_inflation = belly_pref.get_value(prefs)
-
-/mob/living/proc/refresh_erp_preference_cache()
-	var/datum/preferences/prefs = client?.prefs
-	var/current_revision = prefs?.erp_preferences_revision
-	if(erp_preferences_revision_seen == current_revision)
-		return
-	erp_preferences_revision_seen = current_revision
-	cached_horny_mob_pref_flags = NONE
-	cached_horny_mob_family_flags = NONE
-	if(!prefs?.erp_preferences)
-		return
-	cache_allow_belly_inflation_pref(prefs)
-	cached_horny_mob_pref_flags = prefs.erp_preferences[/datum/erp_preference/bitflag/horny_mobs] || NONE
-	var/allowed_families = prefs.erp_preferences[/datum/erp_preference/bitflag/horny_mob_types]
+	cached_allow_belly_inflation = belly_pref.get_value_from_list(cached_erp_preferences)
+	var/datum/erp_preference/boolean/nonmatching_horny_mobs_are_nonlethal/nonlethal_pref = new
+	cached_nonmatching_horny_mobs_are_nonlethal = nonlethal_pref.get_value_from_list(cached_erp_preferences)
+	cached_horny_mob_pref_flags = cached_erp_preferences[/datum/erp_preference/bitflag/horny_mobs] || NONE
+	var/allowed_families = cached_erp_preferences[/datum/erp_preference/bitflag/horny_mob_types]
 	if(isnull(allowed_families))
 		allowed_families = HORNY_MOB_TYPE_ALL
 	cached_horny_mob_family_flags = allowed_families
 
+/mob/living/proc/set_cached_erp_preferences(list/preferences, revision = -1)
+	cached_erp_preferences = islist(preferences) ? deep_copy_list_alt(preferences) : null
+	erp_preferences_revision_seen = revision
+	rebuild_cached_erp_preference_shortcuts()
+
+/mob/living/proc/cache_erp_preferences_from_prefs(datum/preferences/prefs)
+	if(!prefs?.erp_preferences)
+		return FALSE
+	if(mind?.current == src)
+		return mind.cache_erp_preferences_from_prefs(prefs)
+	set_cached_erp_preferences(prefs.erp_preferences, prefs.erp_preferences_revision)
+	return TRUE
+
+/mob/living/proc/refresh_erp_preference_cache()
+	var/datum/preferences/prefs = client?.prefs
+	if(prefs?.erp_preferences)
+		var/current_revision = prefs.erp_preferences_revision
+		if(erp_preferences_revision_seen == current_revision && cached_erp_preferences)
+			return
+		cache_erp_preferences_from_prefs(prefs)
+		return
+
+	if(mind?.cached_erp_preferences)
+		if(erp_preferences_revision_seen == mind.cached_erp_preferences_revision && cached_erp_preferences)
+			return
+		set_cached_erp_preferences(mind.cached_erp_preferences, mind.cached_erp_preferences_revision)
+		return
+
+	if(!cached_erp_preferences)
+		rebuild_cached_erp_preference_shortcuts()
+
+/mob/living/proc/get_cached_erp_pref(pref_type)
+	if(!ispath(pref_type, /datum/erp_preference))
+		return FALSE
+	refresh_erp_preference_cache()
+	if(!cached_erp_preferences)
+		return FALSE
+	var/datum/erp_preference/pref = new pref_type()
+	return pref.get_value_from_list(cached_erp_preferences)
+
 /mob/living/proc/get_cached_allow_belly_inflation()
 	refresh_erp_preference_cache()
 	return cached_allow_belly_inflation == TRUE
+
+/mob/living/proc/get_cached_nonmatching_horny_mobs_are_nonlethal()
+	refresh_erp_preference_cache()
+	return cached_nonmatching_horny_mobs_are_nonlethal == TRUE
 
 /mob/living/proc/get_cached_horny_mob_pref_flags()
 	refresh_erp_preference_cache()

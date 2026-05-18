@@ -29,7 +29,25 @@
 	var/mob/living/living_owner = owner
 	living_owner.invalidate_erp_preference_cache()
 
+/datum/preferences/proc/ensure_erp_preferences()
+	if(!erp_preferences)
+		erp_preferences = list()
+	return erp_preferences
+
+/datum/preferences/proc/get_default_kink_preference_data()
+	return list("enabled" = FALSE, "intensity" = 1, "notes" = "")
+
+/datum/preferences/proc/ensure_kink_preferences()
+	ensure_erp_preferences()
+	var/list/kink_prefs = erp_preferences["kinks"]
+	if(!islist(kink_prefs))
+		kink_prefs = list()
+		erp_preferences["kinks"] = kink_prefs
+	return kink_prefs
+
 /datum/preferences/proc/show_erp_preferences(mob/user)
+	setup_default_erp_preferences()
+
 	var/list/dat = list()
 	dat += "<style>span.color_holder_box{display: inline-block; width: 20px; height: 8px; border:1px solid #000; padding: 0px;}</style>"
 	dat += "<style>"
@@ -188,14 +206,11 @@
 	return dat
 
 /datum/preferences/proc/show_kink_ui(datum/kink/kink)
-	var/list/kink_prefs = erp_preferences["kinks"]
-	if(!kink_prefs)
-		kink_prefs = list()
-		erp_preferences["kinks"] = kink_prefs
+	var/list/kink_prefs = ensure_kink_preferences()
 
 	var/list/kink_data = kink_prefs[kink.name]
-	if(!kink_data)
-		kink_data = list("enabled" = TRUE, "intensity" = 3, "notes" = "")
+	if(!islist(kink_data))
+		kink_data = get_default_kink_preference_data()
 		kink_prefs[kink.name] = kink_data
 
 	var/enabled = kink_data["enabled"]
@@ -240,14 +255,11 @@
 	if(!kink_name || !GLOB.available_kinks[kink_name])
 		return
 
-	var/list/kink_prefs = erp_preferences["kinks"]
-	if(!kink_prefs)
-		kink_prefs = list()
-		erp_preferences["kinks"] = kink_prefs
+	var/list/kink_prefs = ensure_kink_preferences()
 
 	var/list/kink_data = kink_prefs[kink_name]
-	if(!kink_data)
-		kink_data = list("enabled" = TRUE, "intensity" = 3, "notes" = "")
+	if(!islist(kink_data))
+		kink_data = get_default_kink_preference_data()
 		kink_prefs[kink_name] = kink_data
 
 	switch(href_list["action"])
@@ -267,9 +279,9 @@
 
 /datum/preferences/proc/apply_character_kinks(mob/living/carbon/human/character)
 	if(!length(erp_preferences))
-		validate_erp_preferences()
+		setup_default_erp_preferences()
 
-	var/list/kink_prefs = erp_preferences["kinks"]
+	var/list/kink_prefs = erp_preferences?["kinks"]
 	if(!kink_prefs)
 		return
 
@@ -298,11 +310,11 @@
 	S["erp_preferences"] >> erp_preferences
 	erp_preferences = SANITIZE_LIST(erp_preferences)
 	validate_erp_preferences()
+	setup_default_erp_preferences()
 	mark_erp_preferences_dirty()
 
 /datum/preferences/proc/validate_erp_preferences()
-	if(!erp_preferences)
-		erp_preferences = list()
+	ensure_erp_preferences()
 
 	// Clean up any invalid preference types that might have been loaded
 	var/list/valid_types = list()
@@ -329,30 +341,30 @@
 	mark_erp_preferences_dirty()
 
 /datum/preferences/proc/setup_default_erp_preferences()
-	if(!erp_preferences)
-		erp_preferences = list()
+	ensure_erp_preferences()
+	var/changed = FALSE
 
 	// Set up default values for any missing ERP preferences
-	for(var/pref_type in subtypesof(/datum/erp_preference))
+	for(var/datum/erp_preference/pref_type as anything in subtypesof(/datum/erp_preference))
+		if(IS_ABSTRACT(pref_type))
+			continue
 		var/datum/erp_preference/pref = new pref_type()
 		if(pref.abstract_type == pref_type)
 			continue
 		if(!(pref_type in erp_preferences))
-			if(istype(pref, /datum/erp_preference/boolean))
-				erp_preferences[pref_type] = pref.default_value
-			else if(istype(pref, /datum/erp_preference/list_choice))
-				var/datum/erp_preference/list_choice/choice_pref = pref
-				erp_preferences[pref_type] = choice_pref.default_choice
-			else if(istype(pref, /datum/erp_preference/numeric))
-				var/datum/erp_preference/numeric/num_pref = pref
-				erp_preferences[pref_type] = num_pref.default_numeric
+			erp_preferences[pref_type] = pref.get_default_value()
+			changed = TRUE
 
 	// Set up default kink preferences
-	if(!erp_preferences["kinks"])
+	if(!islist(erp_preferences["kinks"]))
 		erp_preferences["kinks"] = list()
+		changed = TRUE
 
 	var/list/kink_prefs = erp_preferences["kinks"]
 	for(var/kink_name in GLOB.available_kinks)
-		if(!kink_prefs[kink_name])
-			kink_prefs[kink_name] = list("enabled" = FALSE, "intensity" = 1, "notes" = "")
-	mark_erp_preferences_dirty()
+		if(!islist(kink_prefs[kink_name]))
+			kink_prefs[kink_name] = get_default_kink_preference_data()
+			changed = TRUE
+
+	if(changed)
+		mark_erp_preferences_dirty()

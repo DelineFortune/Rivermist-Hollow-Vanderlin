@@ -10,15 +10,22 @@
 	var/category = "General"
 
 /datum/erp_preference/proc/get_value(datum/preferences/prefs)
-	if(isnull(prefs.erp_preferences[type]))
-		return default_value
-	else
-		return prefs.erp_preferences[type]
+	return get_value_from_list(prefs?.ensure_erp_preferences())
+
+/datum/erp_preference/proc/get_value_from_list(list/stored_preferences)
+	var/stored_value = stored_preferences?[type]
+	if(isnull(stored_value))
+		return get_default_value()
+	return stored_value
+
+/datum/erp_preference/proc/get_default_value()
+	return default_value
 
 /datum/erp_preference/proc/set_value(datum/preferences/prefs, value)
-	if(!prefs.erp_preferences)
-		prefs.erp_preferences = list()
-	prefs.erp_preferences[type] = value
+	if(!prefs)
+		return
+	var/list/stored_preferences = prefs.ensure_erp_preferences()
+	stored_preferences[type] = value
 	prefs.mark_erp_preferences_dirty()
 
 /datum/erp_preference/proc/show_pref_ui(datum/preferences/prefs, lock_reason = null)

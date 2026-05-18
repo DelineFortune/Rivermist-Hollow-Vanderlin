@@ -309,6 +309,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/patreon = TRUE
 	/// If our owner is from a race that has more than one accent
 	var/change_accent = FALSE
+	var/player_language = "RU"
 
 	var/datum/job/advclass/preview_subclass
 	var/tmp/preview_image_revision = 0
@@ -401,6 +402,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	if(isclient(C))
 		C.update_movement_keys()
 	real_name = pref_species.random_name(gender,1)
+	setup_default_erp_preferences()
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
@@ -2514,6 +2516,25 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					nsfwflavortext = new_nsfwflavortext
 					to_chat(user, "<span class='notice'>Successfully updated NSFW flavortext</span>")
 					log_game("[user] has set their NSFW flavortext'.")
+				if("player_language")
+					to_chat(user, "<span class='notice'>["<span class='bold'>Let players know what language you speak (ex. RU or EN)</span>"]</span>")
+					to_chat(user, "<font color = '#d6d6d6'>Set the language code for indicating what language you speak to other players.</font>")
+					var/new_player_language = tgui_input_text(user, "Input your language code (ex. RU or EN):", "Player Language", player_language, encode = FALSE, max_length = 3)
+					if(new_player_language == null)
+						return
+					if(length(new_player_language) > 3)
+						to_chat(user, "<span class='notice'>Language code must be 3 characters or less.</span>")
+						new_player_language = null
+						return
+					if(new_player_language == "")
+						new_player_language = null
+						player_language = "RU"
+						to_chat(user, "<span class='notice'>Language code reset to RU.</span>")
+						update_menu_data(user)
+						return
+					player_language = new_player_language
+					to_chat(user, "<span class='notice'>Successfully updated Player Language.</span>")
+					log_game("[user] has set their Player Language to '[player_language]'.")
 				if("song_link")
 					to_chat(user, "<span class='notice'>Add a link from a suitable host (catbox, etc) to an mp3 to embed in your flavor text.</span>")
 					to_chat(user, "<span class='notice'>If the song doesn't  play properly, ensure that it's a direct link that opens properly in a browser.</span>")
@@ -3519,6 +3540,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	dat += "<a class='option-row' href='?_src_=prefs;preference=change_title;task=input'>Song Title<small>[song_title_display]</small></a>"
 	dat += "<a class='option-row' href='?_src_=prefs;preference=change_artist;task=input'>Song Artist<small>[song_artist_display]</small></a>"
 
+	dat += "<div class='section-title'>OOC</div>"
+	dat += "<a class='option-row' href='?_src_=prefs;preference=player_language;task=input'>Player's Language<small>Set the language you understand oocly and prefer to speak in if possible, this will be shown in your examine to other players.</small></a>"
+
 	dat += {"
 				<div class="footer"><a href='?_src_=prefs;preference=body_customize;task=menu'>Customize Appearance</a></div>
 			</div>
@@ -3561,6 +3585,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 /datum/preferences/proc/apply_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, character_setup = FALSE)
 	if(QDELETED(character) || !ishuman(character))
 		return
+	character.cache_erp_preferences_from_prefs(src)
 	character.age = age
 	character.gender = gender
 	character.dna.features = features.Copy()

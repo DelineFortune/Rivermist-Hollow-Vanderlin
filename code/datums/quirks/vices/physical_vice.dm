@@ -83,6 +83,12 @@
 /datum/quirk/vice/wooden_arm_right
 	name = "Wooden Arm (R)"
 	desc = "I lost my right arm long ago, but the wooden arm doesn't bleed as much."
+	incompatible_quirks = list(
+		/datum/quirk/boon/iron_arm_right,
+		/datum/quirk/boon/steel_arm_right,
+		/datum/quirk/boon/gold_arm_right,
+		/datum/quirk/boon/bronze_arm_right,
+	)
 	point_value = 3
 
 /datum/quirk/vice/wooden_arm_right/on_spawn()
@@ -99,6 +105,12 @@
 /datum/quirk/vice/wooden_arm_left
 	name = "Wooden Arm (L)"
 	desc = "I lost my left arm long ago, but the wooden arm doesn't bleed as much."
+	incompatible_quirks = list(
+		/datum/quirk/boon/iron_arm_left,
+		/datum/quirk/boon/steel_arm_left,
+		/datum/quirk/boon/gold_arm_left,
+		/datum/quirk/boon/bronze_arm_left,
+	)
 	point_value = 3
 
 /datum/quirk/vice/wooden_arm_left/on_spawn()
@@ -111,6 +123,55 @@
 		qdel(O)
 	var/obj/item/bodypart/l_arm/prosthetic/wood/L = new()
 	L.attach_limb(H)
+
+/datum/quirk/vice/wooden_leg_right
+	name = "Wooden Leg (R)"
+	desc = "I lost my right leg long ago, but the wooden leg doesn't bleed as much."
+	point_value = 3
+	incompatible_quirks = list(
+		/datum/quirk/boon/iron_leg_right,
+		/datum/quirk/boon/steel_leg_right,
+		/datum/quirk/boon/gold_leg_right,
+		/*
+		/datum/quirk/boon/bronze_leg_right,
+		*/
+	)
+
+/datum/quirk/vice/wooden_leg_right/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/r_leg/prosthetic/wood/L = new()
+	L.attach_limb(H)
+
+/datum/quirk/vice/wooden_leg_left
+	name = "Wooden Leg (L)"
+	desc = "I lost my left leg long ago, but the wooden leg doesn't bleed as much."
+	incompatible_quirks = list(
+		/datum/quirk/boon/iron_leg_left,
+		/datum/quirk/boon/steel_leg_left,
+		/datum/quirk/boon/gold_leg_left,
+		/*
+		/datum/quirk/boon/bronze_leg_left,
+		*/
+	)
+	point_value = 3
+
+/datum/quirk/vice/wooden_leg_left/on_spawn()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
+	if(O)
+		O.drop_limb()
+		qdel(O)
+	var/obj/item/bodypart/l_leg/prosthetic/wood/L = new()
+	L.attach_limb(H)
+
 
 /datum/quirk/vice/leprosy
 	name = "Leprosy"
@@ -152,6 +213,14 @@
 	incompatible_quirks = list(
 		/datum/quirk/vice/wooden_arm_right,
 		/datum/quirk/vice/wooden_arm_left,
+		/datum/quirk/boon/iron_arm_right,
+		/datum/quirk/boon/iron_arm_left,
+		/datum/quirk/boon/steel_arm_right,
+		/datum/quirk/boon/steel_arm_left,
+		/datum/quirk/boon/gold_arm_right,
+		/datum/quirk/boon/gold_arm_left,
+		/datum/quirk/boon/bronze_arm_right,
+		/datum/quirk/boon/bronze_arm_left,
 	)
 	customization_options = list(
 		BODY_ZONE_L_ARM,
@@ -190,6 +259,20 @@
 	desc = "You're missing a leg. It was lost in an accident or battle, and the stump is too damaged for anything but prosthetics."
 	point_value = 5
 	customization_label = "Choose Missing Leg"
+	incompatible_quirks = list(
+		/datum/quirk/vice/wooden_leg_right,
+		/datum/quirk/vice/wooden_leg_left,
+		/datum/quirk/boon/iron_leg_right,
+		/datum/quirk/boon/iron_leg_left,
+		/datum/quirk/boon/steel_leg_right,
+		/datum/quirk/boon/steel_leg_left,
+		/datum/quirk/boon/gold_leg_right,
+		/datum/quirk/boon/gold_leg_left,
+		/*
+		/datum/quirk/boon/bronze_leg_right,
+		/datum/quirk/boon/bronze_leg_left,
+		*/
+	)
 	customization_options = list(
 		BODY_ZONE_L_LEG,
 		BODY_ZONE_R_LEG

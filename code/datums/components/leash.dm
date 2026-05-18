@@ -78,8 +78,8 @@
 	)
 
 	AddComponent(/datum/component/connect_containers, owner, container_connections)
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE)
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_parent_pre_move))
 
 	if(isnum(duration) && duration > 0)

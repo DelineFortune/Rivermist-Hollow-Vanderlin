@@ -6,7 +6,7 @@
 	icon_state = "pestle"
 	force = 7
 	dropshrink = 0.9
-	grid_height = 64
+	grid_height = 32
 	grid_width = 32
 
 /obj/item/reagent_containers/glass/mortar
@@ -20,7 +20,7 @@
 	reagent_flags = TRANSFERABLE | AMOUNT_VISIBLE
 	spillable = TRUE
 	grid_height = 32
-	grid_width = 64
+	grid_width = 32
 	dropshrink = 0.9
 	var/obj/item/to_grind
 

@@ -417,8 +417,9 @@
 			vomit(1, blood = TRUE)
 
 /mob/living/carbon/human/has_smoke_protection()
-	if(wear_mask)
-		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
+	if(istype(wear_mask, /obj/item/clothing))
+		var/obj/item/clothing/mask_clothing = wear_mask
+		if(mask_clothing.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	if(head && istype(head, /obj/item/clothing))
 		var/obj/item/clothing/CH = head

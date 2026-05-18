@@ -57,6 +57,26 @@
 	var/static/list/random_colors = list("#fffbf7", "#f3c877", "#5e533e", "#db7f62", "#f39945")
 	seed_color = pick(random_colors)
 
+/proc/is_harvestable_plant_def(datum/plant_def/plant_def_type)
+	if(!ispath(plant_def_type, /datum/plant_def))
+		return FALSE
+	if(plant_def_type == /datum/plant_def/alchemical || plant_def_type == /datum/plant_def/mushroom)
+		return FALSE
+	return ispath(initial(plant_def_type.produce_type), /atom)
+
+/proc/get_harvestable_plant_defs()
+	var/static/list/harvestable_plant_defs
+	if(harvestable_plant_defs)
+		return harvestable_plant_defs
+
+	harvestable_plant_defs = list()
+	for(var/datum/plant_def/plant_def_type as anything in subtypesof(/datum/plant_def))
+		if(!is_harvestable_plant_def(plant_def_type))
+			continue
+		harvestable_plant_defs += plant_def_type
+
+	return harvestable_plant_defs
+
 /datum/plant_def/proc/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	// Override this in subtypes to set species-specific traits
 	return

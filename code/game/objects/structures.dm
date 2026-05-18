@@ -153,6 +153,8 @@
 	if(obj_broken)
 		return "It appears to be broken."
 	if(uses_integrity)
+		if(max_integrity <= 0)
+			return
 		var/healthpercent = (atom_integrity / max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)

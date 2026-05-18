@@ -34,6 +34,12 @@
 	default_value = FALSE
 	category = "General"
 
+/datum/erp_preference/boolean/allow_player_erp_when_disconnected
+	name = "Allow ERP While Disconnected"
+	description = "If other players can start and continue sex interactions with your character while you are disconnected"
+	default_value = FALSE
+	category = "General"
+
 /datum/erp_preference/boolean/allow_mob_oviposition
 	name = "Allow mob oviposition"
 	description = "If you want mobs to perform oviposition when possible"
@@ -44,4 +50,10 @@
 	name = "Allow mob breeding"
 	description = "If you want mobs to breed you when possible"
 	default_value = FALSE
+	category = "Mobs"
+
+/datum/erp_preference/boolean/nonmatching_horny_mobs_are_nonlethal
+	name = "Out-of-scope horny mobs disarm"
+	description = "If enabled, horny mobs outside your enabled mob prefs will try to disarm or subdue you instead of damaging you."
+	default_value = TRUE
 	category = "Mobs"

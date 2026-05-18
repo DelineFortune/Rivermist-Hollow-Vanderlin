@@ -341,8 +341,7 @@
 			if(istype(stored_item, /obj/item/penis_fake))
 				var/obj/item/penis_fake/fake_penis = stored_item
 				var/mob/living/original_owner = find_original_owner_by_ckey(fake_penis.original_owner_ckey)
-				if(target_o)
-					SEND_SIGNAL(target_o, COMSIG_BODYSTORAGE_FORCE_REMOVE, fake_penis, STORAGE_LAYER_INNER)
+				remove_tracked_item_from_body_storage(target_o, fake_penis)
 				if(!silent)
 					if(original_owner)
 						to_chat(original_owner, span_notice("Your penis has been withdrawn from [target]'s [hole_id]."))
@@ -352,6 +351,7 @@
 						to_chat(user, span_notice("Withdrew penis from [target]'s [hole_id]."))
 				qdel(stored_item)
 			else
+				remove_tracked_item_from_body_storage(target_o, stored_item)
 				if(!silent)
 					to_chat(user, span_notice("Removed [stored_item.name] from [target]'s [hole_id]."))
 				qdel(stored_item)
@@ -359,6 +359,17 @@
 			tracked_storage -= entry
 			qdel(entry)
 
+	return TRUE
+
+/datum/sex_action/proc/remove_tracked_item_from_body_storage(obj/item/organ/target_organ, obj/item/stored_item)
+	if(!target_organ || !stored_item)
+		return FALSE
+
+	var/current_layer = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_FIND_ITEM_LAYER, stored_item)
+	if(!current_layer)
+		return FALSE
+
+	SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_FORCE_REMOVE, stored_item, current_layer)
 	return TRUE
 
 /datum/sex_action/proc/find_original_owner_by_ckey(target_ckey)
@@ -377,7 +388,7 @@
 		user.mouth_blocked = TRUE
 	if(gags_target)
 		target.mouth_blocked = TRUE
-	if(requires_hole_storage)
+	if(requires_hole_storage && !issimple(target)) //simple mobs dont have anything so skip.
 		if(flipped)
 			if(!try_store_in_hole(target, user))
 				return FALSE

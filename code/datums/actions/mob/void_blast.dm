@@ -18,6 +18,8 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/voidblast/Activate(atom/target)
+	if(!owner)
+		return TRUE
 	StartCooldown(360 SECONDS)
 
 	owner.face_atom(target)
@@ -25,6 +27,8 @@
 	owner.add_overlay(direction_overlay)
 
 	var/fully_charged = do_after(owner, delay = charge_duration, target = owner)
+	if(!owner)
+		return TRUE
 	owner.cut_overlay(direction_overlay)
 	if (!fully_charged)
 		StartCooldown()
@@ -78,7 +82,8 @@
 /datum/action/cooldown/mob_cooldown/voidblast/proc/extinguish_laser()
 	if(!length(beam_parts))
 		return FALSE
-	owner.move_resist = initial(owner.move_resist)
+	if(owner)
+		owner.move_resist = initial(owner.move_resist)
 	for(var/obj/effect/obeliskbeam/beam in beam_parts)
 		beam.disperse()
 	beam_parts = list()

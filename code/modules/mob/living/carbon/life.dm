@@ -427,7 +427,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	//Only starts when the chest has taken full damage
 	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
-	if(!(chest.get_damage() >= (chest.max_damage - 5)))
+	if(!chest || !(chest.get_damage() >= (chest.max_damage - 5)))
 		return
 
 	//Burn off limbs one by one

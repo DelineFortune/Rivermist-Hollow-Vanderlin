@@ -142,9 +142,18 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
+	remove_all_uis()
+	QDEL_LIST_ASSOC_VAL(active_uis)
+	active_uis = null
 	QDEL_NULL(sleep_adv)
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
+	current = null
+	current_ghost = null
+	assigned_role = null
+	soulOwner = null
+	enslaved_to = null
+	language_holder = null
 	return ..()
 
 /proc/get_minds(role)
@@ -317,6 +326,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	RegisterSignal(current, COMSIG_MOB_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
 		current.key = key		//now transfer the key to link the client to our new body
+	current.refresh_erp_preference_cache()
 	current.update_fov_angles()
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)

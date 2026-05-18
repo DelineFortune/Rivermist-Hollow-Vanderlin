@@ -1315,7 +1315,7 @@
 /turf/open/floor/blocks/stonered/tiny,
 /area/under/rmh_dungeon)
 "cbb" = (
-/turf/closed/wall/mineral/rogue/sandstone,
+/turf/closed/wall/mineral/sandstone,
 /area/outdoors/rmh_desert/port)
 "cbF" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -4130,7 +4130,7 @@
 /turf/open/floor/sandstone_tile/five,
 /area/outdoors/rmh_desert/valley)
 "gqU" = (
-/turf/closed/wall/mineral/rogue/sandstone,
+/turf/closed/wall/mineral/sandstone,
 /area/indoors/rmh_desert/phouse)
 "gru" = (
 /obj/structure/fluff/railing/corner/north_east,
@@ -14452,7 +14452,7 @@
 /turf/open/floor/metal/barograte,
 /area/under/rmh_dungeon)
 "vit" = (
-/turf/closed/wall/mineral/rogue/sandbrick,
+/turf/closed/wall/mineral/sandbrick,
 /area/indoors/rmh_desert/phouse)
 "viO" = (
 /obj/item/natural/rock/random_ore,

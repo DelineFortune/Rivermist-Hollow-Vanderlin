@@ -448,3 +448,48 @@
     	/datum/thaumaturgical_essence/order = 4,
 		/datum/thaumaturgical_essence/frost = 3,
 		/datum/thaumaturgical_essence/void = 2,)
+
+//anti preg alchemy recipe
+
+/datum/alch_cauldron_recipe/anti_preg_potion
+	recipe_name = "Pregnancy Removal Potion"
+	smells_like = "disgusting"
+	output_reagents = list(/datum/reagent/medicine/antipregnancy = 18)
+	required_essences = list(
+		/datum/thaumaturgical_essence/poison = 3,
+		/datum/thaumaturgical_essence/cycle = 2
+	)
+
+/datum/supply_pack/medicine/antipregpot
+	name = "Pregnancy Removal Potion"
+	cost = 30
+	contains = list(
+					/obj/item/reagent_containers/glass/bottle/antipregnancy,
+					/obj/item/reagent_containers/glass/bottle/antipregnancy,
+					/obj/item/reagent_containers/glass/bottle/antipregnancy,
+				)
+
+/obj/item/reagent_containers/glass/bottle/antipregnancy
+	list_reagents = list(/datum/reagent/medicine/antipregnancy = 45)
+
+/datum/reagent/medicine/antipregnancy
+	name = "Pregnancy Removal Potion"
+	description = "Fixes mistakes."
+	reagent_state = LIQUID
+	taste_description = "worries"
+	overdose_threshold = 60
+	metabolization_rate = REAGENTS_METABOLISM
+	alpha = 200
+
+/datum/reagent/medicine/antipregnancy/on_mob_life(mob/living/carbon/M)
+	for(var/obj/item/organ/genitals/filling_organ/forgan in M.internal_organs)
+		if(forgan.pregnant)
+			to_chat(M, "I feel something shift within my [forgan.altnames]... I am no longer pregnant.")
+			forgan.clear_conventional_pregnancy()
+	M.add_nausea(1)
+	..()
+	. = 1
+
+/datum/reagent/medicine/antipregnancy/overdose_process(mob/living/carbon/M)
+	M.add_nausea(9)
+	M.adjustToxLoss(3, 0)

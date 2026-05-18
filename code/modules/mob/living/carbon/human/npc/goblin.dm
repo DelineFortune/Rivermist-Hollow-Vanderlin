@@ -235,6 +235,10 @@
 	apply_overlay(ARMOR_LAYER)
 	update_body_parts(TRUE)
 
+//for genitals
+/mob/living/carbon/human/species/goblin/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
+	. = ..()
+	update_body_parts(TRUE)
 
 /mob/living/carbon/human/species/goblin/update_inv_head(hide_nonstandard = FALSE)
 	update_wearable()

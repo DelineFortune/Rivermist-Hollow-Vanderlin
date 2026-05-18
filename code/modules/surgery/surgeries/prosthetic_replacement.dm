@@ -118,8 +118,10 @@
 /datum/surgery_step/remove_prosthetic
 	name = "Remove prosthetic"
 	implements = list(
-		TOOL_SAW = 90,
-		TOOL_IMPROVISED_SAW = 60,
+		TOOL_RETRACTOR = 90,
+		TOOL_IMPROVISED_RETRACTOR = 60,
+		TOOL_IMPROVISED_SCALPEL = 60,
+		TOOL_SCALPEL = 80,
 	)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(
@@ -140,17 +142,16 @@
 
 /datum/surgery_step/remove_prosthetic/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	display_results(user, target, span_notice("I begin to saw through the base of [target]'s [parse_zone(target_zone)] prosthetic..."),
-		span_notice("[user] begins to saw through the base of [target]'s prosthetic [parse_zone(target_zone)]."),
-		span_notice("[user] begins to saw through the base of [target]'s prosthetic [parse_zone(target_zone)]."))
+		span_notice("[user] begins to detach [target]'s prosthetic [parse_zone(target_zone)]."),
+		span_notice("[user] begins to detach [target]'s prosthetic [parse_zone(target_zone)]."))
 	return TRUE
 
 /datum/surgery_step/remove_prosthetic/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	display_results(user, target, span_notice("I saw through the base of [target]'s prosthetic [parse_zone(target_zone)]."),
-		span_notice("[user] saws through the base of [target]'s prosthetic [parse_zone(target_zone)]!"),
-		span_notice("[user] saws through the base of [target]'s prosthetic [parse_zone(target_zone)]!"))
+		span_notice("[user] detaches [target]'s prosthetic [parse_zone(target_zone)]!"),
+		span_notice("[user] detaches [target]'s prosthetic [parse_zone(target_zone)]!"))
 	var/obj/item/bodypart/target_limb = target.get_bodypart(check_zone(target_zone))
 	target_limb?.drop_limb(TRUE)
-	target_limb.brute_dam += target_limb.max_damage * 0.5 // doctors doing emergency removals damages the prosthetic
 	return TRUE
 
 /datum/surgery_step/add_taur

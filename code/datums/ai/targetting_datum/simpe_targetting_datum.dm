@@ -71,6 +71,8 @@
 		return FALSE
 	if(!should_apply_mob_erp_target_pref(living_mob, human_target))
 		return FALSE
+	if(!human_target.get_cached_nonmatching_horny_mobs_are_nonlethal())
+		return FALSE
 	if(!has_any_horny_mob_pref_enabled(human_target))
 		return FALSE
 	if(is_selected_horny_target(living_mob, human_target))

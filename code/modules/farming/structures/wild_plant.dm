@@ -13,6 +13,8 @@
 		plant_type = incoming_type
 	if(!plant_type)
 		plant_type = /datum/plant_def/cabbage
+	if(!is_harvestable_plant_def(plant_type))
+		return INITIALIZE_HINT_QDEL
 	plant_type = new plant_type
 
 	if(incoming_spread)
@@ -90,6 +92,10 @@
 	yield_produce(modifier)
 
 /obj/structure/wild_plant/proc/yield_produce(modifier = 0)
+	if(!istype(plant_type) || !plant_type.produce_type)
+		qdel(src)
+		return
+
 	var/base_amount = rand(plant_type.produce_amount_min, plant_type.produce_amount_max)
 	var/spawn_amount = max(base_amount + modifier, 1)
 	for(var/i in 1 to spawn_amount)
@@ -97,7 +103,7 @@
 	qdel(src)
 
 /obj/structure/wild_plant/random/Initialize()
-	plant_type = pick(subtypesof(/datum/plant_def))
+	plant_type = safepick(get_harvestable_plant_defs()) || /datum/plant_def/cabbage
 	spread_chance = rand(25, 100)
 	return ..()
 

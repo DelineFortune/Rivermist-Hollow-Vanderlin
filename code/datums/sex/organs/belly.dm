@@ -1,3 +1,5 @@
+#define BELLY_FULLNESS_MESSAGE_COOLDOWN (30 SECONDS)
+
 /obj/item/organ/genitals/belly
 	name = "belly"
 	icon = 'modular_rmh/icons/eaglephntm/icons/obj/surgery.dmi'
@@ -8,25 +10,37 @@
 	accessory_type = /datum/sprite_accessory/genitals/belly
 	organ_size = DEFAULT_BELLY_SIZE
 	var/resting_size = DEFAULT_BELLY_SIZE
+	var/fullness_growth_steps = 0
 
 /obj/item/organ/genitals/belly/Initialize()
 	. = ..()
-	resting_size = organ_size
+	resting_size = CLAMP(organ_size, MIN_BELLY_SIZE, MAX_BELLY_SIZE)
 
 /obj/item/organ/genitals/belly/Insert(mob/living/M, special, drop_if_replaced, new_zone = null)
 	. = ..()
-	if(!.)
-		return FALSE
-	resting_size = CLAMP(organ_size, MIN_BELLY_SIZE, MAX_BELLY_SIZE)
+	resting_size = CLAMP(resting_size, MIN_BELLY_SIZE, MAX_BELLY_SIZE)
+	organ_size = resting_size
 	if(!GetComponent(/datum/component/belly_fullness))
 		AddComponent(/datum/component/belly_fullness)
 
 /obj/item/organ/genitals/belly/Remove(mob/living/M, special, drop_if_replaced)
 	. = ..()
+	set_fullness_growth_steps(0)
 	organ_size = resting_size
 
 	var/datum/component/belly_fullness/fullness = GetComponent(/datum/component/belly_fullness)
 	qdel(fullness)
+
+/obj/item/organ/genitals/belly/proc/get_visible_belly_size()
+	return CLAMP(resting_size + fullness_growth_steps, MIN_BELLY_SIZE, MAX_BELLY_SIZE)
+
+/obj/item/organ/genitals/belly/proc/set_fullness_growth_steps(growth_steps)
+	var/new_growth_steps = CLAMP(growth_steps, 0, MAX_BELLY_SIZE)
+	if(fullness_growth_steps == new_growth_steps)
+		return FALSE
+
+	fullness_growth_steps = new_growth_steps
+	return TRUE
 
 /obj/item/organ/genitals/belly/internal
 	name = "internal belly"
@@ -36,9 +50,13 @@
 /datum/component/belly_fullness
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
+	COOLDOWN_DECLARE(fullness_expand_message_cooldown)
+	COOLDOWN_DECLARE(fullness_shrink_message_cooldown)
+
 	var/obj/item/organ/genitals/belly/belly
 	var/mob/living/carrier
 	var/list/tracked_organs = list()
+	var/fullness_message_initialized = FALSE
 
 /datum/component/belly_fullness/Initialize()
 	if(!istype(parent, /obj/item/organ/genitals/belly))
@@ -65,16 +83,18 @@
 
 /datum/component/belly_fullness/Destroy(force, ...)
 	clear_tracked_organs()
+	if(carrier)
+		unregister_carrier()
 	carrier = null
 	belly = null
 	return ..()
 
 /datum/component/belly_fullness/proc/register_carrier()
-	RegisterSignal(carrier, COMSIG_LIVING_LIFE, PROC_REF(handle_life))
+	RegisterSignal(carrier, COMSIG_LIVING_ORGAN_CHANGED, PROC_REF(on_carrier_organ_changed))
 	RegisterSignal(carrier, COMSIG_PARENT_QDELETING, PROC_REF(on_carrier_qdeleting))
 
 /datum/component/belly_fullness/proc/unregister_carrier()
-	UnregisterSignal(carrier, list(COMSIG_LIVING_LIFE, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(carrier, list(COMSIG_LIVING_ORGAN_CHANGED, COMSIG_PARENT_QDELETING))
 
 /datum/component/belly_fullness/proc/register_tracked_organ(obj/item/organ/organ)
 	if(!organ)
@@ -141,10 +161,13 @@
 	carrier = null
 	clear_tracked_organs()
 
-/datum/component/belly_fullness/proc/handle_life(seconds)
+/datum/component/belly_fullness/proc/on_carrier_organ_changed(datum/source, obj/item/organ/changed_organ, changed_slot, inserted)
 	SIGNAL_HANDLER
 
-	refresh_tracked_organs()
+	if(!(changed_slot in list(ORGAN_SLOT_GUTS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_VAGINA, ORGAN_SLOT_ANUS)))
+		return
+
+	refresh_tracked_organs(TRUE)
 	recalculate_size()
 
 /datum/component/belly_fullness/proc/on_storage_changed(datum/source, datum/component/body_storage/storage)
@@ -212,25 +235,48 @@
 	if(!belly)
 		return FALSE
 
-	var/base_size = CLAMP(belly.resting_size, MIN_BELLY_SIZE, MAX_BELLY_SIZE)
-	var/target_size = CLAMP(base_size + get_total_growth_steps(), MIN_BELLY_SIZE, MAX_BELLY_SIZE)
-	if(belly.organ_size == target_size)
+	var/old_growth_steps = belly.fullness_growth_steps
+	var/new_growth_steps = get_total_growth_steps()
+	var/was_initialized = fullness_message_initialized
+	fullness_message_initialized = TRUE
+
+	if(!belly.set_fullness_growth_steps(new_growth_steps))
 		return FALSE
 
-	belly.organ_size = target_size
+	if(was_initialized)
+		send_fullness_change_message(old_growth_steps, belly.fullness_growth_steps)
+
 	if(iscarbon(carrier))
 		var/mob/living/carbon/carbon_owner = carrier
 		// Belly size lives on a visible organ overlay, so force a redraw when it changes.
 		carbon_owner.update_body_parts(TRUE)
 	return TRUE
 
+/datum/component/belly_fullness/proc/send_fullness_change_message(old_growth_steps, new_growth_steps)
+	if(!carrier || old_growth_steps == new_growth_steps)
+		return FALSE
+
+	if(new_growth_steps > old_growth_steps)
+		if(!COOLDOWN_FINISHED(src, fullness_expand_message_cooldown))
+			return FALSE
+		COOLDOWN_START(src, fullness_expand_message_cooldown, BELLY_FULLNESS_MESSAGE_COOLDOWN)
+		to_chat(carrier, span_small(span_love("My belly bulges outward from all that's stuffed in me.")))
+		return TRUE
+
+	if(!COOLDOWN_FINISHED(src, fullness_shrink_message_cooldown))
+		return FALSE
+	COOLDOWN_START(src, fullness_shrink_message_cooldown, BELLY_FULLNESS_MESSAGE_COOLDOWN)
+	to_chat(carrier, span_small(span_love("My belly settles back down as the fullness eases.")))
+	return TRUE
+
 /datum/component/belly_fullness/proc/get_total_growth_steps()
 	var/total_growth = 0
+	var/max_growth = MAX_BELLY_SIZE - CLAMP(belly.resting_size, MIN_BELLY_SIZE, MAX_BELLY_SIZE)
 
 	for(var/key in tracked_organs)
 		total_growth += get_growth_steps_for_organ(tracked_organs[key])
-		if(total_growth >= MAX_BELLY_SIZE)
-			return MAX_BELLY_SIZE
+		if(total_growth >= max_growth)
+			return max_growth
 
 	return total_growth
 
@@ -242,20 +288,25 @@
 	if(!storage)
 		return 0
 
+	var/inner_capacity = max(1, storage.layer_storage_max_bulk[STORAGE_LAYER_INNER] || 0)
 	var/deep_capacity = max(1, storage.layer_storage_max_bulk[STORAGE_LAYER_DEEP] || 0)
-	var/current_bulk = 0
+	var/inner_bulk = 0
+	var/deep_bulk = 0
 	if(storage.available_layers[STORAGE_LAYER_INNER])
-		current_bulk += storage.layer_storage_cur_bulk[STORAGE_LAYER_INNER]
+		inner_bulk += storage.layer_storage_cur_bulk[STORAGE_LAYER_INNER]
 	if(storage.available_layers[STORAGE_LAYER_DEEP])
-		current_bulk += storage.layer_storage_cur_bulk[STORAGE_LAYER_DEEP]
+		deep_bulk += storage.layer_storage_cur_bulk[STORAGE_LAYER_DEEP]
 
 	if(istype(organ, /obj/item/organ/genitals/filling_organ))
 		var/obj/item/organ/genitals/filling_organ/filling_organ = organ
 		if(fluid_fullness_counts_for_organ(filling_organ) && filling_organ.reagents?.maximum_volume > 0)
-			current_bulk += deep_capacity * filling_organ.reagents.total_volume / filling_organ.reagents.maximum_volume * 0.5
-		current_bulk += round(deep_capacity * filling_organ.conventional_pregnancy_stage / 3)
+			deep_bulk += deep_capacity * filling_organ.reagents.total_volume / filling_organ.reagents.maximum_volume * 0.5
+		deep_bulk += round(deep_capacity * filling_organ.conventional_pregnancy_stage / 3)
 
-	return growth_steps_from_fullness(current_bulk, deep_capacity)
+	return min(
+		growth_steps_from_inner_fullness(inner_bulk, inner_capacity) + growth_steps_from_fullness(deep_bulk, deep_capacity),
+		MAX_BELLY_SIZE
+	)
 
 /datum/component/belly_fullness/proc/fluid_fullness_counts_for_organ(obj/item/organ/genitals/filling_organ/filling_organ)
 	if(!istype(filling_organ, /obj/item/organ/genitals/filling_organ/anus) && !istype(filling_organ, /obj/item/organ/genitals/filling_organ/vagina))
@@ -274,3 +325,14 @@
 	if(current_bulk * 3 >= capacity)
 		return 1
 	return 0
+
+/datum/component/belly_fullness/proc/growth_steps_from_inner_fullness(current_bulk, capacity)
+	if(current_bulk <= 0 || capacity <= 0)
+		return 0
+	if(current_bulk >= capacity)
+		return 2
+	if(current_bulk * 2 >= capacity)
+		return 1
+	return 0
+
+#undef BELLY_FULLNESS_MESSAGE_COOLDOWN

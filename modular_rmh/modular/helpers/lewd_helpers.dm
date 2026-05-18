@@ -47,7 +47,7 @@
 		return
 
 	//Full list of exposable genitals created
-	var/obj/item/organ/genitals/picked_organ
+	var/obj/item/organ/picked_organ
 	picked_organ = input(src, "Choose which genitalia to expose/hide", "Expose/Hide genitals") \
 		as null|anything in genital_list
 
@@ -71,7 +71,7 @@
 
 	picked_organ.toggle_visibility(vis_type)
 
-/obj/item/organ/genitals/proc/toggle_visibility(vis_type)
+/obj/item/organ/genitals/toggle_visibility(vis_type)
 	switch(vis_type)
 		if("Show Under clothes")
 			visible_through_clothes = TRUE

@@ -243,7 +243,7 @@
 	var/turf/best_turf
 	var/best_score = INFINITY
 
-	for(var/obj/effect/decal/marker_export/marker in world)
+	for(var/obj/effect/decal/marker_export/marker as anything in GLOB.quest_turn_in_markers)
 		var/turf/marker_turf = get_turf(marker)
 		if(!marker_turf)
 			continue

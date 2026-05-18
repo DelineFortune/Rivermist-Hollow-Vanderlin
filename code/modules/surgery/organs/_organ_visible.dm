@@ -39,6 +39,9 @@
 /obj/item/organ/proc/is_visible_on_owner()
 	return TRUE
 
+/obj/item/organ/proc/toggle_visibility(vis_type)
+	return
+
 /// Gets the organ overlay.
 /obj/item/organ/proc/get_bodypart_overlay(obj/item/bodypart/bodypart)
 	if(!bodypart_icon && !accessory_type)

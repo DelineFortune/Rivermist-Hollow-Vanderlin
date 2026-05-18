@@ -289,6 +289,7 @@
 		/datum/skill/craft/cooking = 3,
 		/datum/skill/craft/engineering = 3,
 		/datum/skill/misc/sewing = 3,
+		/datum/skill/craft/tanning = 3,
 		/datum/skill/craft/smelting = 3,
 	)
 

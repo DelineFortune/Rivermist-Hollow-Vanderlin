@@ -139,6 +139,7 @@
 	melting_material = /datum/material/iron
 	melt_amount = 100
 	punch_modifier = 1.2
+	fingers = TRUE
 
 /obj/item/bodypart/r_arm/prosthetic/iron
 	name = "iron right arm"
@@ -155,6 +156,7 @@
 	melting_material = /datum/material/iron
 	melt_amount = 100
 	punch_modifier = 1.2
+	fingers = TRUE
 
 /obj/item/bodypart/l_leg/prosthetic/iron
 	name = "iron left leg"
@@ -205,6 +207,7 @@
 	melt_amount = 75
 	melting_material = /datum/material/steel
 	punch_modifier = 1.4
+	fingers = TRUE
 
 /obj/item/bodypart/r_arm/prosthetic/steel
 	name = "steel right arm"
@@ -220,6 +223,7 @@
 	melt_amount = 75
 	melting_material = /datum/material/steel
 	punch_modifier = 1.4
+	fingers = TRUE
 
 /obj/item/bodypart/l_leg/prosthetic/steel
 	name = "steel left leg"

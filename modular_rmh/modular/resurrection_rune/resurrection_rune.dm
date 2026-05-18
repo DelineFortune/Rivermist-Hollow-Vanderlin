@@ -633,9 +633,10 @@
 		return RUNE_STAGE_IMMEDIATE
 	if(target.is_dead())
 		return RUNE_STAGE_IMMEDIATE
-	if(target.health <= RUNE_THRESHOLD_FULLCRIT && target.stat == UNCONSCIOUS)
+	var/sleeping_above_crit = target.IsSleeping() && target.health > target.crit_threshold
+	if(target.health <= RUNE_THRESHOLD_FULLCRIT && target.stat == UNCONSCIOUS && !sleeping_above_crit)
 		return RUNE_STAGE_HARD_CRIT
-	if(target.health <= RUNE_THRESHOLD_SOFTCRIT || target.get_num_legs(TRUE) < 2)
+	if((target.health <= RUNE_THRESHOLD_SOFTCRIT && !sleeping_above_crit) || target.get_num_legs(TRUE) < 2)
 		return RUNE_STAGE_SOFT_CRIT
 	return RUNE_STAGE_NONE
 
@@ -750,7 +751,7 @@
 	var/datum/action/innate/resurrection_rune_call/rescue_action = new(src)
 	rescue_action.Grant(user)
 	rescue_actions[user] = rescue_action
-	to_chat(user, span_blue("You feel the rune's pull stengthening towards you. All you need is to answer it."))
+	to_chat(user, span_blue("The rune has found you in grave danger and is offering to pull you back. Use <b>Call the Rune</b> to surrender to it; your body will be drawn to its circle and revived."))
 
 /datum/resurrection_rune_controller/proc/clear_rescue_action(mob/living/carbon/user)
 	var/datum/action/innate/resurrection_rune_call/rescue_action = rescue_actions[user]
@@ -807,7 +808,7 @@
 	if(rescue_stage != RUNE_STAGE_SOFT_CRIT && rescue_stage != RUNE_STAGE_HARD_CRIT)
 		return FALSE
 
-	queue_revival(user, voluntary = TRUE)
+	queue_revival(user, voluntary = TRUE, allow_outlaw_redirect = FALSE)
 	return TRUE
 
 /datum/resurrection_rune_controller/proc/trigger_mob_erp_escape(mob/living/carbon/user)
@@ -817,7 +818,7 @@
 	queue_revival(user, voluntary = TRUE)
 	return TRUE
 
-/datum/resurrection_rune_controller/proc/queue_revival(mob/living/carbon/user, is_linked = TRUE, voluntary = FALSE)
+/datum/resurrection_rune_controller/proc/queue_revival(mob/living/carbon/user, is_linked = TRUE, voluntary = FALSE, allow_outlaw_redirect = TRUE)
 	if(!user)
 		return
 	if(user in resurrecting)
@@ -833,9 +834,9 @@
 
 	sub_rune.visible_message(span_blue("The rune begins to grow brighter."))
 	resurrecting |= user
-	addtimer(CALLBACK(src, PROC_REF(complete_revival), user, voluntary), RUNE_REVIVE_DELAY)
+	addtimer(CALLBACK(src, PROC_REF(complete_revival), user, voluntary, allow_outlaw_redirect), RUNE_REVIVE_DELAY)
 
-/datum/resurrection_rune_controller/proc/complete_revival(mob/living/carbon/user, voluntary = FALSE)
+/datum/resurrection_rune_controller/proc/complete_revival(mob/living/carbon/user, voluntary = FALSE, allow_outlaw_redirect = TRUE)
 	var/mob/living/carbon/body = user
 	if(QDELETED(body))
 		body = null
@@ -843,7 +844,7 @@
 		clear_linked_user_rescue_state(body)
 		resurrecting -= user
 		return
-	var/turf/destination_turf = sub_rune?.get_resurrection_destination(body)
+	var/turf/destination_turf = sub_rune?.get_resurrection_destination(body, allow_outlaw_redirect = allow_outlaw_redirect)
 	var/turf/return_turf = get_turf(body)
 	if(!body || !destination_turf)
 		if(sub_rune)
@@ -1144,7 +1145,9 @@
 	var/rune_status = disabled_res ? "disabled" : "enabled"
 	return "[name] ([rune_tag]) - [x],[y],[z] - [rune_status] - [linked_count] linked"
 
-/obj/structure/resurrection_rune/proc/uses_outlaw_redirect(mob/living/carbon/body = null, datum/mind/linked_mind = null)
+/obj/structure/resurrection_rune/proc/uses_outlaw_redirect(mob/living/carbon/body = null, datum/mind/linked_mind = null, allow_outlaw_redirect = TRUE)
+	if(!allow_outlaw_redirect)
+		return FALSE
 	if(!should_redirect_outlaw_resurrection(body, linked_mind))
 		return FALSE
 
@@ -1162,33 +1165,33 @@
 		return
 	return outlaw_rune
 
-/obj/structure/resurrection_rune/proc/get_resurrection_tag(mob/living/carbon/body = null, datum/mind/linked_mind = null)
-	if(uses_outlaw_redirect(body, linked_mind))
+/obj/structure/resurrection_rune/proc/get_resurrection_tag(mob/living/carbon/body = null, datum/mind/linked_mind = null, allow_outlaw_redirect = TRUE)
+	if(uses_outlaw_redirect(body, linked_mind, allow_outlaw_redirect))
 		return RUNE_LINK_OUTLAW
 	return rune_tag
 
-/obj/structure/resurrection_rune/proc/get_resurrection_anchor_rune(mob/living/carbon/body = null, datum/mind/linked_mind = null)
-	if(uses_outlaw_redirect(body, linked_mind))
+/obj/structure/resurrection_rune/proc/get_resurrection_anchor_rune(mob/living/carbon/body = null, datum/mind/linked_mind = null, allow_outlaw_redirect = TRUE)
+	if(uses_outlaw_redirect(body, linked_mind, allow_outlaw_redirect))
 		return get_outlaw_redirect_rune()
 	return src
 
-/obj/structure/resurrection_rune/proc/get_resurrection_anchor(mob/living/carbon/body = null, datum/mind/linked_mind = null)
+/obj/structure/resurrection_rune/proc/get_resurrection_anchor(mob/living/carbon/body = null, datum/mind/linked_mind = null, allow_outlaw_redirect = TRUE)
 	// Outlaws keep their original soul link, but can be rerouted to a prison rune or
 	// prison marker set on resurrection.
-	var/rune_tag_to_use = get_resurrection_tag(body, linked_mind)
+	var/rune_tag_to_use = get_resurrection_tag(body, linked_mind, allow_outlaw_redirect)
 	var/obj/effect/landmark/resurrection_rune_destination/marker = find_resurrection_rune_destination_marker_by_tag(rune_tag_to_use)
 	var/turf/anchor_turf = get_turf(marker)
 	if(anchor_turf)
 		return anchor_turf
 
-	var/obj/structure/resurrection_rune/anchor_rune = get_resurrection_anchor_rune(body, linked_mind)
+	var/obj/structure/resurrection_rune/anchor_rune = get_resurrection_anchor_rune(body, linked_mind, allow_outlaw_redirect)
 	if(anchor_rune)
 		return get_turf(anchor_rune)
 
 	return get_turf(src)
 
-/obj/structure/resurrection_rune/proc/get_resurrection_destination_radius(mob/living/carbon/body = null, datum/mind/linked_mind = null)
-	var/obj/structure/resurrection_rune/anchor_rune = get_resurrection_anchor_rune(body, linked_mind)
+/obj/structure/resurrection_rune/proc/get_resurrection_destination_radius(mob/living/carbon/body = null, datum/mind/linked_mind = null, allow_outlaw_redirect = TRUE)
+	var/obj/structure/resurrection_rune/anchor_rune = get_resurrection_anchor_rune(body, linked_mind, allow_outlaw_redirect)
 	if(anchor_rune)
 		return max(anchor_rune.destination_radius, 0)
 
@@ -1211,12 +1214,12 @@
 
 	return valid_turfs
 
-/obj/structure/resurrection_rune/proc/get_resurrection_destination(mob/living/carbon/body = null, datum/mind/linked_mind = null)
-	var/turf/anchor_turf = get_resurrection_anchor(body, linked_mind)
+/obj/structure/resurrection_rune/proc/get_resurrection_destination(mob/living/carbon/body = null, datum/mind/linked_mind = null, allow_outlaw_redirect = TRUE)
+	var/turf/anchor_turf = get_resurrection_anchor(body, linked_mind, allow_outlaw_redirect)
 	if(!anchor_turf)
 		return
 
-	var/search_radius = get_resurrection_destination_radius(body, linked_mind)
+	var/search_radius = get_resurrection_destination_radius(body, linked_mind, allow_outlaw_redirect)
 	var/list/valid_turfs = get_resurrection_destination_options(anchor_turf, search_radius)
 	if(valid_turfs.len)
 		return pick(valid_turfs)

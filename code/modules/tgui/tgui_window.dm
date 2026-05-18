@@ -38,6 +38,8 @@
  */
 /datum/tgui_window/New(client/client, id, pooled = FALSE)
 	src.id = id
+	if(!istype(client))
+		return
 	src.client = client
 	src.client.tgui_windows[id] = src
 	src.pooled = pooled
@@ -82,7 +84,7 @@
 	log_tgui(client,
 		context = "[id]/initialize",
 		window = src)
-	if(!client)
+	if(!istype(client))
 		return
 	src.initial_fancy = fancy
 	src.initial_assets = assets

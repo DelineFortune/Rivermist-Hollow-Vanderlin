@@ -4,6 +4,7 @@
 /datum/surgery_step/incise
 	name = "Incise"
 	implements = list(
+		TOOL_IMPROVISED_SCALPEL = 60,
 		TOOL_SCALPEL = 80,
 		TOOL_SHARP = 60,
 	) // 60% success with any sharp item.

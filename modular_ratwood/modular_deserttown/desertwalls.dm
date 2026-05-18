@@ -1,4 +1,4 @@
-/turf/closed/wall/mineral/rogue/sandstone
+/turf/closed/wall/mineral/sandstone
 	name = "sandstone wall"
 	desc = "A wall of smooth, unyielding sandstone."
 	icon = 'modular_ratwood/modular_deserttown/icons/sandstone.dmi'
@@ -16,7 +16,7 @@
 	damage_deflection = 10
 	hardness = 4
 
-/turf/closed/wall/mineral/rogue/sandbrick
+/turf/closed/wall/mineral/sandbrick
 	name = "sandbrick wall"
 	desc = "A wall of smooth, unyielding bricks."
 	icon = 'modular_ratwood/modular_deserttown/icons/sandbrick_wall.dmi'
@@ -26,7 +26,7 @@
 	max_integrity = 1800
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
-	//NEED TO REPAIR FOR RMH canSmoothWith = list(/turf/closed/wall/mineral/rogue/sandbrick)
+	//NEED TO REPAIR FOR RMH canSmoothWith = list(/turf/closed/wall/mineral/sandbrick)
 	above_floor = /turf/open/floor/desert/darkpath
 	baseturfs = /turf/open/floor/desert/darkpath
 	neighborlay = "dirtedge"

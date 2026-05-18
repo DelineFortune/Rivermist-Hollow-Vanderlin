@@ -320,6 +320,8 @@
 	owner = M
 	last_owner = M
 	M.internal_organs |= src
+	M.internal_organs_slot[slot] = src
+	SEND_SIGNAL(M, COMSIG_LIVING_ORGAN_CHANGED, src, slot, TRUE)
 	moveToNullspace()
 	for(var/slot in organ_efficiency)
 		LAZYADD(M.internal_organs_slot[slot], src)

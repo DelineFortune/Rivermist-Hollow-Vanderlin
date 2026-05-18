@@ -89,10 +89,13 @@
 		return LANGUAGE_KNOWN
 	else
 		var/atom/movable/AM = get_atom()
+		if(!AM)
+			return FALSE
 		var/datum/language_holder/L = AM.get_language_holder(shadow=FALSE)
-		if(L != src)
-			if(is_type_in_typecache(dt, L.shadow_languages))
-				return LANGUAGE_SHADOWED
+		if(!L || L == src)
+			return FALSE
+		if(is_type_in_typecache(dt, L.shadow_languages))
+			return LANGUAGE_SHADOWED
 	return FALSE
 
 /datum/language_holder/proc/copy_known_languages_from(thing, replace=FALSE)

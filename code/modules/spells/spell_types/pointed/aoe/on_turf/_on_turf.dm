@@ -43,12 +43,12 @@
 	var/list/turfs = list()
 	if(respect_LOS)
 		for(var/turf/T as anything in circle_view_turfs(center, aoe_radius))
-			if(respect_density && T.density)
+			if(!is_valid_target(T))
 				continue
 			turfs += T
 	else
 		for(var/turf/T as anything in circle_range_turfs(center, aoe_radius))
-			if(respect_density && T.density)
+			if(!is_valid_target(T))
 				continue
 			turfs += T
 

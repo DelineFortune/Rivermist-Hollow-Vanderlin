@@ -15,12 +15,12 @@
 /datum/round_event/wild_crops/start()
 	. = ..()
 	var/list/turfs = get_area_turfs(/area/outdoors/wilderness, subtypes = TRUE)
+	var/list/valid_turfs = list()
+	for(var/turf/turf as anything in turfs)
+		if(!istype(turf, /turf/open/floor/dirt) && !istype(turf, /turf/open/floor/grass) && !istype(turf, /turf/open/floor/snow))
+			continue
+		valid_turfs += turf
+	if(!length(valid_turfs))
+		return
 	for(var/i = 1 to rand(2, 12))
-		var/failing = TRUE
-		while(failing)
-			var/turf/turf = pick(turfs) ///sometimes the dumber ways are the more efficent
-			if(!istype(turf, /turf/open/floor/dirt) && !istype(turf, /turf/open/floor/grass) && !istype(turf, /turf/open/floor/snow))
-				continue
-			new /obj/structure/wild_plant/random(turf)
-			failing = FALSE
-
+		new /obj/structure/wild_plant/random(pick(valid_turfs))

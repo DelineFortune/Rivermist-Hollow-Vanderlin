@@ -27,15 +27,16 @@
 				return
 			if(!piercings_feature)
 				var/datum/bodypart_feature/piercing/piercings_new = new /datum/bodypart_feature/piercing()
-				piercings_new.set_accessory_type(sprite_acc, color, H)
+				piercings_new.set_accessory_type(sprite_acc, color, null)
 				piercings_feature = piercings_new
 			user.visible_message(span_notice("[user] tries to put [src] on [H]..."))
 			if(do_after(user, 50, target = H))
 				var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
-				chest.add_bodypart_feature(piercings_feature)
+				if(!chest.add_bodypart_feature(piercings_feature))
+					return
+				piercings_feature.set_piercings_item(src, H)
 				user.dropItemToGround(src)
 				forceMove(H)
-				H.piercings_item = src
 
 /obj/item/piercings/beads
 	name = "bead piercings"

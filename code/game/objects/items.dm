@@ -390,6 +390,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			return body_storage_random_removal
 	return body_storage_manual_removal
 
+/obj/item/proc/can_random_body_storage_layer_swap()
+	return TRUE
+
 /// Handles sprite changes and decals
 /obj/item/proc/update_transform()
 	transform = null
@@ -1637,7 +1640,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	. = ..()
 	if(!get_precursor_data(src))
 		return
-	var/alch_skill = user.attributes ? GET_MOB_SKILL_VALUE(user, /datum/attribute/skill/craft/alchemy) : SKILL_LEVEL_LEGENDARY
+	var/alch_skill = SKILL_LEVEL_LEGENDARY
+	if(isliving(user) && user.attributes)
+		alch_skill = GET_MOB_SKILL_VALUE_OLD(user, /datum/attribute/skill/craft/alchemy)
 	var/datum/natural_precursor/precursor = get_precursor_data(src)
 	if(precursor)
 		for(var/datum/thaumaturgical_essence/essence as anything in precursor.essence_yields)

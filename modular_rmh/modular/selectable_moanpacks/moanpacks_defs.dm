@@ -462,3 +462,23 @@ GLOBAL_LIST_EMPTY(selectable_moanpacks)
 	sounds_whimper = list('sound/vo/female/gen/whimper (1).ogg','sound/vo/female/gen/whimper (2).ogg','sound/vo/female/gen/whimper (3).ogg')
 	sounds_sexmoangag = list('modular_rmh/sound/vo/gagged/female/gagged_moan1.ogg','modular_rmh/sound/vo/gagged/female/gagged_moan2.ogg','modular_rmh/sound/vo/gagged/female/gagged_moan3.ogg','modular_rmh/sound/vo/gagged/female/gagged_moan4.ogg','modular_rmh/sound/vo/gagged/female/gagged_moan5.ogg','modular_rmh/sound/vo/gagged/female/gagged_moan6.ogg','modular_rmh/sound/vo/gagged/female/gagged_moan7.ogg','modular_rmh/sound/vo/gagged/female/gagged_moan8.ogg','modular_rmh/sound/vo/gagged/female/gagged_moan9.ogg','modular_rmh/sound/vo/gagged/female/gagged_moan10.ogg','modular_rmh/sound/vo/gagged/female/gagged_moan11.ogg')
 	sounds_sexmoangag_org = list('modular_rmh/sound/vo/gagged/female/gagged_orgasm.ogg')
+
+/datum/moan_pack/male/quiet
+	name = "MALE STONE-COLD QUIET"
+	sounds_sexmoanlight = null
+	sounds_sexmoanhvy = null
+	sounds_groan = null
+	sounds_painmoan = null
+	sounds_whimper = null
+	sounds_sexmoangag = null
+	sounds_sexmoangag_org = null
+
+/datum/moan_pack/female/quiet
+	name = "FEMALE STONE-COLD QUIET"
+	sounds_sexmoanlight = null
+	sounds_sexmoanhvy = null
+	sounds_groan = null
+	sounds_painmoan = null
+	sounds_whimper = null
+	sounds_sexmoangag = null
+	sounds_sexmoangag_org = null

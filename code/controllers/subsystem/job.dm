@@ -57,12 +57,37 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/GetJob(rank)
 	if(!length(all_occupations))
 		SetupOccupations()
+	if(istype(rank, /datum/job))
+		return rank
 	return name_occupations[rank]
 
 /datum/controller/subsystem/job/proc/GetJobType(jobtype)
 	if(!length(all_occupations))
 		SetupOccupations()
 	return type_occupations[jobtype]
+
+/datum/controller/subsystem/job/proc/get_adventurer_slot_count()
+	var/count = 0
+	for(var/datum/job/job as anything in joinable_occupations)
+		if(job.uses_adventurer_slot_pool())
+			count += job.current_positions
+	return count
+
+/datum/controller/subsystem/job/proc/get_adventurer_slot_limit(latejoin = FALSE)
+	var/limit = 0
+	for(var/datum/job/job as anything in joinable_occupations)
+		if(!job.enabled || !job.uses_adventurer_slot_pool())
+			continue
+		var/job_limit = latejoin ? job.total_positions : job.spawn_positions
+		if(job_limit == -1)
+			return -1
+		limit = max(limit, job_limit)
+	return limit
+
+/datum/controller/subsystem/job/proc/set_adventurer_slot_limit(new_total_positions)
+	for(var/datum/job/job as anything in joinable_occupations)
+		if(job.uses_adventurer_slot_pool())
+			job.total_positions = new_total_positions
 
 /datum/controller/subsystem/job/proc/AssignRole(mob/dead/new_player/player, datum/job/job, latejoin = FALSE)
 	JobDebug("Running AR, Player: [player], Rank: [job?.type || "null"], LJ: [latejoin]")
@@ -75,9 +100,7 @@ SUBSYSTEM_DEF(job)
 		return FALSE
 	if(job.required_playtime_remaining(player.client))
 		return FALSE
-	var/position_limit = job.total_positions
-	if(!latejoin)
-		position_limit = job.spawn_positions
+	var/position_limit = job.get_position_limit(latejoin)
 	JobDebug("Player: [player] is now Rank: [job.get_informed_title(player)], JCP:[job.current_positions], JPL:[position_limit]")
 	if(istype(player) && player?.client?.prefs.multi_char_ready)
 		player.finalize_multi_ready_character()
@@ -172,7 +195,7 @@ SUBSYSTEM_DEF(job)
 			JobDebug("GRJ whitelist failed, Player: [player], Job: [job.title]")
 			continue
 
-		if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
+		if(job.has_open_position())
 			JobDebug("GRJ Random job given, Player: [player], Job: [job]")
 			if(AssignRole(player, job))
 				return TRUE
@@ -389,7 +412,7 @@ SUBSYSTEM_DEF(job)
 							continue
 
 						// Is the job available?
-						if(!((job.current_positions < job.spawn_positions) || job.spawn_positions == -1))
+						if(!job.has_open_position())
 							continue
 
 						// Is this character eligible?
@@ -418,7 +441,7 @@ SUBSYSTEM_DEF(job)
 					if(player.client.prefs.job_preferences[job.title] != level)
 						continue
 
-					if(!((job.current_positions < job.spawn_positions) || job.spawn_positions == -1))
+					if(!job.has_open_position())
 						continue
 
 					if(!check_job_eligibility(player, job))
@@ -595,7 +618,7 @@ SUBSYSTEM_DEF(job)
 						continue
 
 					// Check if job has room
-					if(!((job.current_positions < job.spawn_positions) || job.spawn_positions == -1))
+					if(!job.has_open_position())
 						continue
 
 					// Success!
@@ -618,7 +641,7 @@ SUBSYSTEM_DEF(job)
 				if(!check_job_eligibility(player, job))
 					continue
 
-				if(!((job.current_positions < job.spawn_positions) || job.spawn_positions == -1))
+				if(!job.has_open_position())
 					continue
 
 				JobDebug("Required job single-char: Player [player], Job [job.title]")

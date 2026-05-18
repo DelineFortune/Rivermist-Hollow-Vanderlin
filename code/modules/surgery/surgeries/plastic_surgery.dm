@@ -13,6 +13,7 @@
 /datum/surgery_step/reshape_face
 	name = "Reshape face"
 	implements = list(
+		TOOL_IMPROVISED_SCALPEL = 50,
 		TOOL_SCALPEL = 70,
 		TOOL_WIRECUTTER = 50,
 		TOOL_SHARP = 35,

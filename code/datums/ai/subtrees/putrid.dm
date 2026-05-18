@@ -50,6 +50,8 @@
 
 	// Look for nearby corpses
 	var/mob/living/simple_animal/hostile/retaliate/meatvine/our_mob = controller.pawn
+	if(!our_mob || !our_mob.master || !length(our_mob.master.papameats))
+		return
 	var/obj/structure/meatvine/papameat/nearest_papameat = null
 	var/min_dist = INFINITY
 

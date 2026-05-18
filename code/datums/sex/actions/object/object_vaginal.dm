@@ -2,7 +2,7 @@
 /datum/sex_action/object_fuck/object_vaginal
 	name = "Fuck cunt with object"
 	var/ouchietext = "owie"
-	do_time = 4 SECONDS //slower on your own but not as much as ass since this is on your front.
+	do_time = 4 SECONDS //slower on your own but not as much as pussy since this is on your front.
 	user_priority = 100
 	target_priority = 1
 
@@ -72,9 +72,10 @@
 			if(targetpuss.reagents.total_volume >= (targetpuss.reagents.maximum_volume -0.5))
 				target.visible_message(span_notice("[contdildo] splashes it's contents around [target]'s hole as it is packed full!"))
 				contdildo.reagents.reaction(target, TOUCH, sex_session.speed, FALSE)
-				contdildo.reagents.remove_all(sex_session.speed)
+				var/turf/targetloc = target.loc
+				targetloc.add_liquid_from_reagents(contdildo.reagents, amount = sex_session.speed)
 			else
-				target.visible_message(span_notice(pick("[english_list(contdildo.reagents.reagent_list)] from \the [contdildo] fill [target]'s ass.", "[user] feeds [target]'s ass with [english_list(contdildo.reagents.reagent_list)] from \The [contdildo]", "[english_list(contdildo.reagents.reagent_list)] from \the [contdildo] splash into [target]'s ass.", "[english_list(contdildo.reagents.reagent_list)] from \the [contdildo] flood into [target]'s ass.")), span_notice(pick("[english_list(contdildo.reagents.reagent_list)] from \the [contdildo] fill my ass.", "I feed my ass with [english_list(contdildo.reagents.reagent_list)] from \The [contdildo]", "[english_list(contdildo.reagents.reagent_list)] from \the [contdildo] splash into my ass.", "[english_list(contdildo.reagents.reagent_list)] from \the [contdildo] flood into me.")))
+				target.visible_message(span_notice(pick("[english_list(contdildo.reagents.reagent_list)] from \the [contdildo] fill [target]'s pussy.", "[user] feeds [target]'s pussy with [english_list(contdildo.reagents.reagent_list)] from \The [contdildo]", "[english_list(contdildo.reagents.reagent_list)] from \the [contdildo] splash into [target]'s pussy.", "[english_list(contdildo.reagents.reagent_list)] from \the [contdildo] flood into [target]'s pussy.")), span_notice(pick("[english_list(contdildo.reagents.reagent_list)] from \the [contdildo] fill my pussy.", "I feed my pussy with [english_list(contdildo.reagents.reagent_list)] from \The [contdildo]", "[english_list(contdildo.reagents.reagent_list)] from \the [contdildo] splash into my pussy.", "[english_list(contdildo.reagents.reagent_list)] from \the [contdildo] flood into me.")))
 				contdildo.reagents.trans_to(targetpuss, sex_session.speed, 1, TRUE, FALSE, targetpuss, FALSE, INJECT, FALSE, TRUE)
 			playsound(user.loc, 'sound/misc/mat/endin.ogg', 20, TRUE)
 			pain_amt = -8 //liquid ease pain i guess

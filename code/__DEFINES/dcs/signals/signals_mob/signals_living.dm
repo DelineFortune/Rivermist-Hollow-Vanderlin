@@ -121,6 +121,9 @@
 	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.
 	#define COMPONENT_LIVING_CANCEL_LIFE_PROCESSING (1<<0)
 
+/// From organ insertion/removal after a living mob's organ slot changes. (obj/item/organ/organ, organ_slot, inserted)
+#define COMSIG_LIVING_ORGAN_CHANGED "living_organ_changed"
+
 #define COMSIG_LIVING_ADJUSTED "living_damage_adjusted"
 
 #define COMSIG_LIVING_PREBITE_SELF  "living_prebite"

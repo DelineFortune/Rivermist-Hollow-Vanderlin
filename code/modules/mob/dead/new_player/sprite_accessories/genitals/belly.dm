@@ -5,7 +5,7 @@
 
 /datum/sprite_accessory/genitals/belly/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	var/obj/item/organ/genitals/belly/belleh = organ
-	return "[icon_state]_[belleh.organ_size]"
+	return "[icon_state]_[belleh.get_visible_belly_size()]"
 
 /datum/sprite_accessory/genitals/belly/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	gender_genitals_adjust(appearance_list, organ, bodypart, owner, OFFSET_BELLY)

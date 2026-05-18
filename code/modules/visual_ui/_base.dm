@@ -29,11 +29,6 @@ GLOBAL_LIST_INIT(visual_ui_id_to_type, list())
 /datum/mind
 	var/list/active_uis = list()
 
-/datum/mind/Destroy()
-	. = ..()
-	remove_all_uis()
-	QDEL_LIST_ASSOC(active_uis)
-
 /datum/mind/proc/resend_all_uis() // Re-sends all mind uis to client.screen, called on mob/living/Login()
 	for (var/visual_ui in active_uis)
 		var/datum/visual_ui/ui = active_uis[visual_ui]
@@ -145,6 +140,17 @@ GLOBAL_LIST_INIT(visual_ui_id_to_type, list())
 		subUIs += child
 		child.parent = src
 	send_to_client()
+
+/datum/visual_ui/Destroy()
+	remove_from_client()
+	if(mind?.active_uis && mind.active_uis[uniqueID] == src)
+		mind.active_uis -= uniqueID
+	QDEL_LIST(elements)
+	QDEL_LIST(subUIs)
+	mind = null
+	parent = null
+	failsafe = null
+	return ..()
 
 /datum/visual_ui/proc/spawn_elements()
 	failsafe = new (null, src)
@@ -289,7 +295,9 @@ GLOBAL_LIST_INIT(visual_ui_id_to_type, list())
 /obj/abstract/visual_ui_element/Destroy()
 	if (element_flags & MINDUI_FLAG_PROCESSING)
 		STOP_PROCESSING(SSobj, src)
-	..()
+	parent = null
+	scrollable_parent = null
+	return ..()
 
 /obj/abstract/visual_ui_element/proc/can_appear()
 	return TRUE

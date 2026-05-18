@@ -738,7 +738,7 @@
 
 		for(var/datum/job/job in SSjob.joinable_occupations)
 			if(job.title == Add)
-				job.total_positions += 1
+				job.set_total_positions(job.get_position_limit(TRUE) + 1)
 				break
 
 		src.manage_free_slots()
@@ -756,9 +756,9 @@
 				newtime = input(usr, "How many jebs do you want?", "Add wanted posters", "[newtime]") as num|null
 				if(!newtime)
 					to_chat(src.owner, "Setting to amount of positions filled for the job")
-					job.total_positions = job.current_positions
+					job.set_total_positions(job.get_position_count())
 					break
-				job.total_positions = newtime
+				job.set_total_positions(newtime)
 
 		src.manage_free_slots()
 
@@ -769,8 +769,8 @@
 		var/Remove = href_list["removejobslot"]
 
 		for(var/datum/job/job in SSjob.joinable_occupations)
-			if(job.title == Remove && job.total_positions - job.current_positions > 0)
-				job.total_positions -= 1
+			if(job.title == Remove && job.get_position_limit(TRUE) - job.get_position_count() > 0)
+				job.set_total_positions(job.get_position_limit(TRUE) - 1)
 				break
 
 		src.manage_free_slots()
@@ -783,7 +783,7 @@
 
 		for(var/datum/job/job in SSjob.joinable_occupations)
 			if(job.title == Unlimit)
-				job.total_positions = -1
+				job.set_total_positions(-1)
 				break
 
 		src.manage_free_slots()
@@ -796,7 +796,7 @@
 
 		for(var/datum/job/job in SSjob.joinable_occupations)
 			if(job.title == Limit)
-				job.total_positions = job.current_positions
+				job.set_total_positions(job.get_position_count())
 				break
 
 		src.manage_free_slots()

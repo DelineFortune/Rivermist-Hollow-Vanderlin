@@ -239,6 +239,9 @@
 /datum/sex_session/proc/sex_action_loop(datum/sex_action/action)
 	if(!action || !(action in active_actions))
 		return
+	if(!can_perform_action(action, TRUE))
+		stop_current_action(action)
+		return
 	if(action.on_start(user, target) == FALSE)
 		stop_current_action(action)
 		return
@@ -252,8 +255,13 @@
 			break
 
 		var/do_time = action.do_time / get_speed_multiplier()
-		var/do_after_flags = IGNORE_USER_DIR_CHANGE | IGNORE_HELD_ITEM | IGNORE_SLOWDOWNS | IGNORE_SLOWDOWNS | IGNORE_USER_DOING
+		var/do_after_flags = IGNORE_USER_DIR_CHANGE | IGNORE_HELD_ITEM | IGNORE_SLOWDOWNS | IGNORE_SLOWDOWNS | IGNORE_USER_DOING | IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE
 		var/interaction_key = "sex_action_[REF(action)]"
+		//loc check for proximity instead of move disruption.
+		if(!(target in view(1, user)))
+			if(current_action)
+				stop_current_action()
+			return
 		if(!do_after(user, do_time, target = target, timed_action_flags = do_after_flags, interaction_key = interaction_key))
 			break
 
@@ -311,6 +319,11 @@
 	var/datum/sex_action/action = get_action_template(action_type)
 	if(!action)
 		return FALSE
+	if(user != target)
+		if(!user.allows_player_erp_while_disconnected())
+			return FALSE
+		if(!target.allows_player_erp_while_disconnected())
+			return FALSE
 	if(!inherent_perform_check(action))
 		return FALSE
 	if(!action.can_perform(user, target) && !performing)

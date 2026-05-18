@@ -1099,6 +1099,9 @@
 /obj/structure/soil/proc/yield_produce(modifier = 0)
 	if(!produce_ready || !plant_genetics)
 		return
+	if(!plant?.produce_type)
+		ruin_produce()
+		return
 
 	// GENETICS: Enhanced yield calculation
 	var/base_amount = rand(plant.produce_amount_min, plant.produce_amount_max)

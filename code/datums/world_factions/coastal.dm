@@ -201,7 +201,8 @@
 		/datum/supply_pack/seeds/pear,
 		/datum/supply_pack/seeds/mangosteen,
 		/datum/supply_pack/seeds/dragonfruit,
-		/datum/supply_pack/seeds/poppy
+		/datum/supply_pack/seeds/poppy,
+		/datum/supply_pack/medicine/antipregpot
 	)
 	exotic_pool = list(
 		/datum/supply_pack/food/drinks/elfred,

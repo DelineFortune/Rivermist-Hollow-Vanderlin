@@ -3,6 +3,7 @@
 	..()
 	//Mind updates
 	sync_mind()
+	refresh_erp_preference_cache()
 	mind.show_memory(src, FALSE)
 
 	update_a_intents()

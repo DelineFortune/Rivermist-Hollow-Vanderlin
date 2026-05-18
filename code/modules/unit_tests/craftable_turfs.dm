@@ -84,6 +84,9 @@
 		/turf/open/floor/dirt/snowy,
 		/turf/open/floor/AzureSand,
 		/turf/open/floor/dark_ice,
+		/turf/open/floor/desert, // implicit parent for desert floor variants
+		/turf/open/floor/desert_grass, // legacy branch; the buildable scrub grass is /turf/open/floor/desert/desert_grass
+		/turf/open/floor/desert_grass/nospawn, // legacy branch; the buildable scrub grass is /turf/open/floor/desert/desert_grass
 	) \
 	+ typesof(/turf/open/floor/mushroom) \
 	+ typesof(/turf/open/floor/sandstone_tile) \

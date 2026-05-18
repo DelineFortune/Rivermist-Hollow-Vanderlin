@@ -127,6 +127,10 @@ GLOBAL_LIST_INIT(footstep, list(
 ))
 //bare footsteps lists
 GLOBAL_LIST_INIT(barefootstep, list(
+	FOOTSTEP_WOOD_BAREFOOT = list(list(
+		'sound/foley/footsteps/hardbarefoot (1).ogg',
+		'sound/foley/footsteps/hardbarefoot (2).ogg',
+		'sound/foley/footsteps/hardbarefoot (3).ogg'), 60, 0),
 	FOOTSTEP_HARD_BAREFOOT = list(list(
 		'sound/foley/footsteps/hardbarefoot (1).ogg',
 		'sound/foley/footsteps/hardbarefoot (2).ogg',

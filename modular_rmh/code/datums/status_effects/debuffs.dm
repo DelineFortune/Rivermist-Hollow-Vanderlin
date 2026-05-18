@@ -149,7 +149,7 @@
 	name = "Orgasm Broken"
 	desc = "My legs are shaking, but I need more."
 	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
-	icon_state = "fentanyl"
+	icon_state = "orgasm_broken"
 
 /datum/status_effect/debuff/nympho_addiction
 	id = "nympho_addiction"
@@ -200,7 +200,8 @@
 /atom/movable/screen/alert/status_effect/debuff/cumbrained
 	name = "Cum Brained"
 	desc = "It's hard to think of anything but sex..."
-	icon_state = "debuff"
+	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
+	icon_state = "cum_brained"
 
 /datum/status_effect/debuff/cumbrained/tick()
 	. = ..()
@@ -243,6 +244,8 @@
 	name = "Spent Loins"
 	desc = "It's starting to hurt a bit..."
 	icon_state = "debuff"
+	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
+	icon_state = "spent_loins"
 
 
 /datum/status_effect/debuff/loinspent/tick()
@@ -255,6 +258,8 @@
 
 	MOBTIMER_SET(owner, "chafing_loins")
 
+	if(!ishuman(owner))
+		return
 	var/mob/living/carbon/human/human = owner
 	if(human.underwear)
 		if(rand(5))
@@ -269,7 +274,7 @@
 
 /datum/status_effect/debuff/bloatone
 	id = "bloatone"
-	duration = 5 MINUTES
+	duration = 8 SECONDS //will be reapplied by the organ if the conditions are still met continiously.
 	alert_type = /atom/movable/screen/alert/status_effect/bloatone
 	examine_text = span_notice("Their belly is bulging...")
 	effectedstats = list("constitution" = 1, "speed" = -1)
@@ -279,14 +284,6 @@
 	timer = 60 MINUTES
 	stress_change = -1
 
-/datum/status_effect/debuff/bloatone/on_apply()
-	owner.add_stress(/datum/stress_event/bloatsex)
-	. = ..()
-
-/datum/status_effect/debuff/bloatone/on_remove()
-	owner.remove_stress(/datum/stress_event/bloatsex)
-	. = ..()
-
 /atom/movable/screen/alert/status_effect/bloatone
 	name = "Bloated"
 	desc = "Bit full..."
@@ -295,7 +292,7 @@
 
 /datum/status_effect/debuff/bloattwo
 	id = "bloattwo"
-	duration = 5 MINUTES
+	duration = 8 SECONDS //will be reapplied by the organ if the conditions are still met continiously.
 	alert_type = /atom/movable/screen/alert/status_effect/bloattwo
 	examine_text = span_notice("Their belly is bulging largely...")
 	effectedstats = list("constitution" = 2, "speed" = -2)

@@ -130,6 +130,8 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
  * * on_behalf_of - The new object to set as a parent.
  */
 /datum/looping_sound/proc/start(atom/on_behalf_of)
+	if(QDELETED(src))
+		return
 	stopped = FALSE
 	if(on_behalf_of)
 		set_parent(on_behalf_of)
@@ -244,6 +246,8 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 
 /// A proc that's there to handle delaying the main sounds if there's a start_sound, and simply starting the sound loop in general.
 /datum/looping_sound/proc/on_start()
+	if(QDELETED(src))
+		return
 	var/start_wait = 0
 	if(start_sound)
 		play(start_sound, start_volume)

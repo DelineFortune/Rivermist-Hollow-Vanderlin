@@ -172,7 +172,8 @@
 		// Food & Luxury
 		/datum/supply_pack/food/drinks/voddena,
 		/datum/supply_pack/jewelry/circlet,
-		/datum/supply_pack/luxury/silver_plaque_belt
+		/datum/supply_pack/luxury/silver_plaque_belt,
+		/datum/supply_pack/medicine/antipregpot
 	)
 	exotic_pool = list(
 		/datum/supply_pack/armor/steel/coatofplates,
