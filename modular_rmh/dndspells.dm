@@ -1,5 +1,6 @@
 #define DND_SPELL_SLOT_MIN 1
 #define DND_SPELL_SLOT_MAX 5
+#define DND_SPELL_SLOT_ICON_MAX 4
 
 /mob/living/carbon/human
 	var/selected_dnd_spell_slot_level = DND_SPELL_SLOT_MIN
@@ -25,7 +26,7 @@
 		if(!isnum(amount))
 			continue
 
-		amount = max(round(amount), 0)
+		amount = clamp(round(amount), 0, DND_SPELL_SLOT_ICON_MAX)
 
 		var/key = num2text(slot_level)
 		dnd_spell_slots_max[key] = amount
@@ -59,6 +60,24 @@
 	update_dnd_spell_slot_hud()
 	return TRUE
 
+/mob/living/carbon/human/proc/gain_dnd_spell_slot(level, amount = 1)
+	level = clamp(round(level), DND_SPELL_SLOT_MIN, DND_SPELL_SLOT_MAX)
+
+	if(!dnd_spell_slots_max || !dnd_spell_slots_current)
+		setup_default_dnd_spell_slots()
+
+	if(!isnum(amount))
+		amount = 1
+
+	var/key = num2text(level)
+	var/current = get_dnd_spell_slots_current(level)
+	var/maximum = get_dnd_spell_slots_max(level)
+
+	dnd_spell_slots_current[key] = clamp(current + round(amount), 0, maximum)
+
+	update_dnd_spell_slot_hud()
+	return TRUE
+
 /mob/living/carbon/human/proc/get_selected_dnd_spell_slot_level()
 	if(!isnum(selected_dnd_spell_slot_level))
 		selected_dnd_spell_slot_level = DND_SPELL_SLOT_MIN
@@ -75,7 +94,7 @@
 	if(!isnum(amount))
 		return 0
 
-	return max(round(amount), 0)
+	return clamp(round(amount), 0, DND_SPELL_SLOT_ICON_MAX)
 
 /mob/living/carbon/human/proc/get_dnd_spell_slots_max(level)
 	if(!dnd_spell_slots_max)
@@ -87,7 +106,7 @@
 	if(!isnum(amount))
 		return 0
 
-	return max(round(amount), 0)
+	return clamp(round(amount), 0, DND_SPELL_SLOT_ICON_MAX)
 
 /mob/living/carbon/human/proc/can_spend_dnd_spell_slot(level, feedback = TRUE)
 	level = clamp(round(level), DND_SPELL_SLOT_MIN, DND_SPELL_SLOT_MAX)
@@ -193,26 +212,24 @@
 
 /proc/get_dnd_spell_slot_icon_state(level, charges)
 	level = clamp(round(level), DND_SPELL_SLOT_MIN, DND_SPELL_SLOT_MAX)
+	charges = clamp(round(charges), 0, DND_SPELL_SLOT_ICON_MAX)
 
-	if(charges <= 0)
-		return "dnd_slot_1_0"
-
-	return "dnd_slot_1_[level]"
+	return "dnd_slot_[level]_[charges]"
 
 /proc/get_dnd_spell_slot_screen_loc(level)
 	switch(level)
 		if(1)
-			return "CENTER-2,NORTH-4"
+			return "CENTER-2,SOUTH+2"
 		if(2)
-			return "CENTER-1,NORTH-4"
+			return "CENTER-1,SOUTH+2"
 		if(3)
-			return "CENTER,NORTH-4"
+			return "CENTER,SOUTH+2"
 		if(4)
-			return "CENTER+1,NORTH-4"
+			return "CENTER+1,SOUTH+2"
 		if(5)
-			return "CENTER+2,NORTH-4"
+			return "CENTER+2,SOUTH+2"
 
-	return "CENTER,NORTH-4"
+	return "CENTER,SOUTH+2"
 
 /atom/movable/screen/dnd_spell_slot_hud
 	name = "Spell Slot"
@@ -230,7 +247,7 @@
 
 /atom/movable/screen/dnd_spell_slot_hud/proc/refresh_dnd_slot_hud()
 	if(!owner_mob)
-		icon_state = "dnd_slot_1_0"
+		icon_state = get_dnd_spell_slot_icon_state(slot_level, 0)
 		return FALSE
 
 	var/current = owner_mob.get_dnd_spell_slots_current(slot_level)
@@ -251,15 +268,4 @@
 
 #undef DND_SPELL_SLOT_MIN
 #undef DND_SPELL_SLOT_MAX
-
-/mob/living/carbon/human/verb/debug_grant_dnd_fireball()
-	set name = "Grant DND Fireball"
-	set category = "Debug"
-
-	setup_default_dnd_spell_slots()
-	grant_dnd_spell_slot_hud()
-
-	var/datum/action/cooldown/spell/projectile/fireball/F = new
-	F.Grant(src)
-
-	to_chat(src, span_notice("DND Fireball granted."))
+#undef DND_SPELL_SLOT_ICON_MAX
