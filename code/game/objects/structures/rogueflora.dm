@@ -430,6 +430,52 @@
 
 	guaranteed_loot = list(/obj/item/natural/fibers)
 	bonus_loot = list(/obj/item/natural/thorn)
+	hidingspot = TRUE
+	var/mob/living/hiddenguy = null // So we can find them with fixed eye search
+
+/obj/structure/flora/grass/bush/attack_hand(mob/user)
+	if(user.m_intent == MOVE_INTENT_SNEAK)
+		hideinside(user)
+		return
+	. = ..()
+
+/obj/structure/flora/grass/bush/proc/hideinside(mob/living/user)
+	var/sneak_level = user.get_skill_level(/datum/skill/misc/sneaking) || 0
+	var/sneaktime = max(10, 50 - (sneak_level * 10)) // Hard caps at 1 second at Expert and above.
+	if(user.loc == src)
+		unhide(user)
+		return
+	if(occupied)
+		to_chat(user, span_warning("Someone is already hiding in [src]!"))
+		return
+	if(!do_after(user, sneaktime, src))
+		return
+	user.forceMove(src)
+	occupied = TRUE
+	hiddenguy = user
+	to_chat(user, span_warning("I hide in [src]!"))
+
+/obj/structure/flora/grass/bush/proc/unhide(mob/living/user)
+	var/turf/T = get_turf(src)
+	if(!T) return
+	user.forceMove(T)
+	occupied = FALSE
+	hiddenguy = null
+	to_chat(user, span_warning("I come out from [src]!"))
+
+/obj/structure/flora/grass/bush/relaymove(mob/user)
+	if(user.loc == src)
+		unhide(user)
+
+/obj/structure/flora/grass/bush/CanPass(atom/movable/mover, turf/target)
+	if(occupied)
+		return FALSE
+	return ..()
+
+/obj/structure/flora/grass/bush/CanAStarPass(ID, to_dir, requester)
+	if(occupied)
+		return FALSE
+	return ..()
 
 /obj/structure/flora/grass/bush/tundra
 	name = "tundra bush"

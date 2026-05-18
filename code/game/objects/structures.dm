@@ -17,6 +17,8 @@
 	var/last_redstone_state = 0
 	var/bonus_pressure = 0
 //	move_resist = MOVE_FORCE_STRONG
+	var/hidingspot = FALSE //safety measures, dw about it
+	var/occupied = FALSE
 
 /obj/structure/Initialize()
 	if (!armor)
@@ -48,6 +50,9 @@
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, Knockdown), 10), 10)
 
 /obj/structure/Destroy()
+	if(hidingspot) //if I don't do this, it deletes the player too
+		for(var/mob/living/M in src)
+			M.forceMove(get_turf(src))
 	if(isturf(loc))
 		for(var/mob/living/user in loc)
 			if(climb_offset)
@@ -144,6 +149,13 @@
 
 /obj/structure/examine(mob/user)
 	. = ..()
+	if(in_range(user, src))
+		if(occupied)
+			var/mob/living/M = locate() in src
+			if(M)
+				M.forceMove(get_turf(src))
+				occupied = FALSE
+
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		var/examine_status = examine_status(user)
 		if(examine_status)

@@ -60,7 +60,16 @@
 		if(MOVE_INTENT_RUN)
 			mod = CONFIG_GET(number/movedelay/run_delay)
 		if(MOVE_INTENT_SNEAK)
-			mod = 6
+			var/base_walk = CONFIG_GET(number/movedelay/walk_delay)
+			var/default_delay
+			if(HAS_TRAIT(src, TRAIT_LIGHT_STEP))
+				default_delay = base_walk * 1.3
+			else
+				default_delay = 6
+			var/skill = src.get_skill_level(/datum/skill/misc/sneaking)
+			var/skill_mod = 1.6 - (skill * 0.1)
+			var/skill_delay = base_walk * skill_mod
+			mod = min(default_delay, skill_delay)
 	var/spdchange = (10-GET_MOB_ATTRIBUTE_VALUE(src, STAT_SPEED))*0.1
 	spdchange = clamp(spdchange, -0.5, 1)  //if this is not clamped, it can make you go faster than you should be able to.
 	mod = mod+spdchange
@@ -181,7 +190,7 @@
 	light_threshold += (sneak_skill_level / 200)
 
 	if(rogue_sneaking) //If sneaking, check if they should be revealed
-		if((stat > SOFT_CRIT) || IsSleeping() || !MOBTIMER_FINISHED(src, MT_FOUNDSNEAK, 30 SECONDS) || !T || reset || (m_intent != MOVE_INTENT_SNEAK) || light_amount >= light_threshold)
+		if((stat > SOFT_CRIT) || IsSleeping() || !MOBTIMER_FINISHED(src, MT_FOUNDSNEAK, 30 SECONDS) || !T || reset || (m_intent != MOVE_INTENT_SNEAK) || light_amount >= (light_threshold  + (mind?.get_skill_level(/datum/skill/misc/sneaking)/200)))
 			used_time /= 2
 			used_time += (sneak_skill_level * 2.5) //sneak skill makes you reveal slower but not as drastic as disappearing speed
 			animate(src, alpha = initial(alpha), time =	used_time, flags = ANIMATION_PARALLEL)
@@ -190,9 +199,22 @@
 			return
 
 	else //not currently sneaking, check if we can sneak
-		if(light_amount < light_threshold && m_intent == MOVE_INTENT_SNEAK)
+		if(light_amount < (light_threshold  + (mind?.get_skill_level(/datum/skill/misc/sneaking)/200)) && m_intent == MOVE_INTENT_SNEAK)
 			used_time = max(used_time - (sneak_skill_level * 5), 0)
 			animate(src, alpha = 0, time = used_time, flags = ANIMATION_PARALLEL)
 			spawn(used_time + 5) regenerate_icons()
 			rogue_sneaking = TRUE
 	return
+
+/mob/living/proc/get_lying_alpha()
+	var/skill_level = src.get_skill_level(/datum/skill/misc/sneaking)
+
+	switch(skill_level)
+		if(1) return 178 //30%
+		if(2) return 140 //45%
+		if(3) return 128 //50%
+		if(4) return 102 //60%
+		if(5) return 77 //70%
+		if(6) return 51 //80%
+
+	return 255

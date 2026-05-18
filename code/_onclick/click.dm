@@ -97,6 +97,11 @@
 	if(SEND_SIGNAL(clicked_atom, COMSIG_ATOM_CLICKEDON, src, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
+	var/mob/living/L = src
+	if(L?.wallpressed && L.m_intent == MOVE_INTENT_SNEAK && !istype(L.loc, /turf/open/openspace))
+		to_chat(src, span_warning("You need to step away from the wall first."))
+		return
+
 	if(curplaying)
 		curplaying.on_mouse_up()
 

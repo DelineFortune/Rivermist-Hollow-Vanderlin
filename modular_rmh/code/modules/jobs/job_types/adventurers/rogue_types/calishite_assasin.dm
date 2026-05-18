@@ -34,6 +34,7 @@
 		TRAIT_DODGEEXPERT,
 		TRAIT_STEELHEARTED,
 		TRAIT_BLINDFIGHTING,
+		TRAIT_LIGHT_STEP,
 	)
 
 	languages = list(/datum/language/zalad)

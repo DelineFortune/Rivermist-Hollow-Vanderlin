@@ -64,6 +64,7 @@
 	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal), override = TRUE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
+	ADD_TRAIT(owner, TRAIT_IMPERCEPTIBLE, "[type]")
 	owner.alpha = 10
 
 /datum/coven_power/obfuscate/cloak_of_shadows/deactivate()
@@ -71,6 +72,7 @@
 	UnregisterSignal(owner, aggressive_signals)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
+	REMOVE_TRAIT(owner, TRAIT_IMPERCEPTIBLE, "[type]")
 	owner.alpha = 255
 
 /datum/coven_power/obfuscate/cloak_of_shadows/proc/handle_move(datum/source, atom/moving_thing, dir)
@@ -100,6 +102,7 @@
 	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal), override = TRUE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
+	ADD_TRAIT(owner, TRAIT_IMPERCEPTIBLE, "[type]")
 	owner.alpha = 10
 
 /datum/coven_power/obfuscate/unseen_presence/deactivate()
@@ -108,6 +111,7 @@
 	UnregisterSignal(owner, aggressive_signals)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
+	REMOVE_TRAIT(owner, TRAIT_IMPERCEPTIBLE, "[type]")
 	owner.alpha = 255
 
 /datum/coven_power/obfuscate/unseen_presence/proc/handle_move(datum/source, atom/moving_thing, dir)
@@ -270,6 +274,7 @@
 	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal), override = TRUE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 	owner.playsound_local(owner, 'sound/magic/PSY.ogg', 200)
+	ADD_TRAIT(owner, TRAIT_IMPERCEPTIBLE, "[type]")
 	owner.alpha = 10
 
 	// Memory wipe effect - make nearby people forget they saw you
@@ -301,6 +306,7 @@
 	UnregisterSignal(owner, aggressive_signals)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
+	REMOVE_TRAIT(owner, TRAIT_IMPERCEPTIBLE, "[type]")
 	owner.alpha = 255
 
 /datum/coven_power/obfuscate/vanish_from_the_minds_eye/proc/handle_move(datum/source, atom/moving_thing, dir)
@@ -331,6 +337,7 @@
 	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal), override = TRUE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
+	ADD_TRAIT(owner, TRAIT_IMPERCEPTIBLE, "[type]")
 	owner.alpha = 10
 	cloaked_mobs = list(owner)
 
@@ -339,6 +346,7 @@
 		if(target.client && target.stat < UNCONSCIOUS)
 			// Add faction/ally checks here as appropriate
 			ADD_TRAIT(target, TRAIT_SILENT_FOOTSTEPS, VAMPIRE_TRAIT)
+			ADD_TRAIT(owner, TRAIT_IMPERCEPTIBLE, "[type]")
 			target.alpha = 10
 			cloaked_mobs += target
 			to_chat(target, span_notice("You feel a supernatural veil fall over you..."))
@@ -354,6 +362,7 @@
 	// Restore visibility to all cloaked mobs
 	for(var/mob/living/target in cloaked_mobs)
 		REMOVE_TRAIT(target, TRAIT_SILENT_FOOTSTEPS, VAMPIRE_TRAIT)
+		REMOVE_TRAIT(owner, TRAIT_IMPERCEPTIBLE, "[type]")
 		target.alpha = 255
 		UnregisterSignal(target, aggressive_signals)
 		if(target != owner)
@@ -377,6 +386,7 @@
 	to_chat(ally, span_danger("Your actions break the supernatural veil!"))
 
 	// Remove this ally from the cloak
+	REMOVE_TRAIT(owner, TRAIT_IMPERCEPTIBLE, "[type]")
 	ally.alpha = 255
 	UnregisterSignal(ally, aggressive_signals)
 	cloaked_mobs -= ally

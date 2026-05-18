@@ -43,6 +43,7 @@
 		TRAIT_STRONG_GRABBER,
 		TRAIT_VILLAIN,
 		TRAIT_BLINDFIGHTING,
+		TRAIT_LIGHT_STEP,
 	)
 
 /datum/outfit/adventurer_rogue/assassin
