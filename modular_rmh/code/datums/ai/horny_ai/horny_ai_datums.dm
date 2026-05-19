@@ -419,7 +419,10 @@
 		var/speed = rand(SEX_SPEED_MID, SEX_SPEED_MAX)
 		session.set_current_force(force)
 		session.set_current_speed(speed)
-		target_living.apply_status_effect(/datum/status_effect/debuff/mob_fucked)
+		if(target_living.gender == MALE)
+			target_living.apply_status_effect(/datum/status_effect/debuff/mob_fucked/male)
+		else
+			target_living.apply_status_effect(/datum/status_effect/debuff/mob_fucked)
 		if(!isnull(session.current_action))
 			try_heal_horny_action_bleeding(controller, target_living)
 		if(isnull(session.current_action))

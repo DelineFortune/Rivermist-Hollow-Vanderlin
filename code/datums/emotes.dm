@@ -229,7 +229,11 @@
 				possible_sounds = H.dna.species.soundpack_m.get_sound(key,modifier)
 			//RMH ADD - manual voicepack selection
 			if(H.moan_selection && (key in list("sexmoanlight","sexmoanmed","sexmoanhvy","groan","painmoan","whimper","sexmoangag","sexmoangag_org")))
-				var/datum/moan_pack/vpath = new H.moan_selection
+				var/datum/moan_pack/vpath
+				if(user.rogue_sneaking || user.m_intent == MOVE_INTENT_SNEAK || user.alpha <= 100) //stealth sex, keep your voice down.
+					vpath = new /datum/moan_pack/female/quiet //gender dont matter ig, they are quiet
+				else
+					vpath = new H.moan_selection
 				switch(key)
 					if("sexmoanlight")
 						if(vpath.sounds_sexmoanlight)

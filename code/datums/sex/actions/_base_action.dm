@@ -106,6 +106,7 @@
 	var/user_menu_zone_mask = SEX_UI_ZONE_ANY
 	/// Which zone on the other side this action focuses on for interaction-menu filtering
 	var/target_menu_zone_mask = SEX_UI_ZONE_ANY
+	var/sex_volume = 50 //volume for plaps
 
 /datum/sex_action/Destroy()
 	// Clean up any tracked storage entries
@@ -487,6 +488,8 @@
 
 
 /datum/sex_action/proc/can_show_action_message(mob/living/user, mob/living/target)
+	if(user.rogue_sneaking || user.m_intent == MOVE_INTENT_SNEAK || user.alpha <= 100) //stealth sex les go
+		return FALSE
 	if(world.time >= next_message_time)
 		var/datum/sex_session/sex_session = get_sex_session(user, target)
 		var/speed_time = 40

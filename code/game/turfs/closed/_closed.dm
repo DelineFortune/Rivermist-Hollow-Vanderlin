@@ -66,7 +66,10 @@
 		return
 	user.wallpressed = dir2wall
 	user.update_wallpress_slowdown()
-	user.visible_message("<span class='info'>[user] leans against [src].</span>")
+	if(user.m_intent == MOVE_INTENT_SNEAK)
+		to_chat(user, span_info("You press yourself against [src]."))
+	else
+		user.visible_message(span_info("[user] leans against [src]."))
 	switch(dir2wall)
 		if(NORTH)
 			user.setDir(SOUTH)
@@ -108,8 +111,17 @@
 /mob/living/proc/update_wallpress_slowdown()
 	if(wallpressed)
 		add_movespeed_modifier("wallpress", TRUE, 100, override = TRUE, multiplicative_slowdown = 3)
+		if(m_intent == MOVE_INTENT_SNEAK)
+			ADD_TRAIT(src, TRAIT_SPELLBLOCK, TRAIT_GENERIC) // spell restrictions don't seem to be working well so I'm doing it this way for now
+			var/lean_alpha = get_wallpress_alpha()
+			if(src.alpha != 0 && lean_alpha < src.alpha)
+				var/used_time = 50
+				used_time = max(used_time - (get_skill_level(/datum/skill/misc/sneaking) * 8), 10)
+				animate(src, alpha = lean_alpha, time = used_time)
 	else
 		remove_movespeed_modifier("wallpress")
+		animate(src, alpha = 255, time = 10)
+		REMOVE_TRAIT(src, TRAIT_SPELLBLOCK, TRAIT_GENERIC)
 
 /turf/closed/Bumped(atom/movable/AM)
 	..()

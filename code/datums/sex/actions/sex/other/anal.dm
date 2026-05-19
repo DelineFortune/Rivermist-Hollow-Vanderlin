@@ -33,13 +33,19 @@
 /datum/sex_action/sex/other/anal/on_start(mob/living/user, mob/living/target)
 	. = ..()
 	user.visible_message(span_warning("[user] gets on top of [target] and begins riding [target.p_them()] with [user.p_their()] butt!"))
-	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
+	var/used_sex_volume = sex_volume
+	if(user.rogue_sneaking || user.m_intent == MOVE_INTENT_SNEAK || user.alpha <= 100)
+		used_sex_volume *= 0.5
+	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), used_sex_volume, TRUE, ignore_walls = FALSE)
 
 /datum/sex_action/sex/other/anal/on_perform(mob/living/user, mob/living/target)
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	if(can_show_action_message(user, target))
 		user.visible_message(sex_session.spanify_force("[user] [sex_session.get_generic_force_adjective()] rides [target]."))
-	playsound(target, sex_session.get_force_sound(), 50, TRUE, -2, ignore_walls = FALSE)
+	var/used_sex_volume = sex_volume
+	if(user.rogue_sneaking || user.m_intent == MOVE_INTENT_SNEAK || user.alpha <= 100)
+		used_sex_volume *= 0.5
+	playsound(target, sex_session.get_force_sound(), used_sex_volume, TRUE, -2, ignore_walls = FALSE)
 	do_thrust_animate(user, target)
 
 	if(user.has_kink(KINK_ONOMATOPOEIA))

@@ -408,7 +408,7 @@
 
 		//btm.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
 		btm.Stun(80)
-		playsound(btm, 'sound/misc/mat/pop.ogg', 100, TRUE, -2, ignore_walls = FALSE)
+		playsound(btm, pick('sound/misc/mat/pop.ogg', 'modular_rmh/sound/effects/cork_pop.ogg', 'modular_rmh/sound/effects/cork_pop (2).ogg'), 100, TRUE, -2, ignore_walls = FALSE)
 		playsound(top, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
 		btm.emote("paincrit", forced = TRUE)
 

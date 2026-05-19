@@ -179,7 +179,7 @@
 		return FALSE
 	if(target_living.body_position == LYING_DOWN)
 		return TRUE
-	if(target_living.has_status_effect(/datum/status_effect/debuff/mob_fucked))
+	if(target_living.has_status_effect(/datum/status_effect/debuff/mob_fucked) || target_living.has_status_effect(/datum/status_effect/debuff/mob_fucked/male))
 		return TRUE
 	if(get_active_other_sex_participant(target_living, living_mob))
 		return TRUE

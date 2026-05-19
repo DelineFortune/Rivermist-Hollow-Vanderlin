@@ -2671,7 +2671,10 @@
 				if(M.m_intent == MOVE_INTENT_SNEAK)
 					emote("huh")
 					to_chat(M, "<span class='danger'>[src] sees me! I'm found!</span>")
+					playsound(loc, 'modular_rmh/sound/effects/mgsalert.ogg', 100, FALSE) //found people already emit noise by breaking stealth.
+					M.apply_status_effect(/datum/status_effect/debuff/stealthcd)
 					MOBTIMER_SET(M, MT_FOUNDSNEAK)
+					M.update_sneak_invis(reset = TRUE)
 			else
 				if(M.m_intent == MOVE_INTENT_SNEAK)
 					if(M.client?.prefs.showrolls)
@@ -2682,6 +2685,13 @@
 					found_ping(get_turf(M), client, "hidden")
 
 		for(var/obj/O in view(7,src))
+			if("hiddenguy" in O.vars)
+				var/mob/living/M = O.vars["hiddenguy"]
+				if(M)
+					var/sneak = M.get_skill_level(/datum/skill/misc/sneaking)
+					var/effective_sneak = 8 + (sneak * 2)
+					if(STAPER >= effective_sneak) // skewed towards the hiding player because there's already a separate, guaranteed way to find hiders.
+						found_ping(get_turf(O), client, "hidden")
 			if(istype(O, /obj/item/restraints/legcuffs/beartrap))
 				var/obj/item/restraints/legcuffs/beartrap/M = O
 				if(isturf(M.loc) && M.armed)

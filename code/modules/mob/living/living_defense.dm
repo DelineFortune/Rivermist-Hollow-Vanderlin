@@ -3,6 +3,9 @@
 	var/armor = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling)
 	var/armor_check = 0
 
+	if(alpha <= 100 || rogue_sneaking)
+		apply_status_effect(/datum/status_effect/debuff/stealthcd)
+		mob_timers[MT_SNEAKATTACK] = world.time //Stops you from sneaking after being hit. (Should work!)
 	// Only run armor logic if there actually is armor
 	if(armor > 0)
 		if(armor_penetration)

@@ -38,6 +38,7 @@
 	traits = list(
 		TRAIT_DODGEEXPERT,
 		TRAIT_MEDIUMARMOR, // so they can dodge wearing their mask, these guys dont actually spawn with medium armor, they have to EARN it.
+		TRAIT_BLINDFIGHTING,
 	)
 
 /datum/outfit/adventurer_monk/shadow

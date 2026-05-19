@@ -33,6 +33,7 @@
 	traits = list(
 		TRAIT_STEELHEARTED,
 		TRAIT_DEADNOSE,
+		TRAIT_BLINDFIGHTING,
 	)
 
 /datum/outfit/adventurer_barbarian/seaelf_reaver

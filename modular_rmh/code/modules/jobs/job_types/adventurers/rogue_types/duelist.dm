@@ -29,6 +29,7 @@
 
 
 	traits = list(
+		TRAIT_BLINDFIGHTING,
 		TRAIT_DODGEEXPERT
 	)
 

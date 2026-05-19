@@ -34,6 +34,7 @@
 	traits = list(
         TRAIT_DECEIVING_MEEKNESS,
         TRAIT_STEELHEARTED,
+		TRAIT_BLINDFIGHTING,
         TRAIT_DODGEEXPERT
     )
 

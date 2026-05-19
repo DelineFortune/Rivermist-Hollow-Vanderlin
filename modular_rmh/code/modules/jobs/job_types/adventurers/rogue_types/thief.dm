@@ -38,6 +38,7 @@
 		TRAIT_THIEVESGUILD,
 		TRAIT_DODGEEXPERT,
 		TRAIT_LIGHT_STEP,
+		TRAIT_BLINDFIGHTING,
 	)
 
 	languages = list(/datum/language/thievescant)

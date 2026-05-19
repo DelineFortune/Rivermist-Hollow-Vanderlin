@@ -231,6 +231,22 @@
 	if(dam < 5)
 		return FALSE
 
+	var/from_behind = FALSE
+	if(user && (owner.dir == turn(get_dir(owner,user), 180)))
+		from_behind = TRUE
+	if(owner.resting)
+		dam += 15
+	if(user && (from_behind || user.alpha <= 15))//Dreamkeep change -- Attacks from stealth should be much more likely to crit
+		if(user.mind && !HAS_TRAIT(owner, TRAIT_BLINDFIGHTING) && !user.has_status_effect(/datum/status_effect/debuff/stealthcd))
+			var/sneakmult = user.get_skill_level(/datum/skill/misc/sneaking)
+			dam *= max(1,sneakmult)
+			dam += 15
+			user.apply_status_effect(/datum/status_effect/debuff/stealthcd)
+			animate(user, alpha = 255, time = 1 SECONDS, easing = EASE_IN) // shitcode to prevent infinite attacks from invisibility
+			to_chat(src, span_userdanger("SNEAK ATTACK!!!"))
+			to_chat(user, span_userdanger("SNEAK ATTACK!!!"))
+			user.adjust_experience(/datum/skill/misc/sneaking, user.STAINT * 5, TRUE)
+
 	var/damage_dividend = get_damage() / max_damage
 
 	// Collect candidate wounds valid for this bodypart zone
@@ -292,6 +308,22 @@
 				winset(owner.client, "outputwindow.output", "max-lines=1")
 				winset(owner.client, "outputwindow.output", "max-lines=100")
 			return TRUE // short circuit, no wound applied
+		else
+			var/from_behind = FALSE //DK stealth attack
+			if(user && (owner.dir == turn(get_dir(owner,user), 180)))
+				from_behind = TRUE
+			if(owner.resting)
+				dam += 15
+			if(user && (from_behind || user.alpha <= 15))//Dreamkeep change -- Attacks from stealth should be much more likely to crit
+				if(user.mind && !HAS_TRAIT(owner, TRAIT_BLINDFIGHTING) && !user.has_status_effect(/datum/status_effect/debuff/stealthcd))
+					var/sneakmult = user.get_skill_level(/datum/skill/misc/sneaking)
+					dam *= max(1,sneakmult)
+					dam += 15
+					user.apply_status_effect(/datum/status_effect/debuff/stealthcd)
+					animate(user, alpha = 255, time = 1 SECONDS, easing = EASE_IN) // shitcode to prevent infinite attacks from invisibility
+					to_chat(src, span_userdanger("SNEAK ATTACK!!!"))
+					to_chat(user, span_userdanger("SNEAK ATTACK!!!"))
+					user.adjust_experience(/datum/skill/misc/sneaking, user.STAINT * 5, TRUE)
 
 	return ..() // fall through to generic try_crit
 

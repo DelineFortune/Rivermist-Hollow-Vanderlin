@@ -38,6 +38,7 @@
 	#define MT_LASTTRICK "lasttrick"
 	#define MT_MIRRORTIME "mirrortime"
 	#define MT_FOUNDSNEAK "found_sneak"
+	#define MT_SNEAKATTACK "sneak_attack"
 
 	#define MT_MADELOVE "made_love" // sexerlin //unused
 	#define MT_RESIST_GRAB "resist_grab" // SORRY FINGER

@@ -128,9 +128,11 @@
 
 
 /mob/living/proc/npc_detect_sneak(mob/living/target, extra_prob = 0)
-	if (target.alpha > 0 || !target.rogue_sneaking)
+	if (target.alpha > 100 || !target.rogue_sneaking)
 		return TRUE
-	var/probby = 4 * GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) //this is 10 by default - npcs get an easier time to detect to slightly thwart cheese
+	if(HAS_TRAIT(target, TRAIT_IMPERCEPTIBLE))
+		return FALSE
+	var/probby = 2 * GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) //this is 10 by default - npcs get an easier time to detect to slightly thwart cheese
 	probby += extra_prob
 	var/sneak_bonus = 0
 	if(target.mind)

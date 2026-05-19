@@ -453,13 +453,13 @@
 /datum/sex_session/proc/get_speed_multiplier()
 	switch(speed)
 		if(SEX_SPEED_LOW)
-			return 1.0
-		if(SEX_SPEED_MID)
 			return 1.5
-		if(SEX_SPEED_HIGH)
-			return 2.0
-		if(SEX_SPEED_EXTREME)
+		if(SEX_SPEED_MID)
 			return 2.5
+		if(SEX_SPEED_HIGH)
+			return 3.5
+		if(SEX_SPEED_EXTREME)
+			return 4.5
 
 /datum/sex_session/proc/get_stamina_cost_multiplier()
 	switch(force)

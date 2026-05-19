@@ -35,6 +35,7 @@
 
 	traits = list(
 		TRAIT_DODGEEXPERT,
+		TRAIT_BLINDFIGHTING,
 	)
 
 /datum/outfit/adventurer_rogue/swashbuckler

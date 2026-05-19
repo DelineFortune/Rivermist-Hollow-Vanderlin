@@ -641,15 +641,26 @@
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	var/hitlim = simple_limb_hit(user.zone_selected)
+	var/from_behind = FALSE
+	if(user && (src.dir == turn(get_dir(src,user), 180)))
+		from_behind = TRUE
 	I.funny_attack_effects(src, user)
 	if(I.force)
 		var/newforce = get_complex_damage(I, user)
+		if(from_behind && user.mind && !HAS_TRAIT(src, TRAIT_BLINDFIGHTING) && !user.has_status_effect(/datum/status_effect/debuff/stealthcd))//Backstabs do increased damage; Sneak attacks have a higher crit chance. Combined, a stealthy backstab should be very damaging.
+			var/sneakmult = user.get_skill_level(/datum/skill/misc/sneaking)
+			newforce *= max(1,sneakmult)
+			newforce += 15
+			user.apply_status_effect(/datum/status_effect/debuff/stealthcd)
+			to_chat(src, span_userdanger("BACKSTAB!!! THE ATTACK DEALS GREATER DAMAGE!"))
+			to_chat(user, span_userdanger("BACKSTAB!!! MY ATTACK DOES GREATER DAMAGE!"))
+			user.adjust_experience(/datum/skill/misc/sneaking, user.STAINT * 5, TRUE)
 		apply_damage(newforce, I.damtype, def_zone = hitlim)
 		if(I.damtype == BRUTE)
 			next_attack_msg.Cut()
 			if(HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
 				var/datum/wound/crit_wound  = simple_woundcritroll(user.used_intent.blade_class, newforce, user, hitlim)
-				if(crit_wound?.should_embed(I))
+				if(istype(crit_wound) && crit_wound.should_embed(I))
 					// throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 					simple_add_embedded_object(I, silent = FALSE, crit_message = TRUE)
 					src.grabbedby(user, 1, item_override = I)
