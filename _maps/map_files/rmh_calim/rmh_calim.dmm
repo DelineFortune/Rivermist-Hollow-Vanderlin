@@ -1,4 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/structure/flowerpot{
+	color = "#96956f"
+	},
+/obj/structure/flora/roguegrass/bush/desert{
+	icon_state = "saigahorn3";
+	pixel_y = 15;
+	pixel_x = 1
+	},
+/turf/open/floor/ruinedwood/two,
+/area)
 "ak" = (
 /obj/item/bin/water,
 /turf/open/floor/sandstone,
@@ -52,6 +63,38 @@
 	},
 /turf/open/floor/desert/darkpath,
 /area)
+"aA" = (
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#683E38"
+	},
+/obj/structure/rack/shelf/biggest,
+/obj/item/reagent_containers/glass/bottle/kgunplum{
+	pixel_x = -7;
+	pixel_y = 18
+	},
+/obj/item/reagent_containers/glass/bottle/kgunplum{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/bottle/kgunplum{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/glass/bottle/elfred{
+	pixel_x = 5;
+	pixel_y = 18
+	},
+/obj/item/reagent_containers/glass/bottle/redwine{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/bottle/redwine{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/turf/open/floor/desert/deserttile,
+/area)
 "aG" = (
 /obj/effect/decal/edge{
 	color = "#4d443e";
@@ -63,16 +106,62 @@
 	},
 /turf/open/floor/desert/citybrick/citybrick1,
 /area)
+"aN" = (
+/obj/structure/carpet/red,
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
+"aO" = (
+/obj/machinery/light/fueled/torchholder/r,
+/turf/open/floor/ruinedwood/two,
+/area)
 "aS" = (
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
+"aX" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 2
+	},
+/obj/structure/closet/crate/chest/wicker,
+/obj/item/reagent_containers/food/snacks/cheese,
+/obj/item/reagent_containers/food/snacks/cheese,
+/obj/item/reagent_containers/food/snacks/cheese,
+/obj/item/reagent_containers/food/snacks/cheese,
+/obj/item/reagent_containers/food/snacks/cheese,
+/obj/item/reagent_containers/food/snacks/butter,
+/obj/item/reagent_containers/food/snacks/butter,
+/obj/item/reagent_containers/food/snacks/spiderhoney/honey,
+/obj/item/reagent_containers/food/snacks/spiderhoney/honey,
+/obj/item/reagent_containers/food/snacks/spiderhoney/honey,
+/obj/item/reagent_containers/food/snacks/spiderhoney,
+/obj/item/reagent_containers/food/snacks/spiderhoney,
+/turf/open/floor/desert/deserttile,
+/area)
 "bf" = (
 /obj/effect/decal/edge{
 	color = "#4d443e";
 	dir = 8
 	},
 /turf/open/floor/desert/citybrick/citybrick2,
+/area)
+"bg" = (
+/obj/structure/closet/crate/chest/old_crate,
+/turf/open/floor/ruinedwood/spiral,
+/area)
+"bi" = (
+/obj/structure/carpet,
+/obj/structure/fermentation_keg/sandpot/random/wine,
+/obj/structure/fake_machine/merchantvend{
+	density = 0;
+	pixel_y = 32
+	},
+/obj/structure/drape/zybantine{
+	pixel_y = 33;
+	layer = 2;
+	plane = -10
+	},
+/turf/open/floor/sandstone,
 /area)
 "bm" = (
 /obj/effect/decal/edge{
@@ -88,6 +177,19 @@
 	},
 /turf/open/floor/woodturned,
 /area)
+"br" = (
+/obj/effect/decal/carpet/kover_darkred{
+	dir = 4;
+	pixel_x = -5;
+	pixel_y = -10
+	},
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
+"bv" = (
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
 "by" = (
 /obj/structure/rack/shelf/biggest,
 /obj/machinery/light/fueled/torchholder/c{
@@ -102,15 +204,45 @@
 	},
 /turf/open/floor/grass,
 /area)
+"bJ" = (
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#683E38"
+	},
+/obj/structure/rack/shelf/biggest,
+/obj/item/reagent_containers/glass/bottle/gronnmead{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/bottle/avarmead{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/glass/bottle/avarmead{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/turf/open/floor/desert/deserttile,
+/area)
 "bL" = (
 /obj/structure/fluff/railing/corner/south_east{
 	dir = 9
 	},
 /turf/open/openspace,
 /area)
+"bR" = (
+/obj/item/cushion/desert2,
+/turf/open/floor/wood,
+/area)
 "bS" = (
 /obj/structure/fluff/railing/border,
 /turf/open/openspace,
+/area)
+"bT" = (
+/obj/machinery/light/fueled/torchholder/r,
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
 /area)
 "bW" = (
 /obj/structure/fluff/railing/corner{
@@ -153,6 +285,32 @@
 /obj/structure/carpet,
 /turf/open/floor/wood,
 /area)
+"cs" = (
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#683E38"
+	},
+/obj/structure/rack/shelf/biggest,
+/obj/item/reagent_containers/food/snacks/saltfish{
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/food/snacks/saltfish{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/saltfish{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/turf/open/floor/desert/deserttile,
+/area)
+"ct" = (
+/obj/effect/decal/carpet/kover_black{
+	pixel_y = -18
+	},
+/turf/open/floor/ruinedwood/spiral,
+/area)
 "cw" = (
 /mob/living/simple_animal/hostile/retaliate/saiga/horse/male/tame/saddled{
 	dir = 4
@@ -193,6 +351,19 @@
 /obj/structure/fermentation_keg/sandpot/water,
 /turf/open/floor/tile/diamond,
 /area)
+"dh" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#683E38"
+	},
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
 "dj" = (
 /obj/effect/landmark/boat_transfer/ship_side,
 /turf/open/water/ocean/abyss,
@@ -205,6 +376,21 @@
 	},
 /turf/open/floor/desert/citybrick/citybrick5,
 /area)
+"dt" = (
+/obj/structure/rack,
+/obj/item/storage/meatbag{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/storage/sack,
+/obj/item/storage/belt/pouch{
+	pixel_x = -9;
+	pixel_y = -5
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
 "dC" = (
 /obj/structure/fluff/railing/corner/south_west,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -214,6 +400,15 @@
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/ruinedwood,
 /area/ship/topdeck)
+"dG" = (
+/obj/structure/table/wood/counter/alt,
+/obj/effect/decal/carpet{
+	pixel_y = -8;
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/open/floor/sandstone,
+/area)
 "dP" = (
 /obj/structure/fluff/railing/corner{
 	dir = 9
@@ -250,6 +445,44 @@
 /obj/item/weapon/whip,
 /turf/open/floor/sandstone,
 /area)
+"ec" = (
+/obj/structure/carpet,
+/turf/open/floor/sandstone,
+/area)
+"ef" = (
+/obj/structure/drape/desert{
+	pixel_y = 32;
+	layer = 2;
+	plane = -10
+	},
+/obj/structure/fluff/walldeco/bath/wallrope{
+	pixel_y = 32
+	},
+/obj/machinery/light/fueled/firebowl/standing,
+/turf/open/floor/ruinedwood/two,
+/area)
+"ei" = (
+/obj/machinery/light/fueled/wallfire/candle,
+/turf/open/floor/ruinedwood/two,
+/area)
+"ej" = (
+/obj/structure/flowerpot{
+	color = "#96956f";
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/obj/structure/flora/roguegrass/bush/desert{
+	icon_state = "bushshrub2";
+	pixel_y = 7;
+	pixel_x = 6;
+	base_icon_state = "bushshrub2"
+	},
+/turf/open/floor/sandstone,
+/area)
+"eo" = (
+/obj/structure/bars/grille,
+/turf/closed/basic,
+/area)
 "eq" = (
 /obj/item/bin/water,
 /turf/open/floor/hay,
@@ -259,6 +492,13 @@
 	color = "#b9c4bd"
 	},
 /turf/open/floor/grass,
+/area)
+"ey" = (
+/obj/item/cushion/desert2,
+/turf/open/floor/carpet/royalblack,
+/area)
+"eA" = (
+/turf/closed/wall/mineral/stone,
 /area)
 "eD" = (
 /turf/closed/wall/mineral/desert_sandstone/window/brass,
@@ -273,6 +513,14 @@
 	plane = -10
 	},
 /turf/open/floor/sandstone,
+/area)
+"eG" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 2
+	},
+/obj/structure/fermentation_keg/sandpot/wine,
+/turf/open/floor/desert/deserttile,
 /area)
 "eK" = (
 /obj/structure/carpet/red,
@@ -293,8 +541,49 @@
 /obj/item/bin/water,
 /turf/open/floor/dirt/desert,
 /area)
+"eW" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#683E38"
+	},
+/obj/structure/closet/crate/chest/wicker,
+/obj/item/reagent_containers/food/snacks/produce/fruit/plum,
+/obj/item/reagent_containers/food/snacks/produce/fruit/plum,
+/obj/item/reagent_containers/food/snacks/produce/fruit/plum,
+/obj/item/reagent_containers/food/snacks/produce/fruit/plum,
+/obj/item/reagent_containers/food/snacks/produce/fruit/plum,
+/obj/item/reagent_containers/food/snacks/produce/fruit/plum,
+/obj/item/reagent_containers/food/snacks/produce/fruit/apple,
+/obj/item/reagent_containers/food/snacks/produce/fruit/apple,
+/obj/item/reagent_containers/food/snacks/produce/fruit/apple,
+/obj/item/reagent_containers/food/snacks/produce/fruit/apple,
+/obj/item/reagent_containers/food/snacks/produce/fruit/dragonfruit,
+/obj/item/reagent_containers/food/snacks/produce/fruit/dragonfruit,
+/obj/item/reagent_containers/food/snacks/produce/fruit/avocado,
+/obj/item/reagent_containers/food/snacks/produce/fruit/avocado,
+/obj/item/reagent_containers/food/snacks/produce/fruit/mango,
+/obj/item/reagent_containers/food/snacks/produce/fruit/mango,
+/obj/item/reagent_containers/food/snacks/produce/fruit/lime,
+/obj/item/reagent_containers/food/snacks/produce/fruit/lime,
+/obj/item/reagent_containers/food/snacks/produce/fruit/lemon,
+/obj/item/reagent_containers/food/snacks/produce/fruit/lemon,
+/obj/item/reagent_containers/food/snacks/produce/fruit/pineapple,
+/obj/item/reagent_containers/food/snacks/produce/fruit/mango,
+/obj/item/reagent_containers/food/snacks/produce/fruit/mangosteen,
+/obj/item/reagent_containers/food/snacks/produce/fruit/raspberry,
+/obj/item/reagent_containers/food/snacks/produce/fruit/strawberry,
+/obj/item/reagent_containers/food/snacks/produce/fruit/tangerine,
+/obj/item/reagent_containers/food/snacks/produce/fruit/pear,
+/obj/item/reagent_containers/food/snacks/produce/fruit/blackberry,
+/obj/item/reagent_containers/food/snacks/produce/fruit/jacksberry,
+/turf/open/floor/desert/deserttile,
+/area)
 "fd" = (
 /turf/open/floor/carpet,
+/area)
+"fk" = (
+/obj/structure/flora/driftwood,
+/turf/open/water/ocean,
 /area)
 "fl" = (
 /turf/open/floor/ruinedwood/turned,
@@ -304,6 +593,14 @@
 	pixel_y = -8
 	},
 /turf/open/floor/carpet,
+/area)
+"fH" = (
+/obj/structure/rack,
+/turf/open/floor/ruinedwood/turned,
+/area)
+"fL" = (
+/obj/structure/stairs/ccwdown,
+/turf/open/floor/ruinedwood/spiral,
 /area)
 "fV" = (
 /obj/structure/table/wood/plain_alt,
@@ -325,6 +622,50 @@
 	},
 /turf/open/openspace,
 /area)
+"gd" = (
+/obj/effect/decal/carpet{
+	dir = 4;
+	pixel_y = 15;
+	pixel_x = 18
+	},
+/turf/open/floor/wood,
+/area)
+"gp" = (
+/obj/effect/decal/borderfall{
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/structure/closet/crate/chest/old_crate,
+/turf/open/floor/woodturned,
+/area)
+"gs" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 2
+	},
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
+"gv" = (
+/obj/machinery/light/fueled/wallfire/candle{
+	pixel_y = -32
+	},
+/obj/item/cushion/desert1,
+/turf/open/floor/ruinedwood/two,
+/area)
+"gw" = (
+/obj/machinery/light/fueled/wallfire/candle/l,
+/turf/open/floor/sandstone,
+/area)
+"gx" = (
+/obj/machinery/light/fueled/wallfire/candle/r,
+/turf/open/floor/sandstone,
+/area)
 "gy" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/tile/diamond,
@@ -333,6 +674,16 @@
 /obj/structure/chair/stool,
 /obj/structure/carpet/red,
 /turf/open/floor/woodturned,
+/area)
+"gG" = (
+/obj/structure/window/openclose/reinforced{
+	dir = 8
+	},
+/obj/structure/curtain/bounty/dir{
+	open = 0;
+	dir = 8
+	},
+/turf/open/floor/wood,
 /area)
 "gO" = (
 /obj/structure/fluff/railing/corner/south_east,
@@ -353,12 +704,50 @@
 "ha" = (
 /turf/closed/sea_fog,
 /area)
+"hg" = (
+/obj/structure/flowerpot{
+	color = "#96956f"
+	},
+/obj/structure/flora/roguegrass/bush/desert{
+	icon_state = "bushshrub2";
+	pixel_y = 13
+	},
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
+"hi" = (
+/obj/structure/drape/desert{
+	pixel_y = 32;
+	layer = 2;
+	plane = -10
+	},
+/obj/structure/fluff/walldeco/bath/wallrope{
+	pixel_y = 32
+	},
+/obj/structure/mannequin/male{
+	density = 0;
+	pixel_y = 20;
+	pixel_x = -9;
+	dir = 2
+	},
+/obj/machinery/light/fueled/wallfire/candle/l,
+/turf/open/floor/woodturned,
+/area)
 "hj" = (
 /obj/structure/fluff/railing/wood/north{
 	pixel_y = 6
 	},
 /obj/structure/fluff/railing/wood/west,
-/turf/open/floor/wood,
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 8
+	},
+/obj/effect/decal/edge{
+	dir = 6;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
 /area)
 "hn" = (
 /turf/open/water/ocean,
@@ -393,16 +782,38 @@
 	},
 /turf/open/floor/ruinedwood/turned,
 /area/ship/topdeck)
+"hB" = (
+/obj/structure/rack/shelf/biggest,
+/obj/effect/decal/carpet/square{
+	pixel_x = -10;
+	pixel_y = -9
+	},
+/obj/item/storage/handbasket{
+	pixel_y = -6;
+	pixel_x = -5
+	},
+/turf/open/floor/sandstone,
+/area)
 "hR" = (
 /obj/structure/fluff/railing/corner/north_east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
 /area)
-"ih" = (
-/obj/structure/flora/shells{
-	icon_state = "driftwood-4"
+"ig" = (
+/obj/structure/carpet/red,
+/obj/structure/table/wood/large/corner_new{
+	dir = 6;
+	pixel_y = 0
 	},
-/turf/open/floor/sand/sandstone,
+/obj/item/candle/tin/lit{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/turf/open/floor/wood,
+/area)
+"ih" = (
+/obj/item/grown/log/tree/stick,
+/turf/open/water/ocean,
 /area)
 "ij" = (
 /turf/closed/wall/mineral/sandbrick,
@@ -433,12 +844,25 @@
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/openspace,
 /area)
+"ja" = (
+/obj/machinery/light/fueled/hearth,
+/obj/machinery/light/fueled/oven/south,
+/turf/open/floor/concrete,
+/area)
 "jc" = (
 /turf/open/floor/twig,
 /area)
 "je" = (
 /obj/structure/well/climb_down,
 /turf/open/floor/desert/dunes,
+/area)
+"jf" = (
+/obj/structure/table/wood/counter/end,
+/obj/effect/decal/carpet/kover_darkred{
+	pixel_y = -19;
+	pixel_x = -5
+	},
+/turf/open/floor/sandstone,
 /area)
 "jj" = (
 /obj/structure/table/wood/counter/alt,
@@ -469,9 +893,28 @@
 	},
 /turf/open/floor/woodturned,
 /area)
+"jq" = (
+/obj/structure/fluff/railing/wood/west,
+/obj/structure/fluff/railing/wood,
+/obj/structure/closet/crate/chest/wicker,
+/turf/open/floor/ruinedwood/turned,
+/area)
 "ju" = (
 /obj/structure/carpet/blue,
 /turf/open/floor/wood,
+/area)
+"jv" = (
+/obj/structure/rack/shelf/biggest,
+/obj/item/reagent_containers/glass/bucket/tinypot{
+	icon_state = "fancypot2";
+	pixel_y = 16;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/glass/bucket/tinypot{
+	pixel_x = -5;
+	pixel_y = -6
+	},
+/turf/open/floor/sandstone,
 /area)
 "jw" = (
 /obj/structure/rack/shelf/biggest,
@@ -529,14 +972,60 @@
 /obj/structure/bars/grille,
 /turf/open/openspace,
 /area)
+"jG" = (
+/obj/machinery/light/rogue/campfire/fireplace/desert{
+	pixel_y = 29
+	},
+/turf/open/floor/wood,
+/area)
 "jJ" = (
 /obj/effect/decal/cleanable/debris/wood,
+/obj/machinery/tanningrack,
 /turf/open/floor/ruinedwood/turned,
 /area)
 "jK" = (
 /obj/structure/chair/stool,
 /obj/structure/carpet/blue,
 /turf/open/floor/woodturned,
+/area)
+"jS" = (
+/obj/structure/flowerpot{
+	color = "#96956f";
+	pixel_y = -3
+	},
+/obj/structure/fluff/walldeco/bath/three{
+	pixel_x = -32;
+	color = "#b5a884"
+	},
+/obj/structure/fluff/railing/corner{
+	dir = 9
+	},
+/obj/structure/flora/grass/herb/random{
+	pixel_y = 6
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tilewhitebluespecial"
+	},
+/area)
+"jT" = (
+/obj/structure/table/wood/plain_alt,
+/obj/item/plate/pewter{
+	pixel_x = -3;
+	pixel_y = 4;
+	layer = 2.7
+	},
+/obj/item/reagent_containers/glass/cup/clay{
+	pixel_x = 9;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/carafe/teapot/bronze{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/glass/cup/clay{
+	pixel_x = -9;
+	pixel_y = -1
+	},
+/turf/open/floor/ruinedwood/two,
 /area)
 "jZ" = (
 /obj/structure/chair/stool,
@@ -554,6 +1043,17 @@
 	},
 /turf/open/floor/sandstone,
 /area)
+"kr" = (
+/obj/item/cushion/desert2,
+/turf/open/floor/ruinedwood/spiral,
+/area)
+"kv" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 8
+	},
+/turf/open/floor/desert/deserttile,
+/area)
 "kC" = (
 /obj/structure/table/wood/counter/end/right,
 /obj/structure/bars/passage/shutter{
@@ -562,6 +1062,19 @@
 	},
 /turf/open/floor/tile/brownbrick,
 /area)
+"kD" = (
+/obj/structure/flowerpot{
+	color = "#96956f";
+	pixel_x = 3;
+	pixel_y = -6
+	},
+/obj/structure/flora/grass/herb/random{
+	pixel_y = 6
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tilewhitebluespecial"
+	},
+/area)
 "kK" = (
 /obj/structure/fluff/railing/wood/east,
 /obj/structure/fluff/nest{
@@ -569,12 +1082,45 @@
 	},
 /turf/open/floor/dirt/desert,
 /area)
+"kL" = (
+/obj/structure/table/wood/plain_alt,
+/obj/item/candle/tin{
+	pixel_y = 10;
+	pixel_x = 4
+	},
+/turf/open/floor/ruinedwood/two,
+/area)
 "kP" = (
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/ruinedwood/spiral,
 /area)
+"kQ" = (
+/obj/structure/table/wood/counter/end/right,
+/obj/structure/flowerpot/medium{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/structure/flora/grass/herb/calendula{
+	pixel_y = 17;
+	pixel_x = 9
+	},
+/turf/open/floor/sandstone,
+/area)
 "le" = (
 /turf/closed/wall/mineral/wood,
+/area)
+"lf" = (
+/obj/structure/table/wood/plain_alt,
+/obj/item/reagent_containers/glass/carafe/water{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/plate/pewter{
+	pixel_x = -5;
+	pixel_y = -1;
+	layer = 2.7
+	},
+/turf/open/floor/carpet/royalblack,
 /area)
 "lk" = (
 /obj/structure/fluff/railing/corner/north_east,
@@ -588,8 +1134,18 @@
 	},
 /turf/open/openspace,
 /area)
+"lv" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 4
+	},
+/turf/open/floor/ruinedwood/turned,
+/area)
 "lF" = (
 /turf/open/water/clean/dirt,
+/area)
+"lH" = (
+/obj/structure/rack/shelf/big,
+/turf/open/floor/ruinedwood/turned,
 /area)
 "lM" = (
 /turf/closed/wall/mineral/wooddark/horizontal,
@@ -597,6 +1153,13 @@
 "lR" = (
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/water/ocean,
+/area)
+"lT" = (
+/obj/structure/fermentation_keg/fancypot/water,
+/obj/structure/fake_machine/stockpile,
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
 /area)
 "lU" = (
 /obj/effect/decal/edge{
@@ -675,6 +1238,10 @@
 /obj/structure/fake_machine/scomm,
 /turf/open/floor/tile/diamond,
 /area)
+"mN" = (
+/obj/item/cushion/desert1,
+/turf/open/floor/carpet/royalblack,
+/area)
 "mO" = (
 /obj/structure/fluff/railing/border/west,
 /obj/structure/fluff/railing/corner{
@@ -693,6 +1260,41 @@
 	},
 /turf/open/floor/sandstone,
 /area)
+"ni" = (
+/obj/machinery/light/fueled/wallfire/candle/r,
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 1
+	},
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
+"nk" = (
+/obj/structure/window/openclose/reinforced{
+	dir = 1
+	},
+/obj/structure/curtain/bounty/dir{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area)
+"nt" = (
+/obj/structure/drape/desert{
+	pixel_y = 32;
+	layer = 2;
+	plane = -10
+	},
+/obj/structure/fluff/walldeco/bath/wallrope{
+	pixel_y = 32;
+	dir = 8
+	},
+/turf/open/floor/ruinedwood/two,
+/area)
 "nw" = (
 /obj/structure/flora/grass/jungle/b{
 	color = "#b9c4bd"
@@ -702,11 +1304,26 @@
 "nB" = (
 /turf/open/floor/desert/sandbrick,
 /area)
+"nK" = (
+/obj/structure/fluff/pillow/purple{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area)
 "nP" = (
 /obj/structure/fluff/railing/corner/south_west,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/debris/wood,
 /turf/open/floor/ruinedwood,
+/area)
+"nS" = (
+/obj/machinery/light/fueled/torchholder/c,
+/obj/structure/table/wood/plain_alt,
+/turf/open/floor/ruinedwood/two,
+/area)
+"nV" = (
+/obj/structure/closet/crate/chest/old_crate,
+/turf/open/floor/ruinedwood/turned,
 /area)
 "nW" = (
 /obj/structure/door/swing,
@@ -741,6 +1358,16 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area)
+"oq" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 4
+	},
+/obj/structure/fluff/millstone{
+	pixel_y = 9;
+	pixel_x = 3
+	},
+/turf/open/floor/desert/deserttile,
+/area)
 "or" = (
 /turf/closed/wall/mineral/wooddark/deco,
 /area)
@@ -769,16 +1396,29 @@
 /turf/open/floor/ruinedwood,
 /area/ship/middeck)
 "oR" = (
-/obj/structure/fluff/railing/wood/north{
-	pixel_y = 6
+/obj/machinery/light/fueled/torchholder/l,
+/turf/open/floor/ruinedwood/two,
+/area)
+"oV" = (
+/obj/structure/door/fancy{
+	name = "Balcony"
 	},
-/obj/structure/stairs/cw,
-/turf/open/floor/wood,
+/turf/open/floor/sandstone,
 /area)
 "oY" = (
 /obj/structure/fluff/railing/wood/west,
 /obj/structure/fluff/railing/border/north,
-/turf/open/floor/wood,
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 8
+	},
+/obj/effect/decal/edge{
+	dir = 6;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
 /area)
 "pc" = (
 /obj/structure/fluff/walldeco/vinez/r,
@@ -811,15 +1451,61 @@
 "pm" = (
 /turf/open/floor/sand/sandstone,
 /area)
+"pp" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#683E38"
+	},
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
 "pr" = (
 /obj/structure/flora/shells{
 	icon_state = "starfish-3"
 	},
-/turf/open/floor/sand/sandstone,
+/turf/open/water/ocean,
 /area)
 "py" = (
 /turf/closed/wall/mineral/wooddark,
 /area/ship/middeck)
+"pC" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 2
+	},
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#683E38"
+	},
+/obj/item/weapon/shield/heater{
+	pixel_x = -32;
+	name = "decorative wall shield";
+	anchored = 1
+	},
+/obj/machinery/light/fueled/wallfire/candle/l,
+/obj/structure/table/wood/plain_alt,
+/obj/item/alch/herb/symphitum{
+	pixel_y = 4;
+	pixel_x = 4
+	},
+/obj/item/tablecloth/silk,
+/obj/item/reagent_containers/glass/carafe{
+	pixel_y = 10;
+	pixel_x = -2
+	},
+/obj/structure/fluff/walldeco/bigpainting{
+	pixel_x = 0;
+	pixel_y = -32
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
 "pF" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/walldeco/wantedposter/l,
@@ -831,6 +1517,26 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area)
+"pM" = (
+/obj/machinery/light/fueled/wallfire/candle/l,
+/turf/open/floor/carpet/red,
+/area)
+"pU" = (
+/obj/structure/fluff/railing/wood/north{
+	pixel_y = 6
+	},
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 2
+	},
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
 "pY" = (
 /obj/effect/decal/edge{
 	color = "#4d443e";
@@ -838,12 +1544,23 @@
 	},
 /turf/open/floor/desert/citybrick,
 /area)
+"pZ" = (
+/obj/structure/fluff/railing/wood,
+/obj/structure/rack,
+/turf/open/floor/ruinedwood/turned,
+/area)
 "qa" = (
 /turf/closed/wall/mineral/wooddark/vertical,
 /area)
 "qg" = (
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/openspace,
+/area)
+"qj" = (
+/obj/structure/flora/shells{
+	icon_state = "shell-2"
+	},
+/turf/open/water/ocean,
 /area)
 "qu" = (
 /turf/open/openspace,
@@ -854,6 +1571,19 @@
 	transfer_delay = 10
 	},
 /turf/open/floor/ruinedwood,
+/area)
+"qz" = (
+/obj/machinery/light/fueled/wallfire/candle/l,
+/turf/open/floor/ruinedwood/two,
+/area)
+"qB" = (
+/obj/structure/fluff/railing/corner/south_east,
+/turf/open/openspace,
+/area)
+"qD" = (
+/obj/structure/carpet/red,
+/obj/item/cushion/zybantine,
+/turf/open/floor/wood,
 /area)
 "qM" = (
 /obj/structure/fluff/railing/border/north,
@@ -880,11 +1610,44 @@
 	},
 /turf/open/floor/tile/diamond,
 /area)
+"rb" = (
+/obj/structure/closet/crate/drawer,
+/turf/open/floor/carpet/royalblack,
+/area)
+"rd" = (
+/obj/structure/drape/desert{
+	pixel_y = -32;
+	layer = 2;
+	plane = -10
+	},
+/obj/structure/fluff/walldeco/bath/wallrope{
+	pixel_y = -32;
+	dir = 8
+	},
+/obj/machinery/light/fueled/wallfire/candle/l,
+/turf/open/floor/woodturned,
+/area)
 "rm" = (
 /mob/living/simple_animal/hostile/retaliate/saiga/horse/brown/male/tame/saddled{
 	dir = 8
 	},
 /turf/open/floor/hay,
+/area)
+"rr" = (
+/obj/structure/fluff/railing/corner{
+	dir = 9
+	},
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#683E38"
+	},
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
 /area)
 "rw" = (
 /obj/structure/hay_stack{
@@ -909,6 +1672,10 @@
 	},
 /turf/open/floor/sand/sandstone,
 /area)
+"rG" = (
+/obj/structure/flora/starfish,
+/turf/open/floor/sand/sandstone,
+/area)
 "rH" = (
 /obj/structure/stairs,
 /turf/open/floor/ruinedwood,
@@ -927,9 +1694,24 @@
 	},
 /turf/open/water/ocean/abyss,
 /area)
+"rV" = (
+/obj/structure/door/red{
+	name = "Stable"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
 "rW" = (
 /obj/structure/fake_machine/scomm,
 /turf/open/floor/woodturned,
+/area)
+"rY" = (
+/obj/structure/giantfur{
+	pixel_x = -12;
+	pixel_y = -13
+	},
+/turf/open/floor/ruinedwood/herringbone_clear,
 /area)
 "sc" = (
 /obj/structure/fluff/railing/corner/north_east,
@@ -955,6 +1737,110 @@
 	},
 /turf/open/floor/ruinedwood/turned,
 /area/ship/topdeck)
+"sA" = (
+/obj/machinery/light/fueled/chand,
+/turf/open/openspace,
+/area)
+"sH" = (
+/obj/structure/flowerpot{
+	color = "#96956f";
+	pixel_y = -4
+	},
+/obj/structure/flora/grass/herb/random{
+	pixel_y = 6
+	},
+/turf/open/floor/ruinedwood/two,
+/area)
+"sK" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#683E38"
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/onion{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/onion{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/onion{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/onion{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/onion{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/onion{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/onion{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/potato,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/potato{
+	pixel_y = -3;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/potato{
+	pixel_y = -3;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/potato{
+	pixel_y = -3;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/potato{
+	pixel_y = -3;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/potato{
+	pixel_y = -3;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/food/snacks/produce/vegetable/potato,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/potato{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/turf/open/floor/desert/deserttile,
+/area)
+"sP" = (
+/obj/structure/fluff/railing/wood/west,
+/obj/machinery/light/fueled/wallfire/candle{
+	pixel_y = -32
+	},
+/obj/item/cushion/desert1,
+/turf/open/floor/ruinedwood/two,
+/area)
+"sV" = (
+/obj/structure/drape/desert{
+	pixel_y = 32;
+	layer = 2;
+	plane = -10
+	},
+/obj/structure/fluff/walldeco/bath/wallrope{
+	pixel_y = 32
+	},
+/obj/structure/flowerpot{
+	color = "#96956f"
+	},
+/obj/structure/flora/junglebush/large{
+	color = "#b9c4bd";
+	pixel_y = 3;
+	pixel_x = -17;
+	base_pixel_x = -17;
+	base_pixel_y = 3
+	},
+/turf/open/floor/ruinedwood/two,
+/area)
 "sW" = (
 /obj/structure/chair/wood/alt{
 	dir = 8
@@ -990,6 +1876,18 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
+"ti" = (
+/obj/structure/bed/inn,
+/obj/item/bedsheet/wool,
+/turf/open/floor/carpet/royalblack,
+/area)
+"tj" = (
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile,
+/area)
 "tk" = (
 /obj/effect/decal/edge{
 	dir = 1;
@@ -1003,13 +1901,20 @@
 /obj/item/reagent_containers/glass/bowl/clay,
 /obj/item/reagent_containers/glass/bowl/clay,
 /obj/item/reagent_containers/glass/bowl/clay,
+/obj/item/reagent_containers/glass/bucket/tinypot{
+	pixel_x = -5;
+	pixel_y = 18
+	},
 /turf/open/floor/tile/diamond,
+/area)
+"tq" = (
+/obj/structure/curtain/bounty/dir{
+	dir = 8
+	},
+/turf/closed/wall/mineral/wood/window,
 /area)
 "tt" = (
 /obj/structure/window/openclose/reinforced{
-	dir = 1
-	},
-/obj/structure/curtain/bounty/dir{
 	dir = 1
 	},
 /turf/open/floor/tile/brownbrick,
@@ -1034,6 +1939,39 @@
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
+"tZ" = (
+/turf/open/floor/carpet/red,
+/area)
+"ua" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 8
+	},
+/obj/effect/decal/borderfall{
+	pixel_y = 8;
+	dir = 1
+	},
+/turf/open/floor/woodturned,
+/area)
+"ue" = (
+/obj/item/cushion/desert1,
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
+"uf" = (
+/obj/item/reagent_containers/glass/bucket/tinypot{
+	pixel_x = -11;
+	pixel_y = -8
+	},
+/obj/structure/well{
+	icon = 'icons/obj/structures/rotation_devices/water_vent.dmi';
+	icon_state = "pipevent";
+	dir = 2;
+	density = 0;
+	name = "water tap"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
 "uq" = (
 /obj/item/storage/sack,
 /turf/open/floor/sandstone,
@@ -1047,6 +1985,23 @@
 	dir = 4
 	},
 /turf/open/floor/ruinedwood/two,
+/area)
+"uF" = (
+/obj/structure/bed/inn,
+/obj/item/bedsheet/cloth,
+/turf/open/floor/wood,
+/area)
+"uG" = (
+/obj/structure/fluff/railing/wood/north{
+	pixel_y = 6
+	},
+/obj/structure/fluff/pillow/red,
+/turf/open/floor/carpet/red,
+/area)
+"uL" = (
+/obj/machinery/light/fueled/hearth,
+/obj/machinery/light/fueled/oven/north,
+/turf/open/floor/concrete,
 /area)
 "uN" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1065,8 +2020,28 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/ruinedwood/turned,
 /area)
+"vg" = (
+/obj/structure/stairs/desert{
+	dir = 1
+	},
+/turf/open/floor/desert/deserttile,
+/area)
+"vn" = (
+/obj/structure/fluff/railing/wood/north{
+	pixel_y = 6
+	},
+/turf/open/floor/carpet/red,
+/area)
 "vq" = (
 /turf/open/floor/ruinedwood/darker,
+/area)
+"vr" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 2
+	},
+/obj/machinery/light/fueled/torchholder/l,
+/turf/open/floor/desert/deserttile,
 /area)
 "vu" = (
 /obj/structure/fluff/railing/corner{
@@ -1074,12 +2049,42 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
+"vw" = (
+/obj/structure/drape/desert{
+	pixel_y = -32;
+	layer = 2;
+	plane = -10
+	},
+/obj/structure/fluff/walldeco/bath/wallrope{
+	pixel_y = -32;
+	dir = 4
+	},
+/obj/structure/bed/mediocre,
+/obj/item/bedsheet/cloth,
+/turf/open/floor/woodturned,
+/area)
 "vz" = (
 /obj/structure/fluff/railing/border/east,
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/rooftop{
 	dir = 1
 	},
+/area)
+"vE" = (
+/obj/machinery/light/fueled/wallfire/candle{
+	pixel_y = -32
+	},
+/obj/structure/carpet/red,
+/turf/open/floor/ruinedwood/two,
+/area)
+"vJ" = (
+/obj/structure/carpet/red,
+/obj/item/cushion/desert2,
+/turf/open/floor/wood,
+/area)
+"vK" = (
+/obj/structure/rack/shelf/biggest,
+/turf/open/floor/ruinedwood/spiral,
 /area)
 "vR" = (
 /obj/structure/fluff/railing/wood/west,
@@ -1099,9 +2104,51 @@
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/wood,
 /area)
+"wb" = (
+/obj/structure/closet/crate/chest/wicker,
+/turf/open/floor/ruinedwood/spiral,
+/area)
+"wf" = (
+/obj/structure/flowerpot{
+	color = "#96956f";
+	pixel_y = -4
+	},
+/obj/structure/flora/grass/herb/random{
+	pixel_y = 6
+	},
+/turf/open/floor/woodturned,
+/area)
+"wh" = (
+/obj/structure/carpet/red,
+/obj/structure/table/wood/large/corner_new{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area)
+"wp" = (
+/obj/structure/water_pipe,
+/turf/closed/wall/mineral/pipe,
+/area)
 "wr" = (
 /obj/structure/flora/roguetree/palm,
 /turf/open/floor/grass,
+/area)
+"wt" = (
+/obj/structure/window/openclose/reinforced{
+	dir = 2
+	},
+/obj/structure/curtain/bounty/dir{
+	open = 0;
+	dir = 2
+	},
+/turf/open/floor/wood,
+/area)
+"wu" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 4
+	},
+/turf/open/floor/desert/deserttile,
 /area)
 "wy" = (
 /obj/effect/decal/borderfall{
@@ -1109,6 +2156,25 @@
 	},
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/sand/sandstone,
+/area)
+"wA" = (
+/obj/machinery/light/fueled/wallfire/candle/l,
+/obj/item/weapon/shield/heater{
+	pixel_x = -32;
+	name = "decorative wall shield";
+	anchored = 1
+	},
+/obj/structure/carpet/red,
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
+"wJ" = (
+/obj/structure/fluff/walldeco/bath/two{
+	color = "#b5a884";
+	pixel_x = -32
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tilewhitebluespecial"
+	},
 /area)
 "wW" = (
 /turf/open/floor/rooftop{
@@ -1121,6 +2187,9 @@
 	},
 /turf/open/floor/dirt/desert,
 /area)
+"xb" = (
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
 "xd" = (
 /turf/open/floor/desert/citybrick,
 /area)
@@ -1131,10 +2200,28 @@
 	},
 /turf/open/floor/tile/diamond,
 /area)
+"xl" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 8
+	},
+/obj/structure/rack/shelf/biggest,
+/obj/item/reagent_containers/food/snacks/cheddar{
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/food/snacks/cheddar{
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/snacks/cheddar/aged{
+	pixel_y = 6
+	},
+/turf/open/floor/desert/deserttile,
+/area)
 "xo" = (
-/obj/structure/fluff/railing/corner/south_east,
-/obj/structure/underworld/ship/smol,
-/turf/open/water/ocean,
+/obj/structure/stairs{
+	dir = 4
+	},
+/turf/open/floor/ruinedwood/spiral,
 /area)
 "xr" = (
 /obj/structure/flora/grass,
@@ -1150,8 +2237,26 @@
 	icon_state = "tiledrab2"
 	},
 /area)
+"xz" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 8
+	},
+/turf/open/floor/sandstone,
+/area)
 "xH" = (
 /turf/closed/wall/mineral/wooddark/window,
+/area)
+"xL" = (
+/obj/structure/bed/inn/double,
+/obj/item/bedsheet/double_pelt,
+/obj/structure/carpet/red,
+/turf/open/floor/wood,
+/area)
+"xN" = (
+/obj/structure/flora/shells{
+	icon_state = "shell-2"
+	},
+/turf/open/floor/sand/sandstone,
 /area)
 "xQ" = (
 /obj/structure/chair/wood/alt,
@@ -1159,10 +2264,23 @@
 /turf/open/floor/woodturned,
 /area)
 "xY" = (
-/obj/structure/flora/shells{
-	icon_state = "shell-2"
+/obj/structure/fermentation_keg/water{
+	pixel_x = -6;
+	pixel_y = -8;
+	layer = 2.91
 	},
-/turf/open/floor/sand/sandstone,
+/obj/structure/closet/crate/chest/wicker{
+	pixel_y = 5;
+	pixel_x = 3
+	},
+/turf/open/floor/sandstone,
+/area)
+"xZ" = (
+/obj/structure/flora/grass/fullgrass,
+/obj/structure/flora/grass/herb/random{
+	pixel_y = 6
+	},
+/turf/open/floor/grass,
 /area)
 "yd" = (
 /obj/effect/decal/edge_corner{
@@ -1201,6 +2319,13 @@
 	},
 /turf/open/floor/tile/diamond,
 /area)
+"yl" = (
+/obj/effect/decal/carpet/square/black{
+	pixel_x = 20;
+	pixel_y = -9
+	},
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
 "yo" = (
 /obj/structure/rack/shelf/biggest,
 /obj/effect/decal/edge{
@@ -1234,12 +2359,45 @@
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
+"yw" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 4
+	},
+/obj/structure/closet/crate/chest/old_crate,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/turnip,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/turnip,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/turnip,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/turnip,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/turnip,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/cabbage,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/cabbage,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/cabbage,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/cabbage,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/cabbage,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/cabbage,
+/turf/open/floor/desert/deserttile,
+/area)
+"yy" = (
+/obj/structure/stairs{
+	dir = 4
+	},
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
+"yC" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/turf/open/floor/ruinedwood/two,
+/area)
 "yD" = (
 /obj/structure/fluff/railing/corner/south_east{
 	dir = 10;
 	pixel_y = 0
 	},
 /turf/open/openspace,
+/area)
+"yF" = (
+/obj/item/cushion/desert1,
+/turf/open/floor/ruinedwood/spiral,
 /area)
 "yH" = (
 /obj/structure/table/wood/plain_alt,
@@ -1255,8 +2413,15 @@
 /obj/item/grown/log/tree/stick,
 /turf/open/floor/sand/sandstone,
 /area)
+"yW" = (
+/turf/open/floor/desert/deserttile,
+/area)
 "yY" = (
 /turf/closed/wall/mineral/wooddark/horizontal,
+/area)
+"ze" = (
+/obj/structure/carpet/green,
+/turf/open/floor/ruinedwood/two,
 /area)
 "zl" = (
 /obj/effect/decal/borderfall,
@@ -1264,9 +2429,46 @@
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/desert/lightpath,
 /area)
+"zm" = (
+/obj/structure/window/openclose/reinforced,
+/obj/structure/curtain/bounty/dir{
+	dir = 2
+	},
+/turf/open/floor/wood,
+/area)
 "zo" = (
 /obj/item/storage/sack,
 /turf/open/floor/hay,
+/area)
+"zt" = (
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#683E38"
+	},
+/obj/structure/rack/shelf/biggest,
+/obj/item/storage/sack{
+	pixel_x = -8;
+	pixel_y = -7;
+	populate_contents = list(/obj/item/reagent_containers/food/snacks/sugar,/obj/item/reagent_containers/food/snacks/sugar,/obj/item/reagent_containers/food/snacks/sugar,/obj/item/reagent_containers/food/snacks/sugar,/obj/item/reagent_containers/food/snacks/sugar,/obj/item/reagent_containers/food/snacks/sugar,/obj/item/reagent_containers/food/snacks/sugar,/obj/item/reagent_containers/food/snacks/sugar,/obj/item/reagent_containers/food/snacks/sugar)
+	},
+/obj/item/reagent_containers/food/snacks/sugar{
+	pixel_y = -9;
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/food/snacks/tallow{
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/snacks/tallow{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/snacks/chocolate,
+/obj/item/reagent_containers/food/snacks/chocolate,
+/obj/item/reagent_containers/food/snacks/chocolate,
+/obj/item/reagent_containers/food/snacks/chocolate,
+/obj/item/reagent_containers/food/snacks/chocolate,
+/turf/open/floor/desert/deserttile,
 /area)
 "zv" = (
 /obj/structure/table/wood/reinforced_alter,
@@ -1281,6 +2483,16 @@
 /obj/structure/fluff/railing/wood/east,
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/desert/lightpath,
+/area)
+"zx" = (
+/obj/item/natural/bundle/carpet_roll/cyan{
+	pixel_y = -9
+	},
+/obj/structure/rack,
+/obj/item/natural/bundle/carpet_roll/red{
+	pixel_x = 6
+	},
+/turf/open/floor/sandstone,
 /area)
 "zA" = (
 /obj/effect/decal/cleanable/debris/glass,
@@ -1317,6 +2529,11 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
+"zJ" = (
+/obj/structure/fluff/railing/corner/south_west,
+/obj/structure/underworld/ship/smol,
+/turf/open/water/ocean,
+/area)
 "zK" = (
 /obj/machinery/light/fueled/wallfire/floorcandle/alt{
 	pixel_y = -2
@@ -1330,6 +2547,16 @@
 /obj/item/cushion/desert1,
 /obj/structure/carpet/purple,
 /turf/open/floor/woodturned,
+/area)
+"zP" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#683E38"
+	},
+/obj/machinery/light/fueled/wallfire{
+	pixel_x = 32
+	},
+/turf/open/floor/desert/deserttile,
 /area)
 "zT" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1351,12 +2578,35 @@
 	},
 /turf/open/water/ocean,
 /area)
+"Ar" = (
+/obj/structure/fluff/railing/wood/west,
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#683E38"
+	},
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#683E38"
+	},
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
 "At" = (
 /obj/effect/decal/borderfall{
 	dir = 1
 	},
 /obj/structure/fluff/railing/wood/north,
-/turf/open/floor/sand/sandstone,
+/turf/open/water/ocean,
+/area)
+"Az" = (
+/obj/item/cushion/desert1,
+/obj/machinery/light/fueled/wallfire/candle,
+/turf/open/floor/ruinedwood/two,
 /area)
 "AA" = (
 /obj/effect/decal/edge{
@@ -1369,12 +2619,28 @@
 	},
 /turf/open/floor/desert/citybrick/citybrick2,
 /area)
+"AG" = (
+/obj/structure/table/wood/plain,
+/obj/item/candle/tin{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/glass/cup/wooden{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/turf/open/floor/ruinedwood/two,
+/area)
 "AM" = (
 /obj/structure/chair/wood/alt{
 	dir = 4
 	},
 /obj/structure/carpet/blue,
 /turf/open/floor/wood,
+/area)
+"AN" = (
+/turf/closed/wall/mineral/wooddark/deco{
+	dir = 8
+	},
 /area)
 "AQ" = (
 /obj/structure/chair/stool,
@@ -1389,6 +2655,14 @@
 /turf/open/floor/desert/deserttile{
 	icon_state = "tiledrab2"
 	},
+/area)
+"Ba" = (
+/obj/effect/decal/carpet/kover_darkred{
+	dir = 4;
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/turf/open/floor/woodturned,
 /area)
 "Bm" = (
 /obj/structure/fluff/railing/corner/north_east,
@@ -1407,10 +2681,26 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/woodturned,
 /area)
+"BA" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/machinery/light/fueled/wallfire/candle,
+/turf/open/floor/sandstone,
+/area)
 "BC" = (
 /obj/structure/table/wood/plain_alt,
 /obj/structure/carpet/blue,
 /turf/open/floor/wood,
+/area)
+"BE" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 1
+	},
+/obj/item/storage/sack{
+	pixel_y = 16;
+	populate_contents = list(/obj/item/reagent_containers/food/snacks/produce/grain/wheat,/obj/item/reagent_containers/food/snacks/produce/grain/wheat,/obj/item/reagent_containers/food/snacks/produce/grain/oat,/obj/item/reagent_containers/food/snacks/produce/grain/oat,/obj/item/reagent_containers/food/snacks/produce/grain/oat,/obj/item/reagent_containers/food/snacks/produce/grain/wheat,/obj/item/reagent_containers/food/snacks/produce/grain/wheat,/obj/item/reagent_containers/food/snacks/produce/grain/wheat,/obj/item/reagent_containers/food/snacks/produce/grain/oat,/obj/item/reagent_containers/food/snacks/produce/grain/oat,/obj/item/reagent_containers/food/snacks/produce/grain/oat,/obj/item/reagent_containers/food/snacks/produce/grain/oat,/obj/item/reagent_containers/food/snacks/produce/grain/oat,/obj/item/reagent_containers/food/snacks/produce/grain/oat,/obj/item/reagent_containers/food/snacks/produce/grain/oat,/obj/item/reagent_containers/food/snacks/produce/grain/wheat,/obj/item/reagent_containers/food/snacks/produce/grain/wheat,/obj/item/reagent_containers/food/snacks/produce/grain/oat,/obj/item/reagent_containers/food/snacks/produce/grain/wheat,/obj/item/reagent_containers/food/snacks/produce/grain/oat)
+	},
+/turf/open/floor/desert/deserttile,
 /area)
 "BG" = (
 /turf/closed/wall/mineral/wooddark,
@@ -1427,6 +2717,20 @@
 	},
 /turf/open/floor/dirt/desert,
 /area)
+"BZ" = (
+/obj/structure/window/harem3{
+	name = "tall window"
+	},
+/obj/structure/curtain/bounty/dir{
+	open = 0;
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area)
+"Cd" = (
+/obj/structure/chair/bench/coucha,
+/turf/open/floor/carpet/red,
+/area)
 "Ck" = (
 /obj/structure/flora/driftwood,
 /turf/open/floor/sand/sandstone,
@@ -1437,6 +2741,11 @@
 	color = "#683E38"
 	},
 /turf/open/floor/tile/diamond,
+/area)
+"Cp" = (
+/obj/structure/fluff/railing/wood,
+/obj/structure/rack/shelf/biggest,
+/turf/open/floor/ruinedwood/turned,
 /area)
 "Cr" = (
 /obj/effect/decal/edge{
@@ -1464,6 +2773,18 @@
 	dir = 8
 	},
 /area)
+"CC" = (
+/obj/structure/stairs/ccwdown{
+	dir = 4
+	},
+/obj/item/weapon/shield/heater{
+	pixel_x = -32;
+	name = "decorative wall shield";
+	anchored = 1
+	},
+/obj/machinery/light/fueled/wallfire/candle/l,
+/turf/open/floor/ruinedwood/two,
+/area)
 "CD" = (
 /obj/structure/fluff/railing/border/west,
 /obj/structure/fluff/railing/corner/south_west,
@@ -1475,6 +2796,9 @@
 	},
 /turf/open/floor/hay,
 /area)
+"CG" = (
+/turf/open/floor/tile/brownbrick,
+/area)
 "CL" = (
 /obj/structure/fluff/railing/wood/east,
 /turf/open/floor/desert/darkpath,
@@ -1485,6 +2809,10 @@
 	},
 /turf/open/floor/ruinedwood/turned,
 /area/ship/topdeck)
+"CO" = (
+/obj/structure/fluff/railing/corner/south_west,
+/turf/open/floor/carpet/royalblack,
+/area)
 "CR" = (
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/desert/sandbrick,
@@ -1499,6 +2827,45 @@
 	dir = 1
 	},
 /turf/open/floor/desert/citybrick,
+/area)
+"Di" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#683E38"
+	},
+/obj/structure/rack/shelf/biggest,
+/obj/item/reagent_containers/glass/bottle/rtoper{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/bottle/rtoper{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/glass/bottle/apfelweinheim{
+	pixel_x = 6;
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/glass/bottle/apfelweinheim{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/bottle/apfelweinheim{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/turf/open/floor/desert/deserttile,
+/area)
+"Dj" = (
+/obj/machinery/tanningrack,
+/obj/item/storage/sack{
+	pixel_x = -8;
+	pixel_y = -7;
+	populate_contents = list(/obj/item/reagent_containers/powder/salt,/obj/item/reagent_containers/powder/salt,/obj/item/reagent_containers/powder/salt,/obj/item/reagent_containers/powder/salt,/obj/item/reagent_containers/powder/salt,/obj/item/reagent_containers/powder/salt)
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
 /area)
 "Dl" = (
 /obj/effect/decal/edge{
@@ -1548,6 +2915,15 @@
 "DX" = (
 /turf/open/floor/ruinedwood/two,
 /area)
+"Ea" = (
+/obj/structure/mannequin/male{
+	density = 0;
+	pixel_y = 20;
+	pixel_x = -9;
+	dir = 2
+	},
+/turf/open/floor/ruinedwood/two,
+/area)
 "Ed" = (
 /obj/item/bin{
 	icon = 'modular_rmh/icons/obj/structures/yashiki.dmi';
@@ -1572,6 +2948,33 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
+"Ex" = (
+/obj/structure/table/wood/counter/alt,
+/obj/item/candle/tin/lit{
+	pixel_x = -8;
+	pixel_y = 11
+	},
+/turf/open/floor/sandstone,
+/area)
+"Ez" = (
+/obj/structure/window/openclose/reinforced{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area)
+"EB" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 4
+	},
+/obj/effect/decal/edge{
+	dir = 9;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
 "EC" = (
 /obj/structure/window/openclose/reinforced{
 	dir = 8
@@ -1606,13 +3009,77 @@
 /area)
 "EK" = (
 /obj/structure/fluff/railing/wood/west,
-/turf/open/floor/wood,
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#683E38"
+	},
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
+"EM" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 8
+	},
+/obj/item/reagent_containers/powder/salt{
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/powder/salt{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/turf/open/floor/concrete,
+/area)
+"EQ" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#683E38"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
+"ES" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 8
+	},
+/turf/open/floor/ruinedwood/turned,
+/area)
+"EV" = (
+/obj/item/bin{
+	icon = 'modular_rmh/icons/obj/structures/yashiki.dmi';
+	icon_state = "stack-yashik2";
+	anchored = 1;
+	name = "wood bins";
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/turf/open/floor/ruinedwood/two,
 /area)
 "EY" = (
 /obj/structure/door/red{
-	name = "Room I"
+	name = "Knan's Owner"
 	},
 /turf/open/floor/wood,
+/area)
+"Fd" = (
+/obj/item/weapon/shield/heater{
+	name = "decorative wall shield";
+	anchored = 1;
+	pixel_y = -32
+	},
+/obj/machinery/light/fueled/wallfire/candle{
+	pixel_y = -32
+	},
+/obj/structure/flora/junglebush/large{
+	color = "#b9c4bd"
+	},
+/turf/open/floor/grass,
 /area)
 "Ff" = (
 /obj/structure/stairs/desert{
@@ -1624,7 +3091,15 @@
 /obj/structure/door/red{
 	name = "Balcony stall"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/ruinedwood/two,
+/area)
+"Fj" = (
+/obj/effect/decal/borderfall{
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/structure/closet/crate/chest/wicker,
+/turf/open/floor/woodturned,
 /area)
 "Fs" = (
 /obj/structure/fluff/railing/corner{
@@ -1645,6 +3120,14 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
+"Fz" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 4
+	},
+/obj/structure/fermentation_keg/sandpot/beer,
+/turf/open/floor/desert/deserttile,
+/area)
 "FE" = (
 /obj/structure/fluff/railing/wood/east,
 /obj/structure/fluff/railing/corner/south_east,
@@ -1655,6 +3138,11 @@
 /obj/structure/fluff/railing/wood/east,
 /turf/open/floor/dirt/desert,
 /area)
+"FH" = (
+/obj/structure/closet/crate/drawer/random,
+/obj/structure/carpet/red,
+/turf/open/floor/wood,
+/area)
 "FM" = (
 /obj/effect/decal/edge{
 	dir = 6;
@@ -1664,6 +3152,7 @@
 	dir = 9;
 	color = "#683E38"
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/desert/deserttile{
 	icon_state = "tiledrab2"
 	},
@@ -1671,6 +3160,33 @@
 "FQ" = (
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/desert/sandbrick,
+/area)
+"FS" = (
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#683E38"
+	},
+/obj/structure/closet/crate/chest/wicker,
+/obj/item/reagent_containers/food/snacks/meat/steak,
+/obj/item/reagent_containers/food/snacks/meat/steak,
+/obj/item/reagent_containers/food/snacks/meat/steak,
+/obj/item/reagent_containers/food/snacks/meat/steak,
+/obj/item/reagent_containers/food/snacks/meat/steak,
+/obj/item/reagent_containers/food/snacks/meat/sausage/wiener,
+/obj/item/reagent_containers/food/snacks/meat/sausage/wiener,
+/obj/item/reagent_containers/food/snacks/meat/sausage/wiener,
+/obj/item/reagent_containers/food/snacks/meat/poultry,
+/obj/item/reagent_containers/food/snacks/meat/poultry,
+/obj/item/reagent_containers/food/snacks/fat,
+/obj/item/reagent_containers/food/snacks/fat,
+/turf/open/floor/desert/deserttile,
+/area)
+"FW" = (
+/obj/item/bin/water{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/turf/open/floor/sandstone,
 /area)
 "Ga" = (
 /turf/open/floor/woodturned,
@@ -1699,6 +3215,10 @@
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/ruinedwood/spiral,
 /area)
+"Gm" = (
+/obj/structure/mannequin/male,
+/turf/open/floor/ruinedwood/two,
+/area)
 "Go" = (
 /obj/structure/door/window{
 	name = "Counter side"
@@ -1708,6 +3228,10 @@
 "GA" = (
 /turf/open/floor/ruinedwood/turned,
 /area/ship/topdeck)
+"GB" = (
+/obj/structure/giantfur/small,
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
 "GK" = (
 /obj/effect/decal/edge_corner{
 	color = "#683E38";
@@ -1721,6 +3245,14 @@
 "GM" = (
 /turf/open/openspace,
 /area/ship/topdeck)
+"GO" = (
+/obj/structure/fluff/railing/wood/west,
+/turf/open/floor/ruinedwood/two,
+/area)
+"GP" = (
+/obj/machinery/light/fueled/wallfire/candle/r,
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
 "GW" = (
 /turf/open/floor/desert/dunes,
 /area)
@@ -1732,15 +3264,52 @@
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/ruinedwood/spiral,
 /area)
+"Hf" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 4
+	},
+/obj/effect/decal/borderfall{
+	pixel_y = 8;
+	dir = 1
+	},
+/turf/open/floor/woodturned,
+/area)
+"Hm" = (
+/obj/structure/door/red{
+	name = "Room IV"
+	},
+/turf/open/floor/wood,
+/area)
+"Hp" = (
+/obj/structure/fluff/railing/border/west,
+/obj/item/storage/handbasket{
+	pixel_y = -9;
+	pixel_x = -7
+	},
+/turf/closed/wall/mineral/rogue/sandbrick,
+/area)
 "Hq" = (
 /obj/structure/door/window{
 	name = "Kitchen room"
 	},
-/obj/structure/drape/zybantine,
 /turf/open/floor/tile/brownbrick,
+/area)
+"Hx" = (
+/obj/effect/decal/borderfall{
+	pixel_y = -8
+	},
+/obj/structure/bed/mediocre,
+/obj/item/bedsheet/cloth,
+/turf/open/floor/woodturned,
 /area)
 "HA" = (
 /turf/open/floor/ruinedwood/spiral,
+/area)
+"HF" = (
+/obj/structure/flora/shells{
+	icon_state = "shell-3"
+	},
+/turf/open/water/ocean,
 /area)
 "HG" = (
 /obj/effect/decal/edge{
@@ -1756,24 +3325,71 @@
 /obj/effect/decal/cleanable/debris/wood,
 /turf/open/floor/ruinedwood,
 /area)
+"HL" = (
+/obj/structure/carpet/red,
+/turf/open/floor/ruinedwood/two,
+/area)
 "HP" = (
 /obj/structure/fluff/railing/corner{
 	dir = 9
 	},
-/turf/open/floor/tile/brownbrick,
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile,
 /area)
 "HS" = (
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
+"HV" = (
+/obj/machinery/light/fueled/wallfire/candle{
+	pixel_y = -32
+	},
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
+"Ir" = (
+/obj/structure/window/harem3{
+	name = "tall window"
+	},
+/turf/open/floor/tile/brownbrick,
+/area)
 "It" = (
 /obj/item/cushion/desert2,
 /obj/structure/carpet/purple,
 /turf/open/floor/woodturned,
 /area)
+"Ix" = (
+/obj/structure/fermentation_keg/distiller,
+/turf/open/floor/concrete,
+/area)
+"IA" = (
+/obj/structure/flora/shells{
+	icon_state = "starfish-3"
+	},
+/turf/open/floor/sand/sandstone,
+/area)
 "IL" = (
 /obj/structure/pillar/sand1,
 /turf/closed/wall/mineral/wooddark,
+/area)
+"IO" = (
+/obj/structure/mannequin/male{
+	density = 0;
+	pixel_y = 20;
+	pixel_x = -9;
+	dir = 2
+	},
+/turf/open/floor/wood,
+/area)
+"IS" = (
+/obj/structure/fluff/pillow/red{
+	pixel_y = 10;
+	pixel_x = 4;
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
 /area)
 "IT" = (
 /turf/closed/wall/mineral/wooddark/vertical,
@@ -1787,13 +3403,63 @@
 	dir = 1;
 	color = "#683E38"
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/desert/deserttile{
 	icon_state = "tiledrab2"
 	},
 /area)
 "Jb" = (
 /obj/structure/fluff/railing/border/west,
-/turf/open/floor/tile/brownbrick,
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 1
+	},
+/obj/item/bin{
+	icon = 'modular_rmh/icons/obj/structures/yashiki.dmi';
+	icon_state = "stack-yashik2-preopen";
+	anchored = 1;
+	name = "wood bins";
+	pixel_y = 4;
+	pixel_x = 4;
+	plane = -10
+	},
+/obj/item/ration{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/ration{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/ration{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/ration{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/ration{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/ration{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/ration{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/ration{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/ration{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/turf/open/floor/desert/deserttile,
 /area)
 "Jc" = (
 /obj/structure/chair/stool,
@@ -1804,6 +3470,19 @@
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
+"Jg" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#683E38"
+	},
+/obj/effect/decal/edge{
+	dir = 10;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
 "Ji" = (
 /obj/structure/window/openclose/reinforced{
 	dir = 1
@@ -1830,12 +3509,27 @@
 	},
 /turf/open/water/ocean,
 /area)
+"Jq" = (
+/obj/structure/closet/crate/crafted_closet/inn/south,
+/obj/effect/decal/borderfall{
+	pixel_y = 8;
+	dir = 1
+	},
+/turf/open/floor/woodturned,
+/area)
 "Jz" = (
 /obj/structure/fluff/railing/wood/north{
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/ruinedwood,
+/area)
+"JX" = (
+/obj/effect/decal/borderfall{
+	pixel_y = -8
+	},
+/obj/structure/closet/crate/drawer,
+/turf/open/floor/woodturned,
 /area)
 "JY" = (
 /obj/structure/table/wood/plain_alt,
@@ -1872,13 +3566,11 @@
 /area)
 "KI" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/tanningrack,
 /turf/open/floor/ruinedwood/turned,
 /area)
 "KN" = (
-/turf/open/floor/ruinedwood/two{
-	icon_state = "wooden_floor2t"
-	},
+/obj/structure/fermentation_keg/sandpot/random/water,
+/turf/open/floor/ruinedwood/two,
 /area)
 "KO" = (
 /obj/structure/fluff/railing/corner{
@@ -1887,6 +3579,24 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/debris/wood,
 /turf/open/floor/ruinedwood,
+/area)
+"KU" = (
+/turf/closed/wall/mineral/wooddark/end{
+	dir = 4
+	},
+/area)
+"KY" = (
+/obj/machinery/light/fueled/wallfire/candle{
+	pixel_y = -32
+	},
+/turf/open/floor/ruinedwood/two,
+/area)
+"Lc" = (
+/obj/structure/chair/zybantine_sofa/right,
+/obj/structure/fluff/railing/wood/north{
+	pixel_y = 6
+	},
+/turf/open/floor/carpet/red,
 /area)
 "Li" = (
 /turf/open/floor/grass/mixyel,
@@ -1897,17 +3607,44 @@
 	},
 /turf/open/floor/ruinedwood/turned,
 /area/ship/topdeck)
+"Lv" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 1
+	},
+/turf/open/floor/desert/deserttile,
+/area)
 "LE" = (
 /obj/structure/fluff/railing/corner{
 	dir = 9
 	},
 /turf/open/floor/wood,
 /area)
+"LG" = (
+/obj/effect/decal/borderfall{
+	pixel_y = -8
+	},
+/obj/structure/closet/crate/chest/crate,
+/turf/open/floor/woodturned,
+/area)
 "LP" = (
 /obj/structure/fluff/railing/corner{
 	dir = 9
 	},
 /turf/open/floor/ruinedwood,
+/area)
+"LR" = (
+/obj/structure/table/wood/reinf_long,
+/obj/structure/flowerpot/bong{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/structure/flora/grass/herb/benedictus{
+	pixel_y = 13;
+	pixel_x = -5
+	},
+/obj/machinery/light/fueled/wallfire/candle/l,
+/turf/open/floor/sandstone,
 /area)
 "LU" = (
 /obj/structure/flora/shells{
@@ -1920,10 +3657,10 @@
 /turf/open/floor/ruinedwood/turned,
 /area)
 "Mc" = (
-/obj/structure/stairs{
-	dir = 1
+/obj/structure/stairs/ccwdown{
+	dir = 4
 	},
-/turf/open/floor/desert/lightpath,
+/turf/open/floor/ruinedwood/two,
 /area)
 "Mh" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1932,6 +3669,30 @@
 	dir = 2
 	},
 /turf/open/floor/desert/citybrick,
+/area)
+"Mi" = (
+/obj/structure/fluff/walldeco/bath/wallrope{
+	pixel_y = 32;
+	dir = 4
+	},
+/obj/structure/drape/desert{
+	pixel_y = 32;
+	layer = 2;
+	plane = -10
+	},
+/obj/structure/chair/stool,
+/turf/open/floor/ruinedwood/two,
+/area)
+"Mm" = (
+/obj/item/bin{
+	icon = 'modular_rmh/icons/obj/structures/yashiki.dmi';
+	icon_state = "stack-yashik2-preopen";
+	anchored = 1;
+	name = "wood bins";
+	pixel_y = 2;
+	plane = -10
+	},
+/turf/open/floor/sandstone,
 /area)
 "Mq" = (
 /obj/structure/fluff/railing/wood/west,
@@ -1969,8 +3730,58 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/tile/diamond,
 /area)
+"Nc" = (
+/obj/structure/rack/shelf/biggest,
+/turf/open/floor/ruinedwood/turned,
+/area)
+"Ne" = (
+/obj/structure/table/wood/plain/alto,
+/turf/open/floor/carpet/red,
+/area)
 "Nq" = (
-/turf/open/floor/tile/brownbrick,
+/obj/structure/rack,
+/obj/item/storage/handbasket{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/storage/handbasket{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
+"NH" = (
+/obj/structure/table/wood/plain_alt,
+/obj/item/candle/yellow,
+/turf/open/floor/wood,
+/area)
+"NI" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 4
+	},
+/obj/item/reagent_containers/glass/bucket/tinypot{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/machinery/light/fueled/wallfire/candle/r,
+/turf/open/floor/sandstone,
+/area)
+"NK" = (
+/turf/open/floor/carpet/royalblack,
+/area)
+"NL" = (
+/obj/item/weapon/shield/heater{
+	name = "decorative wall shield";
+	anchored = 1;
+	pixel_y = 32
+	},
+/obj/machinery/light/fueled/wallfire/candle,
+/obj/structure/flora/junglebush/b{
+	color = "#b9c4bd"
+	},
+/turf/open/floor/grass,
 /area)
 "NP" = (
 /obj/effect/decal/edge{
@@ -2008,11 +3819,28 @@
 	},
 /turf/open/floor/tile/diamond,
 /area)
+"NV" = (
+/obj/structure/flowerpot{
+	color = "#96956f"
+	},
+/obj/structure/flora/junglebush/large{
+	color = "#b9c4bd";
+	pixel_y = 3;
+	pixel_x = -17;
+	base_pixel_x = -17;
+	base_pixel_y = 3
+	},
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
 "NZ" = (
 /obj/structure/fluff/nest{
 	name = "patch of straw"
 	},
 /turf/open/floor/desert/darkpath,
+/area)
+"Ot" = (
+/obj/structure/closet/crate/chest/neu,
+/turf/open/floor/ruinedwood/two,
 /area)
 "OE" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
@@ -2025,6 +3853,7 @@
 	color = "#683E38";
 	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/desert/deserttile{
 	icon_state = "tiledrab2"
 	},
@@ -2042,14 +3871,48 @@
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/desert/lightpath,
 /area)
+"OQ" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile,
+/area)
 "OS" = (
 /obj/structure/fluff/railing/wood/north{
 	pixel_y = 6
 	},
-/turf/open/floor/wood,
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#683E38"
+	},
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
 /area)
 "OY" = (
 /turf/open/floor/desert/darkpath,
+/area)
+"Pq" = (
+/obj/structure/chair/stool,
+/obj/structure/mirror{
+	pixel_y = 0;
+	pixel_x = -64
+	},
+/turf/open/floor/carpet/red,
+/area)
+"Ps" = (
+/obj/structure/window/openclose/reinforced{
+	dir = 4
+	},
+/obj/structure/curtain/bounty/dir{
+	dir = 4
+	},
+/turf/open/floor/ruinedwood/two,
 /area)
 "Pu" = (
 /obj/structure/fluff/walldeco/wantedposter/r{
@@ -2057,11 +3920,46 @@
 	},
 /turf/open/floor/ruinedwood/turned,
 /area)
+"Px" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 8
+	},
+/obj/item/kitchen/rollingpin{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/turf/open/floor/desert/deserttile,
+/area)
+"Pz" = (
+/obj/structure/fluff/railing/wood,
+/turf/open/floor/ruinedwood/turned,
+/area)
+"PC" = (
+/turf/open/floor/desert/deserttile{
+	icon_state = "tilewhitebluespecial"
+	},
+/area)
+"PF" = (
+/obj/effect/decal/borderfall{
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/structure/closet/crate/crafted_closet,
+/turf/open/floor/woodturned,
+/area)
 "PH" = (
 /obj/structure/fluff/railing/border/north,
 /obj/structure/fluff/railing/border/east,
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/openspace,
+/area)
+"PJ" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#683E38"
+	},
+/obj/machinery/light/fueled/torchholder/r,
+/turf/open/floor/desert/deserttile,
 /area)
 "PS" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2071,12 +3969,21 @@
 	},
 /turf/open/floor/desert/citybrick/citybrick4,
 /area)
+"PU" = (
+/obj/structure/fermentation_keg/fancypot/random/water,
+/turf/open/floor/ruinedwood/spiral,
+/area)
 "Qa" = (
 /obj/structure/stairs{
 	dir = 4
 	},
 /turf/open/floor/ruinedwood/turned,
 /area/ship/middeck)
+"Qe" = (
+/obj/structure/table/wood/plain_alt,
+/obj/item/candle/yellow,
+/turf/open/floor/ruinedwood/spiral,
+/area)
 "Qi" = (
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/ruinedwood/darker,
@@ -2092,15 +3999,36 @@
 	name = "decorative wall shield";
 	anchored = 1
 	},
+/obj/structure/flowerpot{
+	color = "#96956f"
+	},
+/obj/structure/flora/roguegrass/bush/desert{
+	icon_state = "bushshrub2";
+	pixel_y = 12;
+	base_icon_state = "bushshrub2"
+	},
 /turf/open/floor/woodturned,
 /area)
 "Qq" = (
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/floor/desert/sandbrick,
 /area)
+"Qw" = (
+/obj/structure/window/openclose/reinforced,
+/turf/open/floor/wood,
+/area)
+"Qz" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 1
+	},
+/turf/open/floor/sandstone,
+/area)
 "QC" = (
 /obj/structure/window/harem3{
 	name = "tall window"
+	},
+/obj/structure/curtain/bounty/dir{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area)
@@ -2121,6 +4049,19 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
+"QL" = (
+/obj/structure/mannequin/male{
+	density = 0;
+	pixel_y = 20;
+	pixel_x = -9;
+	dir = 2
+	},
+/turf/open/floor/carpet/red,
+/area)
+"QQ" = (
+/obj/structure/chair/stool,
+/turf/open/floor/ruinedwood/two,
+/area)
 "Ra" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/edge_corner{
@@ -2136,9 +4077,7 @@
 /obj/structure/door/red{
 	name = "Room II"
 	},
-/turf/open/floor/ruinedwood/two{
-	icon_state = "wooden_floor2t"
-	},
+/turf/open/floor/ruinedwood/two,
 /area)
 "Rl" = (
 /turf/open/water/ocean/abyss,
@@ -2149,6 +4088,10 @@
 	},
 /obj/structure/curtain/bounty,
 /turf/open/floor/tile/brownbrick,
+/area)
+"Rv" = (
+/obj/structure/fluff/railing/border/west,
+/turf/open/floor/carpet/royalblack,
 /area)
 "Ry" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2161,6 +4104,15 @@
 	dir = 2
 	},
 /turf/open/floor/desert/citybrick,
+/area)
+"RB" = (
+/obj/structure/mirror{
+	pixel_y = 64
+	},
+/obj/effect/decal/carpet/square{
+	pixel_y = 24
+	},
+/turf/open/floor/woodturned,
 /area)
 "RG" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2180,6 +4132,27 @@
 	},
 /turf/open/floor/sandstone,
 /area)
+"RR" = (
+/obj/machinery/light/rogue/campfire/fireplace/desert{
+	pixel_y = 29
+	},
+/turf/open/floor/ruinedwood/two,
+/area)
+"RS" = (
+/obj/structure/fluff/walldeco/bath/wallrope{
+	pixel_y = 32
+	},
+/obj/structure/drape/desert{
+	pixel_y = 32;
+	layer = 2;
+	plane = -10
+	},
+/turf/open/floor/ruinedwood/two,
+/area)
+"RY" = (
+/obj/structure/curtain/red,
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
 "RZ" = (
 /obj/item/bin/water,
 /obj/structure/fluff/nest{
@@ -2197,6 +4170,15 @@
 	dir = 1
 	},
 /area)
+"Sp" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/turf/open/floor/wood,
+/area)
+"Sr" = (
+/obj/structure/carpet/red,
+/obj/item/cushion/desert1,
+/turf/open/floor/wood,
+/area)
 "Sy" = (
 /turf/closed/wall/mineral/tent{
 	dir = 4
@@ -2210,6 +4192,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet,
 /area)
+"SH" = (
+/obj/structure/bed/inn,
+/obj/item/bedsheet/cloth,
+/turf/open/floor/carpet/royalblack,
+/area)
 "SN" = (
 /turf/closed/wall/mineral/desert_soapstone,
 /area)
@@ -2220,11 +4207,12 @@
 	},
 /turf/open/water/ocean,
 /area)
+"SQ" = (
+/obj/structure/closet/crate/chest/crate,
+/turf/open/floor/ruinedwood/two,
+/area)
 "SS" = (
 /obj/structure/window/openclose/reinforced{
-	dir = 8
-	},
-/obj/structure/curtain/bounty/dir{
 	dir = 8
 	},
 /turf/open/floor/tile/brownbrick,
@@ -2249,6 +4237,16 @@
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/floor/ruinedwood/turned,
 /area)
+"To" = (
+/obj/structure/window/harem3{
+	name = "tall window"
+	},
+/obj/structure/curtain/bounty/dir{
+	open = 0;
+	dir = 2
+	},
+/turf/open/floor/wood,
+/area)
 "Tv" = (
 /obj/machinery/light/fueled/torchholder/l,
 /turf/open/floor/desert/darkpath,
@@ -2270,9 +4268,7 @@
 /obj/structure/door/red{
 	name = "Room III"
 	},
-/turf/open/floor/ruinedwood/two{
-	icon_state = "wooden_floor2t"
-	},
+/turf/open/floor/ruinedwood/two,
 /area)
 "TK" = (
 /obj/structure/fluff/railing/border/west,
@@ -2296,6 +4292,13 @@
 	},
 /turf/open/floor/tile/brownbrick,
 /area)
+"Um" = (
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 2
+	},
+/turf/open/floor/desert/deserttile,
+/area)
 "Uu" = (
 /obj/structure/fluff/railing/corner/south_east,
 /obj/effect/decal/edge{
@@ -2317,6 +4320,22 @@
 	},
 /obj/machinery/light/fueled/firebowl/standing,
 /turf/open/floor/desert/citybrick/citybrick2,
+/area)
+"UA" = (
+/obj/structure/flowerpot/medium{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/structure/flowerpot{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/structure/flowerpot/small{
+	pixel_x = 10;
+	pixel_y = -9
+	},
+/obj/structure/flowerpot/bong,
+/turf/open/floor/ruinedwood/turned,
 /area)
 "UM" = (
 /turf/open/floor/ruinedwood/darker,
@@ -2357,6 +4376,23 @@
 	},
 /obj/structure/ladder,
 /turf/open/floor/tile/diamond,
+/area)
+"Vt" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 8
+	},
+/turf/open/floor/concrete,
+/area)
+"Vu" = (
+/obj/structure/door/red{
+	name = "Room V"
+	},
+/turf/open/floor/ruinedwood/two,
+/area)
+"VG" = (
+/obj/structure/bed/inn,
+/obj/item/bedsheet/pelt,
+/turf/open/floor/carpet/red,
 /area)
 "VH" = (
 /obj/structure/fluff/railing/border,
@@ -2452,6 +4488,19 @@
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/ruinedwood/turned,
 /area/ship/topdeck)
+"Xf" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#683E38"
+	},
+/obj/structure/rack/shelf/biggest,
+/obj/item/reagent_containers/glass/bottle/wine/sourwine{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/machinery/light/fueled/torchholder/r,
+/turf/open/floor/desert/deserttile,
+/area)
 "Xl" = (
 /obj/effect/landmark/ship_marker{
 	ship_size = 48
@@ -2464,9 +4513,41 @@
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/sand/sandstone,
 /area)
+"Xp" = (
+/turf/closed/wall/mineral/desert_sandstone/window,
+/area)
+"Xv" = (
+/obj/structure/giantfur/small,
+/turf/open/floor/ruinedwood/two,
+/area)
+"Xw" = (
+/obj/structure/drape/desert{
+	pixel_y = 32;
+	layer = 2;
+	plane = -10
+	},
+/obj/structure/fluff/walldeco/bath/wallrope{
+	pixel_y = 32;
+	dir = 8
+	},
+/obj/structure/closet/crate/chest/neu,
+/turf/open/floor/woodturned,
+/area)
+"XC" = (
+/obj/machinery/light/fueled/torchholder/c,
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
+/area)
 "XG" = (
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/ruinedwood,
+/area)
+"XM" = (
+/obj/structure/window/openclose/reinforced{
+	dir = 2
+	},
+/turf/open/floor/ruinedwood/two,
 /area)
 "XN" = (
 /obj/structure/chair/stool,
@@ -2481,11 +4562,43 @@
 	},
 /turf/open/floor/woodturned,
 /area)
+"XV" = (
+/obj/structure/chair/bench/coucha/r,
+/turf/open/floor/carpet/red,
+/area)
+"XW" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/ruinedwood/herringbone_clear,
+/area)
 "Yb" = (
 /turf/open/floor/dirt/desert,
 /area)
 "Ye" = (
 /turf/open/floor/hay,
+/area)
+"Yi" = (
+/obj/structure/rack/shelf/big{
+	pixel_y = -4
+	},
+/obj/structure/carpet,
+/obj/structure/rack/shelf/biggest{
+	pixel_y = 9
+	},
+/turf/open/floor/sandstone,
+/area)
+"Yk" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#683E38"
+	},
+/obj/effect/decal/edge_corner{
+	color = "#683E38";
+	dir = 1
+	},
+/obj/structure/fermentation_keg/fancypot/random/water,
+/turf/open/floor/desert/deserttile{
+	icon_state = "tiledrab2"
+	},
 /area)
 "Yq" = (
 /obj/structure/plank{
@@ -2526,11 +4639,49 @@
 /obj/structure/carpet/green,
 /turf/open/floor/woodturned,
 /area)
+"YK" = (
+/obj/structure/carpet/red,
+/turf/open/floor/sandstone,
+/area)
+"YL" = (
+/obj/structure/table/wood/plain/alto,
+/obj/item/candle/tin{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/glass/cup/wooden{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/turf/open/floor/ruinedwood/two,
+/area)
 "YM" = (
 /obj/structure/stairs{
 	dir = 1
 	},
-/turf/open/floor/ruinedwood,
+/turf/open/floor/ruinedwood/two,
+/area)
+"YO" = (
+/obj/structure/closet/crate/chest/wicker,
+/obj/machinery/light/fueled/wallfire/candle,
+/turf/open/floor/carpet/red,
+/area)
+"YS" = (
+/obj/structure/fluff/railing/border,
+/obj/structure/table/wood/plain/alto,
+/obj/item/reagent_containers/food/snacks/tangerine_dried{
+	pixel_y = 8;
+	pixel_x = 3
+	},
+/obj/item/plate/pewter{
+	pixel_x = -2;
+	pixel_y = 3;
+	layer = 2.7
+	},
+/obj/item/reagent_containers/food/snacks/tangerine_dried{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/turf/open/floor/ruinedwood/two,
 /area)
 "YU" = (
 /turf/closed/wall/mineral/desert_sandstone,
@@ -2543,6 +4694,13 @@
 /obj/item/natural/saddle,
 /turf/open/floor/desert/lightpath,
 /area)
+"Za" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 4
+	},
+/obj/item/weapon/knife/cleaver,
+/turf/open/floor/concrete,
+/area)
 "Zj" = (
 /obj/effect/decal/edge_corner{
 	color = "#683E38";
@@ -2550,10 +4708,6 @@
 	},
 /obj/machinery/light/fueled/wallfire/candle,
 /obj/item/bin/water,
-/obj/item/reagent_containers/glass/bucket/wooden/alter{
-	pixel_x = 7;
-	pixel_y = -8
-	},
 /obj/item/natural/cloth,
 /turf/open/floor/tile/diamond,
 /area)
@@ -2573,8 +4727,22 @@
 /obj/item/reagent_containers/food/snacks/produce/grain/wheat,
 /turf/open/floor/sandstone,
 /area)
+"Zq" = (
+/obj/structure/chair/zybantine_sofa/left,
+/obj/structure/fluff/railing/wood/north{
+	pixel_y = 6
+	},
+/turf/open/floor/carpet/red,
+/area)
 "Zs" = (
 /turf/open/floor/grass,
+/area)
+"Zx" = (
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#683E38"
+	},
+/turf/open/floor/desert/deserttile,
 /area)
 "Zy" = (
 /obj/effect/decal/edge{
@@ -2597,10 +4765,30 @@
 	},
 /turf/open/floor/tile/brownbrick,
 /area)
+"ZF" = (
+/obj/structure/table/wood/reinf_long{
+	dir = 4
+	},
+/turf/open/floor/concrete,
+/area)
 "ZH" = (
 /obj/structure/chair/stool,
 /obj/structure/carpet,
 /turf/open/floor/wood,
+/area)
+"ZM" = (
+/obj/structure/window/openclose/reinforced,
+/obj/structure/curtain/bounty/dir{
+	open = 0;
+	dir = 2
+	},
+/turf/open/floor/wood,
+/area)
+"ZP" = (
+/obj/structure/bed/inn,
+/obj/item/bedsheet/cloth,
+/obj/structure/carpet/green,
+/turf/open/floor/ruinedwood/two,
 /area)
 "ZR" = (
 /obj/effect/decal/edge{
@@ -2610,6 +4798,18 @@
 /turf/open/floor/desert/deserttile{
 	icon_state = "tiledrab2"
 	},
+/area)
+"ZV" = (
+/obj/structure/fluff/walldeco/bath/wallrope{
+	pixel_y = 32
+	},
+/obj/structure/drape/desert{
+	pixel_y = 32;
+	layer = 2;
+	plane = -10
+	},
+/obj/structure/chair/stool,
+/turf/open/floor/ruinedwood/two,
 /area)
 "ZW" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -33622,12 +35822,12 @@ dX
 dX
 dX
 dX
-dX
-dX
-dX
-dX
-dX
-dX
+BG
+ij
+ij
+ij
+ij
+BG
 dX
 dX
 dX
@@ -33820,16 +36020,16 @@ dX
 dX
 dX
 dX
+BG
 ij
 ij
 ij
 ij
+xl
+zt
+cs
+aX
 ij
-dX
-dX
-dX
-dX
-dX
 dX
 dX
 dX
@@ -34023,15 +36223,15 @@ dX
 dX
 dX
 ij
-Ff
-Nq
-Nq
+vg
+tj
+vr
 ij
-dX
-dX
-dX
-dX
-dX
+FS
+yW
+yW
+sK
+ij
 dX
 dX
 dX
@@ -34227,13 +36427,13 @@ dX
 ij
 Jb
 HP
-Nq
+wu
+rV
+Lv
+PJ
+eW
+yw
 ij
-dX
-dX
-dX
-dX
-dX
 dX
 dX
 dX
@@ -34428,14 +36628,14 @@ dX
 dX
 ij
 Nq
-Nq
-Nq
+bv
+bv
+BG
 ij
-dX
-dX
-dX
-dX
-dX
+ij
+ij
+ij
+BG
 dX
 dX
 dX
@@ -34629,13 +36829,13 @@ dX
 dX
 dX
 ij
-ij
-ij
-ij
-ij
-dX
-dX
-dX
+dt
+kv
+aA
+bJ
+eG
+YY
+YY
 dX
 dX
 dX
@@ -34829,15 +37029,15 @@ dX
 dX
 dX
 dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
+wp
+wp
+uf
+Zx
+yW
+yW
+OQ
+Ix
+YY
 dX
 dX
 dX
@@ -35030,16 +37230,16 @@ dX
 dX
 dX
 dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
+ij
+ij
+BG
+XC
+Lv
+Di
+Xf
+Fz
+YY
+YY
 dX
 dX
 dX
@@ -35231,16 +37431,16 @@ dX
 dX
 dX
 dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
+ij
+ij
+lT
+bv
+bv
+bv
+Dj
+ij
+ij
+ij
 dX
 dX
 dX
@@ -35433,15 +37633,15 @@ dX
 dX
 dX
 dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
+eA
+ja
+bv
+kv
+tj
+Um
+bv
+EM
+eA
 dX
 dX
 dX
@@ -35635,15 +37835,15 @@ dX
 dX
 dX
 dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
+eA
+Vt
+bv
+Zx
+Px
+OQ
+bv
+Za
+eA
 dX
 dX
 dX
@@ -35837,15 +38037,15 @@ dX
 dX
 dX
 dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
+eA
+ZF
+bT
+Zx
+oq
+OQ
+bT
+uL
+eA
 dX
 dX
 dX
@@ -36039,15 +38239,15 @@ dX
 dX
 dX
 dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
-dX
+ij
+ij
+ij
+BE
+zP
+wu
+ij
+ij
+ij
 dX
 dX
 dX
@@ -36243,11 +38443,11 @@ dX
 dX
 dX
 dX
-dX
-dX
-dX
-dX
-dX
+ij
+YY
+YY
+YY
+ij
 dX
 dX
 dX
@@ -59883,8 +62083,8 @@ gy
 Cm
 jj
 xy
-ZR
-jC
+EQ
+eo
 ZH
 cn
 jZ
@@ -60085,8 +62285,8 @@ Ub
 Cm
 jj
 AQ
-ZR
-jC
+EQ
+eo
 mv
 fV
 ZY
@@ -60288,7 +62488,7 @@ rz
 jj
 xy
 ZR
-jC
+eo
 ZH
 ZH
 sW
@@ -60493,7 +62693,7 @@ ZR
 Ga
 RO
 cc
-Ga
+ys
 ZB
 nB
 xd
@@ -60691,7 +62891,7 @@ Go
 zv
 BG
 IX
-ZR
+EQ
 tf
 JY
 RO
@@ -61093,7 +63293,7 @@ BG
 dW
 Wc
 Dl
-Wc
+Dl
 EF
 Ga
 ys
@@ -61724,14 +63924,14 @@ OO
 Gd
 ZW
 ZW
-Pu
-ea
-VK
-VM
-Mb
-uZ
-sc
 fl
+fl
+cQ
+fl
+fl
+KI
+sk
+cQ
 dC
 BK
 Rl
@@ -61902,7 +64102,7 @@ DH
 DH
 Yx
 ys
-Ga
+wf
 Ga
 RO
 fd
@@ -61926,14 +64126,14 @@ zw
 cQ
 fl
 KI
-le
-vX
-Jn
-Am
-vX
-Jn
-dP
-OI
+Pu
+ea
+VK
+VM
+Mb
+uZ
+sc
+fl
 ZW
 Rl
 Rl
@@ -62128,14 +64328,14 @@ rH
 sk
 fl
 fl
-pm
-xY
-hn
-hn
-hn
-hn
-yh
-UX
+le
+vX
+Jn
+Am
+vX
+Jn
+dP
+OI
 sk
 Rl
 Rl
@@ -62330,14 +64530,14 @@ zl
 zT
 sk
 fl
-pm
-pm
+hn
+qj
 hn
 hn
+fk
 hn
-hn
-vX
-Fs
+yh
+UX
 sk
 rL
 Rl
@@ -62533,13 +64733,13 @@ pd
 cQ
 jJ
 At
-pm
-ih
 hn
 hn
 hn
-Zz
-Tj
+hn
+hn
+vX
+Fs
 cQ
 Rl
 Rl
@@ -62735,13 +64935,13 @@ yY
 mF
 yY
 le
-pm
-pm
 hn
 hn
 hn
-yh
-pi
+hn
+hn
+Zz
+Tj
 cQ
 Rl
 Rl
@@ -62937,14 +65137,14 @@ HA
 Gl
 HA
 qa
-pm
+hn
 pr
 hn
 hn
 hn
-vX
-KO
-sk
+yh
+pi
+cQ
 Rl
 Rl
 Rl
@@ -63139,15 +65339,15 @@ HA
 hu
 yp
 qa
-yR
-pm
+ih
 hn
 hn
 hn
-xo
-lk
-MO
-mP
+hn
+vX
+KO
+sk
+Rl
 Rl
 Rl
 Rl
@@ -63341,15 +65541,15 @@ HA
 Ha
 kP
 qa
-LU
-pm
-pm
+HF
 hn
 hn
-yh
-Jz
-fZ
-Yz
+hn
+hn
+Zz
+lk
+MO
+mP
 Rl
 Rl
 Rl
@@ -63543,15 +65743,15 @@ HA
 BG
 yY
 le
-pm
-pm
-Ck
 hn
 hn
-vX
-LP
-XG
-BK
+fk
+hn
+hn
+yh
+Jz
+fZ
+Yz
 Rl
 Rl
 Rl
@@ -63744,16 +65944,16 @@ HA
 HA
 QE
 pm
-pm
-pm
-pm
+LU
 pm
 hn
 hn
 hn
-cQ
-cQ
-Rl
+hn
+zJ
+LP
+XG
+BK
 Rl
 Rl
 Rl
@@ -63945,12 +66145,12 @@ yY
 yY
 yY
 le
+yR
 pm
-pm
-pm
-pm
-pm
-pm
+yR
+hn
+hn
+hn
 hn
 hn
 cQ
@@ -64143,16 +66343,16 @@ GW
 GW
 GW
 fl
+Nc
+lH
 fl
-fl
-fl
-fl
-fl
+nV
+jq
+Ck
 pm
-pm
-pm
-pm
-pm
+hn
+hn
+hn
 hn
 hn
 cQ
@@ -64349,12 +66549,12 @@ fl
 fl
 fl
 fl
-fl
+Pz
 pm
 pm
-pm
-pm
-pm
+hn
+hn
+hn
 hn
 hn
 cQ
@@ -64551,12 +66751,12 @@ fl
 fl
 fl
 fl
-fl
+Pz
+xN
 pm
-pm
-pm
-pm
-pm
+yR
+hn
+hn
 hn
 hn
 cQ
@@ -64748,17 +66948,17 @@ xd
 xd
 xd
 xd
+le
+fH
 fl
 fl
-fl
-fl
-fl
-fl
-VS
+ES
+le
 pm
 pm
-pm
-pm
+rG
+hn
+hn
 hn
 hn
 cQ
@@ -64948,19 +67148,19 @@ xd
 xd
 xd
 xd
-VS
-VS
+xd
+xd
+Nc
+fH
 fl
 fl
-fl
-fl
-fl
-fl
-VS
+lv
+Cp
 pm
 pm
 pm
-pm
+hn
+hn
 hn
 hn
 cQ
@@ -65149,24 +67349,24 @@ xd
 xd
 xd
 xd
-VS
-VS
-VS
+xd
+xd
+xd
 fl
 fl
 fl
 fl
 fl
-fl
-VS
+pZ
 pm
-pm
-pm
-pm
+IA
+Ck
 hn
 hn
 hn
 hn
+cQ
+cQ
 Rl
 Rl
 Rl
@@ -65349,26 +67549,26 @@ xd
 xd
 xd
 xd
+xd
+xd
 VS
 VS
 VS
-VS
-GW
-le
-yY
-yY
-yY
-yY
-yY
-yY
-yY
-yY
-le
+UA
+fl
+fl
+fl
+fl
+pZ
+yR
+pm
+pm
 hn
 hn
 hn
 hn
-hn
+cQ
+cQ
 Rl
 Rl
 Rl
@@ -65553,24 +67753,24 @@ xd
 GW
 VS
 VS
-GW
-GW
-GW
-qa
-HA
-HA
-HA
-HA
-HA
-HA
-HA
-HA
-qa
+le
+ij
+ij
+ij
+le
+Go
+ij
+ij
+le
+yY
+yY
+yY
+le
 hn
 hn
 hn
-hn
-hn
+cQ
+cQ
 Rl
 Rl
 Rl
@@ -65753,26 +67953,26 @@ xd
 xd
 xd
 GW
-GW
-GW
-GW
-GW
-GW
+VS
+VS
+CS
+zx
+gw
+xY
+FW
+OF
+Qz
+LR
+ij
+vK
+HA
+bg
 qa
-HA
-HA
-HA
-HA
-HA
-HA
-HA
-HA
-qa
 hn
 hn
 hn
-hn
-Rl
+cQ
+cQ
 Rl
 Rl
 Rl
@@ -65957,24 +68157,24 @@ xd
 GW
 GW
 GW
-GW
-GW
-GW
-qa
+Ir
+hB
+OF
+OF
+OF
+OF
+OF
+Mm
+ij
+vK
 HA
-HA
-HA
-HA
-HA
-HA
-HA
-HA
-qa
+vK
+KU
 hn
 hn
 hn
-hn
-Rl
+cQ
+cQ
 Rl
 Rl
 Rl
@@ -66159,24 +68359,24 @@ xd
 GW
 GW
 GW
-GW
-GW
-GW
-qa
+Hp
+Yi
+ec
+jf
+OF
+YK
+YK
+OF
+CG
 HA
 HA
 HA
-HA
-HA
-HA
-HA
-HA
-qa
-hn
-hn
-hn
-hn
-Rl
+CG
+cQ
+cQ
+cQ
+cQ
+cQ
 Rl
 Rl
 Rl
@@ -66359,26 +68559,26 @@ xd
 xd
 xd
 GW
-GW
-GW
-GW
-GW
-GW
-qa
+le
+yY
+YY
+bi
+ec
+Ex
+OF
+YK
+YK
+OF
+le
 HA
 HA
-HA
-HA
-HA
-HA
-HA
-HA
-qa
-hn
-hn
-hn
-hn
-Rl
+PU
+le
+cQ
+cQ
+cQ
+cQ
+cQ
 Rl
 Rl
 Rl
@@ -66561,26 +68761,26 @@ xd
 xd
 GW
 VS
-VS
-VS
-VS
-GW
-VS
 qa
+OF
+oV
+OF
+OF
+dG
+OF
+YK
+YK
+OF
+CG
 HA
 HA
 HA
-HA
-HA
-HA
-HA
-HA
-qa
-hn
-hn
-hn
-hn
-Rl
+CG
+cQ
+cQ
+cQ
+cQ
+cQ
 Rl
 Rl
 Rl
@@ -66763,21 +68963,21 @@ xd
 xd
 GW
 GW
-GW
-VS
-VS
-VS
-VS
-le
-yY
-yY
-yY
-yY
-yY
-yY
-yY
-yY
-le
+qa
+xo
+ij
+BA
+OF
+kQ
+OF
+YK
+YK
+xz
+ij
+wb
+HA
+HA
+KE
 hn
 hn
 hn
@@ -66965,21 +69165,21 @@ xd
 GW
 GW
 GW
-GW
-GW
-GW
-VS
-VS
-VS
-VS
-VS
-VS
-pm
-pm
-pm
-pm
-pm
-hn
+qa
+AN
+ij
+jv
+gx
+OF
+ej
+OF
+OF
+NI
+ij
+vK
+vK
+vK
+qa
 hn
 hn
 hn
@@ -67167,25 +69367,25 @@ GW
 GW
 GW
 GW
-GW
-GW
-GW
-GW
-GW
-GW
-VS
-VS
-VS
-pm
-pm
-pm
-pm
+le
+yY
+le
+ij
+ij
+ij
+le
+ij
+Go
+ij
+le
+yY
+yY
+yY
+le
 hn
 hn
 hn
 hn
-hn
-Rl
 Rl
 Rl
 Rl
@@ -83915,9 +86115,9 @@ qu
 qu
 qu
 SN
+Xp
 SN
-SN
-SN
+Xp
 SN
 qu
 qu
@@ -84115,13 +86315,13 @@ qu
 qu
 qu
 qu
-SN
-SN
-RO
-RO
-RO
-SN
-SN
+ij
+ij
+gp
+PF
+Fj
+ij
+ij
 qu
 qu
 qu
@@ -84317,13 +86517,13 @@ qu
 qu
 qu
 SN
-SN
+ij
+hi
 RO
-RO
-RO
-RO
-RO
-SN
+BG
+YM
+rd
+ij
 SN
 qu
 qu
@@ -84518,22 +86718,22 @@ qu
 qu
 qu
 qu
-SN
-RO
-RO
-RO
-RO
-RO
-RO
-RO
-SN
-qu
-qu
-qu
-qu
-qu
-qu
-qu
+Xp
+ua
+Ga
+vJ
+wh
+Sr
+Ga
+Hx
+Xp
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 qu
 qu
 qu
@@ -84712,22 +86912,22 @@ qu
 qu
 qu
 qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 SN
-RO
-RO
-RO
-RO
-RO
-RO
-RO
+Hf
+RB
+vJ
+ig
+qD
+Ga
+LG
 SN
 BG
 ij
@@ -84916,27 +87116,27 @@ qu
 qu
 BG
 ij
-ij
+Ps
 ij
 BG
 ij
-ij
+Ps
 ij
 SN
+Jq
+Ga
 RO
 RO
 RO
-RO
-RO
-RO
-RO
+Ga
+JX
 SN
 qu
 qu
-bS
-YM
-RO
-RO
+qB
+pU
+qz
+aa
 ij
 qu
 qu
@@ -85117,28 +87317,28 @@ qu
 qu
 qu
 ij
-DX
-DX
-DX
+Ot
+NK
+nK
 le
-DX
-DX
-DX
+VG
+tZ
+QQ
 SN
-SN
+ij
+Xw
 RO
 RO
 RO
-RO
-RO
-RO
+Ba
+vw
 SN
 qu
 qu
 bS
 YM
-RO
-RO
+DX
+DX
 ij
 qu
 qu
@@ -85319,16 +87519,16 @@ qu
 qu
 qu
 ij
-DX
-DX
-DX
+Az
+NK
+ti
 le
-DX
-DX
-DX
+YO
+tZ
+AG
 le
-SN
-SN
+ij
+ij
 iu
 BG
 yY
@@ -85338,9 +87538,9 @@ BG
 qu
 qu
 qg
-OS
-RO
-RO
+vn
+IS
+vE
 qa
 qu
 qu
@@ -85521,28 +87721,28 @@ qu
 qu
 qu
 ij
+kL
 DX
-DX
-DX
+Gm
 le
-DX
-DX
-DX
+tZ
+tZ
+Gm
 le
-DX
+yC
 SN
 SN
 qa
-RO
-RO
-RO
+pM
+tZ
+Ne
 qa
 qu
+sA
 qu
-qu
-OS
-RO
-RO
+Zq
+tZ
+HL
 QC
 yt
 qu
@@ -85732,19 +87932,19 @@ Re
 le
 le
 DX
-DX
-DX
+qz
+Gm
 qa
-RO
-RO
-RO
+QL
+tZ
+Pq
 qa
 qu
 qu
 qu
-OS
-RO
-RO
+Lc
+tZ
+HL
 Ji
 yt
 qu
@@ -85926,27 +88126,27 @@ qu
 qu
 ka
 ij
-KN
-KN
-KN
+RS
 DX
 DX
-KN
+DX
+DX
+DX
 WV
 DX
-DX
-DX
+NK
+SH
 qa
-RO
-RO
-RO
+eK
+FH
+eK
 qa
 qu
 qu
 qu
-OS
-RO
-RO
+uG
+tZ
+HL
 Ji
 yt
 qu
@@ -86127,28 +88327,28 @@ qu
 qu
 qu
 ka
-ij
-KN
-KN
-KN
+XM
 DX
-KN
+DX
+aO
+DX
+DX
 KN
 le
-DX
-DX
-DX
+YL
+ey
+rb
 qa
-RO
-RO
-RO
+eK
+xL
+eK
 qa
 qu
 qu
 qu
-oR
-RO
-RO
+OS
+DX
+DX
 QC
 yt
 qu
@@ -86330,7 +88530,7 @@ qu
 qu
 ka
 ij
-KN
+Mi
 DX
 BG
 mO
@@ -86338,7 +88538,7 @@ mh
 CD
 BG
 le
-le
+tq
 le
 qa
 yY
@@ -86349,8 +88549,8 @@ qu
 qu
 qu
 OS
-RO
-RO
+Xv
+KY
 qa
 qu
 qu
@@ -86531,8 +88731,8 @@ qu
 qu
 qu
 ka
-xH
-DX
+BG
+nS
 DX
 gc
 qu
@@ -86550,9 +88750,9 @@ qu
 qu
 qu
 hj
-RO
-RO
-RO
+Jg
+dh
+gs
 ij
 qu
 qu
@@ -86734,7 +88934,7 @@ qu
 qu
 ka
 ij
-DX
+ZV
 DX
 qM
 iO
@@ -86747,14 +88947,14 @@ ka
 qa
 qu
 qu
-qu
+sA
 qu
 qu
 qu
 OS
-RO
-RO
-RO
+xb
+xb
+XW
 ij
 qu
 qu
@@ -86935,7 +89135,7 @@ qu
 qu
 qu
 ka
-ij
+XM
 DX
 DX
 uy
@@ -86954,8 +89154,8 @@ qu
 BG
 qu
 OS
-RO
-RO
+xb
+HV
 hq
 BG
 Cx
@@ -87138,7 +89338,7 @@ qu
 qu
 ka
 ij
-DX
+nt
 DX
 DX
 oI
@@ -87155,9 +89355,9 @@ oI
 qu
 qu
 hj
-RO
-RO
-RO
+EB
+xb
+Cd
 ZB
 jc
 jc
@@ -87339,7 +89539,7 @@ qu
 qu
 qu
 ka
-xH
+BG
 DX
 DX
 BG
@@ -87351,15 +89551,15 @@ cf
 oF
 vz
 BG
-DH
-DH
+yy
+yy
 oY
+Ar
 EK
-EK
-RO
-RO
-RO
-RO
+EB
+xb
+xb
+XV
 tt
 jc
 jc
@@ -87544,23 +89744,23 @@ ka
 ij
 DX
 DX
-DX
-KN
-KN
-KN
+oR
 DX
 DX
 DX
+oR
 DX
+DX
+SQ
 qa
-RO
-RO
-LE
-RO
-RO
-RO
-RO
-RO
+xb
+GB
+rr
+xb
+xb
+xb
+xb
+hg
 hq
 Wp
 jc
@@ -87744,24 +89944,24 @@ qu
 qu
 ka
 ij
+EV
 DX
-KN
-KN
-KN
-KN
-KN
-KN
+DX
+DX
+DX
+DX
+DX
 DX
 DX
 DX
 Fh
-RO
-RO
-RO
-RO
-RO
-RO
-RO
+xb
+xb
+pp
+xb
+GP
+br
+ue
 KE
 Wp
 jc
@@ -87957,10 +90157,10 @@ ij
 ij
 ij
 qa
-RO
-RO
-RO
-RO
+NV
+xb
+ni
+XW
 KE
 EJ
 SS
@@ -90602,19 +92802,19 @@ qu
 qu
 qu
 qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
 qu
 qu
 qu
@@ -90804,19 +93004,19 @@ qu
 qu
 qu
 qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
 qu
 qu
 qu
@@ -91006,19 +93206,19 @@ qu
 qu
 qu
 qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
 qu
 qu
 qu
@@ -91208,19 +93408,19 @@ qu
 qu
 qu
 qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
 qu
 qu
 qu
@@ -91408,21 +93608,21 @@ qu
 qu
 qu
 qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
 qu
 qu
 qu
@@ -91610,21 +93810,21 @@ qu
 qu
 qu
 qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
 qu
 qu
 qu
@@ -91812,21 +94012,21 @@ qu
 qu
 qu
 qu
+HA
 qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
 qu
 qu
 qu
@@ -92014,21 +94214,21 @@ qu
 qu
 qu
 qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
+HA
+fL
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
 qu
 qu
 qu
@@ -92216,21 +94416,21 @@ qu
 qu
 qu
 qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
-qu
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
+HA
 qu
 qu
 qu
@@ -109570,9 +111770,9 @@ qu
 nB
 nB
 YY
-VS
-VS
-VS
+YS
+CC
+qu
 YY
 nB
 nB
@@ -109770,13 +111970,13 @@ qu
 qu
 qu
 nB
-YY
-VS
-VS
-VS
-VS
-VS
-YY
+To
+wJ
+CO
+CO
+Rv
+jS
+QC
 nB
 qu
 qu
@@ -109972,20 +112172,20 @@ qu
 qu
 qu
 nB
-YY
-VS
-VS
-VS
-VS
-VS
-YY
-ij
+ZM
+PC
+mN
+lf
+ey
+PC
+nk
 nB
 nB
 nB
 nB
 nB
-ij
+nB
+nB
 nB
 qu
 qu
@@ -110174,20 +112374,20 @@ nB
 nB
 nB
 nB
-YY
-VS
-VS
-VS
-VS
-VS
-YY
-VS
-VS
-VS
-Mc
-qu
-qu
-VS
+To
+kD
+NK
+NK
+NK
+PC
+QC
+nB
+BG
+ij
+ij
+ij
+ij
+BG
 nB
 qu
 qu
@@ -110378,18 +112578,18 @@ VS
 nB
 nB
 YY
-VS
-VS
-VS
+NL
+xZ
+Fd
 YY
-VS
-VS
-VS
-VS
+nB
+nB
+To
+DX
 Mc
 qu
 qu
-VS
+QC
 nB
 qu
 qu
@@ -110580,18 +112780,18 @@ VS
 VS
 nB
 nB
-YY
-YY
-YY
+BZ
+BZ
+BZ
+nB
+nB
 VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
+ij
+ei
+DX
+GO
+sP
+ij
 nB
 qu
 qu
@@ -110784,16 +112984,16 @@ VS
 nB
 nB
 nB
+nB
+nB
 VS
 VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
+wt
+DX
+yl
+xb
+jT
+nk
 nB
 qu
 qu
@@ -110989,12 +113189,12 @@ nB
 VS
 VS
 VS
+VS
 ij
-VS
-VS
-VS
-VS
-VS
+ei
+xb
+xb
+gv
 ij
 nB
 qu
@@ -111192,12 +113392,12 @@ VS
 VS
 VS
 VS
-VS
-VS
-VS
-VS
-VS
-VS
+To
+sH
+xb
+xb
+sH
+QC
 nB
 qu
 qu
@@ -111390,16 +113590,16 @@ VS
 VS
 VS
 nB
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
+BG
+ij
+Ez
+ij
+BG
+ij
+RY
+RY
+ij
+BG
 nB
 qu
 qu
@@ -111592,16 +113792,16 @@ nB
 nB
 nB
 nB
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
+ij
+sV
+xb
+rY
+xb
+wA
+aN
+aN
+pC
+ij
 nB
 qu
 qu
@@ -111794,16 +113994,16 @@ qu
 qu
 qu
 nB
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
+Qw
+DX
+xb
+xb
+xb
+aN
+aN
+aN
+Yk
+ij
 nB
 qu
 qu
@@ -111996,16 +114196,16 @@ qu
 qu
 qu
 nB
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
+ij
+ef
+DX
+DX
+ij
+ij
+Hm
+ij
+ij
+ij
 nB
 qu
 qu
@@ -112198,15 +114398,15 @@ qu
 qu
 qu
 nB
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
+ij
+ij
+Vu
+ij
+ij
+jG
+RO
+RO
+nk
 nB
 nB
 qu
@@ -112400,15 +114600,15 @@ qu
 qu
 qu
 nB
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
+ij
+yC
+HA
+kr
+ij
+IO
+gd
+Sp
+ij
 nB
 qu
 qu
@@ -112602,15 +114802,15 @@ Cx
 Cx
 Cx
 nB
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
+zm
+Ea
+ct
+Qe
+ij
+bR
+uF
+ij
+BG
 nB
 qu
 qu
@@ -112804,14 +115004,14 @@ Cx
 Cx
 Cx
 nB
-VS
-VS
-VS
-VS
-VS
-VS
-VS
-VS
+ij
+RR
+HA
+yF
+ij
+NH
+ij
+ij
 nB
 nB
 qu
@@ -113006,13 +115206,13 @@ wW
 wW
 wW
 nB
-VS
-VS
-VS
-VS
-VS
-VS
-VS
+ij
+ZP
+ze
+ij
+ij
+gG
+BG
 nB
 nB
 qu
@@ -113208,10 +115408,10 @@ wW
 wW
 wW
 nB
-VS
-VS
-VS
-VS
+BG
+ij
+gG
+ij
 nB
 nB
 nB

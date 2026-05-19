@@ -379,13 +379,6 @@
 /obj/structure/bars,
 /turf/open/floor/blocks/paving,
 /area/under/town/rmh/sewer)
-"agF" = (
-/obj/structure/fluff/railing/wood/west{
-	pixel_x = -9
-	},
-/obj/structure/flora/grass/crawlvines,
-/turf/open/floor/dirt/road,
-/area/outdoors/rmh_field/west)
 "agM" = (
 /obj/structure/table/wood/large/corner_new{
 	dir = 6
@@ -2884,10 +2877,6 @@
 /obj/effect/decal/cleanable/debris/stone,
 /turf/open/floor/dirt/road,
 /area/under/rmh_dungeon/catacombs_town)
-"biJ" = (
-/obj/structure/handcart,
-/turf/open/floor/dirt/road,
-/area/outdoors/rmh_field/west)
 "biL" = (
 /obj/structure/flora/grass,
 /turf/open/floor/dirt,
@@ -60693,8 +60682,8 @@
 /turf/open/floor/wood,
 /area/indoors/town/rmh/garrison)
 "wqH" = (
-/obj/structure/flora/grass/crawlvines,
-/turf/open/floor/dirt/road,
+/obj/structure/flora/hotspring_rocks/grassy,
+/turf/open/floor/cobblerock,
 /area/outdoors/rmh_field/west)
 "wqK" = (
 /obj/structure/fluff/railing/wood/east,
@@ -204292,12 +204281,12 @@ tzB
 tma
 tzB
 bEo
-bEo
-tzB
 jJs
 rsj
 jJs
 mpV
+jJs
+jJs
 mpV
 jJs
 jJs
@@ -204549,12 +204538,12 @@ tma
 tzB
 tzB
 bEo
-tzB
-tzB
 jIG
 qDI
-biJ
-mpV
+jJs
+jJs
+jJs
+jJs
 jJs
 jJs
 jJs
@@ -204806,14 +204795,14 @@ tzB
 tzB
 bEo
 bEo
-jJs
-jJs
 ioI
 qDI
+jkx
+jkx
 qDI
-agF
-jkx
-jkx
+jJs
+jJs
+jJs
 jJs
 mpV
 jJs
@@ -205064,14 +205053,14 @@ bEo
 tzB
 jJs
 jJs
-jJs
-jJs
+qDI
+qDI
 uTV
-wqH
-utF
 dvD
 qDI
 qDI
+jJs
+jJs
 jJs
 mpV
 mpV
@@ -205320,16 +205309,16 @@ tzB
 tzB
 tzB
 mjp
-jJs
 jIG
+qDI
 xIv
 dvD
-jJs
-jJs
 dvD
-bgO
+wqH
 qDI
 qDI
+jJs
+jJs
 mpV
 mpV
 mpV
@@ -205574,8 +205563,6 @@ tzB
 tzB
 tzB
 qtQ
-tzB
-jJs
 grc
 eWk
 grc
@@ -205585,8 +205572,10 @@ rqm
 grc
 dvD
 hZo
-jJs
+eDo
 mpV
+jJs
+jJs
 mpV
 jJs
 jJs
@@ -205831,8 +205820,6 @@ tzB
 tzB
 tzB
 iXg
-iXg
-jJs
 wUH
 nyM
 hzp
@@ -205842,6 +205829,8 @@ uic
 sMv
 mQY
 utF
+eDo
+jJs
 jJs
 jJs
 jJs
@@ -206088,8 +206077,6 @@ tzB
 tzB
 oTI
 iNp
-tzB
-jJs
 grc
 rqm
 wUH
@@ -206099,6 +206086,8 @@ oHO
 sMv
 mQY
 dvD
+eDo
+jJs
 jJs
 mpV
 mpV
@@ -206345,8 +206334,6 @@ bEo
 tzB
 iXg
 iNp
-tma
-hIk
 mpV
 mpV
 lUj
@@ -206356,6 +206343,8 @@ wxw
 lKT
 dvD
 dvD
+qDI
+eDo
 cqo
 cqo
 jJs
@@ -206602,8 +206591,6 @@ trN
 iNp
 iXg
 tma
-tzB
-tzB
 mpV
 jJs
 grc
@@ -206612,7 +206599,9 @@ rqm
 rqm
 grc
 utF
-jJs
+dvD
+qDI
+eDo
 cqo
 xub
 jJs
@@ -206866,10 +206855,10 @@ tzB
 jJs
 dUn
 dUn
-jJs
-vnD
 dvD
-vnD
+dvD
+dvD
+qDI
 jJs
 mpV
 jJs
@@ -207123,10 +207112,10 @@ tzB
 tzB
 jJs
 vnD
-vnD
-vnD
 eDo
-vnD
+qDI
+dvD
+qDI
 vnD
 vnD
 vnD
