@@ -3944,6 +3944,7 @@
 #include "modular_rmh\code\game\turfs\jaunt_block.dm"
 #include "modular_rmh\code\game\turfs\closed\walls\walls.dm"
 #include "modular_rmh\code\game\turfs\open\floor\azure_floors.dm"
+#include "modular_rmh\code\game\turfs\open\floor\desert_floors.dm"
 #include "modular_rmh\code\game\turfs\open\floor\rogue_floor.dm"
 #include "modular_rmh\code\game\turfs\open\floor\snowyfloors.dm"
 #include "modular_rmh\code\modules\admins\itemtracker.dm"
