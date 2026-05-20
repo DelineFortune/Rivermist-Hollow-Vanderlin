@@ -47,6 +47,7 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
 	var/current_page = 1
 	var/browser_total_items = 0
 	var/browser_page_count = 1
+	var/browser_search = ""
 
 	// Pixel positioning mode
 	var/pixel_positioning_mode = FALSE
@@ -135,6 +136,7 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
 	cached_buildmode_html.Cut()
 	cached_buildmode_html = null
 	selected_item = null
+	browser_search = null
 	holder = null
 	QDEL_NULL(mode)
 	return ..()

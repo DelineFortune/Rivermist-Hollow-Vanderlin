@@ -46,41 +46,48 @@
 	dat += "</div>"
 
 	dat += "<div class='search-container'>"
-	dat += "<input type='text' class='search-bar' id='item-search' placeholder='Search this page...'>"
+	dat += "<input type='text' class='search-bar' id='item-search' placeholder='Search this category...' value='[html_encode(browser_search)]' autofocus>"
 	dat += "</div>"
 
 	dat += {"
 	<script type='text/javascript'>
 	(function setupListeners() {
-		if (window.buildmodeScriptLoaded) return;
-		window.buildmodeScriptLoaded = true;
-
 		var input = document.getElementById('item-search');
 		if (input) {
-			input.addEventListener('keyup', function() {
-				var filter = input.value.toUpperCase();
-				var grid = document.getElementById('item-grid');
-				if (!grid) return;
+			var searchTimer = null;
+			var lastSubmittedSearch = input.value || '';
+			function submitSearch() {
+				lastSubmittedSearch = input.value || '';
+				var a = document.createElement('a');
+				a.href = '?src=[REF(src)];search=' + encodeURIComponent(lastSubmittedSearch);
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+			}
 
-				var items = grid.getElementsByClassName('item');
-				for (var i = 0; i < items.length; i++) {
-					var itemName = items\[i\].getElementsByClassName('item-name')\[0\];
-					var itemPath = items\[i\].getAttribute('data-path') || '';
-					if (itemName) {
-						if (
-							itemName.innerHTML.toUpperCase().indexOf(filter) > -1 ||
-							itemPath.toUpperCase().indexOf(filter) > -1
-						) {
-							items\[i\].style.display = '';
-						} else {
-							items\[i\].style.display = 'none';
-						}
-					}
+			input.addEventListener('keyup', function(event) {
+				if ((input.value || '') === lastSubmittedSearch) {
+					return;
+				}
+				if (searchTimer) {
+					clearTimeout(searchTimer);
+				}
+				if (event && event.keyCode === 13) {
+					submitSearch();
+				} else {
+					searchTimer = setTimeout(submitSearch, 350);
 				}
 			});
+
+			input.focus();
+			if (input.setSelectionRange) {
+				input.setSelectionRange(input.value.length, input.value.length);
+			}
 		}
 
-		let shiftWasDown = false;
+		if (window.buildmodePixelListenersLoaded) return;
+		window.buildmodePixelListenersLoaded = true;
+		window.buildmodeShiftWasDown = false;
 
 		function sendTogglePixel(toggled) {
 			var a = document.createElement('a');
@@ -91,15 +98,15 @@
 		}
 
 		document.addEventListener('keydown', function(event) {
-			if (event.key === 'Shift' && !shiftWasDown) {
-				shiftWasDown = true;
+			if (event.key === 'Shift' && !window.buildmodeShiftWasDown) {
+				window.buildmodeShiftWasDown = true;
 				sendTogglePixel(1);
 			}
 		});
 
 		document.addEventListener('keyup', function(event) {
 			if (event.key === 'Shift') {
-				shiftWasDown = false;
+				window.buildmodeShiftWasDown = false;
 				sendTogglePixel(0);
 			}
 		});
@@ -127,6 +134,17 @@
 	item_browser = popup
 
 /**
+ * Store the browser search query.
+ *
+ * @param {string} search_text - Raw search query from the browser
+ */
+/datum/buildmode/proc/set_browser_search(search_text)
+	if(!istext(search_text))
+		browser_search = ""
+		return
+	browser_search = trim(copytext_char(url_decode(search_text), 1, 101))
+
+/**
  * Close the item browser
  */
 /datum/buildmode/proc/close_item_browser()
@@ -148,7 +166,17 @@
 		var/new_category = text2num(href_list["category"])
 		if(new_category)
 			current_page = 1
+			browser_search = ""
 			change_category(new_category)
+			return TRUE
+
+	if("search" in href_list)
+		var/previous_search = browser_search
+		set_browser_search(href_list["search"])
+		if(browser_search != previous_search)
+			current_page = 1
+		if(!href_list["page"])
+			open_item_browser()
 			return TRUE
 
 	if(href_list["page"])

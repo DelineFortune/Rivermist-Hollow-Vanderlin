@@ -8,24 +8,48 @@
 		return ""
 
 	var/list/dat = list()
+	var/search_params = browser_search ? ";search=[url_encode(browser_search)]" : ""
 	dat += "<div class='pagination'>"
 	if(current_page > 1)
-		dat += "<a class='button' href='?src=[REF(src)];page=[current_page - 1]'>Previous</a>"
+		dat += "<a class='button' href='?src=[REF(src)];page=[current_page - 1][search_params]'>Previous</a>"
 	dat += "<span class='page-status'>Page [current_page] of [browser_page_count] ([browser_total_items] entries)</span>"
 	if(current_page < browser_page_count)
-		dat += "<a class='button' href='?src=[REF(src)];page=[current_page + 1]'>Next</a>"
+		dat += "<a class='button' href='?src=[REF(src)];page=[current_page + 1][search_params]'>Next</a>"
 	dat += "</div>"
 	return dat.Join()
+
+/**
+ * Filter buildmode type paths by a search query before pagination.
+ *
+ * @param {list} item_types - Type paths in the current category
+ * @param {string} search_text - Search query to match against names and type paths
+ * @return {list} - Matching type paths
+ */
+/proc/filter_buildmode_types_for_search(list/item_types, search_text)
+	if(!istext(search_text) || !length(search_text))
+		return item_types.Copy()
+
+	var/search_lower = lowertext(search_text)
+	var/list/search_results = list()
+	for(var/item_path in item_types)
+		var/atom/item_atom = item_path
+		var/name_display = initial(item_atom.name) || item_path
+		if(findtext(lowertext("[name_display]"), search_lower) || findtext(lowertext("[item_path]"), search_lower))
+			search_results += item_path
+
+	return search_results
 
 /**
  * Generate a paginated HTML grid for buildmode paths.
  *
  * @param {list} filtered_types - Type paths to show
+ * @param {string} search_text - Search query to apply before pagination
  * @return {string} - HTML for the current page
  */
-/datum/buildmode/proc/generate_buildmode_item_page(list/filtered_types)
+/datum/buildmode/proc/generate_buildmode_item_page(list/filtered_types, search_text = "")
 	var/list/dat = list()
-	browser_total_items = length(filtered_types)
+	var/list/search_results = filter_buildmode_types_for_search(filtered_types, search_text)
+	browser_total_items = length(search_results)
 	if(!browser_total_items)
 		current_page = 1
 		browser_page_count = 1
@@ -37,7 +61,7 @@
 	var/start_index = ((current_page - 1) * BM_ITEMS_PER_PAGE) + 1
 	var/end_index = min(start_index + BM_ITEMS_PER_PAGE - 1, browser_total_items)
 	for(var/index in start_index to end_index)
-		var/item_path = filtered_types[index]
+		var/item_path = search_results[index]
 		var/atom/item_atom = item_path
 		var/name_display = initial(item_atom.name) || item_path
 		dat += "<div class='item' data-path='[item_path]' title='[item_path]' onclick='window.location=\"?src=[REF(src)];item=[item_path]\"'>"
@@ -58,7 +82,7 @@
 		if(initial(T.icon) && !ispath(T, /turf/template_noop))
 			filtered_types += T
 	sortTim(filtered_types, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	return generate_buildmode_item_page(filtered_types)
+	return generate_buildmode_item_page(filtered_types, browser_search)
 
 /**
  * Generate HTML for object selections
@@ -81,7 +105,7 @@
 			if(initial(O.icon) && !ispath(O, /obj/effect))
 				filtered_types += O
 		sortTim(filtered_types, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	return generate_buildmode_item_page(filtered_types)
+	return generate_buildmode_item_page(filtered_types, browser_search)
 
 /**
  * Generate HTML for mob selections
@@ -97,7 +121,7 @@
 			if(initial(M.icon) && !ispath(M, /mob/dead) && !ispath(M, /mob/camera))
 				filtered_types += M
 		sortTim(filtered_types, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	return generate_buildmode_item_page(filtered_types)
+	return generate_buildmode_item_page(filtered_types, browser_search)
 
 /**
  * Generate HTML for item selections
@@ -115,7 +139,7 @@
 			if(initial(I.icon))
 				filtered_types += I
 		sortTim(filtered_types, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	return generate_buildmode_item_page(filtered_types)
+	return generate_buildmode_item_page(filtered_types, browser_search)
 
 /**
  * Generate HTML for food selections
@@ -131,7 +155,7 @@
 			if(initial(I.icon))
 				filtered_types += I
 		sortTim(filtered_types, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	return generate_buildmode_item_page(filtered_types)
+	return generate_buildmode_item_page(filtered_types, browser_search)
 
 /**
  * Generate HTML for reagent container selections
@@ -149,7 +173,7 @@
 			if(initial(I.icon))
 				filtered_types += I
 		sortTim(filtered_types, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	return generate_buildmode_item_page(filtered_types)
+	return generate_buildmode_item_page(filtered_types, browser_search)
 
 /**
  * Generate HTML for clothing selections
@@ -165,7 +189,7 @@
 			if(initial(I.icon))
 				filtered_types += I
 		sortTim(filtered_types, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	return generate_buildmode_item_page(filtered_types)
+	return generate_buildmode_item_page(filtered_types, browser_search)
 
 /**
  * Generate HTML for weapon selections
@@ -181,4 +205,4 @@
 			if(initial(I.icon))
 				filtered_types += I
 		sortTim(filtered_types, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	return generate_buildmode_item_page(filtered_types)
+	return generate_buildmode_item_page(filtered_types, browser_search)
