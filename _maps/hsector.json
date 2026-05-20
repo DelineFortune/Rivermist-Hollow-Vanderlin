@@ -5,8 +5,7 @@
 			"hsector.dmm",
 			"frozen_mountains.dmm",
 			"underdark.dmm",
-			"bogforest.dmm",
-			"desert.dmm"
+			"bogforest.dmm"
 	],
 	"traits": [
 			{"Name": "Rivermist Hollow",

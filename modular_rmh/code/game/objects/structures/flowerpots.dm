@@ -9,7 +9,7 @@
 	resistance_flags = FIRE_PROOF
 	max_integrity = 50
 
-	var/pot_color = "#C2B8A3"   // цвет горшка по умолчанию
+	var/pot_color = "#a3c1c2"
 
 /obj/structure/flowerpot/Initialize(mapload)
 	. = ..()
@@ -20,20 +20,16 @@
 /obj/structure/flowerpot/update_overlays()
 	. = ..()
 
-	// === Горшок (окрашивается) ===
 	var/mutable_appearance/pot = mutable_appearance(icon, icon_state, layer = layer)
 	pot.color = pot_color
 	. += pot
 
-	// === Земля (автоматически подбирается) ===
 	var/dirt_state = replacetext(icon_state, "pot_", "dirt_")
 	var/mutable_appearance/dirt = mutable_appearance(icon, dirt_state, layer = layer + 0.1)
-
 	dirt.color = null
 	dirt.appearance_flags |= RESET_COLOR
 	. += dirt
 
-// Обработка изменения цвета
 /obj/structure/flowerpot/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(var_name == "color" || var_name == NAMEOF(src, color))

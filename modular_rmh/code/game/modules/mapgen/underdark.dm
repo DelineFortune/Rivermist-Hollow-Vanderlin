@@ -18,18 +18,18 @@
 							/obj/structure/flora/tinymushrooms = 20,
 							/obj/structure/roguerock = 25,
 							/obj/item/natural/rock = 25,
-							/obj/structure/flora/crystal = 10,
+							/obj/structure/flora/crystal = 12,
 							/obj/structure/vine = 5,
 							/obj/structure/flora/gemcrystals/aquamarine = 2,
-							/obj/structure/flora/gemcrystals/aquamarine/small = 2,
+							/obj/structure/flora/gemcrystals/aquamarine/small = 3,
 							/obj/structure/flora/gemcrystals/emerald = 2,
-							/obj/structure/flora/gemcrystals/emerald/small = 2,
+							/obj/structure/flora/gemcrystals/emerald/small = 3,
 							/obj/structure/flora/gemcrystals/rube = 2,
-							/obj/structure/flora/gemcrystals/rube/small = 2,
+							/obj/structure/flora/gemcrystals/rube/small = 3,
 							/obj/structure/flora/gemcrystals/topaz = 2,
-							/obj/structure/flora/gemcrystals/topaz/small = 2,
+							/obj/structure/flora/gemcrystals/topaz/small = 3,
 							/obj/structure/flora/gemcrystals/lapiz = 1,
-							/obj/structure/flora/gemcrystals/sapphiresmall = 1)
+							/obj/structure/flora/gemcrystals/sapphiresmall = 2)
 
 /datum/mapGeneratorModule/underdarkmud
 	clusterCheckFlags = CLUSTER_CHECK_SAME_ATOMS

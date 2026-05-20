@@ -382,16 +382,13 @@
 	icon_state = "rube_crystal"
 
 /obj/structure/flora/gemcrystals/rube/deconstruct(disassembled = FALSE)
-	if(!disassembled)
+	if(!disassembled && prob(25))
 		var/gem_type = pick(/obj/item/gem/red, /obj/item/gem/coral)
-
 		if(icon_state == "rube_crystals")
 			new gem_type(get_turf(src))
 			new gem_type(get_turf(src))
-
 		else if(icon_state == "rube_crystal")
 			new gem_type(get_turf(src))
-
 	return ..()
 
 /obj/structure/flora/gemcrystals/rube/New(loc)
@@ -410,7 +407,7 @@
 	icon_state = "emerald_crystal"
 
 /obj/structure/flora/gemcrystals/emerald/deconstruct(disassembled = FALSE)
-	if(!disassembled)
+	if(!disassembled && prob(25))
 		var/gem_type = pick(/obj/item/gem/green, /obj/item/gem/jade)
 
 		if(icon_state == "emerald_crystals")
@@ -438,7 +435,7 @@
 	icon_state = "aquamarine_crystal"
 
 /obj/structure/flora/gemcrystals/aquamarine/deconstruct(disassembled = FALSE)
-	if(!disassembled)
+	if(!disassembled && prob(25))
 		var/gem_type = pick(/obj/item/gem/blue, /obj/item/gem/opal)
 
 		if(icon_state == "aquamarine_crystals")
@@ -466,7 +463,7 @@
 	icon_state = "topaz_crystal"
 
 /obj/structure/flora/gemcrystals/topaz/deconstruct(disassembled = FALSE)
-	if(!disassembled)
+	if(!disassembled && prob(25))
 		var/gem_type = pick(/obj/item/gem/yellow, /obj/item/gem/amber)
 
 		if(icon_state == "topaz_crystals")
@@ -489,7 +486,7 @@
 	icon_state = "sapphire_crystal"
 
 /obj/structure/flora/gemcrystals/sapphiresmall/deconstruct(disassembled = FALSE)
-	if(!disassembled)
+	if(!disassembled && prob(25))
 		var/gem_type = pick(/obj/item/gem/amethyst, /obj/item/gem/violet, /obj/item/gem/onyxa,)
 
 		if(icon_state == "sapphire_crystal")
@@ -508,7 +505,7 @@
 	icon_state = "lapiz_crystals"
 
 /obj/structure/flora/gemcrystals/lapiz/deconstruct(disassembled = FALSE)
-	if(!disassembled)
+	if(!disassembled && prob(25))
 		drop_lapiz_loot()
 	return ..()
 
