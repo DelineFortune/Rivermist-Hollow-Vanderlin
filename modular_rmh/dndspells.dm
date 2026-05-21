@@ -294,8 +294,16 @@
 
 /mob/living/carbon/human/proc/toggle_dnd_spell_hud()
 	dnd_spell_slots_collapsed = !dnd_spell_slots_collapsed
+
+	if(!dnd_spell_slots_toggle_hud_button)
+		grant_dnd_spell_slots_toggle_hud()
+
 	apply_dnd_spell_hud_visibility()
 	update_dnd_spell_slots_toggle_hud()
+
+	if(dnd_spell_slots_toggle_hud_button && client && !(dnd_spell_slots_toggle_hud_button in client.screen))
+		client.screen += dnd_spell_slots_toggle_hud_button
+
 	return TRUE
 
 /mob/living/carbon/human/proc/apply_dnd_spell_hud_visibility()
@@ -320,8 +328,9 @@
 			if(!(dnd_short_rest_hud_button in client.screen))
 				client.screen += dnd_short_rest_hud_button
 
-	if(dnd_spell_slots_toggle_hud_button && !(dnd_spell_slots_toggle_hud_button in client.screen))
-		client.screen += dnd_spell_slots_toggle_hud_button
+	if(dnd_spell_slots_toggle_hud_button)
+		if(!(dnd_spell_slots_toggle_hud_button in client.screen))
+			client.screen += dnd_spell_slots_toggle_hud_button
 
 	return TRUE
 
@@ -519,7 +528,6 @@
 #undef DND_SPELL_SLOT_MAX
 #undef DND_SPELL_SLOT_ICON_MAX
 #undef DND_SHORT_REST_MAX_CHARGES
-
 
 /mob/living/carbon/human/verb/debug_grant_dnd_fireball()
 	set name = "Grant DND Fireball"
