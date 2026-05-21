@@ -17,7 +17,7 @@
 	charge_time = 2.5 SECONDS
 	charge_drain = 1
 	charge_slowdown = 0.7
-	cooldown_time = 40 SECONDS
+	cooldown_time = 10 SECONDS
 	spell_cost = 40
 	spell_flags = SPELL_RITUOS
 	projectile_type = /obj/projectile/magic/aoe/fireball/rogue

@@ -1,12 +1,16 @@
 #define DND_SPELL_SLOT_MIN 1
 #define DND_SPELL_SLOT_MAX 5
 #define DND_SPELL_SLOT_ICON_MAX 4
+#define DND_SHORT_REST_MAX_CHARGES 2
 
 /mob/living/carbon/human
 	var/selected_dnd_spell_slot_level = DND_SPELL_SLOT_MIN
 	var/list/dnd_spell_slots_max
 	var/list/dnd_spell_slots_current
 	var/list/dnd_spell_slot_hud_buttons
+	var/dnd_short_rest_max = DND_SHORT_REST_MAX_CHARGES
+	var/dnd_short_rest_current = DND_SHORT_REST_MAX_CHARGES
+	var/atom/movable/screen/dnd_short_rest_hud/dnd_short_rest_hud_button
 
 /mob/living/carbon/human/proc/setup_dnd_spell_slots(list/slot_table)
 	if(!slot_table)
@@ -44,6 +48,9 @@
 	default_slots["5"] = 1
 
 	setup_dnd_spell_slots(default_slots)
+	dnd_short_rest_max = DND_SHORT_REST_MAX_CHARGES
+	dnd_short_rest_current = DND_SHORT_REST_MAX_CHARGES
+	update_dnd_short_rest_hud()
 	return TRUE
 
 /mob/living/carbon/human/proc/restore_all_dnd_spell_slots()
@@ -57,25 +64,10 @@
 	for(var/key in dnd_spell_slots_max)
 		dnd_spell_slots_current[key] = dnd_spell_slots_max[key]
 
-	update_dnd_spell_slot_hud()
-	return TRUE
-
-/mob/living/carbon/human/proc/gain_dnd_spell_slot(level, amount = 1)
-	level = clamp(round(level), DND_SPELL_SLOT_MIN, DND_SPELL_SLOT_MAX)
-
-	if(!dnd_spell_slots_max || !dnd_spell_slots_current)
-		setup_default_dnd_spell_slots()
-
-	if(!isnum(amount))
-		amount = 1
-
-	var/key = num2text(level)
-	var/current = get_dnd_spell_slots_current(level)
-	var/maximum = get_dnd_spell_slots_max(level)
-
-	dnd_spell_slots_current[key] = clamp(current + round(amount), 0, maximum)
+	dnd_short_rest_current = dnd_short_rest_max
 
 	update_dnd_spell_slot_hud()
+	update_dnd_short_rest_hud()
 	return TRUE
 
 /mob/living/carbon/human/proc/get_selected_dnd_spell_slot_level()
@@ -107,6 +99,18 @@
 		return 0
 
 	return clamp(round(amount), 0, DND_SPELL_SLOT_ICON_MAX)
+
+/mob/living/carbon/human/proc/get_dnd_short_rest_current()
+	if(!isnum(dnd_short_rest_current))
+		dnd_short_rest_current = DND_SHORT_REST_MAX_CHARGES
+
+	return clamp(round(dnd_short_rest_current), 0, DND_SHORT_REST_MAX_CHARGES)
+
+/mob/living/carbon/human/proc/get_dnd_short_rest_max()
+	if(!isnum(dnd_short_rest_max))
+		dnd_short_rest_max = DND_SHORT_REST_MAX_CHARGES
+
+	return clamp(round(dnd_short_rest_max), 0, DND_SHORT_REST_MAX_CHARGES)
 
 /mob/living/carbon/human/proc/can_spend_dnd_spell_slot(level, feedback = TRUE)
 	level = clamp(round(level), DND_SPELL_SLOT_MIN, DND_SPELL_SLOT_MAX)
@@ -160,6 +164,49 @@
 	update_dnd_spell_slot_hud()
 	return TRUE
 
+/mob/living/carbon/human/proc/use_dnd_short_rest()
+	if(!dnd_spell_slots_max || !dnd_spell_slots_current)
+		setup_default_dnd_spell_slots()
+
+	if(get_dnd_short_rest_current() <= 0)
+		to_chat(src, span_warning("I have no short rests left."))
+		balloon_alert(src, "No short rests!")
+		return FALSE
+
+	var/restored_any = FALSE
+
+	for(var/level in DND_SPELL_SLOT_MIN to DND_SPELL_SLOT_MAX)
+		var/key = num2text(level)
+		var/current = get_dnd_spell_slots_current(level)
+		var/maximum = get_dnd_spell_slots_max(level)
+
+		if(maximum <= 0)
+			continue
+
+		var/half = round(maximum / 2)
+		if(half < 1)
+			half = 1
+
+		if(current >= half)
+			continue
+
+		dnd_spell_slots_current[key] = half
+		restored_any = TRUE
+
+	dnd_short_rest_current = max(get_dnd_short_rest_current() - 1, 0)
+
+	update_dnd_spell_slot_hud()
+	update_dnd_short_rest_hud()
+
+	if(restored_any)
+		to_chat(src, span_notice("I take a short rest and recover some spell slots."))
+		balloon_alert(src, "Short rest")
+	else
+		to_chat(src, span_notice("I take a short rest, but my spell slots are already steady."))
+		balloon_alert(src, "No slots restored")
+
+	return TRUE
+
 /mob/living/carbon/human/proc/grant_dnd_spell_slot_hud()
 	if(!client)
 		return FALSE
@@ -191,6 +238,26 @@
 	update_dnd_spell_slot_hud()
 	return TRUE
 
+/mob/living/carbon/human/proc/grant_dnd_short_rest_hud()
+	if(!client)
+		return FALSE
+
+	if(!isnum(dnd_short_rest_current))
+		dnd_short_rest_current = DND_SHORT_REST_MAX_CHARGES
+
+	if(dnd_short_rest_hud_button)
+		dnd_short_rest_hud_button.refresh_dnd_short_rest_hud()
+		return dnd_short_rest_hud_button
+
+	var/atom/movable/screen/dnd_short_rest_hud/button = new
+	button.owner_mob = src
+	button.screen_loc = get_dnd_short_rest_screen_loc()
+	dnd_short_rest_hud_button = button
+	client.screen += button
+
+	update_dnd_short_rest_hud()
+	return button
+
 /mob/living/carbon/human/proc/remove_dnd_spell_slot_hud()
 	if(!dnd_spell_slot_hud_buttons)
 		return
@@ -202,6 +269,16 @@
 
 	dnd_spell_slot_hud_buttons = null
 
+/mob/living/carbon/human/proc/remove_dnd_short_rest_hud()
+	if(!dnd_short_rest_hud_button)
+		return
+
+	if(client)
+		client.screen -= dnd_short_rest_hud_button
+
+	qdel(dnd_short_rest_hud_button)
+	dnd_short_rest_hud_button = null
+
 /mob/living/carbon/human/proc/update_dnd_spell_slot_hud()
 	if(!dnd_spell_slot_hud_buttons)
 		return
@@ -210,11 +287,20 @@
 		if(button)
 			button.refresh_dnd_slot_hud()
 
+/mob/living/carbon/human/proc/update_dnd_short_rest_hud()
+	if(dnd_short_rest_hud_button)
+		dnd_short_rest_hud_button.refresh_dnd_short_rest_hud()
+
 /proc/get_dnd_spell_slot_icon_state(level, charges)
 	level = clamp(round(level), DND_SPELL_SLOT_MIN, DND_SPELL_SLOT_MAX)
 	charges = clamp(round(charges), 0, DND_SPELL_SLOT_ICON_MAX)
 
 	return "dnd_slot_[level]_[charges]"
+
+/proc/get_dnd_short_rest_icon_state(charges)
+	charges = clamp(round(charges), 0, DND_SHORT_REST_MAX_CHARGES)
+
+	return "dnd_short_rest_[charges]"
 
 /proc/get_dnd_spell_slot_screen_loc(level)
 	switch(level)
@@ -230,6 +316,9 @@
 			return "CENTER+2,SOUTH+2"
 
 	return "CENTER,SOUTH+2"
+
+/proc/get_dnd_short_rest_screen_loc()
+	return "CENTER+3,SOUTH+2"
 
 /atom/movable/screen/dnd_spell_slot_hud
 	name = "Spell Slot"
@@ -266,9 +355,44 @@
 
 	owner_mob.select_dnd_spell_slot(slot_level)
 
+/atom/movable/screen/dnd_short_rest_hud
+	name = "Short Rest"
+	desc = "Restores spell slots up to half of each level."
+	icon = 'icons/mob/actions/dnd_spell_slots.dmi'
+	icon_state = "dnd_short_rest_2"
+	mouse_opacity = MOUSE_OPACITY_ICON
+
+	var/mob/living/carbon/human/owner_mob
+
+/atom/movable/screen/dnd_short_rest_hud/Destroy()
+	owner_mob = null
+	return ..()
+
+/atom/movable/screen/dnd_short_rest_hud/proc/refresh_dnd_short_rest_hud()
+	if(!owner_mob)
+		icon_state = "dnd_short_rest_0"
+		return FALSE
+
+	var/current = owner_mob.get_dnd_short_rest_current()
+	var/maximum = owner_mob.get_dnd_short_rest_max()
+
+	icon_state = get_dnd_short_rest_icon_state(current)
+	name = "Short Rest ([current]/[maximum])"
+	desc = "Restores spell slots up to half of each level. Charges: [current]/[maximum]."
+	return TRUE
+
+/atom/movable/screen/dnd_short_rest_hud/Click(location, control, params)
+	. = ..()
+
+	if(!owner_mob)
+		return
+
+	owner_mob.use_dnd_short_rest()
+
 #undef DND_SPELL_SLOT_MIN
 #undef DND_SPELL_SLOT_MAX
 #undef DND_SPELL_SLOT_ICON_MAX
+#undef DND_SHORT_REST_MAX_CHARGES
 
 
 /mob/living/carbon/human/verb/debug_grant_dnd_fireball()
