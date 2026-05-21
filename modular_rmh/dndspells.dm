@@ -10,7 +10,9 @@
 	var/list/dnd_spell_slot_hud_buttons
 	var/dnd_short_rest_max = DND_SHORT_REST_MAX_CHARGES
 	var/dnd_short_rest_current = DND_SHORT_REST_MAX_CHARGES
+	var/dnd_spell_slots_collapsed = FALSE
 	var/atom/movable/screen/dnd_short_rest_hud/dnd_short_rest_hud_button
+	var/atom/movable/screen/dnd_spell_slots_toggle_hud/dnd_spell_slots_toggle_hud_button
 
 /mob/living/carbon/human/proc/setup_dnd_spell_slots(list/slot_table)
 	if(!slot_table)
@@ -51,6 +53,7 @@
 	dnd_short_rest_max = DND_SHORT_REST_MAX_CHARGES
 	dnd_short_rest_current = DND_SHORT_REST_MAX_CHARGES
 	update_dnd_short_rest_hud()
+	update_dnd_spell_slots_toggle_hud()
 	return TRUE
 
 /mob/living/carbon/human/proc/restore_all_dnd_spell_slots()
@@ -68,6 +71,7 @@
 
 	update_dnd_spell_slot_hud()
 	update_dnd_short_rest_hud()
+	update_dnd_spell_slots_toggle_hud()
 	return TRUE
 
 /mob/living/carbon/human/proc/get_selected_dnd_spell_slot_level()
@@ -207,6 +211,19 @@
 
 	return TRUE
 
+/mob/living/carbon/human/proc/grant_dnd_spell_hud()
+	if(!client)
+		return FALSE
+
+	if(!dnd_spell_slots_max || !dnd_spell_slots_current)
+		setup_default_dnd_spell_slots()
+
+	grant_dnd_spell_slots_toggle_hud()
+	grant_dnd_short_rest_hud()
+	grant_dnd_spell_slot_hud()
+	apply_dnd_spell_hud_visibility()
+	return TRUE
+
 /mob/living/carbon/human/proc/grant_dnd_spell_slot_hud()
 	if(!client)
 		return FALSE
@@ -258,6 +275,61 @@
 	update_dnd_short_rest_hud()
 	return button
 
+/mob/living/carbon/human/proc/grant_dnd_spell_slots_toggle_hud()
+	if(!client)
+		return FALSE
+
+	if(dnd_spell_slots_toggle_hud_button)
+		dnd_spell_slots_toggle_hud_button.refresh_dnd_spell_slots_toggle_hud()
+		return dnd_spell_slots_toggle_hud_button
+
+	var/atom/movable/screen/dnd_spell_slots_toggle_hud/button = new
+	button.owner_mob = src
+	button.screen_loc = get_dnd_spell_slots_toggle_screen_loc()
+	dnd_spell_slots_toggle_hud_button = button
+	client.screen += button
+
+	update_dnd_spell_slots_toggle_hud()
+	return button
+
+/mob/living/carbon/human/proc/toggle_dnd_spell_hud()
+	dnd_spell_slots_collapsed = !dnd_spell_slots_collapsed
+	apply_dnd_spell_hud_visibility()
+	update_dnd_spell_slots_toggle_hud()
+	return TRUE
+
+/mob/living/carbon/human/proc/apply_dnd_spell_hud_visibility()
+	if(!client)
+		return FALSE
+
+	if(dnd_spell_slot_hud_buttons)
+		for(var/atom/movable/screen/dnd_spell_slot_hud/button as anything in dnd_spell_slot_hud_buttons)
+			if(!button)
+				continue
+
+			if(dnd_spell_slots_collapsed)
+				client.screen -= button
+			else
+				if(!(button in client.screen))
+					client.screen += button
+
+	if(dnd_short_rest_hud_button)
+		if(dnd_spell_slots_collapsed)
+			client.screen -= dnd_short_rest_hud_button
+		else
+			if(!(dnd_short_rest_hud_button in client.screen))
+				client.screen += dnd_short_rest_hud_button
+
+	if(dnd_spell_slots_toggle_hud_button && !(dnd_spell_slots_toggle_hud_button in client.screen))
+		client.screen += dnd_spell_slots_toggle_hud_button
+
+	return TRUE
+
+/mob/living/carbon/human/proc/remove_dnd_spell_hud()
+	remove_dnd_spell_slot_hud()
+	remove_dnd_short_rest_hud()
+	remove_dnd_spell_slots_toggle_hud()
+
 /mob/living/carbon/human/proc/remove_dnd_spell_slot_hud()
 	if(!dnd_spell_slot_hud_buttons)
 		return
@@ -279,6 +351,16 @@
 	qdel(dnd_short_rest_hud_button)
 	dnd_short_rest_hud_button = null
 
+/mob/living/carbon/human/proc/remove_dnd_spell_slots_toggle_hud()
+	if(!dnd_spell_slots_toggle_hud_button)
+		return
+
+	if(client)
+		client.screen -= dnd_spell_slots_toggle_hud_button
+
+	qdel(dnd_spell_slots_toggle_hud_button)
+	dnd_spell_slots_toggle_hud_button = null
+
 /mob/living/carbon/human/proc/update_dnd_spell_slot_hud()
 	if(!dnd_spell_slot_hud_buttons)
 		return
@@ -290,6 +372,10 @@
 /mob/living/carbon/human/proc/update_dnd_short_rest_hud()
 	if(dnd_short_rest_hud_button)
 		dnd_short_rest_hud_button.refresh_dnd_short_rest_hud()
+
+/mob/living/carbon/human/proc/update_dnd_spell_slots_toggle_hud()
+	if(dnd_spell_slots_toggle_hud_button)
+		dnd_spell_slots_toggle_hud_button.refresh_dnd_spell_slots_toggle_hud()
 
 /proc/get_dnd_spell_slot_icon_state(level, charges)
 	level = clamp(round(level), DND_SPELL_SLOT_MIN, DND_SPELL_SLOT_MAX)
@@ -305,20 +391,23 @@
 /proc/get_dnd_spell_slot_screen_loc(level)
 	switch(level)
 		if(1)
-			return "CENTER-2,SOUTH+2"
-		if(2)
 			return "CENTER-1,SOUTH+2"
-		if(3)
+		if(2)
 			return "CENTER,SOUTH+2"
-		if(4)
+		if(3)
 			return "CENTER+1,SOUTH+2"
-		if(5)
+		if(4)
 			return "CENTER+2,SOUTH+2"
+		if(5)
+			return "CENTER+3,SOUTH+2"
 
-	return "CENTER,SOUTH+2"
+	return "CENTER+1,SOUTH+2"
 
 /proc/get_dnd_short_rest_screen_loc()
-	return "CENTER+3,SOUTH+2"
+	return "CENTER-2,SOUTH+2"
+
+/proc/get_dnd_spell_slots_toggle_screen_loc()
+	return "CENTER-3,SOUTH+2"
 
 /atom/movable/screen/dnd_spell_slot_hud
 	name = "Spell Slot"
@@ -389,6 +478,43 @@
 
 	owner_mob.use_dnd_short_rest()
 
+/atom/movable/screen/dnd_spell_slots_toggle_hud
+	name = "Toggle Spell Slots"
+	desc = "Hide or show spell slot HUD."
+	icon = 'icons/mob/actions/dnd_spell_slots.dmi'
+	icon_state = "dnd_slots_open"
+	mouse_opacity = MOUSE_OPACITY_ICON
+
+	var/mob/living/carbon/human/owner_mob
+
+/atom/movable/screen/dnd_spell_slots_toggle_hud/Destroy()
+	owner_mob = null
+	return ..()
+
+/atom/movable/screen/dnd_spell_slots_toggle_hud/proc/refresh_dnd_spell_slots_toggle_hud()
+	if(!owner_mob)
+		icon_state = "dnd_slots_closed"
+		return FALSE
+
+	if(owner_mob.dnd_spell_slots_collapsed)
+		icon_state = "dnd_slots_closed"
+		name = "Show Spell Slots"
+		desc = "Show spell slot HUD."
+	else
+		icon_state = "dnd_slots_open"
+		name = "Hide Spell Slots"
+		desc = "Hide spell slot HUD."
+
+	return TRUE
+
+/atom/movable/screen/dnd_spell_slots_toggle_hud/Click(location, control, params)
+	. = ..()
+
+	if(!owner_mob)
+		return
+
+	owner_mob.toggle_dnd_spell_hud()
+
 #undef DND_SPELL_SLOT_MIN
 #undef DND_SPELL_SLOT_MAX
 #undef DND_SPELL_SLOT_ICON_MAX
@@ -400,7 +526,7 @@
 	set category = "Debug"
 
 	setup_default_dnd_spell_slots()
-	grant_dnd_spell_slot_hud()
+	grant_dnd_spell_hud()
 
 	var/datum/action/cooldown/spell/projectile/fireball/F = new
 	F.Grant(src)
