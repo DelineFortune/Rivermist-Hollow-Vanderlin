@@ -270,7 +270,7 @@
 /obj/item/organ/genitals/filling_organ/proc/organ_jumped()
 	var/mob/living/carbon/human/H = owner
 
-	var/stealth = H.get_skill_level(/datum/skill/misc/sneaking)
+	var/stealth = GET_MOB_SKILL_VALUE_OLD(H, /datum/attribute/skill/misc/sneaking)
 	var/keepinsidechance = CLAMP((rand(25,100) - (stealth * 20)),0,100) //basically cant lose your item if you have 5 stealth.
 	if(reagents.total_volume > reagents.maximum_volume / 2 && spiller && prob(keepinsidechance)) //if you have more than half full spiller organ.
 		owner.visible_message(span_info("[owner]'s [pick(altnames)] spill some of it's contents with the pressure on it!"),span_info("My [pick(altnames)] spill some of it's contents with the pressure on it! [keepinsidechance]%"),span_unconscious("I hear a splash."))

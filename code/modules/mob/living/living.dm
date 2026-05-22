@@ -2658,7 +2658,7 @@
 			if("hiddenguy" in O.vars)
 				var/mob/living/M = O.vars["hiddenguy"]
 				if(M)
-					var/sneak = M.get_skill_level(/datum/skill/misc/sneaking)
+					var/sneak = GET_MOB_SKILL_VALUE_OLD(M, /datum/attribute/skill/misc/sneaking)
 					var/effective_sneak = 8 + (sneak * 2)
 					if(STAPER >= effective_sneak) // skewed towards the hiding player because there's already a separate, guaranteed way to find hiders.
 						found_ping(get_turf(O), client, "hidden")
