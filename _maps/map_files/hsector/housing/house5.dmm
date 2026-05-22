@@ -4,10 +4,10 @@
 /area/indoors/town/rmh)
 "e" = (
 /obj/structure/fluff/railing/border/west,
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood19,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood19,
 /area/indoors/town/rmh)
 "f" = (
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood19,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood19,
 /area/indoors/town/rmh)
 "l" = (
 /obj/structure/sign/property_sign/claim,
@@ -15,7 +15,7 @@
 /area/indoors/town/rmh)
 "m" = (
 /obj/structure/fluff/railing/corner/south_east,
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood19,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood19,
 /area/indoors/town/rmh)
 "q" = (
 /turf/open/openspace,
@@ -31,7 +31,7 @@
 /obj/structure/stairs{
 	dir = 8
 	},
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood19,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood19,
 /area/indoors/town/rmh)
 "C" = (
 /obj/structure/window/solid,
@@ -43,15 +43,15 @@
 	lockid = "housing5";
 	name = "C-House V"
 	},
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood19,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood19,
 /area/indoors/town/rmh)
 "G" = (
 /obj/structure/fluff/railing/border/east,
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood19,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood19,
 /area/indoors/town/rmh)
 "I" = (
 /obj/structure/fluff/railing/corner/south_west,
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood19,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood19,
 /area/indoors/town/rmh)
 "J" = (
 /turf/closed/wall/mineral/wooddark/horizontal,
@@ -67,11 +67,11 @@
 /obj/structure/stairs/ccwdown{
 	dir = 1
 	},
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood19,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood19,
 /area/indoors/town/rmh)
 "R" = (
 /obj/structure/fluff/railing/corner,
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood19,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood19,
 /area/indoors/town/rmh)
 "S" = (
 /turf/closed/wall/mineral/wooddark,

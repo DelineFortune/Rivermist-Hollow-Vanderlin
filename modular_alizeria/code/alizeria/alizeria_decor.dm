@@ -403,49 +403,49 @@
 
 
 // ТАЙЛЫ
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood1
+/turf/open/floor/ruinedwood/alizeria/tiles/wood1
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile1"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood2
+/turf/open/floor/ruinedwood/alizeria/tiles/wood2
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile2"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood3
+/turf/open/floor/ruinedwood/alizeria/tiles/wood3
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile8"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood4
+/turf/open/floor/ruinedwood/alizeria/tiles/wood4
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile9"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood5
+/turf/open/floor/ruinedwood/alizeria/tiles/wood5
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile7"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood6
+/turf/open/floor/ruinedwood/alizeria/tiles/wood6
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile14"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood7
+/turf/open/floor/ruinedwood/alizeria/tiles/wood7
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile13"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/carpet1
+/turf/open/floor/ruinedwood/alizeria/tiles/carpet1
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile2"
 	name = "floor"
@@ -467,101 +467,101 @@
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile6"
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood8
+/turf/open/floor/ruinedwood/alizeria/tiles/wood8
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile10"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood9
+/turf/open/floor/ruinedwood/alizeria/tiles/wood9
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile11"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood10
+/turf/open/floor/ruinedwood/alizeria/tiles/wood10
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile12"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/tile/alizeria/tiles/stonefloor1
+/turf/open/floor/tile/alizeria/tiles/stonefloor1
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile15"
 
-/turf/open/floor/rogue/tile/alizeria/tiles/stonefloor2
+/turf/open/floor/tile/alizeria/tiles/stonefloor2
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile16"
 
-/turf/open/floor/rogue/tile/alizeria/tiles/stonefloor3
+/turf/open/floor/tile/alizeria/tiles/stonefloor3
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile17"
 
-/turf/open/floor/rogue/tile/alizeria/tiles/stonefloor4
+/turf/open/floor/tile/alizeria/tiles/stonefloor4
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile18"
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood19
+/turf/open/floor/ruinedwood/alizeria/tiles/wood19
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile19"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood20
+/turf/open/floor/ruinedwood/alizeria/tiles/wood20
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile20"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood21
+/turf/open/floor/ruinedwood/alizeria/tiles/wood21
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile21"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood22
+/turf/open/floor/ruinedwood/alizeria/tiles/wood22
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile22"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood23
+/turf/open/floor/ruinedwood/alizeria/tiles/wood23
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile23"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood24
+/turf/open/floor/ruinedwood/alizeria/tiles/wood24
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile24"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood25
+/turf/open/floor/ruinedwood/alizeria/tiles/wood25
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile25"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood26
+/turf/open/floor/ruinedwood/alizeria/tiles/wood26
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile26"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood27
+/turf/open/floor/ruinedwood/alizeria/tiles/wood27
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile27"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood28
+/turf/open/floor/ruinedwood/alizeria/tiles/wood28
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile28"
 	name = "floor"
 	desc = "Interlocking wooden floorboards scratched with thousands of steps."
 
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood29
+/turf/open/floor/ruinedwood/alizeria/tiles/wood29
 	icon = 'modular_alizeria/icons/roguetown/alizeria/vladegeg_decor.dmi'
 	icon_state = "tile29"
 	name = "floor"

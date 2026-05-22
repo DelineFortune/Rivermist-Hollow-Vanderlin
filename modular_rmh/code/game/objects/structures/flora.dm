@@ -535,3 +535,28 @@
 /obj/structure/flora/gemcrystals/lapiz/New(loc)
 	..()
 	set_light(2, 2, 2, l_color ="#181bca")
+
+//	-	-	-	-	-	-	-	//
+// 			NEW TREES			//
+//	-	-	-	-	-	-	-	//
+/obj/structure/flora/tree/newtree
+	name = "tree"
+	desc = "Beautiful and young trees."
+	icon = 'modular_rmh/icons/obj/flora/trees96.dmi'
+	icon_state = "tree1"
+	base_icon_state = "tree"
+	num_random_icons = 6
+	SET_BASE_PIXEL(-32, 0)
+	debris = list(/obj/item/grown/log/tree/stick = 3)
+	static_debris = list(/obj/item/grown/log/tree = 2)
+
+/obj/structure/flora/tree/newtree2
+	name = "tree"
+	desc = "Beautiful and young trees."
+	icon = 'modular_rmh/icons/obj/flora/trees96.dmi'
+	icon_state = "t1"
+	base_icon_state = "t"
+	num_random_icons = 3
+	SET_BASE_PIXEL(-32, 0)
+	debris = list(/obj/item/grown/log/tree/stick = 3)
+	static_debris = list(/obj/item/grown/log/tree = 2)

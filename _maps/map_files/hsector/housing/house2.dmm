@@ -4,10 +4,10 @@
 /area/indoors/town/rmh)
 "c" = (
 /obj/structure/fluff/railing/wood/west,
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood20,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood20,
 /area/indoors/town/rmh)
 "k" = (
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood20,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood20,
 /area/indoors/town/rmh)
 "m" = (
 /obj/structure/window/openclose/reinforced{
@@ -31,20 +31,20 @@
 	lockid = "housing2";
 	name = "C-House II"
 	},
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood20,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood20,
 /area/indoors/town/rmh)
 "D" = (
 /obj/structure/stairs{
 	dir = 8
 	},
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood20,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood20,
 /area/indoors/town/rmh)
 "E" = (
 /obj/structure/fluff/railing/wood/north{
 	plane = -6;
 	pixel_y = 7
 	},
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood20,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood20,
 /area/indoors/town/rmh)
 "F" = (
 /turf/closed/wall/mineral/wood,
@@ -60,7 +60,7 @@
 /area/indoors/town/rmh)
 "V" = (
 /obj/structure/stairs/cwdown,
-/turf/open/floor/rogue/ruinedwood/alizeria/tiles/wood20,
+/turf/open/floor/ruinedwood/alizeria/tiles/wood20,
 /area/indoors/town/rmh)
 "W" = (
 /turf/open/openspace,
