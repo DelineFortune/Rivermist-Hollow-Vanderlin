@@ -199,7 +199,7 @@
 	var/sneak_skill_level = GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/misc/sneaking)
 	var/light_threshold = rogue_sneaking_light_threshold
 	if(mind)
-		used_time = max(used_time - ((GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/misc/sneaking)) * 8), 0)
+		used_time = max(used_time - (sneak_skill_level * 8), 0)
 		light_threshold += (sneak_skill_level / 100)
 
 	if(!reset && m_intent != MOVE_INTENT_SNEAK && alpha != initial(alpha)) // prevents funny bugs with getting stuck transparent
