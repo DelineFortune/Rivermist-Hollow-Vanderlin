@@ -1954,7 +1954,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 
 	var/actual_damage = Iforce
 	var/from_behind = FALSE
-	if(user && (src.dir == turn(get_dir(src,user), 180)))
+	if(user && (dir == turn(get_dir(src,user), 180)))
 		from_behind = TRUE
 	if(Iforce)
 		if(from_behind && user.mind && !HAS_TRAIT(src, TRAIT_BLINDFIGHTING) && !user.has_status_effect(/datum/status_effect/debuff/stealthcd))//Backstabs do increased damage; Sneak attacks have a higher crit chance. Combined, a stealthy backstab should be very damaging.
