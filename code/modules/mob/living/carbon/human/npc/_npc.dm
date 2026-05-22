@@ -137,7 +137,9 @@
 		return TRUE
 	if(HAS_TRAIT(target, TRAIT_IMPERCEPTIBLE))
 		return FALSE
-	var/probby = 3 * GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) //this is 10 by default, npcs are easier to hide from than people with 10+ per
+	if(see_invisible < target.invisibility)
+		return FALSE
+	var/probby = 3 * GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) //this is 10 by default, npcs are easier to hide from than people with 10+ per, unless they are given more per.
 	probby += extra_prob
 	var/sneak_bonus = 0
 	if(target.mind)
