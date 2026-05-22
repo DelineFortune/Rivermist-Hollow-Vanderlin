@@ -77,8 +77,9 @@
 /turf/open/floor/volcanic,
 /area/under/underdark/rmh)
 "ba" = (
+/mob/living/carbon/human/species/goblin/cave,
 /turf/open/floor/cobblerock/alt,
-/area/under/underdark/rmh/shrub)
+/area/under/underdark/rmh/flow)
 "be" = (
 /turf/open/floor/naturalstone,
 /area/under/underdark/rmh/shar)
@@ -524,7 +525,7 @@
 "fN" = (
 /obj/structure/flora/grass/mushroom,
 /turf/open/floor/naturalstone,
-/area/under/underdark/rmh/shrub)
+/area/under/underdark/rmh/main)
 "fO" = (
 /obj/structure/door/stone{
 	damage_deflection = 100
@@ -1143,22 +1144,9 @@
 /turf/open/floor/cobblerock/alt,
 /area/under/underdark/rmh/desert)
 "ox" = (
-/mob/living/carbon/human/species/skeleton/npc/no_equipment,
-/obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/clothing/armor/brigandine/coatplates,
-/obj/item/clothing/armor/gambeson/light/steppe,
-/obj/item/clothing/cloak/absolutionistrobe,
-/obj/item/clothing/face/facemask/steel/confessor/lensed,
-/obj/item/clothing/gloves/plate/atgervi,
-/obj/item/clothing/head/helmet/visored/sallet,
-/obj/item/clothing/neck/bevor,
-/obj/item/clothing/pants/platelegs/ancient,
-/obj/item/clothing/shoes/boots/armor,
-/obj/item/clothing/wrists/bracers/rare,
-/obj/item/weapon/shield/tower/spidershield,
-/obj/item/weapon/knuckles,
-/turf/open/floor/churchrough/purple,
-/area/under/underdark/rmh/main)
+/mob/living/carbon/human/species/skeleton/npc/warrior/skilled,
+/turf/open/floor/naturalstone,
+/area/under/underdark/rmh)
 "oB" = (
 /mob/living/simple_animal/hostile/mirespider_lurker/mushroom,
 /turf/open/floor/grass/yel,
@@ -1176,6 +1164,10 @@
 /obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/grass/yel,
 /area/under/underdark/rmh/shrub)
+"oM" = (
+/mob/living/carbon/human/species/skeleton/npc/hardspread,
+/turf/open/floor/mushroom,
+/area/under/underdark/rmh)
 "oO" = (
 /obj/effect/decal/cleanable/dreamfiend_ichor/huge,
 /turf/open/floor/cobblerock/alt,
@@ -1293,6 +1285,10 @@
 	},
 /turf/open/floor/church,
 /area/under/underdark/rmh/shar)
+"qq" = (
+/mob/living/carbon/human/species/goblin/cave,
+/turf/open/floor/cobblerock/alt,
+/area/under/underdark/rmh)
 "qr" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/church,
@@ -1494,6 +1490,10 @@
 /obj/effect/mapping_helpers/access/locker,
 /turf/open/floor/concrete,
 /area/under/underdark/rmh/shar)
+"sT" = (
+/mob/living/carbon/human/species/goblin/npc/cave,
+/turf/open/floor/naturalstone,
+/area/under/underdark/rmh/flow)
 "ta" = (
 /turf/open/floor/mushroom/blue,
 /area/under/underdark/rmh/glimmerlakes)
@@ -2154,6 +2154,14 @@
 /obj/effect/decal/cleanable/debris/stone,
 /turf/open/floor/churchrough,
 /area/under/underdark/rmh/shar)
+"BC" = (
+/obj/structure/rack/underworld,
+/obj/structure/fluff/walldeco/church/line{
+	dir = 1
+	},
+/obj/effect/spawner/map_spawner/loot/valuable_jewelry_spawner,
+/turf/open/floor/church,
+/area/under/underdark/rmh/main)
 "BE" = (
 /obj/effect/decal/cleanable/debris/glass,
 /obj/item/natural/glass/shard,
@@ -2172,6 +2180,10 @@
 /obj/effect/decal/cleanable/debris/glass,
 /turf/open/floor/cobblerock/alt,
 /area/under/underdark/rmh/shar)
+"BR" = (
+/mob/living/carbon/human/species/goblin/npc/cave,
+/turf/open/floor/cobblerock/alt,
+/area/under/underdark/rmh/flow)
 "BU" = (
 /obj/item/natural/glass/shard,
 /obj/effect/decal/cleanable/debris/glass,
@@ -2572,6 +2584,10 @@
 "Hk" = (
 /turf/closed/wall/mineral/stonebrick,
 /area/under/underdark/rmh/shar)
+"Ho" = (
+/obj/effect/spawner/map_spawner/loot/valuable_candle_spawner,
+/turf/open/openspace,
+/area/under/underdark/rmh/main)
 "Hs" = (
 /obj/structure/bars/tough{
 	icon = 'icons/effects/effects.dmi';
@@ -2638,6 +2654,10 @@
 /obj/structure/vine,
 /turf/open/floor/naturalstone,
 /area/under/underdark/rmh/glimmerlakes)
+"Iz" = (
+/mob/living/carbon/human/species/goblin/npc/cave,
+/turf/open/floor/dirt/road,
+/area/under/underdark/rmh)
 "IC" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -3135,6 +3155,10 @@
 	},
 /turf/open/floor/churchmarble,
 /area/under/underdark/rmh/shar)
+"NT" = (
+/mob/living/carbon/human/species/goblin/cave,
+/turf/open/floor/naturalstone,
+/area/under/underdark/rmh)
 "NZ" = (
 /turf/open/water/swamp/deep,
 /area/under/underdark/rmh/tavel)
@@ -3233,6 +3257,10 @@
 /obj/item/natural/glass/shard,
 /turf/open/floor/cobblerock/alt,
 /area/under/underdark/rmh/shar)
+"Pv" = (
+/mob/living/carbon/human/species/goblin/npc/cave,
+/turf/open/floor/naturalstone,
+/area/under/underdark/rmh)
 "Pz" = (
 /turf/open/water/marsh,
 /area/under/underdark/rmh)
@@ -3566,6 +3594,7 @@
 	dir = 4
 	},
 /obj/structure/fluff/walldeco/church/line,
+/obj/effect/spawner/map_spawner/loot/rare,
 /turf/open/floor/church,
 /area/under/underdark/rmh/main)
 "Uk" = (
@@ -3720,7 +3749,7 @@
 "VY" = (
 /obj/structure/flora/grass/mushroom,
 /turf/open/floor/cobblerock/alt,
-/area/under/underdark/rmh/shrub)
+/area/under/underdark/rmh/main)
 "Wc" = (
 /obj/structure/flora/grass,
 /obj/structure/flora/grass/bush/wall/tall,
@@ -3780,6 +3809,11 @@
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/open/floor/churchbrick,
 /area/under/underdark/rmh/shar)
+"Xa" = (
+/obj/structure/fluff/walldeco/church/line,
+/obj/effect/spawner/map_spawner/loot/valuable_tableware_spawner,
+/turf/open/floor/church,
+/area/under/underdark/rmh/main)
 "Xb" = (
 /obj/effect/decal/cleanable/blood/puddle,
 /turf/open/floor/naturalstone,
@@ -3806,6 +3840,10 @@
 /obj/item/paper,
 /turf/open/floor/hexstone,
 /area/under/underdark/rmh/shar)
+"Xq" = (
+/mob/living/carbon/human/species/goblin/cave,
+/turf/open/floor/grass/yel,
+/area/under/underdark/rmh/shrub)
 "Xu" = (
 /turf/open/floor/volcanic,
 /area/under/cavelava/rmh/lava_hollows)
@@ -5517,10 +5555,10 @@ UR
 UR
 UR
 UR
-jS
-YK
-YK
-YK
+Bj
+Bj
+Bj
+Bj
 UR
 UR
 UR
@@ -6397,7 +6435,7 @@ PN
 xt
 xt
 ic
-ic
+qq
 ic
 xt
 xt
@@ -6938,18 +6976,7 @@ xt
 xt
 xt
 xt
-xt
-xt
-xt
-xt
-xt
-ic
-ic
-ic
-ic
-xt
-xt
-xt
+NT
 xt
 xt
 xt
@@ -6958,6 +6985,17 @@ ic
 ic
 ic
 ic
+xt
+xt
+xt
+xt
+xt
+xt
+xt
+ic
+ic
+ic
+qq
 ic
 xt
 xt
@@ -6965,7 +7003,7 @@ xt
 lw
 xt
 xt
-xt
+NT
 xt
 ic
 ic
@@ -7114,7 +7152,7 @@ Ri
 Ri
 Ri
 Ri
-XF
+Xq
 XF
 XF
 XF
@@ -7487,7 +7525,7 @@ xt
 Xf
 xt
 xt
-xt
+NT
 xt
 xt
 xt
@@ -8489,7 +8527,7 @@ xt
 xt
 xt
 xt
-xt
+NT
 xt
 xt
 xt
@@ -9239,7 +9277,7 @@ xt
 xt
 xt
 xt
-xt
+NT
 xt
 xt
 xt
@@ -10311,7 +10349,7 @@ xt
 xt
 xt
 xt
-xt
+NT
 xt
 xt
 lw
@@ -10558,7 +10596,7 @@ xt
 xt
 xt
 ic
-ic
+qq
 ic
 ic
 xt
@@ -10864,7 +10902,7 @@ xt
 ic
 ic
 xr
-xr
+Iz
 ic
 ic
 xt
@@ -10954,7 +10992,7 @@ Ri
 Ri
 tv
 XF
-XF
+Xq
 Ri
 XF
 XF
@@ -11894,7 +11932,7 @@ xr
 xr
 xr
 ic
-xt
+Pv
 xt
 xt
 xt
@@ -12405,7 +12443,7 @@ xt
 ic
 ic
 xr
-xr
+Iz
 xr
 ic
 ic
@@ -13175,13 +13213,13 @@ jm
 xt
 xt
 ic
-xr
+Iz
 xr
 ic
 ic
 xt
 xt
-xt
+Pv
 xt
 ic
 xt
@@ -14305,7 +14343,7 @@ Ri
 XF
 nN
 XF
-XF
+Xq
 Ri
 Ri
 XF
@@ -14584,7 +14622,7 @@ UR
 UR
 xt
 xt
-xt
+ox
 xt
 jm
 jm
@@ -14852,7 +14890,7 @@ jm
 jm
 jm
 jm
-jm
+oM
 xt
 xt
 xt
@@ -15003,7 +15041,7 @@ xt
 ic
 ic
 ic
-ic
+qq
 xt
 ic
 xt
@@ -15267,7 +15305,7 @@ xt
 ic
 ic
 xt
-xt
+NT
 xt
 xt
 xt
@@ -15511,8 +15549,8 @@ ic
 xt
 xt
 xt
-xt
-xt
+NT
+NT
 xt
 xt
 xt
@@ -16803,7 +16841,7 @@ xt
 ic
 xt
 xt
-xt
+NT
 xt
 xt
 xt
@@ -17932,7 +17970,7 @@ cZ
 cZ
 cZ
 cZ
-ox
+cZ
 fZ
 xt
 ic
@@ -18469,7 +18507,7 @@ xt
 xt
 xt
 xt
-JU
+sT
 UR
 UR
 UR
@@ -18983,7 +19021,7 @@ xt
 UR
 UR
 Zv
-Zv
+BR
 JU
 UR
 UR
@@ -19217,7 +19255,7 @@ ic
 ic
 ic
 ic
-xt
+ox
 xt
 ic
 ic
@@ -19470,7 +19508,7 @@ UR
 xt
 xt
 xt
-xt
+ox
 xt
 xt
 xt
@@ -19679,7 +19717,7 @@ UR
 UR
 UR
 XF
-Bh
+UC
 XF
 XF
 XF
@@ -19935,10 +19973,10 @@ UR
 UR
 UR
 UR
-ba
+Yk
 VY
 fN
-Bh
+UC
 XF
 XF
 XF
@@ -20192,11 +20230,11 @@ UR
 UR
 UR
 UR
-Bh
-ba
+UC
+Yk
 VY
 fN
-Bh
+UC
 XF
 Tk
 XF
@@ -20450,10 +20488,10 @@ UR
 UR
 UR
 UC
-Bh
-ba
+UC
+Yk
 fN
-Bh
+UC
 XF
 XF
 XF
@@ -20707,10 +20745,10 @@ OC
 VO
 UC
 UC
-Bh
-Bh
-ba
-Bh
+UC
+UC
+Yk
+UC
 XF
 XF
 XF
@@ -20964,10 +21002,10 @@ OC
 VO
 UC
 UC
-Bh
-Bh
-Bh
-Bh
+UC
+UC
+UC
+UC
 XF
 XF
 nN
@@ -21221,10 +21259,10 @@ OC
 VO
 UC
 UC
-Bh
-Bh
-Bh
-Bh
+UC
+UC
+UC
+UC
 XF
 nN
 XF
@@ -21478,10 +21516,10 @@ UR
 UR
 UC
 UC
-Bh
-ba
-ba
-ba
+UC
+Yk
+Yk
+Yk
 XF
 nN
 XF
@@ -21735,10 +21773,10 @@ UR
 UR
 UR
 Yk
-ba
-ba
-ba
-ba
+Yk
+Yk
+Yk
+Yk
 Tk
 XF
 Ri
@@ -21991,11 +22029,11 @@ UR
 UR
 UR
 UR
-ba
-ba
+Yk
+Yk
 VY
-ba
-Bh
+Yk
+UC
 XF
 XF
 Ri
@@ -22247,7 +22285,7 @@ UR
 UR
 UR
 UR
-Bh
+UC
 VY
 fN
 fN
@@ -22504,10 +22542,10 @@ UR
 UR
 UR
 UR
-ba
-ba
-Bh
-Bh
+Yk
+Yk
+UC
+UC
 XF
 Ri
 Ri
@@ -22763,7 +22801,7 @@ UR
 UR
 Mu
 XF
-Bh
+UC
 XF
 Ri
 tv
@@ -37737,7 +37775,7 @@ Pz
 Pz
 Pz
 Zv
-Zv
+ba
 UR
 UR
 UR
@@ -37996,7 +38034,7 @@ Pz
 Zv
 Zv
 Zv
-Zv
+ba
 UR
 UR
 UR
@@ -39020,7 +39058,7 @@ xt
 xt
 ic
 ic
-Zv
+ba
 Zv
 Zv
 lo
@@ -41173,7 +41211,7 @@ xt
 xt
 xt
 xt
-xt
+NT
 xt
 xt
 xt
@@ -41877,7 +41915,7 @@ lo
 lo
 Zv
 JU
-Zv
+ba
 JU
 JU
 UR
@@ -41912,7 +41950,7 @@ xt
 xt
 xt
 xt
-xt
+NT
 xt
 xt
 xt
@@ -42466,7 +42504,7 @@ xr
 xr
 ic
 ic
-xt
+NT
 xt
 xt
 xt
@@ -42652,9 +42690,9 @@ lo
 lo
 lo
 Zv
+ba
 Zv
 Zv
-Zv
 UR
 UR
 UR
@@ -42695,7 +42733,7 @@ xt
 xt
 xt
 xt
-xt
+NT
 xt
 xt
 xt
@@ -43678,7 +43716,7 @@ UR
 UR
 UR
 Zv
-Zv
+ba
 Zv
 lo
 lo
@@ -44579,7 +44617,7 @@ xt
 xt
 xt
 xt
-xt
+NT
 xt
 xt
 xt
@@ -45007,7 +45045,7 @@ xt
 xt
 xt
 xt
-xt
+NT
 xt
 xt
 xt
@@ -46125,7 +46163,7 @@ xt
 xt
 xt
 xt
-xt
+NT
 xt
 xt
 xt
@@ -46375,7 +46413,7 @@ xt
 xt
 xt
 xt
-xt
+NT
 xt
 xt
 xt
@@ -48297,10 +48335,10 @@ UR
 UR
 UR
 UR
-rl
+iK
 UR
 UR
-rl
+iK
 rl
 rl
 xt
@@ -48552,13 +48590,13 @@ UR
 UR
 UR
 UR
-rl
-rl
-rl
-xt
-xt
-xt
-xt
+iK
+iK
+iK
+bW
+bW
+bW
+bW
 xt
 xt
 xt
@@ -48807,15 +48845,15 @@ UR
 UR
 UR
 UR
-rl
-ut
-rl
-xt
-ic
-ic
-rl
-ut
-ut
+iK
+NZ
+iK
+bW
+LS
+LS
+iK
+NZ
+NZ
 rl
 rl
 xt
@@ -49062,17 +49100,17 @@ UR
 UR
 UR
 UR
-rl
-ut
-ut
-rl
-ic
-ic
-ic
-ic
-rl
-rl
-ut
+iK
+NZ
+NZ
+iK
+LS
+LS
+LS
+LS
+iK
+iK
+NZ
 ut
 rl
 xt
@@ -49320,16 +49358,16 @@ UR
 UR
 iK
 NZ
-ut
-rl
-rl
-ic
-xt
-ic
-ic
-ic
-xt
-rl
+NZ
+iK
+iK
+LS
+bW
+LS
+LS
+LS
+bW
+iK
 rl
 xt
 xt
@@ -49578,15 +49616,15 @@ zq
 bW
 iK
 iK
-xt
-ic
-xt
-xt
-xt
-rl
-rl
-xt
-xt
+bW
+LS
+bW
+bW
+bW
+iK
+iK
+bW
+bW
 xt
 xt
 ic
@@ -49835,15 +49873,15 @@ zq
 bW
 LS
 LS
-xt
-xt
-xt
-xt
-ic
-rl
-ut
-rl
-rl
+bW
+bW
+bW
+bW
+LS
+iK
+NZ
+iK
+iK
 UR
 UR
 UR
@@ -50092,14 +50130,14 @@ zq
 bW
 LS
 LS
-xt
-xt
-ic
-rl
-rl
-ut
-ut
-rl
+bW
+bW
+LS
+iK
+iK
+NZ
+NZ
+iK
 UR
 UR
 UR
@@ -50349,11 +50387,11 @@ zq
 bW
 bW
 bW
-ic
-ic
-rl
-ut
-ut
+LS
+LS
+iK
+NZ
+NZ
 UR
 UR
 UR
@@ -50605,10 +50643,10 @@ UR
 UR
 iK
 iK
-rl
-rl
-rl
-rl
+iK
+iK
+iK
+iK
 UR
 UR
 UR
@@ -50863,8 +50901,8 @@ UR
 UR
 UR
 UR
-rl
-rl
+iK
+iK
 UR
 UR
 UR
@@ -70358,7 +70396,7 @@ fZ
 Au
 eX
 Lh
-Lh
+Ho
 Lh
 KU
 Zw
@@ -71904,7 +71942,7 @@ fZ
 El
 De
 un
-Zw
+Xa
 fZ
 gW
 gW
@@ -72929,7 +72967,7 @@ YR
 uC
 Zw
 bD
-IG
+BC
 uC
 Zw
 fZ

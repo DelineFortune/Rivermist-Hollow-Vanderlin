@@ -7,7 +7,7 @@
 	density = FALSE
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
+	plane = SEETHROUGH_PLANE
 	blade_dulling = DULLING_BASH
 	resistance_flags = FLAMMABLE
 	max_integrity = 20

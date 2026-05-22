@@ -22,6 +22,8 @@
 	spawnableAtoms = list(
 		/obj/structure/flora/newtree = 15,
 		/obj/structure/flora/grass = 40,
+		/obj/structure/flora/tree/newtree2 = 20,
+		/obj/structure/flora/tree/newtree = 20,
 		/obj/structure/flora/grass/fullgrass = 50,
 		/obj/structure/flora/grass/sparegrass = 60,
 		/obj/structure/flora/grass/bush/green = 13,

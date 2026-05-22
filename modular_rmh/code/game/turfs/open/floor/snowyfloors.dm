@@ -33,7 +33,7 @@
 	neighborlay = "snowedge"
 	spread_chance = 1.1
 
-/turf/open/floor/dirt/road/snowy/path
+/turf/open/floor/snowpath
 	name = "snowy path"
 	desc = "The path road is covered in a layer of snow."
 	icon = 'modular_rmh/icons/turf/snow.dmi'
@@ -51,7 +51,7 @@
 	spread_chance = 0
 	path_weight = 10
 
-/turf/open/floor/dirt/road/snowy/corner
+/turf/open/floor/snowpath/snowcorner
 	name = "snowy path"
 	desc = "The path road is covered in a layer of snow."
 	icon = 'modular_rmh/icons/turf/snow.dmi'
@@ -69,7 +69,7 @@
 	spread_chance = 0
 	path_weight = 10
 
-/turf/open/floor/dirt/road/snowy/snowpatht
+/turf/open/floor/snowpath/snowpatht
 	name = "snowy path"
 	desc = "The path road is covered in a layer of snow."
 	icon = 'modular_rmh/icons/turf/snow.dmi'
@@ -87,7 +87,7 @@
 	spread_chance = 0
 	path_weight = 10
 
-/turf/open/floor/dirt/road/snowy/snowpathx
+/turf/open/floor/snowpath/snowpathx
 	name = "snowy path"
 	desc = "The path road is covered in a layer of snow."
 	icon = 'modular_rmh/icons/turf/snow.dmi'

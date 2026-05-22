@@ -32,7 +32,17 @@
 	background_track_night = 'modular_rmh/sound/music/area/field_night.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/field_dawn.ogg'
 	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
+	ambient_index = AMBIENCE_BIRDS
+
+/area/outdoors/rmh_field/oldmill
+	name = "Ruined windmill"
+	first_time_text = "RUINED WINDMILL"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	background_track = 'modular_rmh/sound/music/area/windmill.ogg'
+	background_track_dusk = 'modular_rmh/sound/music/area/windmill.ogg'
+	background_track_night = 'modular_rmh/sound/music/area/windmill.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/windmill.ogg'
+	icon_state = "woods_n"
 
 /area/outdoors/rmh_field/north
 	name = "North Forest"
@@ -198,11 +208,22 @@
 	ambient_index = AMBIENCE_BIRDS
 	converted_type = /area/indoors/shelter/town/rmh
 
+/area/outdoors/town/rmh/ruinedzone
+	name = "Town's Ruin"
+	icon_state = "town"
+	first_time_text = "RUINS"
+	background_track = 'modular_rmh/sound/music/area/ruintown.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/town_dawn.ogg'
+	background_track_dusk = 'modular_rmh/sound/music/area/town_dusk.ogg'
+	background_track_night = 'modular_rmh/sound/music/area/town_night.ogg'
+	ambient_index = AMBIENCE_BIRDS
+	converted_type = /area/indoors/shelter/town/rmh
+
 /area/outdoors/town/rmh/roofs
 	name = "Rivermist Hollow Rooftops"
 	icon_state = "roofs"
 	droning_index = DRONING_MOUNTAIN
-	ambient_index = AMBIENCE_GENERIC
+	ambient_index = AMBIENCE_BIRDS
 	//spookysounds = SPOOKY_GEN
 	//spookynight = SPOOKY_GEN
 	background_track = 'modular_rmh/sound/music/area/town_day.ogg'
@@ -211,6 +232,20 @@
 	background_track_night = 'modular_rmh/sound/music/area/town_night.ogg'
 	soundenv = 17
 	converted_type = /area/indoors/shelter/town/rmh/roofs
+
+/area/outdoors/town/rmh/livingquart
+	name = "Living Outskirts"
+	icon_state = "camp"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	soundenv = 19
+//	ambush_mobs = null
+	first_time_text = "LIVING OUTSKIRTS"
+	background_track = 'modular_rmh/sound/music/area/field_day.ogg'
+	background_track_dusk = 'modular_rmh/sound/music/area/field_dusk.ogg'
+	background_track_night = 'modular_rmh/sound/music/area/field_night.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/field_dawn.ogg'
+	ambient_index = AMBIENCE_BIRDS
+	converted_type = /area/indoors/shelter/town/rmh
 
 /area/outdoors/rmh_platz
 	name = "platz"
@@ -230,7 +265,7 @@
 	background_track_dusk = 'modular_rmh/sound/music/area/town_dusk.ogg'
 	background_track_night = 'modular_rmh/sound/music/area/town_night.ogg'
 	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
+	ambient_index = AMBIENCE_BIRDS
 	converted_type = /area/outdoors/exposed/town/rmh
 	//deathsight_message = "the town of Rivermist Hollow and all its bustling souls"
 
@@ -303,6 +338,34 @@
 	background_track_night = 'sound/music/area/manorgarri.ogg'
 	converted_type = /area/outdoors/exposed/town/rmh
 	cell_area = TRUE
+
+/area/indoors/town/rmh/windmill
+	name = "Old Windmill"
+	first_time_text = "WINDMILL"
+	icon_state = "cell"
+	//spookysounds = SPOOKY_DUNGEON
+	//spookynight = SPOOKY_DUNGEON
+	background_track = 'modular_rmh/sound/music/area/windmill.ogg'
+	background_track_dusk = 'modular_rmh/sound/music/area/windmill.ogg'
+	background_track_night = 'modular_rmh/sound/music/area/windmill.ogg'
+	converted_type = /area/outdoors/exposed/town/rmh
+	cell_area = TRUE
+
+/area/under/town/rmh/sewer
+	name = "Rivermist Hollow Sewers"
+	first_time_text = "RIVERMIST HOLLOW SEWERS"
+	icon_state = "sewer"
+	droning_index = DRONING_CAVE_WET
+	ambient_index = AMBIENCE_CAVE
+	//spookysounds = SPOOKY_RATS
+	//spookynight = SPOOKY_RATS
+	background_track = 'sound/music/area/sewers.ogg'
+	background_track_dusk = 'sound/music/area/sewers.ogg'
+	background_track_night = 'sound/music/area/sewers.ogg'
+	//ambientrain = RAIN_SEWER
+	soundenv = 21
+	converted_type = /area/outdoors/exposed/under/rmh/sewer
+	ceiling_protected = TRUE
 
 /area/under/town/rmh/sewer
 	name = "Rivermist Hollow Sewers"
@@ -427,7 +490,7 @@
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "tavern"
 	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
+	ambient_index = DRONING_INDOORS
 	ambient_index_night = DRONING_INDOORS
 	background_track = 'sound/silence.ogg'
 	background_track_dusk = 'sound/silence.ogg'
@@ -477,7 +540,7 @@
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
 	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
+	ambient_index = DRONING_INDOORS
 
 /area/indoors/town/rmh/craft/artificer
 	name = "artificer's indoors"
@@ -485,8 +548,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 
 /area/indoors/town/rmh/craft/blacksmith
@@ -495,8 +556,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 
 /area/indoors/town/rmh/craft/tailor
@@ -505,8 +564,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 /area/indoors/town/rmh/craft/clinic
 	name = "clinic's indoors"
@@ -514,8 +571,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 /area/indoors/town/rmh/craft/apothecary
 	name = "apothecary's indoors"
@@ -523,8 +578,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 /area/indoors/town/rmh/greenhouse
 	name = "greenhouse"
@@ -532,8 +585,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 
 /area/indoors/town/rmh/loudmouth
@@ -542,8 +593,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 
 /area/indoors/town/rmh/farm
@@ -553,7 +602,7 @@
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
 	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
+	ambient_index = DRONING_INDOORS
 
 /area/indoors/town/rmh/farm
 	name = "farm's zones"
@@ -561,8 +610,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 /area/indoors/town/rmh/farm/house
 	name = "farm's house"
@@ -570,8 +617,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 /area/indoors/town/rmh/farm/ambar
 	name = "ambar"
@@ -579,8 +624,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 /area/indoors/town/rmh/farm/henhouse
 	name = "henhouse"
@@ -588,8 +631,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 /area/indoors/town/rmh/farm/stall
 	name = "stall"
@@ -597,8 +638,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 /area/indoors/town/rmh/farm/goat_rue
 	name = "goat's rue"
@@ -606,8 +645,6 @@
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
 
 /area/indoors/town/rmh/magician
 	name = "Mage's Guild"
@@ -629,18 +666,11 @@
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "indoors"
 	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dusk = 'modular_rmh/sound/music/area/townindoor_day.ogg'
 	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	background_track_night = 'modular_rmh/sound/music/area/ruintown.ogg'
 	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
-
-/area/indoors/town/rmh/living/cer
-	name = "tower"
-	icon = 'modular_rmh/icons/turf/areas.dmi'
-	icon_state = "indoors"
-	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
-	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
-	droning_index = DRONING_INDOORS
-	ambient_index = AMBIENCE_GENERIC
+	ambient_index = DRONING_INDOORS
 
 /area/outdoors/exposed/town/rmh
 	name = "Rivermist Hollow"

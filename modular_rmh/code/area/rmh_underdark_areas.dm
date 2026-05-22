@@ -12,10 +12,15 @@
 	background_track_dusk = 'sound/music/area/underdark.ogg'
 	background_track_night = 'sound/music/area/underdark.ogg'
 	ambush_times = list("night","dawn","dusk","day")
+	ambush_types = list(
+				/turf/open/floor/naturalstone,
+				/turf/open/floor/cobblerock/alt,
+				/turf/open/floor/mushroom,
+				/turf/open/floor/grass/yel)
 	ambush_mobs = list(
 				/mob/living/simple_animal/hostile/retaliate/spider/mutated = 20,
-				///mob/living/carbon/human/species/elf/dark/drowraider/ambush = 10,
 				/mob/living/simple_animal/hostile/retaliate/minotaur = 25,
+				/mob/living/carbon/human/species/goblin/cave = 40,
 				/mob/living/carbon/human/species/goblin/npc/ambush/moon = 30,
 				/mob/living/simple_animal/hostile/retaliate/troll = 15)
 	converted_type = /area/outdoors/caves
@@ -32,6 +37,7 @@
 	ambush_times = list("night","dawn","dusk","day")
 	ambush_mobs = list(
 				/mob/living/simple_animal/hostile/retaliate/elemental/crawler = 30,
+				/mob/living/carbon/human/species/goblin/cave = 40,
 				/mob/living/simple_animal/hostile/retaliate/elemental/warden = 20,
 				/mob/living/simple_animal/hostile/retaliate/troll/cave = 15)
 
@@ -42,9 +48,6 @@
 	background_track = 'sound/music/area/underdark.ogg'
 	background_track_dusk = 'sound/music/area/underdark.ogg'
 	background_track_night = 'sound/music/area/underdark.ogg'
-	ambush_times = null
-	ambush_mobs = null
-	threat_region = THREAT_REGION_RMH_UNDERDARK
 	//deathsight_message = "Glimmerlakes"
 
 /area/under/underdark/rmh/shrub
@@ -74,6 +77,9 @@
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "living"
 	ambush_times = list("night","dawn","dusk","day")
+	ambush_types = list(
+				/turf/open/floor/volcanic,
+				/turf/open/floor/cobblerock/alt)
 	ambush_mobs = list(
 				/mob/living/simple_animal/hostile/retaliate/troll/cave = 15)
 	//deathsight_message = "Flow Tunnels"
@@ -104,6 +110,8 @@
 	background_track_dusk = 'sound/music/area/underdark.ogg'
 	background_track_night = 'sound/music/area/underdark.ogg'
 	ambush_times = list("night","dawn","dusk","day")
+	ambush_types = list(
+				/turf/open/floor/church)
 	ambush_mobs = list(
 				/mob/living/simple_animal/hostile/dreamfiend = 50)
 	//deathsight_message = "Gauntlet of Shar"
@@ -117,23 +125,41 @@
 	first_time_text = "UNDERDARK TRAVEL"
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "travel"
+	ambush_times = null
+	ambush_types = null
+	ambush_mobs = null
 
 /area/under/underdark/rmh/desert
 	name = "Ascend To Coastal Desert"
 	first_time_text = "ASCEND TO COASTAL DESERT"
+	ambush_times = null
+	ambush_types = null
+	ambush_mobs = null
 
 /area/under/underdark/rmh/swamps
 	name = "Ascend To Green Swamps"
 	first_time_text = "ASCEND TO GREEN SAWMPS"
+	ambush_times = null
+	ambush_types = null
+	ambush_mobs = null
 
 /area/under/underdark/rmh/forest
 	name = "Ascend To Dark Forest"
 	first_time_text = "ASCEND TO DARK FOREST"
+	ambush_times = null
+	ambush_types = null
+	ambush_mobs = null
 
 /area/under/underdark/rmh/mountain
 	name = "Ascend To Dusk Spire"
 	first_time_text = "ASCEND TO DUSK SPIRE"
+	ambush_times = null
+	ambush_types = null
+	ambush_mobs = null
 
 /area/under/underdark/rmh/main
 	name = "Ascend To Rivermist Hollow"
 	first_time_text = "ASCEND TO RIVERMIST HOLLOW"
+	ambush_times = null
+	ambush_types = null
+	ambush_mobs = null

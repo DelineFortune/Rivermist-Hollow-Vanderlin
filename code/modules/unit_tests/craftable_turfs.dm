@@ -77,16 +77,57 @@
 		/turf/open/floor/rooftop/green/west,
 		/turf/open/floor/rooftop/green/corner1,
 		/turf/open/floor/dirt/road/snowy,
-		/turf/open/floor/dirt/road/snowy/path,
-		/turf/open/floor/dirt/road/snowy/corner,
-		/turf/open/floor/dirt/road/snowy/snowpatht,
-		/turf/open/floor/dirt/road/snowy/snowpathx,
+		/turf/open/floor/snowpath,
+		/turf/open/floor/snowpath/snowcorner,
+		/turf/open/floor/snowpath/snowpatht,
+		/turf/open/floor/snowpath/snowpathx,
 		/turf/open/floor/dirt/snowy,
 		/turf/open/floor/AzureSand,
 		/turf/open/floor/dark_ice,
 		/turf/open/floor/desert, // implicit parent for desert floor variants
 		/turf/open/floor/desert_grass, // legacy branch; the buildable scrub grass is /turf/open/floor/desert/desert_grass
 		/turf/open/floor/desert_grass/nospawn, // legacy branch; the buildable scrub grass is /turf/open/floor/desert/desert_grass
+		/turf/open/floor, //alizeria-build
+		/turf/open/floor/ruinedwood, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood1, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood2, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood3, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood4, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood5, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood6, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood7, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/carpet1, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood8, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood9, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood10, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood19, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood20, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood21, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood22, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood23, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood24, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood25, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood26, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood27, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood28, //alizeria-build
+		/turf/open/floor/ruinedwood/alizeria/tiles/wood29, //alizeria-build
+		/turf/open/floor/tile, //alizeria-build
+		/turf/open/floor/tile/alizeria, //alizeria-build
+		/turf/open/floor/tile/alizeria/tiles, //alizeria-build
+		/turf/open/floor/tile/alizeria/tiles/stonefloor1, //alizeria-build
+		/turf/open/floor/tile/alizeria/tiles/stonefloor2, //alizeria-build
+		/turf/open/floor/tile/alizeria/tiles/stonefloor3, //alizeria-build
+		/turf/open/floor/tile/alizeria/tiles/stonefloor4, //alizeria-build
+		/turf/open/floor/desert/deserttile/tilegreywhite,
+		/turf/open/floor/desert/deserttile/tiledrab2,
+		/turf/open/floor/desert/deserttile/tilewhitegreen,
+		/turf/open/floor/desert/deserttile/tilewhiteblue,
+		/turf/open/floor/desert/deserttile/tilewhitebluespecial,
+		/turf/open/floor/desert/deserttile/tilespecial,
+		/turf/open/floor/desert/deserttile/tilegreeny,
+		/turf/open/floor/desert/deserttile/tilegreyblu
 	) \
 	+ typesof(/turf/open/floor/mushroom) \
 	+ typesof(/turf/open/floor/sandstone_tile) \
