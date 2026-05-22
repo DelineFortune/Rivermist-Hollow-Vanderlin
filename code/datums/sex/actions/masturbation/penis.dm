@@ -29,6 +29,7 @@
 	user.visible_message(span_warning("[user] starts jerking off..."))
 
 /datum/sex_action/masturbate/penis/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	var/chosen_verb = pick(list("jerks [user.p_their()] cock", "strokes [user.p_their()] cock", "masturbates", "jerks off"))
 	if(can_show_action_message(user, target))

@@ -128,11 +128,16 @@
 
 
 /mob/living/proc/npc_detect_sneak(mob/living/target, extra_prob = 0)
-	if (target.alpha > 100 || !target.rogue_sneaking)
+	if (target.alpha > 100)
+		return TRUE
+	if(!COOLDOWN_FINISHED(src, npc_sneak_detect_cd))
+		return FALSE
+	COOLDOWN_START(src, npc_sneak_detect_cd, 8 SECONDS) //this shit happens every process normally
+	if(target.alpha > 100) // this used to have rogue_sneaking too but i think its used for full darkness invisibility now.
 		return TRUE
 	if(HAS_TRAIT(target, TRAIT_IMPERCEPTIBLE))
 		return FALSE
-	var/probby = 2 * GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) //this is 10 by default - npcs get an easier time to detect to slightly thwart cheese
+	var/probby = 3 * GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) //this is 10 by default
 	probby += extra_prob
 	var/sneak_bonus = 0
 	if(target.mind)
@@ -141,7 +146,7 @@
 			sneak_bonus = (max(GET_MOB_SKILL_VALUE_OLD(target, /datum/attribute/skill/magic/arcane), GET_MOB_SKILL_VALUE_OLD(target, /datum/attribute/skill/magic/holy)) * 10)
 			probby -= 20 // also just a fat lump of extra difficulty for the npc since spells are hard, you know?
 		else
-			sneak_bonus = (GET_MOB_SKILL_VALUE_OLD(target, /datum/attribute/skill/misc/sneaking) * 5)
+			sneak_bonus = (GET_MOB_SKILL_VALUE_OLD(target, /datum/attribute/skill/misc/sneaking) * 10)
 		probby -= sneak_bonus
 
 	probby += 100 * target.get_encumbrance()
@@ -152,6 +157,7 @@
 
 	if (prob(probby))
 		// whoops it saw us
+		target.apply_status_effect(/datum/status_effect/debuff/stealthcd)
 		MOBTIMER_SET(target, MT_FOUNDSNEAK)
 		to_chat(target, span_danger("[src] sees me! I'm found!"))
 		target.update_sneak_invis(TRUE)

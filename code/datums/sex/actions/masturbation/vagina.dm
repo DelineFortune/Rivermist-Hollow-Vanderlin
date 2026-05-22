@@ -25,6 +25,7 @@
 	user.visible_message(span_warning("[user] starts stroking [user.p_their()] clit..."))
 
 /datum/sex_action/masturbate/vagina/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	if(can_show_action_message(user, target))
 		user.visible_message(sex_session.spanify_force("[user] [sex_session.get_generic_force_adjective()] strokes [user.p_their()] clit..."))

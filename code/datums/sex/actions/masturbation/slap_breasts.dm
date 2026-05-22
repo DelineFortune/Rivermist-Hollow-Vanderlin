@@ -28,6 +28,7 @@
 	user.visible_message(span_warning("[user] raises [user.p_their()] hand over [user.p_their()] breasts..."))
 
 /datum/sex_action/masturbate/slap_breasts/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	var/sound = pick('sound/foley/slap.ogg', 'sound/foley/smackspecial.ogg')
 	var/action_text = "slaps"
@@ -92,6 +93,7 @@
 	user.visible_message(span_warning("[user] raises [user.p_their()] hand over [target]'s breasts..."))
 
 /datum/sex_action/masturbate/other/slap_breasts/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	var/sound = pick('sound/foley/slap.ogg', 'sound/foley/smackspecial.ogg')
 	var/action_text = "slaps"

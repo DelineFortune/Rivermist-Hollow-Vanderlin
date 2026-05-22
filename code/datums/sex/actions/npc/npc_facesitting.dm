@@ -32,6 +32,7 @@
 
 
 /datum/sex_action/npc/npc_facesitting/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	var/verbstring = pick(list("rubs", "smushes", "forces"))
 	if(can_show_action_message(user, target))

@@ -88,6 +88,7 @@
 	user.visible_message(span_warning("[user] tilts the candle over [target]'s chest..."))
 
 /datum/sex_action/wax_play/breasts/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	apply_wax_effects(user, target, "breasts", 1.2, 2.5)
 
 /datum/sex_action/wax_play/breasts/on_finish(mob/living/user, mob/living/target)
@@ -120,6 +121,7 @@
 	user.visible_message(span_warning("[user] tilts the candle over [target]'s rear..."))
 
 /datum/sex_action/wax_play/butt/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	apply_wax_effects(user, target, "butt", 1.0, 2.0)
 
 /datum/sex_action/wax_play/butt/on_finish(mob/living/user, mob/living/target)

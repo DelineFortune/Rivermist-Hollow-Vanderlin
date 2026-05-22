@@ -561,6 +561,8 @@
 	var/show_genitals = FALSE
 	var/mouth_blocked = FALSE
 
+	COOLDOWN_DECLARE(npc_sneak_detect_cd)
+
 /mob/living/Initialize()
 	. = ..()
 	refresh_erp_preference_cache()

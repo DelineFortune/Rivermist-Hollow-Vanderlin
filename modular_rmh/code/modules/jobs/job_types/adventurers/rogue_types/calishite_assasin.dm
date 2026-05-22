@@ -39,6 +39,10 @@
 
 	languages = list(/datum/language/zalad)
 
+	spells = list(
+		/datum/action/cooldown/spell/undirected/rogue_vanish
+	)
+
 /datum/outfit/adventurer_rogue/calishite_assasin
 	name = "Calishite Assasin"
 	head = /obj/item/clothing/neck/keffiyeh/colored/red

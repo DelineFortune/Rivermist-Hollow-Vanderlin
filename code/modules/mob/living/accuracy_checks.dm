@@ -55,6 +55,12 @@
 /proc/calculate_hit_chance(zone, mob/living/user, mob/living/target, associated_skill, datum/intent/used_intent, obj/item/I)
 	var/chance2hit = 0
 
+	//resting or attacks from behind / stealth are more likely to hit.
+	if(target.body_position == LYING_DOWN)
+		chance2hit += 10
+	if(user && (target.dir == turn(get_dir(target,user), 180 || user.alpha <= 15)))
+		chance2hit += 20
+
 	if(check_zone(zone) == zone)
 		chance2hit += 10
 

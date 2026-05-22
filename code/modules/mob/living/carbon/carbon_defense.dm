@@ -222,7 +222,7 @@
 	if(statforce)
 		next_attack_msg.Cut()
 		affecting.bodypart_attacked_by(user.used_intent.blade_class, statforce, crit_message = TRUE)
-		if(!can_see_cone(user) || user.alpha < 15)//Dreamkeep change
+		if(!can_see_cone(user) || user.alpha < 15)//From Dreamkeep
 			if(user.mind && !HAS_TRAIT(src, TRAIT_BLINDFIGHTING) && !user.has_status_effect(/datum/status_effect/debuff/stealthcd))
 				var/sneakmult = user.get_skill_level(/datum/skill/misc/sneaking)
 				statforce *= max(1,sneakmult)

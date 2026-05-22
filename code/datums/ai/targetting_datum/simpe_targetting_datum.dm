@@ -354,6 +354,8 @@
 			return FALSE
 	if(living_mob.see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return FALSE
+	if(living_mob.alpha <= 100 || living_mob.rogue_sneaking)
+		return FALSE
 
 	if(isturf(the_target.loc) && living_mob.z != the_target.z)
 		return FALSE

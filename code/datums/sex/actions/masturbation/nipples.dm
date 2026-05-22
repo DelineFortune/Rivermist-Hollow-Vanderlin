@@ -26,6 +26,7 @@
 	user.visible_message(span_warning("[user] starts rubbing [user.p_their()] nipples..."))
 
 /datum/sex_action/masturbate/nipples/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	var/action_text = "rubs"
 	var/arousal_amt = 1.0
@@ -86,6 +87,7 @@
 	user.visible_message(span_warning("[user] starts rubbing [target]'s nipples..."))
 
 /datum/sex_action/masturbate/other/nipples/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	var/action_text = "rubs"
 	var/arousal_amt = 1.0

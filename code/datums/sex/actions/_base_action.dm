@@ -401,9 +401,15 @@
 			if(!try_store_in_hole(user, target))
 				return FALSE
 	lock_sex_object(user, target)
+	sex_volume = initial(sex_volume)
+	if(user.rogue_sneaking || user.m_intent == MOVE_INTENT_SNEAK || user.alpha <= 100)
+		sex_volume *= 0.5
 	return TRUE
 
 /datum/sex_action/proc/on_perform(mob/living/user, mob/living/target)
+	sex_volume = initial(sex_volume)
+	if(user.rogue_sneaking || user.m_intent == MOVE_INTENT_SNEAK || user.alpha <= 100)
+		sex_volume *= 0.5
 	return
 
 /datum/sex_action/proc/on_finish(mob/living/user, mob/living/target)
@@ -418,6 +424,9 @@
 		else
 			remove_from_hole(user, target)
 	unlock_sex_object(user, target)
+	sex_volume = initial(sex_volume)
+	if(user.rogue_sneaking || user.m_intent == MOVE_INTENT_SNEAK || user.alpha <= 100)
+		sex_volume *= 0.5
 	return
 
 /datum/sex_action/proc/is_finished(mob/living/user, mob/living/target)

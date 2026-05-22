@@ -25,6 +25,7 @@
 	user.visible_message(span_warning("[user] starts playing with [user.p_their()] labia..."))
 
 /datum/sex_action/masturbate/labia/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	var/action_text = "tugs at"
 	var/arousal_amt = 1.2
@@ -87,6 +88,7 @@
 	user.visible_message(span_warning("[user] starts playing with [target]'s labia..."))
 
 /datum/sex_action/masturbate/other/labia/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	var/action_text = "tugs at"
 	var/arousal_amt = 1.2

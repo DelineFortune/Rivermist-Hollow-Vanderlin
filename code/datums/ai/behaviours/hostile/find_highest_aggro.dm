@@ -96,7 +96,7 @@
 		if(!targetting_datum.can_quickly_engage_target(living_mob, pot_target))
 			continue
 		// Skip sneaking mobs with a chance to detect them
-		if(pot_target.rogue_sneaking)
+		if(pot_target.alpha <= 100 || pot_target.rogue_sneaking)
 			var/extra_chance = (living_mob.health <= living_mob.maxHealth * 0.5) ? 30 : 0
 			if(!living_mob.npc_detect_sneak(pot_target, extra_chance))
 				continue
@@ -172,7 +172,7 @@
 		var/mob/living/living_target = checking
 		if(living_target.stat == DEAD)
 			return FALSE
-		if(living_target.rogue_sneaking)
+		if(living_target.alpha <= 100 || living_target.rogue_sneaking)
 			var/mob/living/living_pawn = pawn
 			var/extra_chance = (living_pawn.health <= living_pawn.maxHealth * 0.5) ? 30 : 0
 			if(!living_pawn.npc_detect_sneak(living_target, extra_chance))

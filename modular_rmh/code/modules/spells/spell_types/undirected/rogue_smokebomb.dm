@@ -16,6 +16,7 @@
 	associated_skill = /datum/skill/misc/sneaking
 	cooldown_reduction_per_rank = 2 SECONDS
 
+//not low alpha enough to sneak attack without going behind.
 /datum/action/cooldown/spell/undirected/rogue_vanish/cast(mob/living/carbon/human/user)
 	. = ..()
 	new /obj/effect/particle_effect/smoke(get_turf(user))

@@ -34,6 +34,9 @@
 
 	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/assassin
 
+	spells = list(
+		/datum/action/cooldown/spell/undirected/rogue_vanish
+	)
 
 	traits = list(
 		TRAIT_ASSASSIN,

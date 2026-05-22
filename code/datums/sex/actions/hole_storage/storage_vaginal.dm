@@ -40,13 +40,12 @@
 		target_organ = target.getorganslot(hole_id)
 		user.visible_message(span_warning("[user] starts inserting \the [dildo] in [target]'s pussy..."))
 
-	var/used_sex_volume = sex_volume
-	if(user.rogue_sneaking || user.m_intent == MOVE_INTENT_SNEAK || user.alpha <= 100)
-		used_sex_volume *= 0.5
-	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), used_sex_volume, TRUE, ignore_walls = FALSE)
+
+	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), sex_volume, TRUE, ignore_walls = FALSE)
 
 
 /datum/sex_action/hole_storage/vagina_store/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/pain_amt = 2 //base pain amt to use
 	var/self = (user == target)
 	if(!target_organ)
@@ -170,13 +169,12 @@
 		target_organ = target.getorganslot(hole_id)
 		user.visible_message(span_warning("[user] starts removing items from [target]'s pussy..."))
 
-	var/used_sex_volume = sex_volume
-	if(user.rogue_sneaking || user.m_intent == MOVE_INTENT_SNEAK || user.alpha <= 100)
-		used_sex_volume *= 0.5
-	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), used_sex_volume, TRUE, ignore_walls = FALSE)
+
+	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), sex_volume, TRUE, ignore_walls = FALSE)
 
 
 /datum/sex_action/hole_storage/vagina_remove/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/pain_amt = 1 //base pain amt to use
 
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
@@ -250,13 +248,12 @@
 
 	to_chat(user, span_warning("I brace myself and start pushing out items from deep inside my pussy..."))
 
-	var/used_sex_volume = sex_volume
-	if(user.rogue_sneaking || user.m_intent == MOVE_INTENT_SNEAK || user.alpha <= 100)
-		used_sex_volume *= 0.5
-	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), used_sex_volume, TRUE, ignore_walls = FALSE)
+
+	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), sex_volume, TRUE, ignore_walls = FALSE)
 
 
 /datum/sex_action/hole_storage/vagina_remove_deep/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/pain_amt = 1 //base pain amt to use
 
 	if(!target_organ)

@@ -43,6 +43,10 @@
 
 	languages = list(/datum/language/thievescant)
 
+	spells = list(
+		/datum/action/cooldown/spell/undirected/rogue_vanish
+	)
+
 /datum/outfit/adventurer_rogue/thief
 	name = "Thief"
 	head = null

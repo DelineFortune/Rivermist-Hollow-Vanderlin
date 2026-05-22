@@ -23,6 +23,7 @@
 	user.visible_message(span_warning("[user] places [user.p_their()] hands onto [target]..."))
 
 /datum/sex_action/rub_body/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	if(can_show_action_message(user, target))
 		user.visible_message(sex_session.spanify_force("[user] [sex_session.get_generic_force_adjective()] rubs [target]'s body..."))

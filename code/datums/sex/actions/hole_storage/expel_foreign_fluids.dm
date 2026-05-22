@@ -65,6 +65,7 @@
 	)
 
 /datum/sex_action/hole_storage/expel_foreign_fluids/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/obj/item/organ/genitals/filling_organ/filling_organ = get_action_organ(user, target)
 	if(!filling_organ)
 		to_chat(user, span_warning("There is nothing to clear right now."))

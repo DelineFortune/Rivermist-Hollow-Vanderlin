@@ -45,6 +45,7 @@
 	user.visible_message(span_warning("[user] starts sucking [target]'s cock..."))
 
 /datum/sex_action/blowjob/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	user.make_sucking_noise()
 	do_thrust_animate(user, target)

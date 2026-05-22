@@ -544,6 +544,7 @@ GLOBAL_LIST_INIT(sex_custom_action_templates, build_sex_custom_action_templates(
 	return TRUE
 
 /datum/sex_action/custom/on_perform(mob/living/user, mob/living/target)
+	. = ..()
 	var/datum/sex_session/session = get_sex_session(user, target)
 	if(can_show_action_message(user, target))
 		user.visible_message(session.spanify_force(get_custom_message(message_tick, user, target, "{user} keeps {name} going.")))
