@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob)))
 		if(living_target.stat == DEAD)
 			filtered_targets -= living_target
 			continue
-		if(!living_target.alpha > 100 || !living_target.rogue_sneaking)
+		if(!(living_target.alpha <= 100 || living_target.rogue_sneaking))
 			continue
 		var/extra_chance = (living_mob.health <= living_mob.maxHealth * 50) ? 30 : 0 // if we're below half health, we're way more alert
 		if (!living_mob.npc_detect_sneak(living_target, extra_chance))
