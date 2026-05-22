@@ -224,11 +224,12 @@
 		affecting.bodypart_attacked_by(user.used_intent.blade_class, statforce, crit_message = TRUE)
 		if(!can_see_cone(user) || user.alpha < 15)//From Dreamkeep
 			if(user.mind && !HAS_TRAIT(src, TRAIT_BLINDFIGHTING) && !user.has_status_effect(/datum/status_effect/debuff/stealthcd))
-				var/sneakmult = user.get_skill_level(/datum/skill/misc/sneaking)
+				var/sneakmult = GET_MOB_SKILL_VALUE_OLD(user, /datum/attribute/skill/misc/sneaking)
 				statforce *= max(1,sneakmult)
+				statforce += 15
 				user.apply_status_effect(/datum/status_effect/debuff/stealthcd)
-				to_chat(src, span_userdanger("SNEAK ATTACK!!! MY ARMOR IS BYPASSED!"))
-				to_chat(user, span_userdanger("SNEAK ATTACK!!! THEIR ARMOR IS BYPASSED!"))
+				to_chat(src, span_userdanger("SNEAK ATTACK!!!"))
+				to_chat(user, span_userdanger("SNEAK ATTACK!!!"))
 				user.adjust_experience(/datum/skill/misc/sneaking, user.STAINT * 5, FALSE)
 		apply_damage(statforce, I.damtype, affecting)
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)

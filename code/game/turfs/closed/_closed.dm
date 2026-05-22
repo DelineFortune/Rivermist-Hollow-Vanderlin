@@ -116,7 +116,7 @@
 			var/lean_alpha = get_wallpress_alpha()
 			if(src.alpha != 0 && lean_alpha < src.alpha)
 				var/used_time = 50
-				used_time = max(used_time - (get_skill_level(/datum/skill/misc/sneaking) * 8), 10)
+				used_time = max(used_time - (GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/misc/sneaking) * 8), 10)
 				animate(src, alpha = lean_alpha, time = used_time)
 	else
 		remove_movespeed_modifier("wallpress")

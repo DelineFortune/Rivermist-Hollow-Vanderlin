@@ -137,7 +137,9 @@
 		return TRUE
 	if(HAS_TRAIT(target, TRAIT_IMPERCEPTIBLE))
 		return FALSE
-	var/probby = 3 * GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) //this is 10 by default
+	if(see_invisible < target.invisibility)
+		return FALSE
+	var/probby = 3 * GET_MOB_ATTRIBUTE_VALUE(src, STAT_PERCEPTION) //this is 10 by default, npcs are easier to hide from than people with 10+ per, unless they are given more per.
 	probby += extra_prob
 	var/sneak_bonus = 0
 	if(target.mind)
@@ -155,6 +157,7 @@
 	if (target.stat_roll(STAT_FORTUNE,5,10))
 		probby -= (10 - GET_MOB_ATTRIBUTE_VALUE(target, STAT_FORTUNE)) * 5 // make it 5% harder for every bit of fortune over 10 that we do have
 
+	probby = (max(probby, 5)) //never less than 5%
 	if (prob(probby))
 		// whoops it saw us
 		target.apply_status_effect(/datum/status_effect/debuff/stealthcd)

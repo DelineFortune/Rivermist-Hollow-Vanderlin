@@ -40,6 +40,7 @@
 
 	spells = list(
 		/datum/action/cooldown/spell/undirected/shapeshift/rat_vampire,
+		/datum/action/cooldown/spell/undirected/rogue_vanish,
 	)
 
 /datum/outfit/adventurer_rogue/bloodsucker

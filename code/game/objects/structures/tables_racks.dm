@@ -94,7 +94,7 @@
 	return ..()
 
 /obj/structure/table/proc/hideinside(mob/living/user)
-	var/sneak_level = user.get_skill_level(/datum/skill/misc/sneaking) || 0
+	var/sneak_level = GET_MOB_SKILL_VALUE_OLD(user, /datum/attribute/skill/misc/sneaking) || 0
 	var/sneaktime = max(10, 50 - (sneak_level * 10)) // Hard caps at 1 second at Expert and above.
 	if(user.loc == src)
 		unhide(user)

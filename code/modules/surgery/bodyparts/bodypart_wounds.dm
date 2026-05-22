@@ -211,7 +211,7 @@
 		dam += 15
 	if(user && (from_behind || user.alpha <= 15))//From Dreamkeep -- Attacks from stealth should be much more likely to crit
 		if(user.mind && !HAS_TRAIT(owner, TRAIT_BLINDFIGHTING) && !user.has_status_effect(/datum/status_effect/debuff/stealthcd))
-			var/sneakmult = user.get_skill_level(/datum/skill/misc/sneaking)
+			var/sneakmult = GET_MOB_SKILL_VALUE_OLD(user, /datum/attribute/skill/misc/sneaking)
 			dam *= max(1,sneakmult)
 			dam += 15
 			user.apply_status_effect(/datum/status_effect/debuff/stealthcd)
@@ -322,7 +322,7 @@
 		dam += 15
 	if(user && (from_behind || user.alpha <= 15))//From Dreamkeep -- Attacks from stealth should be much more likely to crit
 		if(user.mind && !HAS_TRAIT(owner, TRAIT_BLINDFIGHTING) && !user.has_status_effect(/datum/status_effect/debuff/stealthcd))
-			var/sneakmult = user.get_skill_level(/datum/skill/misc/sneaking)
+			var/sneakmult = GET_MOB_SKILL_VALUE_OLD(user, /datum/attribute/skill/misc/sneaking)
 			dam *= max(1,sneakmult)
 			dam += 15
 			user.apply_status_effect(/datum/status_effect/debuff/stealthcd)
@@ -438,7 +438,7 @@
 		dam += 15
 	if(user && (from_behind || user.alpha <= 15))//From Dreamkeep -- Attacks from stealth should be much more likely to crit
 		if(user.mind && !HAS_TRAIT(owner, TRAIT_BLINDFIGHTING) && !user.has_status_effect(/datum/status_effect/debuff/stealthcd))
-			var/sneakmult = user.get_skill_level(/datum/skill/misc/sneaking)
+			var/sneakmult = GET_MOB_SKILL_VALUE_OLD(user, /datum/attribute/skill/misc/sneaking)
 			dam *= max(1,sneakmult)
 			dam += 15
 			user.apply_status_effect(/datum/status_effect/debuff/stealthcd)

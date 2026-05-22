@@ -688,7 +688,7 @@
 
 /datum/status_effect/debuff/stealthcd/on_apply()
 	if(owner.mind)
-		duration = duration - ((owner.get_skill_level(/datum/skill/misc/sneaking)) SECONDS * 2)
+		duration = duration - (GET_MOB_SKILL_VALUE_OLD(owner, /datum/attribute/skill/misc/sneaking) SECONDS * 2)
 	if(owner.m_intent == MOVE_INTENT_SNEAK)
 		playsound(owner.loc, 'modular_rmh/sound/effects/mgsalert.ogg', 50, FALSE)
 		owner.toggle_rogmove_intent(MOVE_INTENT_WALK)
