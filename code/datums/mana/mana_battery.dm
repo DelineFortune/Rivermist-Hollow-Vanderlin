@@ -71,6 +71,8 @@
 	name = MAGIC_MATERIAL_NAME + " crystal"
 	desc = "Crystalized mana." //placeholder desc
 	icon = 'icons/obj/crystals.dmi' //placeholder
+	grid_height = 64
+	grid_width = 64
 
 // Do not use, basetype
 /datum/mana_pool/mana_battery/mana_crystal
@@ -114,6 +116,8 @@
 	desc = "A miniaturized Primordial Quartz Crystal, formed using the run-off of cutting larger ones. Able to hold mana still, although not as much as a proper formation."
 	icon_state = "small"
 	w_class = WEIGHT_CLASS_SMALL
+	grid_height = 32
+	grid_width = 32
 
 /obj/item/mana_battery/mana_crystal/small/get_initial_mana_pool_type()
 	return /datum/mana_pool/mana_battery/mana_crystal/small
@@ -123,6 +127,8 @@
 	desc = "A cut and shaped Primordial Quartz Crystal, using a standardized square cut. It lacks power until it is slotted into a proper amulet."
 	icon_state = "cut"
 	w_class = WEIGHT_CLASS_SMALL
+	grid_height = 32
+	grid_width = 32
 
 /obj/item/mana_battery/mana_crystal/cut/get_initial_mana_pool_type()
 	return /datum/mana_pool/mana_battery/mana_crystal/small
@@ -145,6 +151,8 @@
 	has_initial_mana_pool = TRUE
 	icon = 'icons/obj/crystals.dmi'
 	icon_state = "amulet"
+	grid_height = 32
+	grid_width = 32
 
 /obj/item/clothing/neck/mana_star/Initialize()
 	. = ..()
