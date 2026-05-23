@@ -60,16 +60,11 @@
 		if(MOVE_INTENT_RUN)
 			mod = CONFIG_GET(number/movedelay/run_delay)
 		if(MOVE_INTENT_SNEAK)
-			var/base_walk = CONFIG_GET(number/movedelay/walk_delay)
-			var/default_delay
-			if(HAS_TRAIT(src, TRAIT_LIGHT_STEP))
-				default_delay = base_walk * 1.3
-			else
-				default_delay = 6
 			var/skill = GET_MOB_SKILL_VALUE_OLD(src, /datum/attribute/skill/misc/sneaking)
-			var/skill_mod = 1.6 - (skill * 0.1)
-			var/skill_delay = base_walk * skill_mod
-			mod = min(default_delay, skill_delay)
+			var/sneak_delay = 6 - (skill * 0.25)
+			if(HAS_TRAIT(src, TRAIT_LIGHT_STEP))
+				sneak_delay -= 0.2
+			mod = max(CONFIG_GET(number/movedelay/walk_delay) + 1.5, sneak_delay)
 	var/spdchange = (10-GET_MOB_ATTRIBUTE_VALUE(src, STAT_SPEED))*0.1
 	spdchange = clamp(spdchange, -0.5, 1)  //if this is not clamped, it can make you go faster than you should be able to.
 	mod = mod+spdchange
