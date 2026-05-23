@@ -1,43 +1,1174 @@
-﻿# Type Tree
+# Type Tree
 
-> **Do not read this file top-to-bottom.** It is 436 KB. Use `rg` or Ctrl+F to search for the specific type path you need. Open this file only if inheritance depth is the actual question — for a single type location use `ai_navigation/type_index.md` first.
+> **Do not read this file top-to-bottom.** It is generated for search and inheritance checks. Use `rg` or Ctrl+F for a specific path, and reach for `ai_navigation/type_index.md` first when you only need the cheapest route.
 
-Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro expansions.
+Generated on 2026-05-23 from static analysis of compiled .dm includes in `vanderlin.dme` plus subsystem macro expansions.
 
-- Explicit type paths detected: **20521**
-- Synthesized ancestor nodes: **232**
-- Intermediate parents may be implicit if only child paths were declared directly.
+- Explicit type paths detected: **22130**
+- Synthesized ancestor nodes: **414**
+- Intermediate parents may be implicit if only child paths were referenced directly.
 
 ## Major Roots
 
 | Root | Explicit paths |
 | --- | ---: |
-| `/datum` | 12083 |
-| `/obj` | 6420 |
-| `/mob` | 634 |
-| `/atom` | 611 |
-| `/area` | 386 |
-| `/turf` | 347 |
+| `/datum` | 13009 |
+| `/obj` | 6918 |
+| `/mob` | 642 |
+| `/atom` | 640 |
+| `/area` | 469 |
+| `/turf` | 410 |
 | `/particles` | 31 |
-| `/image` | 2 |
-| `/mutable_appearance` | 2 |
-| `/icon` | 1 |
-| `/client` | 1 |
-| `/procpath` | 1 |
+| `/image` | 3 |
+| `/mutable_appearance` | 3 |
 | `/world` | 1 |
+| `/procpath` | 1 |
+| `/client` | 1 |
+| `/icon` | 1 |
 | `/matrix` | 1 |
 
 ## Complete Tree
 
 ```text
+/area
+├ delver
+├ indoors
+│ ├ bandit_lair
+│ ├ butchershop
+│ ├ cave
+│ │ ├ central
+│ │ ├ east
+│ │ ├ late
+│ │ ├ northern
+│ │ ├ rmh_cave
+│ │ │ ├ cave_druid
+│ │ │ ├ cave_leshiy
+│ │ │ ├ central
+│ │ │ ├ cold
+│ │ │ ├ east
+│ │ │ ├ greenskins
+│ │ │ ├ mine
+│ │ │ ├ minotaur
+│ │ │ ├ northern
+│ │ │ ├ southern
+│ │ │ ├ to_underdark
+│ │ │ ├ west
+│ │ │ └ wet
+│ │ │   └ lake
+│ │ ├ rmh_desertcaves
+│ │ ├ rmh_dwarf_keep
+│ │ │ ├ communal
+│ │ │ ├ entrance
+│ │ │ ├ forge
+│ │ │ ├ grand
+│ │ │ ├ living
+│ │ │ ├ smelters
+│ │ │ ├ throne
+│ │ │ └ treasury
+│ │ ├ southern
+│ │ ├ underhamlet
+│ │ └ west
+│ ├ dungeon
+│ ├ inq
+│ │ ├ basement
+│ │ └ office
+│ ├ lich
+│ ├ mountains
+│ │ └ anvil
+│ │   └ surface
+│ │     └ building
+│ ├ rmh_darkforestbog
+│ │ ├ bog
+│ │ │ ├ orcsdarfort
+│ │ │ ├ rangertower
+│ │ │ └ swampvillage
+│ │ ├ bogpass
+│ │ └ forest
+│ │   ├ abandonedvillage
+│ │   ├ forestranger
+│ │   ├ goblincamp
+│ │   ├ hunterpost
+│ │   └ treehouse
+│ ├ rmh_desert
+│ │ ├ phouse
+│ │ └ tea
+│ ├ shelter
+│ │ ├ basin
+│ │ ├ bog
+│ │ │ └ rmh
+│ │ ├ mountains
+│ │ │ ├ decap
+│ │ │ └ rmh_mountains
+│ │ │   └ frozen
+│ │ ├ rmh_desert
+│ │ │ └ roofs
+│ │ ├ rmh_field
+│ │ ├ town
+│ │ │ ├ rmh
+│ │ │ │ └ roofs
+│ │ │ └ roofs
+│ │ └ woods
+│ │   └ rmh
+│ ├ ship
+│ ├ soilsons
+│ ├ town
+│ │ ├ bath
+│ │ │ └ redhouse
+│ │ ├ cell
+│ │ ├ church
+│ │ │ ├ chapel
+│ │ │ └ inquisition
+│ │ ├ clinic_large
+│ │ │ ├ apothecary
+│ │ │ └ feldsher
+│ │ ├ clocktower
+│ │ ├ dwarfin
+│ │ ├ entrance
+│ │ ├ fire_chamber
+│ │ ├ garrison
+│ │ │ └ lieutenant
+│ │ ├ keep
+│ │ │ ├ archivist
+│ │ │ ├ captain
+│ │ │ ├ dungeoneer
+│ │ │ ├ feast
+│ │ │ ├ garrison
+│ │ │ ├ gate
+│ │ │ ├ guest
+│ │ │ │ ├ guest1
+│ │ │ │ ├ guest2
+│ │ │ │ └ meeting
+│ │ │ ├ halls
+│ │ │ │ ├ e
+│ │ │ │ ├ n
+│ │ │ │ ├ s
+│ │ │ │ └ w
+│ │ │ ├ hand
+│ │ │ ├ heir
+│ │ │ │ ├ heir1
+│ │ │ │ └ heir2
+│ │ │ ├ jester
+│ │ │ ├ kitchen
+│ │ │ │ └ cellar
+│ │ │ ├ knight
+│ │ │ │ ├ knight1
+│ │ │ │ └ knight2
+│ │ │ ├ library
+│ │ │ ├ lord_appt
+│ │ │ ├ magician
+│ │ │ ├ phys
+│ │ │ ├ servant
+│ │ │ ├ servanthead
+│ │ │ ├ squire
+│ │ │ │ ├ squire1
+│ │ │ │ └ squire2
+│ │ │ └ throne
+│ │ ├ magician
+│ │ ├ manor
+│ │ │ ├ archivist
+│ │ │ ├ captain
+│ │ │ ├ dungeoneer
+│ │ │ ├ feast
+│ │ │ ├ garrison
+│ │ │ ├ guest
+│ │ │ │ ├ guest1
+│ │ │ │ ├ guest2
+│ │ │ │ └ meeting
+│ │ │ ├ halls
+│ │ │ │ ├ e
+│ │ │ │ ├ n
+│ │ │ │ ├ s
+│ │ │ │ └ w
+│ │ │ ├ hand
+│ │ │ ├ heir
+│ │ │ │ ├ heir1
+│ │ │ │ └ heir2
+│ │ │ ├ jester
+│ │ │ ├ kitchen
+│ │ │ │ └ cellar
+│ │ │ ├ knight
+│ │ │ │ ├ knight1
+│ │ │ │ └ knight2
+│ │ │ ├ library
+│ │ │ ├ lord_appt
+│ │ │ ├ phys
+│ │ │ ├ servant
+│ │ │ ├ servanthead
+│ │ │ ├ squire
+│ │ │ │ ├ squire1
+│ │ │ │ └ squire2
+│ │ │ └ throne
+│ │ ├ manorgate
+│ │ ├ merc_guild
+│ │ ├ noble_manor
+│ │ │ ├ blue
+│ │ │ ├ red
+│ │ │ └ yellow
+│ │ ├ orphanage
+│ │ ├ rmh
+│ │ │ ├ bank
+│ │ │ ├ barber
+│ │ │ ├ bath
+│ │ │ ├ cell
+│ │ │ ├ chapel
+│ │ │ │ └ basement
+│ │ │ ├ craft
+│ │ │ │ ├ apothecary
+│ │ │ │ ├ artificer
+│ │ │ │ ├ blacksmith
+│ │ │ │ ├ clinic
+│ │ │ │ └ tailor
+│ │ │ ├ crafters_guild
+│ │ │ │ └ under
+│ │ │ ├ druid
+│ │ │ ├ farm
+│ │ │ │ ├ ambar
+│ │ │ │ ├ goat_rue
+│ │ │ │ ├ henhouse
+│ │ │ │ ├ house
+│ │ │ │ └ stall
+│ │ │ ├ garrison
+│ │ │ │ └ wall
+│ │ │ ├ greenhouse
+│ │ │ ├ herbalist
+│ │ │ ├ library
+│ │ │ ├ living
+│ │ │ ├ loudmouth
+│ │ │ ├ magician
+│ │ │ │ └ pass
+│ │ │ ├ manor
+│ │ │ │ ├ basement
+│ │ │ │ ├ bath
+│ │ │ │ └ vault
+│ │ │ ├ merchant
+│ │ │ ├ miner
+│ │ │ ├ sawmill
+│ │ │ ├ tavern
+│ │ │ ├ town_hall
+│ │ │ ├ windmill
+│ │ │ └ witch
+│ │ ├ shop
+│ │ ├ smithy
+│ │ ├ steward
+│ │ ├ tavern
+│ │ │ └ saiga
+│ │ ├ theatre
+│ │ ├ thieves_guild
+│ │ ├ town_elder
+│ │ │ └ place
+│ │ ├ vault
+│ │ └ warehouse
+│ ├ vampire_manor
+│ ├ villagegarrison
+│ └ wilderness
+│   ├ garrison
+│   ├ magic
+│   ├ shop
+│   └ tavern
+├ misc
+│ └ testroom
+├ outdoors
+│ ├ basin
+│ │ └ safe
+│ ├ beach
+│ │ ├ boat
+│ │ └ rmh_beach
+│ ├ bog
+│ │ ├ inhumen_camp
+│ │ └ rmh
+│ │   └ travel
+│ │     ├ forest_to_main
+│ │     ├ main
+│ │     ├ swamp_to_main
+│ │     └ underdark
+│ ├ caves
+│ ├ coast
+│ ├ eora
+│ ├ exposed
+│ │ ├ bath
+│ │ │ └ redhouse
+│ │ ├ cell
+│ │ ├ church
+│ │ ├ decap
+│ │ ├ dwarf
+│ │ ├ magiciantower
+│ │ ├ manorgarri
+│ │ ├ rmh
+│ │ │ ├ bath
+│ │ │ ├ chapel
+│ │ │ ├ crafters
+│ │ │ ├ manorgarri
+│ │ │ ├ merchant
+│ │ │ ├ tavern
+│ │ │ └ under
+│ │ │   └ basement
+│ │ ├ rmh_dwarf_keep
+│ │ ├ shop
+│ │ ├ tavern
+│ │ │ └ saiga
+│ │ ├ theatre
+│ │ ├ town
+│ │ │ └ rmh
+│ │ │   └ farm
+│ │ └ under
+│ │   ├ basement
+│ │   ├ rmh
+│ │   │ └ sewer
+│ │   ├ sewer
+│ │   └ town
+│ ├ farm
+│ ├ mountains
+│ │ ├ anvil
+│ │ │ ├ castle
+│ │ │ ├ grove
+│ │ │ ├ lavaexposed
+│ │ │ ├ peak
+│ │ │ ├ snowy
+│ │ │ └ snowyforest
+│ │ ├ decap
+│ │ ├ deception
+│ │ └ rmh_mountains
+│ │   └ frozen
+│ │     ├ forsaken_village
+│ │     └ lowlands
+│ ├ river
+│ ├ rmh_air
+│ ├ rmh_bog
+│ │ ├ darfortarea
+│ │ ├ north
+│ │ └ south
+│ ├ rmh_darkforest
+│ │ └ goblincampfire
+│ ├ rmh_desert
+│ │ ├ dungeon1
+│ │ ├ oasis
+│ │ ├ port
+│ │ ├ roofs
+│ │ ├ sea
+│ │ ├ tea
+│ │ └ valley
+│ ├ rmh_eilistraee
+│ ├ rmh_field
+│ │ ├ camp
+│ │ ├ druid
+│ │ ├ east
+│ │ ├ north
+│ │ ├ north_mountain
+│ │ ├ oldmill
+│ │ ├ rmh_mageporch
+│ │ ├ tavel
+│ │ │ ├ desert
+│ │ │ ├ forest
+│ │ │ ├ mount_to_rivermist
+│ │ │ ├ mount_to_underdark
+│ │ │ ├ mountain
+│ │ │ ├ swamps
+│ │ │ └ vampires
+│ │ └ west
+│ ├ rmh_magelake
+│ ├ rmh_platz
+│ ├ rmh_river
+│ ├ spidercave
+│ ├ town
+│ │ ├ keep
+│ │ ├ noble_manor
+│ │ │ ├ blue
+│ │ │ ├ red
+│ │ │ └ yellow
+│ │ ├ rmh
+│ │ │ ├ livingquart
+│ │ │ ├ roofs
+│ │ │ └ ruinedzone
+│ │ └ roofs
+│ ├ wilderness
+│ │ └ outpost
+│ │   ├ salem
+│ │   └ vanderlin
+│ └ woods_safe
+├ overlord_lair
+├ pocket_dimension
+│ ├ bag_of_holding
+│ ├ lighting_test
+│ ├ magic_closet
+│ ├ test_chamber
+│ ├ werewolf_lair
+│ └ werewolf_lair_trap
+├ ship
+│ ├ middeck
+│ ├ nobledeck
+│ ├ shipbrig
+│ └ topdeck
+├ start
+├ template_noop
+├ under
+│ ├ cave
+│ │ ├ mazedungeon
+│ │ ├ orcdungeon
+│ │ └ spider
+│ ├ cavelava
+│ │ ├ acid
+│ │ └ rmh
+│ │   └ lava_hollows
+│ ├ cavewet
+│ │ └ bogcaves
+│ │   ├ camp
+│ │   ├ central
+│ │   ├ coastcaves
+│ │   ├ north
+│ │   ├ south
+│ │   └ west
+│ ├ dungeon
+│ ├ lake
+│ ├ mountains
+│ │ └ anvil
+│ │   ├ dungeon
+│ │   │ └ lower
+│ │   ├ lower
+│ │   │ └ building
+│ │   └ upper
+│ ├ rmh_bedrock
+│ ├ rmh_bogforest_caves
+│ │ ├ cliffcaves
+│ │ ├ forestcaves
+│ │ │ ├ northwest
+│ │ │ └ southwest
+│ │ ├ mindflayer
+│ │ ├ moistcaves
+│ │ │ ├ northeast
+│ │ │ └ southeast
+│ │ ├ slime
+│ │ ├ spiders
+│ │ ├ trolls
+│ │ ├ werewolf
+│ │ └ wolf
+│ ├ rmh_desert
+│ │ ├ pyramid
+│ │ ├ spider
+│ │ ├ tea
+│ │ │ ├ harem
+│ │ │ ├ hareml
+│ │ │ ├ palacecasemates
+│ │ │ └ palacecellar
+│ │ └ ziqurat
+│ ├ rmh_dungeon
+│ │ ├ arena
+│ │ ├ catacombs
+│ │ ├ catacombs_church
+│ │ ├ catacombs_town
+│ │ ├ goblindungeon
+│ │ ├ jergal
+│ │ ├ orcpost
+│ │ ├ orcsjail
+│ │ └ underdarkmaze
+│ ├ rmh_eilistraeelake
+│ ├ spiderbase
+│ ├ tomb
+│ │ ├ cave
+│ │ │ ├ lava
+│ │ │ ├ spider
+│ │ │ └ wet
+│ │ ├ indoors
+│ │ │ ├ church
+│ │ │ ├ magic
+│ │ │ ├ rest
+│ │ │ └ royal
+│ │ ├ lake
+│ │ ├ sewer
+│ │ └ wilds
+│ │   ├ ambush
+│ │   └ bog
+│ ├ town
+│ │ ├ basement
+│ │ │ └ keep
+│ │ ├ rmh
+│ │ │ ├ bank
+│ │ │ ├ basement
+│ │ │ │ ├ artificer
+│ │ │ │ ├ bank
+│ │ │ │ ├ basement
+│ │ │ │ ├ bdsm
+│ │ │ │ ├ blacksmith
+│ │ │ │ ├ bogforest
+│ │ │ │ │ ├ normal
+│ │ │ │ │ └ wet
+│ │ │ │ ├ church
+│ │ │ │ ├ farm
+│ │ │ │ ├ lab
+│ │ │ │ ├ mages
+│ │ │ │ ├ merchant
+│ │ │ │ ├ pump
+│ │ │ │ ├ tavern
+│ │ │ │ └ townhall
+│ │ │ ├ sewer
+│ │ │ └ treasury
+│ │ └ sewer
+│ └ underdark
+│   └ rmh
+│     ├ caves
+│     ├ deepwastes
+│     ├ desert
+│     ├ flow
+│     ├ forest
+│     ├ glimmerlakes
+│     ├ main
+│     ├ mountain
+│     ├ shar
+│     ├ shrub
+│     ├ swamps
+│     └ tavel
+└ underworld
+/atom
+└ movable
+  ├ blueprint_pixel_dummy
+  ├ buildmode_pixel_dummy
+  ├ emissive_blocker
+  ├ fishingoverlay
+  │ ├ base
+  │ ├ face
+  │ │ └ frame
+  │ ├ pointer1
+  │ └ pointer2
+  ├ flick_visual
+  ├ lighting_object
+  ├ openspace_backdrop
+  ├ outdoor_effect
+  ├ plane_master_controller
+  │ └ game
+  ├ render_plane_relay
+  ├ screen
+  │ ├ achievement_toast
+  │ ├ act_intent
+  │ │ └ rogintent
+  │ ├ action_bar
+  │ │ ├ clickdelay
+  │ │ │ ├ left
+  │ │ │ └ right
+  │ │ └ resistdelay
+  │ ├ action_landing
+  │ ├ advsetup
+  │ ├ aim
+  │ ├ alert
+  │ │ ├ aura_healing
+  │ │ ├ blackmirror
+  │ │ ├ bugged
+  │ │ ├ disgusted
+  │ │ ├ drunk
+  │ │ ├ embeddedobject
+  │ │ ├ etherealcharge
+  │ │ ├ fat
+  │ │ ├ fire
+  │ │ ├ gross
+  │ │ ├ highgravity
+  │ │ ├ highpressure
+  │ │ ├ hungry
+  │ │ ├ hypnosis
+  │ │ ├ lowpressure
+  │ │ ├ mind_control
+  │ │ ├ not_enough_co2
+  │ │ ├ not_enough_nitro
+  │ │ ├ not_enough_oxy
+  │ │ ├ not_enough_tox
+  │ │ ├ notify_action
+  │ │ ├ notify_cloning
+  │ │ ├ restrained
+  │ │ │ ├ buckled
+  │ │ │ ├ handcuffed
+  │ │ │ └ legcuffed
+  │ │ ├ riddle
+  │ │ ├ starving
+  │ │ ├ status_effect
+  │ │ │ ├ abyssal_chill
+  │ │ │ ├ accelerated_growth
+  │ │ │ ├ aerial_speed
+  │ │ │ ├ air_walking
+  │ │ │ ├ ancestral_smithing
+  │ │ │ ├ aphrodisiac
+  │ │ │ ├ arcane_focus
+  │ │ │ ├ asleep
+  │ │ │ ├ balanced_mind
+  │ │ │ ├ bardbuff
+  │ │ │ │ ├ awaken
+  │ │ │ │ ├ constitution
+  │ │ │ │ ├ endurance
+  │ │ │ │ ├ intelligence
+  │ │ │ │ ├ ravox
+  │ │ │ │ └ speed
+  │ │ │ ├ blind
+  │ │ │ ├ bloatone
+  │ │ │ ├ bloattwo
+  │ │ │ ├ buff
+  │ │ │ │ ├ adrenalinerush
+  │ │ │ │ ├ alch
+  │ │ │ │ │ ├ artemisia_luck
+  │ │ │ │ │ ├ constitutionpot
+  │ │ │ │ │ ├ endurancepot
+  │ │ │ │ │ ├ fortunepot
+  │ │ │ │ │ ├ intelligencepot
+  │ │ │ │ │ ├ perceptionpot
+  │ │ │ │ │ ├ speedpot
+  │ │ │ │ │ └ strengthpot
+  │ │ │ │ ├ barbrage
+  │ │ │ │ │ └ briarrage
+  │ │ │ │ ├ bardic_inspiration
+  │ │ │ │ ├ battle_song
+  │ │ │ │ ├ beastsense
+  │ │ │ │ ├ bladeward
+  │ │ │ │ ├ blessed
+  │ │ │ │ ├ blood_euphoria
+  │ │ │ │ ├ blood_preference
+  │ │ │ │ ├ bloodstrength
+  │ │ │ │ ├ call_to_arms
+  │ │ │ │ ├ call_to_slaughter
+  │ │ │ │ ├ calm
+  │ │ │ │ ├ celerity
+  │ │ │ │ ├ censerbuff
+  │ │ │ │ ├ churnernegative
+  │ │ │ │ ├ churnerprotection
+  │ │ │ │ ├ clash
+  │ │ │ │ ├ clean_plus
+  │ │ │ │ ├ comfy
+  │ │ │ │ ├ constitution
+  │ │ │ │ │ └ lesser
+  │ │ │ │ ├ craft_buff
+  │ │ │ │ ├ cranking_soulchurner
+  │ │ │ │ ├ darkvision
+  │ │ │ │ ├ divine_beauty
+  │ │ │ │ ├ divine_strike
+  │ │ │ │ ├ drunk
+  │ │ │ │ ├ drunk_master
+  │ │ │ │ ├ drunkmurk
+  │ │ │ │ ├ drunknoc
+  │ │ │ │ ├ druqks
+  │ │ │ │ ├ endurance
+  │ │ │ │ │ └ lesser
+  │ │ │ │ ├ featherfall
+  │ │ │ │ ├ flowerfield_resistance
+  │ │ │ │ ├ foodbuff
+  │ │ │ │ ├ fortitude
+  │ │ │ │ ├ free_feet
+  │ │ │ │ ├ galewind
+  │ │ │ │ ├ giant_shape
+  │ │ │ │ ├ graggar_bloodrage
+  │ │ │ │ ├ guidance
+  │ │ │ │ ├ haste
+  │ │ │ │ ├ healing
+  │ │ │ │ │ └ spider_cocoon
+  │ │ │ │ ├ inspiration
+  │ │ │ │ ├ knowledge
+  │ │ │ │ ├ longstrider
+  │ │ │ │ ├ lux_drank
+  │ │ │ │ ├ matthioshealing
+  │ │ │ │ ├ meatvine_endurance
+  │ │ │ │ ├ meatvine_gigantism
+  │ │ │ │ ├ meatvine_speed
+  │ │ │ │ ├ nocblessed
+  │ │ │ │ ├ nocblessing
+  │ │ │ │ ├ nocbuff
+  │ │ │ │ ├ perception
+  │ │ │ │ │ └ lesser
+  │ │ │ │ ├ playing_music
+  │ │ │ │ ├ potence
+  │ │ │ │ ├ powered_steam_armor
+  │ │ │ │ ├ primal_savagery
+  │ │ │ │ ├ protection_evil_good
+  │ │ │ │ ├ psydonic_endurance
+  │ │ │ │ ├ psyhealing
+  │ │ │ │ ├ psyvived
+  │ │ │ │ ├ ravoxbuff
+  │ │ │ │ ├ received_lux
+  │ │ │ │ ├ seelie_grand_glamour
+  │ │ │ │ ├ song
+  │ │ │ │ │ ├ accelakathist
+  │ │ │ │ │ ├ fervor
+  │ │ │ │ │ ├ furtive_fortissimo
+  │ │ │ │ │ ├ intellectual_interval
+  │ │ │ │ │ └ rejuvsong
+  │ │ │ │ ├ speed
+  │ │ │ │ │ └ lesser
+  │ │ │ │ ├ strength
+  │ │ │ │ │ └ lesser
+  │ │ │ │ ├ stuffed
+  │ │ │ │ ├ trollshape
+  │ │ │ │ ├ weed
+  │ │ │ │ └ wheel
+  │ │ │ ├ close_to_orgasm
+  │ │ │ ├ collar_stun
+  │ │ │ ├ darkling_darkly
+  │ │ │ ├ darkling_glare
+  │ │ │ ├ debuff
+  │ │ │ │ ├ abrogation
+  │ │ │ │ ├ acidsplash
+  │ │ │ │ ├ addiction
+  │ │ │ │ ├ badmeal
+  │ │ │ │ ├ baited
+  │ │ │ │ ├ baitedcd
+  │ │ │ │ ├ baothadruqks
+  │ │ │ │ ├ barbfalter
+  │ │ │ │ ├ bigboobs
+  │ │ │ │ ├ bigboobslite
+  │ │ │ │ ├ bleedingt1
+  │ │ │ │ ├ bleedingt2
+  │ │ │ │ ├ bleedingt3
+  │ │ │ │ ├ blood_disgust
+  │ │ │ │ ├ boobs_quirk
+  │ │ │ │ ├ booming_blade
+  │ │ │ │ ├ burntmeal
+  │ │ │ │ ├ calendula_sedation
+  │ │ │ │ ├ call_to_slaughter
+  │ │ │ │ ├ chilled
+  │ │ │ │ ├ clashcd
+  │ │ │ │ ├ clickcd
+  │ │ │ │ ├ cold
+  │ │ │ │ ├ corrupted_by_tainted_lux
+  │ │ │ │ ├ cumbrained
+  │ │ │ │ ├ cursed
+  │ │ │ │ ├ dazed
+  │ │ │ │ ├ drunk
+  │ │ │ │ ├ electrified
+  │ │ │ │ ├ euphorbia_thorns
+  │ │ │ │ ├ exposed
+  │ │ │ │ ├ feintcd
+  │ │ │ │ ├ feinted
+  │ │ │ │ ├ flatboobs
+  │ │ │ │ ├ flatboobslite
+  │ │ │ │ ├ flaw_lux_taken
+  │ │ │ │ ├ frostbite
+  │ │ │ │ ├ hobbled
+  │ │ │ │ ├ hot
+  │ │ │ │ ├ hungryt1
+  │ │ │ │ ├ hungryt2
+  │ │ │ │ ├ hungryt3
+  │ │ │ │ ├ hungryt4
+  │ │ │ │ ├ infestation
+  │ │ │ │ ├ largeboobs
+  │ │ │ │ ├ largeboobslite
+  │ │ │ │ ├ loinspent
+  │ │ │ │ ├ lux_drained
+  │ │ │ │ ├ manabloom_silence
+  │ │ │ │ ├ matricaria_remedy
+  │ │ │ │ ├ mesmerised
+  │ │ │ │ ├ mob_fucked
+  │ │ │ │ │ └ male
+  │ │ │ │ ├ naledimask
+  │ │ │ │ ├ netted
+  │ │ │ │ ├ nympho_addiction
+  │ │ │ │ ├ orgasmbroken
+  │ │ │ │ ├ poppy_arena
+  │ │ │ │ ├ ravox_burden
+  │ │ │ │ ├ received_tainted_lux
+  │ │ │ │ ├ resurrection_trauma
+  │ │ │ │ ├ revive
+  │ │ │ │ ├ revived
+  │ │ │ │ │ └ rune
+  │ │ │ │ │   └ rough
+  │ │ │ │ ├ rosa_pacification
+  │ │ │ │ ├ rotfood
+  │ │ │ │ ├ salvia_madness
+  │ │ │ │ ├ silver_bane
+  │ │ │ │ ├ sleepytime
+  │ │ │ │ ├ smallboobs
+  │ │ │ │ ├ smallboobslite
+  │ │ │ │ ├ song
+  │ │ │ │ │ ├ dirge_misfortune
+  │ │ │ │ │ ├ pestilentpiper
+  │ │ │ │ │ └ suffocationsong
+  │ │ │ │ ├ specialcd
+  │ │ │ │ ├ staggered
+  │ │ │ │ ├ stealthcd
+  │ │ │ │ ├ stinky_person
+  │ │ │ │ ├ tainted_lux
+  │ │ │ │ ├ thirstyt1
+  │ │ │ │ ├ thirstyt2
+  │ │ │ │ ├ thirstyt3
+  │ │ │ │ ├ thirstyt4
+  │ │ │ │ ├ trainsleep
+  │ │ │ │ ├ uncookedfood
+  │ │ │ │ ├ vamp_dreams
+  │ │ │ │ ├ viciousmockery
+  │ │ │ │ ├ vsmallboobs
+  │ │ │ │ ├ vsmallboobslite
+  │ │ │ │ ├ vulnerable
+  │ │ │ │ └ wiz
+  │ │ │ ├ deep_blessing
+  │ │ │ ├ edging_overstimulation
+  │ │ │ ├ elven_grace
+  │ │ │ ├ emberwine
+  │ │ │ ├ falcon_strike
+  │ │ │ ├ family_curse
+  │ │ │ │ ├ demonic_damnation
+  │ │ │ │ ├ demonic_decay
+  │ │ │ │ ├ demonic_despair
+  │ │ │ │ ├ demonic_gluttony
+  │ │ │ │ ├ demonic_isolation
+  │ │ │ │ ├ demonic_madness
+  │ │ │ │ ├ demonic_paranoia
+  │ │ │ │ ├ demonic_pride
+  │ │ │ │ ├ demonic_torment
+  │ │ │ │ ├ demonic_wrath
+  │ │ │ │ ├ hunger
+  │ │ │ │ └ misfortune
+  │ │ │ ├ fleshmend
+  │ │ │ ├ freon
+  │ │ │ ├ frozen_solid
+  │ │ │ ├ go_away
+  │ │ │ ├ ground_slam_slow
+  │ │ │ ├ heldup
+  │ │ │ ├ high
+  │ │ │ ├ holdup
+  │ │ │ ├ immobilized
+  │ │ │ ├ in_love
+  │ │ │ ├ invisible
+  │ │ │ ├ knocked_down
+  │ │ │ ├ knot_fucked_stupid
+  │ │ │ ├ knot_gaped
+  │ │ │ ├ knot_tied
+  │ │ │ ├ knotted
+  │ │ │ ├ leash_owner
+  │ │ │ ├ leash_pet
+  │ │ │ ├ light_buff
+  │ │ │ ├ majesty_compulsion
+  │ │ │ ├ meatvine_tracked
+  │ │ │ ├ momentum_boost
+  │ │ │ ├ nature_communion
+  │ │ │ ├ non_detection
+  │ │ │ ├ off_balanced
+  │ │ │ ├ oiled
+  │ │ │ ├ paralyzed
+  │ │ │ │ └ recovery
+  │ │ │ ├ phase_walking
+  │ │ │ ├ power_regen
+  │ │ │ ├ probability_flux
+  │ │ │ ├ purpose
+  │ │ │ ├ regeneration_cycle
+  │ │ │ ├ regenerative_core
+  │ │ │ ├ seasonal_attunement
+  │ │ │ ├ servant_bell
+  │ │ │ ├ shapeshifted
+  │ │ │ ├ stasis
+  │ │ │ ├ strandling
+  │ │ │ ├ stress
+  │ │ │ │ ├ good
+  │ │ │ │ │ └ stressvgood
+  │ │ │ │ ├ stressbad
+  │ │ │ │ ├ stressinsane
+  │ │ │ │ └ stressvbad
+  │ │ │ ├ stun
+  │ │ │ ├ thaumaturgy
+  │ │ │ ├ toxin_immunity
+  │ │ │ ├ trance
+  │ │ │ ├ tremor_grip_loss
+  │ │ │ ├ vigor
+  │ │ │ ├ void_chill
+  │ │ │ ├ void_corruption
+  │ │ │ ├ warmth
+  │ │ │ ├ water_breathing
+  │ │ │ ├ wind_walking
+  │ │ │ └ wish_granters_gift
+  │ │ ├ too_much_co2
+  │ │ ├ too_much_nitro
+  │ │ ├ too_much_oxy
+  │ │ ├ too_much_tox
+  │ │ ├ verygross
+  │ │ ├ veryhighgravity
+  │ │ └ weightless
+  │ ├ anvil_hud
+  │ ├ area_creator
+  │ ├ area_text
+  │ ├ arrow
+  │ ├ background
+  │ ├ backhudl
+  │ │ ├ ghost
+  │ │ └ obs
+  │ ├ bloodpool
+  │ ├ bloodpool_maskpart
+  │ │ ├ background
+  │ │ ├ fill
+  │ │ ├ foreground
+  │ │ └ mask
+  │ ├ blueprint
+  │ │ ├ direction
+  │ │ ├ help
+  │ │ ├ pixel_mode
+  │ │ ├ quit
+  │ │ └ recipe
+  │ ├ broodmother
+  │ │ ├ bar
+  │ │ │ ├ tier_1_biomass_bar
+  │ │ │ ├ tier_2_biomass_bar
+  │ │ │ └ tier_3_biomass_bar
+  │ │ ├ button
+  │ │ │ ├ tier_1_biomass_lay
+  │ │ │ ├ tier_2_biomass_lay
+  │ │ │ └ tier_3_biomass_lay
+  │ │ ├ cover
+  │ │ └ mask
+  │ ├ building_backdrop
+  │ ├ building_button
+  │ ├ buildmode
+  │ │ ├ bdir
+  │ │ ├ category
+  │ │ ├ categoryswitch
+  │ │ ├ dirswitch
+  │ │ ├ help
+  │ │ ├ items
+  │ │ ├ mode
+  │ │ ├ modeswitch
+  │ │ └ quit
+  │ ├ button_palette
+  │ ├ canvas
+  │ ├ char_preview
+  │ ├ click_catcher
+  │ ├ close
+  │ ├ close_building
+  │ ├ close_gear_menu
+  │ ├ close_inventory
+  │ ├ cmode
+  │ ├ command_display
+  │ ├ component_button
+  │ ├ controller_ui
+  │ │ ├ character_pane
+  │ │ ├ controller_button
+  │ │ │ ├ mob_exit
+  │ │ │ ├ one
+  │ │ │ ├ patrol
+  │ │ │ └ two
+  │ │ ├ controller_ui
+  │ │ ├ name_pane
+  │ │ ├ stat_pane
+  │ │ └ task_pane
+  │ ├ craft
+  │ ├ credit
+  │ ├ damageoverlay
+  │ ├ daynight
+  │ ├ def_intent
+  │ ├ drop
+  │ ├ energy
+  │ ├ eye_intent
+  │ ├ fishing_hud
+  │ ├ flash
+  │ ├ fov_holder
+  │ ├ fullscreen
+  │ │ ├ arcyne_eye
+  │ │ ├ astral_border
+  │ │ ├ black
+  │ │ ├ blackimageoverlay
+  │ │ ├ blind
+  │ │ │ └ sleeper
+  │ │ ├ brute
+  │ │ ├ color_vision
+  │ │ │ ├ blue
+  │ │ │ ├ green
+  │ │ │ └ red
+  │ │ ├ confusion_border
+  │ │ ├ crit
+  │ │ │ ├ cmode
+  │ │ │ ├ death
+  │ │ │ ├ dying
+  │ │ │ ├ uncon
+  │ │ │ └ vision
+  │ │ ├ curse
+  │ │ ├ deafmute_border
+  │ │ ├ dreaming
+  │ │ │ └ waking_up
+  │ │ ├ druqks
+  │ │ ├ echo
+  │ │ ├ fade
+  │ │ ├ flash
+  │ │ │ └ static
+  │ │ ├ flashholder
+  │ │ ├ high
+  │ │ ├ impaired
+  │ │ │ ├ left
+  │ │ │ └ right
+  │ │ ├ inqvision
+  │ │ ├ lighting_backdrop
+  │ │ │ ├ lit
+  │ │ │ ├ sunlight
+  │ │ │ └ unlit
+  │ │ ├ love
+  │ │ ├ maniac
+  │ │ ├ oxy
+  │ │ ├ painflash
+  │ │ ├ purest
+  │ │ ├ see_through_darkness
+  │ │ ├ weedsm
+  │ │ ├ white
+  │ │ └ zezuspsyst
+  │ ├ gameover
+  │ │ └ hog
+  │ ├ gear_menu_backdrop
+  │ ├ gear_slot
+  │ ├ ghost
+  │ │ ├ button_base
+  │ │ ├ jumptomob
+  │ │ ├ orbit
+  │ │ │ └ rogue
+  │ │ ├ reenter
+  │ │ ├ teleport_area
+  │ │ ├ z_down
+  │ │ └ z_up
+  │ ├ give_intent
+  │ ├ healthdoll
+  │ ├ healths
+  │ │ └ blood
+  │ ├ heatstamover
+  │ ├ hud
+  │ ├ hud_bait
+  │ ├ hud_completion
+  │ ├ hud_fish
+  │ ├ hud_note
+  │ ├ human
+  │ │ ├ equip
+  │ │ └ toggle
+  │ ├ inventory
+  │ │ └ hand
+  │ ├ language_menu
+  │ ├ lobby
+  │ │ ├ background
+  │ │ └ button
+  │ │   ├ actors
+  │ │   ├ character_setup
+  │ │   ├ collapse
+  │ │   ├ join
+  │ │   ├ lore
+  │ │   ├ migration
+  │ │   └ ready
+  │ ├ mana
+  │ ├ mana_over
+  │ ├ map_view
+  │ │ └ examine_panel_screen
+  │ ├ mood
+  │ ├ mov_intent
+  │ ├ movable
+  │ │ ├ action_button
+  │ │ ├ mouseover
+  │ │ │ └ maptext
+  │ │ └ snap
+  │ │   └ lockpicking
+  │ ├ multitool_arrow
+  │ ├ palette_scroll
+  │ │ ├ down
+  │ │ └ up
+  │ ├ party_member_health
+  │ ├ party_member_name
+  │ ├ plane_master
+  │ │ ├ above_hud
+  │ │ ├ above_lighting
+  │ │ ├ area
+  │ │ ├ balloon_chat
+  │ │ ├ blackness
+  │ │ ├ camera_static
+  │ │ ├ emissive
+  │ │ ├ field_of_vision_blocker
+  │ │ ├ field_of_vision_mask
+  │ │ ├ floor
+  │ │ ├ fog_cutter
+  │ │ ├ fullscreen
+  │ │ ├ game_world
+  │ │ ├ game_world_above
+  │ │ ├ game_world_below
+  │ │ ├ game_world_fov_hidden
+  │ │ ├ game_world_object_permanence
+  │ │ ├ game_world_walls
+  │ │ ├ ghost
+  │ │ ├ hud
+  │ │ ├ leylines
+  │ │ ├ lighting
+  │ │ ├ massive_obj
+  │ │ ├ o_light_visual
+  │ │ ├ openspace
+  │ │ ├ openspace_backdrop
+  │ │ ├ parallax
+  │ │ ├ parallax_white
+  │ │ ├ point
+  │ │ ├ reflective
+  │ │ ├ reflective_cutter
+  │ │ ├ rendering_plate
+  │ │ │ ├ game_world
+  │ │ │ ├ game_world_post_processing
+  │ │ │ ├ game_world_processing
+  │ │ │ ├ master
+  │ │ │ ├ non_game
+  │ │ │ ├ non_game_post_processing
+  │ │ │ └ non_game_processing
+  │ │ ├ runechat
+  │ │ ├ seethrough
+  │ │ ├ stategy_plane
+  │ │ ├ sunlight
+  │ │ ├ transparent_floor
+  │ │ ├ visual_hud
+  │ │ ├ weather_effect
+  │ │ └ weather_overlay
+  │ ├ pull
+  │ ├ putrid
+  │ │ ├ background
+  │ │ ├ bar
+  │ │ │ └ resource_bar
+  │ │ ├ cover
+  │ │ └ personal
+  │ │   ├ background
+  │ │   ├ bar
+  │ │   │ ├ evolution
+  │ │   │ └ personal_resource_bar
+  │ │   └ cover
+  │ ├ quad_intents
+  │ ├ radial
+  │ │ ├ center
+  │ │ ├ persistent
+  │ │ │ └ center
+  │ │ └ slice
+  │ ├ read
+  │ ├ readtext
+  │ ├ rest
+  │ ├ restdown
+  │ ├ restup
+  │ ├ rintent_selection
+  │ ├ rmbintent
+  │ ├ rogmove
+  │ │ └ sprint
+  │ ├ scannies
+  │ ├ signal_horn
+  │ ├ skills
+  │ ├ splash
+  │ │ └ credits
+  │ ├ stamina
+  │ ├ storage
+  │ ├ storage_hover
+  │ ├ strategy_ui
+  │ │ ├ ability_bar
+  │ │ ├ action
+  │ │ ├ controller_button
+  │ │ │ ├ bottom
+  │ │ │ ├ builds
+  │ │ │ ├ decor
+  │ │ │ ├ destroy
+  │ │ │ ├ exit
+  │ │ │ ├ move
+  │ │ │ └ traps
+  │ │ ├ controller_ui
+  │ │ ├ stat_pane
+  │ │ └ units_preview
+  │ ├ stress
+  │ ├ swap_hand
+  │ ├ text
+  │ │ └ screen_text
+  │ │   └ command_order
+  │ ├ throw_catch
+  │ ├ time
+  │ ├ vis_holder
+  │ ├ worker_inventory_backdrop
+  │ ├ worker_inventory_slot
+  │ └ zone_sel
+  └ virtualspeaker
+/client
 /datum
 ├ achievement_data
 ├ action
 │ ├ augment
-│ │ └
+│ │ └ sandevistan
 │ ├ automaton_voice
 │ ├ boss
-│ │ └
+│ │ └ selfgib
 │ ├ clan_hierarchy
 │ │ ├ command_subordinate
 │ │ ├ locate_subordinate
@@ -65,12 +1196,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ lunge
 │ │ │ │ ├ mark_target
 │ │ │ │ ├ ranged
-│ │ │ │ │ └
+│ │ │ │ │ └ spread
+│ │ │ │ │   └ lethal
 │ │ │ │ ├ repair_walls
 │ │ │ │ ├ slicing_sweep
 │ │ │ │ ├ slow_ground
 │ │ │ │ ├ transfer_resources
-│ │ │ │ │ └
+│ │ │ │ │ └ improved
 │ │ │ │ └ triple_charge
 │ │ │ ├ spread_floor
 │ │ │ ├ spread_healing_well
@@ -90,6 +1222,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ tentacle_grab
 │ │ │ ├ tentacle_spit_acid
 │ │ │ └ voidblast
+│ │ ├ outlaw_decree
 │ │ └ spell
 │ │   ├ aoe
 │ │   │ ├ abrogation
@@ -99,7 +1232,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ ├ on_turf
 │ │   │ │ ├ arcyne_storm
 │ │   │ │ ├ circle
-│ │   │ │ │ └
+│ │   │ │ │ └ flower_field
 │ │   │ │ ├ ensnare
 │ │   │ │ ├ meteor_storm
 │ │   │ │ └ snap_freeze
@@ -108,9 +1241,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ │ └ howl
 │ │   │ └ snuff
 │ │   ├ appraise
-│ │   │ └
+│ │   │ └ holy
 │ │   ├ attach_bodypart
 │ │   ├ avert
+│ │   │ └ templar
 │ │   ├ baothablessings
 │ │   ├ bardic_inspiration
 │ │   ├ beam
@@ -119,14 +1253,17 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   ├ beast_tame
 │ │   ├ blade_burst
 │ │   ├ blindness
-│ │   │ └
+│ │   │ └ miracle
 │ │   ├ charm
 │ │   │ ├ eoran
 │ │   │ └ vampire
 │ │   ├ chill_touch
 │ │   ├ churn_wealthy
 │ │   ├ cone
-│ │   │ └
+│ │   │ └ staggered
+│ │   │   ├ cone_of_cold
+│ │   │   │ └ void
+│ │   │   └ eldritch_blast
 │ │   ├ conjure
 │ │   │ ├ bonfire
 │ │   │ ├ companion_crow
@@ -138,7 +1275,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ ├ kneestingers
 │ │   │ ├ phantom_ear
 │ │   │ ├ raise_lesser_undead
-│ │   │ │ └
+│ │   │ │ └ necromancer
 │ │   │ ├ rous
 │ │   │ ├ summon_horse
 │ │   │ │ ├ black
@@ -152,10 +1289,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   ├ decompose
 │ │   ├ detect_singles
 │ │   ├ diagnose
-│ │   │ └
+│ │   │ └ holy
 │ │   ├ enchant_door
 │ │   ├ enchantment
-│ │   │ └
+│ │   │ └ green_flame
 │ │   ├ enhanced_mimicry
 │ │   ├ enrapture
 │ │   ├ enslave_mortal
@@ -219,7 +1356,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   ├ hammer_fall
 │ │   ├ healing
 │ │   │ ├ greater
-│ │   │ │ └
+│ │   │ │ └ profane
 │ │   │ └ profane
 │ │   ├ heat_metal
 │ │   ├ instill_perfection
@@ -231,6 +1368,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   ├ ourspell
 │ │   ├ painkiller
 │ │   ├ persistence
+│ │   ├ pointed
+│ │   │ └ werewolf_create_lair
 │ │   ├ pragmas_charm
 │ │   ├ pressure
 │ │   ├ projectile
@@ -258,7 +1397,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ ├ profane
 │ │   │ ├ repel
 │ │   │ ├ sickness
-│ │   │ └ swordfish
+│ │   │ ├ swordfish
+│ │   │ └ water_bolt
 │ │   ├ psydonabsolve
 │ │   ├ psydonendure
 │ │   ├ psydonlux_tamper
@@ -268,7 +1408,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   ├ revel_in_slaughter
 │ │   ├ revive
 │ │   ├ sacred_flame
-│ │   │ └
+│ │   │ └ oathbreaker
+│ │   ├ seelie_call_beast
+│ │   ├ seelie_drain
+│ │   ├ seelie_kiss
+│ │   ├ seelie_replenish
+│ │   ├ seelie_strip
 │ │   ├ silence_inhumen
 │ │   ├ status
 │ │   │ ├ booming_blade
@@ -278,6 +1423,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ ├ infestation
 │ │   │ ├ invisibility
 │ │   │ ├ primal_savagery
+│ │   │ ├ seelie_dust
 │ │   │ ├ vigorous_craft
 │ │   │ └ wheel
 │ │   ├ stone_throw
@@ -285,6 +1431,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   ├ sundering_lightning
 │ │   ├ throw_target
 │ │   ├ touch
+│ │   │ └ healing_touch
 │ │   ├ transact
 │ │   ├ transfer_pain
 │ │   ├ transfrom_tree
@@ -295,6 +1442,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ ├ astral_toggle
 │ │   │ ├ barbrage
 │ │   │ ├ basic_projectile
+│ │   │ ├ battle_song
 │ │   │ ├ beast_sense
 │ │   │ ├ blade_ward
 │ │   │ ├ bless_crops
@@ -309,7 +1457,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ ├ claws
 │ │   │ ├ command_undead
 │ │   │ ├ cone
-│ │   │ │ └
+│ │   │ │ └ staggered
 │ │   │ ├ conjure_item
 │ │   │ │ ├ aphrodisiac_bomb
 │ │   │ │ ├ briar_claw
@@ -332,11 +1480,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ │ ├ sleeping_bomb
 │ │   │ │ ├ smoke_bomb
 │ │   │ │ ├ summon_leech
+│ │   │ │ │ └ pestra
 │ │   │ │ ├ summon_lockpick
 │ │   │ │ ├ summon_parchment
-│ │   │ │ │ └
+│ │   │ │ │ └ scroll
 │ │   │ │ └ summon_trident
-│ │   │ │   └
+│ │   │ │   └ miracle
 │ │   │ ├ convert_rebel
 │ │   │ ├ create_abyssoid
 │ │   │ ├ create_cloud
@@ -344,11 +1493,11 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ ├ enter_overseer_mode
 │ │   │ ├ feather_falling
 │ │   │ ├ forcewall
-│ │   │ │ └
+│ │   │ │ └ breakable
 │ │   │ ├ giant_shape
 │ │   │ ├ hag_call
 │ │   │ ├ howl
-│ │   │ │ └
+│ │   │ │ └ call_of_the_moon
 │ │   │ ├ jaunt
 │ │   │ │ ├ bush_jaunt
 │ │   │ │ ├ ethereal_jaunt
@@ -364,7 +1513,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ │ │ ├ servant
 │ │   │ │ │ └ town_watch
 │ │   │ │ ├ encode_thoughts
-│ │   │ │ │ └
+│ │   │ │ │ └ vampire
 │ │   │ │ ├ grant_nobility
 │ │   │ │ ├ grant_resident
 │ │   │ │ ├ grant_title
@@ -375,10 +1524,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ ├ mansion_portal
 │ │   │ ├ message
 │ │   │ ├ personality_commune
+│ │   │ ├ protection_evil_good
 │ │   │ ├ psydonrespite
 │ │   │ ├ regenerate
 │ │   │ ├ rituos
+│ │   │ ├ rogue_vanish
 │ │   │ ├ secondsight
+│ │   │ ├ seelie_grand_glamour
 │ │   │ ├ shadow_step
 │ │   │ ├ shapeshift
 │ │   │ │ ├ bat
@@ -408,6 +1560,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ │ ├ rejuvenation_song
 │ │   │ │ └ suffocating_seliloquy
 │ │   │ ├ soul_speak
+│ │   │ ├ summon_extra_genitals
 │ │   │ ├ summon_worker
 │ │   │ ├ talent_trees
 │ │   │ ├ teleport
@@ -419,22 +1572,29 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ │ ├ entangler
 │ │   │ │ ├ non_detection
 │ │   │ │ ├ orison
-│ │   │ │ │ └
+│ │   │ │ │ └ lesser
 │ │   │ │ └ prestidigitation
 │ │   │ ├ tragedy
 │ │   │ ├ transfix
-│ │   │ │ └
+│ │   │ │ └ master
 │ │   │ ├ troll_shape
 │ │   │ ├ werewolf_form
 │ │   │ └ wildrage
 │ │   ├ vicious_mockery
+│ │   ├ werewolf_voluntary_bite
 │ │   └ woundlick
 │ ├ coven
 │ ├ fae_trickery
 │ ├ innate
 │ │ ├ embrace_death
-│ │ └ path_debug
-│ │   └
+│ │ ├ path_debug
+│ │ │ └ jps
+│ │ ├ resurrection_rune_call
+│ │ ├ resurrection_rune_return
+│ │ ├ table_crawl_hide
+│ │ ├ werewolf_contract_journal
+│ │ ├ werewolf_contract_scent
+│ │ └ werewolf_lair_scent
 │ ├ item_action
 │ │ ├ organ_action
 │ │ │ ├ cursed_heart
@@ -459,6 +1619,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ splitter
 │ └ transport
 ├ action_state_manager
+├ actionspeed_modifier
+│ ├ base
+│ ├ stimulants
+│ └ stress
 ├ admin_help
 ├ admin_help_tickets
 ├ admin_rank
@@ -480,7 +1644,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ species_hostile
 │ │ └ warden
 │ ├ basic_ranged_attack
-│ │ └
+│ │ └ trader
 │ ├ basic_sneak
 │ ├ beacon_for_food
 │ ├ behemoth_quake
@@ -510,7 +1674,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ eat_fetched_snack
 │ ├ end_flesh_frenzy
 │ ├ enter_exit_home
-│ │ └
+│ │ └ no_cooldown
 │ ├ equip_target
 │ ├ fetch_food_for_kitten
 │ ├ fetch_seek
@@ -533,7 +1697,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ human_beg
 │ │ ├ humans
 │ │ ├ in_hands
-│ │ │ └
+│ │ │ └ given_list
 │ │ ├ in_list
 │ │ │ ├ closest_turf
 │ │ │ ├ saiga
@@ -548,7 +1712,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ find_food_urgently
 │ ├ find_hunt_target
 │ ├ find_mom
-│ │ └
+│ │ └ kitten
 │ ├ find_nest
 │ ├ find_partner
 │ ├ find_potential_horny_targets
@@ -572,20 +1736,23 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ fishboss_use_water
 │ ├ fishboss_whirlpool
 │ ├ fishing
-│ │ └
+│ │ └ wolf
 │ ├ flesh_combat
 │ ├ flesh_frenzy_attack
 │ ├ follow
 │ ├ follow_friend
-│ │ └
+│ │ └ mirespider
 │ ├ forget_failed_fetches
 │ ├ gator_ambush
 │ ├ glimmerwing_drug
 │ ├ gnome
-│ │ └
+│ │ └ return_home
 │ ├ gnome_transport_cycle
 │ ├ hide
 │ ├ horny
+│ │ ├ human
+│ │ └ simple_mob
+│ │   └ spider
 │ ├ human_npc_climb_tree
 │ ├ human_npc_harass_dart_in
 │ ├ human_npc_harass_retreat
@@ -609,7 +1776,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ minotaur_ground_slam
 │ ├ minotaur_melee_attack
 │ ├ move_to_cardinal
-│ │ └
+│ │ └ void_obelisk
 │ ├ move_to_target
 │ ├ mug
 │ ├ papameat_defend
@@ -635,7 +1802,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ set_travel_destination
 │ ├ setup_ambush
 │ ├ setup_shop
-│ │ └
+│ │ └ jumpscare
 │ ├ simple_rest_and_recuperate
 │ ├ stand
 │ ├ start_flesh_frenzy
@@ -651,7 +1818,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ void_obelisk
 │ ├ teleport_to_darkness
 │ ├ territorial_struggle
-│ │ └
+│ │ └ raccoon
 │ ├ throw_grenade
 │ ├ tipped_reaction
 │ ├ travel_towards
@@ -669,13 +1836,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ agriopylon
 │ ├ basic_controller
 │ │ ├ chicken
-│ │ │ └
+│ │ │ └ baby
 │ │ ├ cow
-│ │ │ └
+│ │ │ └ baby
 │ │ ├ dryad
 │ │ ├ gnome_homunculus
 │ │ └ trader
-│ │   └
+│ │   └ jumpscare
 │ ├ bat
 │ ├ behemoth
 │ ├ big_rat
@@ -699,8 +1866,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ headless
 │ ├ hellhound
 │ ├ human_bum
-│ │ └
+│ │ └ aggressive
 │ ├ human_npc
+│ │ └ undead
 │ ├ imp
 │ ├ kitten
 │ ├ kraken_tentacle
@@ -762,7 +1930,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ meatvine
 │ │ ├ mimic
 │ │ ├ no_flee
-│ │ │ └
+│ │ │ └ dragger
 │ │ ├ opportunistic
 │ │ ├ opportunistic_watcher
 │ │ ├ saiga
@@ -774,7 +1942,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ beg_human
 │ ├ behemoth_special_abilities
 │ ├ being_a_minion
-│ │ └
+│ │ └ mirespider
 │ ├ bring_food_to_babies
 │ ├ call_for_help
 │ ├ cat_rest_behavior
@@ -812,7 +1980,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ find_water
 │ ├ find_weapon
 │ ├ fish
-│ │ └
+│ │ └ fish_from_turfs
 │ ├ fishboss_check_environment
 │ ├ fishboss_check_phase
 │ ├ fishboss_special_ability
@@ -820,7 +1988,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ flee_target
 │ │ ├ dragger
 │ │ ├ from_flee_key
-│ │ │ └
+│ │ │ └ cat_struggle
 │ │ ├ saiga
 │ │ └ until_destination
 │ ├ flesh_advanced_melee_attack
@@ -844,7 +2012,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ leyline_special_abilities
 │ ├ leyline_teleport
 │ ├ look_for_adult
-│ │ └
+│ │ └ kitten
 │ ├ loot
 │ ├ make_babies
 │ ├ meatvine_bridge
@@ -855,7 +2023,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ minotaur_special_attacks
 │ ├ minotaur_targeting
 │ ├ move_to_cardinal
-│ │ └
+│ │ └ void_obelisk
 │ ├ mug
 │ ├ no_target_hide
 │ ├ papameat_defend
@@ -864,17 +2032,17 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ pet_planning
 │ ├ polter
 │ ├ prepare_travel_to_destination
-│ │ └
+│ │ └ trader
 │ ├ random_speech
-│ │ └
+│ │ └ cow
 │ ├ ranged_attack_subtree
 │ ├ retrieve_arrows
 │ ├ setup_shop
-│ │ └
+│ │ └ jumpscare
 │ ├ shade_burning_check
 │ ├ simple_find_horny
 │ ├ simple_find_nearest_target_to_flee
-│ │ └
+│ │ └ dragger
 │ ├ simple_find_nearest_target_to_flee_has_item
 │ ├ simple_find_priority
 │ ├ simple_find_target
@@ -906,20 +2074,23 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ void_obelisk
 │ │ └ whirlpool
 │ ├ territorial_struggle
-│ │ └
+│ │ └ raccoon
 │ ├ throw_grenade
 │ ├ tip_reaction
 │ ├ travel_to_point
-│ │ └
+│ │ └ and_clear_target
+│ │   ├ reinforce
+│ │   └ wander
 │ ├ tree_climb
 │ ├ use_bandage
 │ ├ use_healing_drink
 │ ├ use_personal_abilities
 │ ├ use_powder
-│ │ └
+│ │ └ bum
 │ ├ use_throwable
 │ └ wounded_harass
 ├ alch_cauldron_recipe
+│ ├ anti_preg_potion
 │ ├ antidote
 │ ├ aphrodisiac
 │ ├ berrypoison
@@ -990,7 +2161,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ └ worm
 ├ ambush_config
 │ ├ bog_guard_deserters
-│ │ └
+│ │ └ hard
 │ ├ deepone_party
 │ ├ deserter_patrol
 │ ├ duo_minotaur
@@ -1074,17 +2245,18 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ maniac
 │ ├ overlord
 │ ├ prebel
-│ │ └
+│ │ └ head
 │ ├ prisoner
 │ ├ purishep
 │ ├ skeleton
-│ │ └
+│ │ └ knight
 │ ├ vampire
 │ │ ├ lord
+│ │ │ └ daewalker
 │ │ ├ lords_spawn
 │ │ └ outcast
 │ ├ werewolf
-│ │ └
+│ │ └ lesser
 │ ├ zizocultist
 │ │ ├ leader
 │ │ └ zizo_knight
@@ -1146,7 +2318,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ mask
 │ │ ├ dendorhelm
 │ │ ├ gold
-│ │ │ └
+│ │ │ └ mask
 │ │ ├ hauberk
 │ │ ├ holysee_bascinet
 │ │ ├ holysee_chausses
@@ -1197,7 +2369,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ splint
 │ │ │ ├ splintpants
 │ │ │ ├ studded
-│ │ │ │ └
+│ │ │ │ └ mail
 │ │ │ ├ studdedbikini
 │ │ │ ├ studdedbikinimail
 │ │ │ ├ studdedbra
@@ -1221,9 +2393,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ sojourner_mask
 │ │ ├ steel
 │ │ │ ├ barding
-│ │ │ │ └
+│ │ │ │ └ honse
 │ │ │ ├ bascinet
-│ │ │ │ └
+│ │ │ │ └ steppe
 │ │ │ ├ bastion_helm
 │ │ │ ├ bevor
 │ │ │ ├ brigadine
@@ -1310,7 +2482,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ rousskull_helm
 │ │ │ ├ royal_knight_helm
 │ │ │ ├ scalemail
-│ │ │ │ └
+│ │ │ │ └ steppe
 │ │ │ ├ scalemailbikini
 │ │ │ ├ scalemailbra
 │ │ │ ├ sinistar
@@ -1323,7 +2495,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ └ helm
 │ │ │ ├ steppemask
 │ │ │ ├ surcoat
-│ │ │ │ └
+│ │ │ │ └ heartfelt
 │ │ │ ├ templar
 │ │ │ │ ├ gold_helmet
 │ │ │ │ ├ helmet_astrata
@@ -1362,7 +2534,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ silver_dildo
 │ ├ silver_plug
 │ ├ slag
-│ │ └
+│ │ └ steel
 │ ├ slave_control
 │ ├ slave_control_master
 │ ├ steel_dildo
@@ -1480,11 +2652,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ volf
 │ │ ├ gold_mask
 │ │ ├ gold_mask_left
+│ │ ├ gold_teeth
 │ │ ├ iron
-│ │ │ └
+│ │ │ └ statue
 │ │ ├ rontzs
 │ │ ├ signet
-│ │ │ └
+│ │ │ └ silver
+│ │ │   └ inq
 │ │ ├ silver
 │ │ │ ├ amulet
 │ │ │ ├ blortzs
@@ -1500,6 +2674,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ gemeralds
 │ │ │ ├ headdress
 │ │ │ ├ maker_ring
+│ │ │ ├ moonshackle_collar
 │ │ │ ├ nosechain
 │ │ │ ├ obelisk
 │ │ │ ├ rings
@@ -1516,7 +2691,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ vasefancy
 │ │ │ └ volf
 │ │ └ steel
-│ │   └
+│ │   └ statue
 │ └ weapons
 │   ├ atgervi_axe
 │   ├ atgervi_shield
@@ -1591,7 +2766,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ ├ woodcutter
 │   │ └ zweihander
 │   ├ mace
-│   │ └
+│   │ └ cane
+│   │   └ noble
 │   ├ psy
 │   │ ├ axe
 │   │ ├ cudgel
@@ -1702,16 +2878,24 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ smelter
 │ │ └ waterpurifier
 │ ├ general
+│ │ ├ bronze_cast
+│ │ ├ bronze_chisel
+│ │ ├ cog
+│ │ │ ├ iron
+│ │ │ └ steel
+│ │ ├ headhook
 │ │ ├ keys
-│ │ ├
-│ │ └
+│ │ ├ locks
+│ │ ├ unstable
+│ │ ├ woodcog
+│ │ └ woodcogupgrade2
 │ ├ gold
-│ │ └
+│ │ └ headhook
 │ ├ misc
-│ │ └
+│ │ └ jinglebells
 │ ├ prosthetics
 │ │ ├ bronze
-│ │ │ └
+│ │ │ └ arm_right
 │ │ ├ gold
 │ │ │ ├ arm_right
 │ │ │ ├ leg_left
@@ -1753,14 +2937,16 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   └ harpoon_gun
 ├ asset
 │ ├ group
-│ │ └
+│ │ ├ permissions
+│ │ ├ tgui_preload
+│ │ └ tgui_window_shared
 │ ├ json
-│ │ └
+│ │ └ icon_ref_map
 │ ├ simple
 │ │ ├ changelog
 │ │ ├ headshot_imgs
 │ │ ├ icon_states
-│ │ │ └
+│ │ │ └ multiple_icons
 │ │ ├ jquery
 │ │ ├ namespaced
 │ │ │ ├ common
@@ -1774,18 +2960,588 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ tgui_panel
 │ │ └ vv
 │ ├ spritesheet
-│ │ └
+│ │ ├ attributes_big
+│ │ ├ attributes_small
+│ │ ├ loadout_items
+│ │ ├ quest_previews
+│ │ └ simple
 │ └ spritesheet_batched
 │   ├ achievements
 │   └ chat
 ├ asset_cache_item
 ├ asset_transport
-│ └
+│ └ webroot
 ├ atom_hud
 │ ├ alternate_appearance
-│ │ └
+│ │ └ basic
+│ │   ├ blessedAware
+│ │   ├ everyone
+│ │   ├ group
+│ │   ├ observers
+│ │   ├ People
+│ │   └ traveltile
 │ └ antag
-│   └
+│   └ hidden
+├ attribute
+│ ├ skill
+│ │ ├ combat
+│ │ │ ├ axesmaces
+│ │ │ ├ bows
+│ │ │ ├ crossbows
+│ │ │ ├ firearms
+│ │ │ ├ knives
+│ │ │ ├ polearms
+│ │ │ ├ shields
+│ │ │ ├ swords
+│ │ │ ├ unarmed
+│ │ │ ├ whipsflails
+│ │ │ └ wrestling
+│ │ ├ craft
+│ │ │ ├ alchemy
+│ │ │ ├ armor_repair
+│ │ │ ├ armorsmithing
+│ │ │ ├ blacksmithing
+│ │ │ ├ bombs
+│ │ │ ├ carpentry
+│ │ │ ├ cooking
+│ │ │ │ ├ baking
+│ │ │ │ ├ brewing
+│ │ │ │ ├ cheesemaking
+│ │ │ │ ├ confectionery
+│ │ │ │ ├ distilling
+│ │ │ │ ├ fine_cuisine
+│ │ │ │ ├ grilling
+│ │ │ │ ├ preparation
+│ │ │ │ ├ preservation
+│ │ │ │ └ winemaking
+│ │ │ ├ crafting
+│ │ │ ├ engineering
+│ │ │ ├ locksmithing
+│ │ │ ├ masonry
+│ │ │ ├ smelting
+│ │ │ ├ tanning
+│ │ │ │ └ patching
+│ │ │ ├ traps
+│ │ │ ├ weapon_repair
+│ │ │ └ weaponsmithing
+│ │ ├ labor
+│ │ │ ├ butchering
+│ │ │ ├ farming
+│ │ │ ├ fishing
+│ │ │ ├ lumberjacking
+│ │ │ ├ mathematics
+│ │ │ ├ mining
+│ │ │ └ taming
+│ │ ├ magic
+│ │ │ ├ arcane
+│ │ │ ├ blood
+│ │ │ ├ druidic
+│ │ │ └ holy
+│ │ └ misc
+│ │   ├ athletics
+│ │   ├ climbing
+│ │   ├ lockpicking
+│ │   ├ medicine
+│ │   ├ music
+│ │   ├ reading
+│ │   ├ riding
+│ │   ├ sewing
+│ │   │ └ mending
+│ │   ├ sneaking
+│ │   ├ stealing
+│ │   └ swimming
+│ └ stat
+│   ├ constitution
+│   ├ endurance
+│   ├ fortune
+│   ├ intelligence
+│   ├ perception
+│   ├ speed
+│   └ strength
+├ attribute_editor
+├ attribute_holder
+│ └ sheet
+│   ├ age
+│   │ ├ middleaged
+│   │ └ old
+│   └ job
+│     ├ aasimar_npc
+│     │ ├ skilled
+│     │ │ ├ heavy_gear
+│     │ │ ├ light_gear
+│     │ │ ├ medium_gear
+│     │ │ └ naked
+│     │ ├ unskilled
+│     │ │ ├ heavy_gear
+│     │ │ ├ light_gear
+│     │ │ ├ medium_gear
+│     │ │ └ naked
+│     │ └ very_skilled
+│     │   ├ heavy_gear
+│     │   ├ light_gear
+│     │   ├ medium_gear
+│     │   └ naked
+│     ├ advclass
+│     │ ├ acolyte
+│     │ │ ├ base
+│     │ │ ├ love
+│     │ │ ├ nun
+│     │ │ ├ nun_regal
+│     │ │ ├ selune
+│     │ │ ├ sune
+│     │ │ └ warrior_priest
+│     │ ├ adventurers_guildmaster
+│     │ │ ├ eldritch_knight
+│     │ │ └ ranger
+│     │ ├ artisan
+│     │ │ ├ blacksmith
+│     │ │ ├ carpenter
+│     │ │ ├ mason
+│     │ │ └ tailor
+│     │ ├ artisan_apprentice
+│     │ │ ├ blacksmith
+│     │ │ ├ carpenter
+│     │ │ ├ mason
+│     │ │ └ tailor
+│     │ ├ burgmeister
+│     │ │ ├ elected
+│     │ │ ├ lord_captain
+│     │ │ ├ marshall
+│     │ │ ├ patrician
+│     │ │ └ scholar
+│     │ ├ combat
+│     │ │ ├ adventurer_barbarian
+│     │ │ │ ├ berserker
+│     │ │ │ ├ exiled
+│     │ │ │ ├ giant
+│     │ │ │ ├ rat_wildman
+│     │ │ │ ├ seaelf_reaver
+│     │ │ │ ├ spearmaiden
+│     │ │ │ └ wild_magic
+│     │ │ ├ adventurer_bard
+│     │ │ │ ├ college_lore
+│     │ │ │ └ college_swords
+│     │ │ ├ adventurer_cleric
+│     │ │ │ ├ death_domain
+│     │ │ │ ├ ironmaiden
+│     │ │ │ ├ life_domain
+│     │ │ │ ├ light_domain
+│     │ │ │ └ war_domain
+│     │ │ ├ adventurer_druid
+│     │ │ │ ├ circle_land
+│     │ │ │ ├ circle_moon
+│     │ │ │ └ troll_skin
+│     │ │ ├ adventurer_fighter
+│     │ │ │ ├ abyssal
+│     │ │ │ ├ amnian_merc
+│     │ │ │ ├ black_swordsman
+│     │ │ │ ├ boltslinger
+│     │ │ │ ├ bombardier_tinkerer
+│     │ │ │ ├ calishite_emir
+│     │ │ │ ├ calishite_mercenary
+│     │ │ │ ├ disgraced
+│     │ │ │ ├ dragoon
+│     │ │ │ ├ eldritch_knight
+│     │ │ │ ├ elven_blademaster
+│     │ │ │ ├ enforcer
+│     │ │ │ ├ fallen_hand
+│     │ │ │ ├ fallen_lord
+│     │ │ │ ├ hedgeknight
+│     │ │ │ ├ housecarl
+│     │ │ │ ├ lancer
+│     │ │ │ ├ longbeard
+│     │ │ │ ├ qualinesti
+│     │ │ │ ├ sellsword_hireling
+│     │ │ │ ├ sembian_count
+│     │ │ │ ├ sembian_merc
+│     │ │ │ ├ sembian_spearman
+│     │ │ │ ├ underdweller
+│     │ │ │ ├ verderer
+│     │ │ │ ├ warrior
+│     │ │ │ └ winged_rescuer
+│     │ │ ├ adventurer_monk
+│     │ │ │ ├ drunk_master
+│     │ │ │ ├ open_hand
+│     │ │ │ └ shadow
+│     │ │ ├ adventurer_paladin
+│     │ │ │ ├ conquest
+│     │ │ │ ├ crown
+│     │ │ │ ├ devotion
+│     │ │ │ ├ immortal
+│     │ │ │ ├ oathbreaker
+│     │ │ │ └ vengeance
+│     │ │ ├ adventurer_ranger
+│     │ │ │ ├ beastmaster
+│     │ │ │ ├ borderland_rider
+│     │ │ │ ├ dwarf_ranger
+│     │ │ │ ├ elf_caravan
+│     │ │ │ ├ elven_outrider
+│     │ │ │ ├ monster_hunter
+│     │ │ │ ├ ranger_hunter
+│     │ │ │ ├ steppe_wayfarer
+│     │ │ │ ├ steppesman
+│     │ │ │ ├ swampstalker
+│     │ │ │ └ tabaxi_raider
+│     │ │ ├ adventurer_rogue
+│     │ │ │ ├ antiquarian
+│     │ │ │ ├ assassin
+│     │ │ │ ├ bloodsucker
+│     │ │ │ ├ calishite_assasin
+│     │ │ │ ├ corsair
+│     │ │ │ ├ duelist
+│     │ │ │ ├ porter
+│     │ │ │ ├ pyromaniac
+│     │ │ │ ├ renegade
+│     │ │ │ ├ royal_outcast
+│     │ │ │ ├ shadowblade
+│     │ │ │ ├ swashbuckler
+│     │ │ │ ├ thief
+│     │ │ │ └ treasurehunter
+│     │ │ ├ adventurer_sorcerer
+│     │ │ │ ├ desert_sorceress
+│     │ │ │ └ wild_magic
+│     │ │ ├ adventurer_warlock
+│     │ │ │ ├ the_fiend
+│     │ │ │ └ the_hexblade
+│     │ │ └ adventurer_wizard
+│     │ │   ├ evocation_wizard
+│     │ │   ├ hedge_wizard
+│     │ │   ├ necromancer
+│     │ │   └ sell_wizard
+│     │ ├ councilor
+│     │ │ ├ adjutant
+│     │ │ ├ advisor
+│     │ │ ├ clerk
+│     │ │ ├ first_mate
+│     │ │ └ spymaster
+│     │ ├ forest_ranger
+│     │ │ ├ pathfinder
+│     │ │ ├ scout
+│     │ │ └ vanguard
+│     │ ├ guild_wizard
+│     │ │ ├ adept
+│     │ │ └ expert
+│     │ ├ ogre
+│     │ │ ├ avatar
+│     │ │ ├ cook
+│     │ │ ├ dumdum
+│     │ │ ├ mercenary
+│     │ │ └ warlord
+│     │ ├ servant
+│     │ │ ├ butler
+│     │ │ ├ concubine
+│     │ │ └ maid
+│     │ ├ swamp_witch
+│     │ │ ├ alchemist
+│     │ │ ├ cinder
+│     │ │ ├ hex
+│     │ │ └ wild
+│     │ ├ tavern_wench
+│     │ │ ├ bath_wench
+│     │ │ ├ courtesan
+│     │ │ └ waitress
+│     │ ├ town_scholar
+│     │ │ ├ archivist
+│     │ │ ├ artificer
+│     │ │ ├ explorer
+│     │ │ ├ ship_doctor
+│     │ │ └ town_physician
+│     │ ├ town_scholar_apprentice
+│     │ │ ├ artificer
+│     │ │ ├ librarian
+│     │ │ └ physician_apprentice
+│     │ ├ towner
+│     │ │ ├ bard
+│     │ │ ├ burgess
+│     │ │ ├ commoner
+│     │ │ ├ farmhand
+│     │ │ ├ fisher
+│     │ │ ├ hunter
+│     │ │ ├ jester
+│     │ │ ├ lumberjack
+│     │ │ ├ miner
+│     │ │ ├ passenger
+│     │ │ ├ patrician
+│     │ │ └ town_mouth
+│     │ ├ watch_guard
+│     │ │ ├ bulwark
+│     │ │ ├ halberdier
+│     │ │ ├ marine
+│     │ │ └ sentinel
+│     │ └ waterdeep_guild_assistant
+│     │   ├ banker_assistant
+│     │   └ shophand
+│     ├ adventurers_assistant
+│     ├ captain
+│     │ ├ justice
+│     │ └ law
+│     ├ clan
+│     ├ cook
+│     ├ dwarf_heavy_gear
+│     │ ├ skilled
+│     │ ├ unskilled
+│     │ └ very_skilled
+│     ├ dwarf_light_gear
+│     │ ├ skilled
+│     │ ├ unskilled
+│     │ └ very_skilled
+│     ├ dwarf_medium_gear
+│     │ ├ skilled
+│     │ ├ unskilled
+│     │ └ very_skilled
+│     ├ dwarf_naked
+│     │ ├ skilled
+│     │ ├ unskilled
+│     │ └ very_skilled
+│     ├ forest_warden
+│     ├ generic_npc
+│     │ ├ skilled
+│     │ │ ├ heavy_gear
+│     │ │ ├ light_gear
+│     │ │ ├ medium_gear
+│     │ │ └ naked
+│     │ ├ unskilled
+│     │ │ ├ heavy_gear
+│     │ │ ├ light_gear
+│     │ │ ├ medium_gear
+│     │ │ └ naked
+│     │ └ very_skilled
+│     │   ├ heavy_gear
+│     │   ├ light_gear
+│     │   ├ medium_gear
+│     │   └ naked
+│     ├ goblin
+│     ├ grove_druid
+│     ├ guild_master_wizard
+│     ├ guild_wizard_apprentice
+│     ├ harlequin
+│     ├ heart_priest
+│     ├ innkeep
+│     ├ leper_vice
+│     ├ lich
+│     ├ lord
+│     │ └ old
+│     ├ maniac
+│     ├ matron
+│     ├ migrant
+│     │ ├ armorsmith
+│     │ │ └ old
+│     │ ├ captain
+│     │ ├ jestertroupe
+│     │ ├ sweetshare
+│     │ └ weaponsmith
+│     │   └ old
+│     ├ moon_priest
+│     ├ npc
+│     │ ├ bog_deserters
+│     │ ├ drowraider
+│     │ ├ highwayman
+│     │ ├ mad_touched_treasure_hunter
+│     │ ├ militia
+│     │ ├ quest_miniboss
+│     │ ├ searaider
+│     │ └ thief
+│     ├ orc_npc
+│     │ ├ ambush
+│     │ ├ berserker
+│     │ ├ configure_mind
+│     │ ├ elite
+│     │ ├ footsoldier
+│     │ ├ marauder
+│     │ ├ marauder_mob
+│     │ ├ tribal
+│     │ ├ warlord_mob
+│     │ └ warrior
+│     ├ pack
+│     │ ├ consecratia
+│     │ ├ creed
+│     │ └ crusade
+│     ├ persistant
+│     │ ├ caravanguard
+│     │ ├ carpenter
+│     │ ├ farmer
+│     │ ├ miner
+│     │ ├ stonemason
+│     │ └ woodsman
+│     ├ random_stats
+│     ├ seelie
+│     ├ skeleton
+│     │ ├ knight
+│     │ ├ raider
+│     │ └ zizo
+│     ├ skeleton_npc
+│     │ ├ ambush
+│     │ ├ arena
+│     │ ├ easy
+│     │ ├ greater
+│     │ ├ hard
+│     │ │ ├ dreadknight
+│     │ │ └ khopesh
+│     │ ├ medium
+│     │ ├ peasant
+│     │ ├ pirate
+│     │ ├ random
+│     │ ├ supereasy
+│     │ └ warrior
+│     │   └ skilled
+│     ├ species
+│     │ ├ aasimar
+│     │ ├ anthromorph
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ anthromorphsmall
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ automaton
+│     │ ├ construct
+│     │ │ ├ doll
+│     │ │ │ └ stats
+│     │ │ │   ├ female
+│     │ │ │   └ male
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ custom_minotaur
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ custom_slime
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ dark
+│     │ │ ├ inherent
+│     │ │ └ stats
+│     │ ├ demihuman
+│     │ ├ dragonborn
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ duergar
+│     │ │ ├ inherent
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ fluvian
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ gnoll
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ gnome
+│     │ │ ├ inherent
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ gnomed
+│     │ │ ├ inherent
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ goblin_player
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ halfanthromorphsmall
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ halfdrow
+│     │ │ ├ inherent
+│     │ │ └ stats
+│     │ ├ halfelf
+│     │ │ ├ inherent
+│     │ │ └ stats
+│     │ ├ halfling
+│     │ │ └ stats
+│     │ ├ halforc
+│     │ │ └ female
+│     │ ├ harpy
+│     │ │ └ stats
+│     │ ├ kobold
+│     │ ├ kobold_classic
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ lizardfolk
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ medicator
+│     │ │ └ stats
+│     │ ├ mountain_dwarf
+│     │ │ └ stats
+│     │ ├ northern
+│     │ │ ├ inherent
+│     │ │ └ stats
+│     │ ├ ogre
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ rakshari
+│     │ ├ seelie
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ snow
+│     │ │ ├ inherent
+│     │ │ └ stats
+│     │ ├ space
+│     │ ├ tabaxi
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ taur
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ tieberian
+│     │ │ ├ inherent
+│     │ │ └ stats
+│     │ ├ triton
+│     │ │ ├ inherent
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ ├ werewolf
+│     │ ├ wood
+│     │ │ ├ inherent
+│     │ │ └ stats
+│     │ │   ├ female
+│     │ │   └ male
+│     │ └ yuanti
+│     │   └ stats
+│     │     ├ female
+│     │     └ male
+│     ├ tester
+│     ├ vampire_lord
+│     ├ watch_captain
+│     ├ watch_sergeant
+│     ├ watch_veteran
+│     ├ watch_warden
+│     ├ waterdeep_banker
+│     ├ waterdeep_guild_guard
+│     ├ waterdeep_merchant
+│     ├ werewolf
+│     ├ zizocultist
+│     │ ├ change
+│     │ └ lesser
+│     └ zizombie
+│       ├ grenzel
+│       ├ peasant
+│       └ warrior
+├ attribute_modifier
+│ ├ attribute_editor
+│ ├ augment
+│ ├ lobotomite
+│ ├ lobotomy
+│ ├ shock_penalty
+│ ├ steal_items
+│ └ variable
 ├ attunement
 │ ├ aeromancy
 │ ├ arcyne
@@ -1827,9 +3583,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ whip_servo
 │ ├ special
 │ │ ├ dualwield
-│ │ │ └
+│ │ │ └ refurbished
 │ │ └ sandevistan
-│ │   └
+│ │   └ refurbished
 │ └ stats
 │   ├ balanced_matrix
 │   ├ core_stabilizer
@@ -1846,11 +3602,11 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   ├ servo_governor
 │   └ strength_servo
 ├ automata_cell
-│ └
+│ └ explosion
 ├ award
 │ ├ achievement
 │ │ ├ boss
-│ │ │ └
+│ │ │ └ deep
 │ │ ├ misc
 │ │ │ ├ feat_of_strength
 │ │ │ ├ getting_an_upgrade
@@ -1861,7 +3617,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ the_best_driver
 │ │ │ └ time_waste
 │ │ └ progress
-│ │   └
+│ │   └ rat_genocide
 │ └ score
 │   ├ blood_miner_score
 │   ├ boss_score
@@ -1910,7 +3666,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ miner
 │ │ └ tamer
 │ ├ magic
-│ │ └
+│ │ └ acolyte
 │ └ misc
 │   ├ bard
 │   ├ locksmith
@@ -1926,9 +3682,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ └ remote
 ├ banker_data
 ├ bar_item
-│ └
+│ └ beer
 ├ beam
-│ └
+│ └ fishing_line
 ├ bee_disease
 │ ├ foulbrood
 │ ├ varroa_mites
@@ -1973,7 +3729,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ essence_splitter
 │ │ └ research_matrix
 │ ├ arcyne
-│ │ └
+│ │ └ mana_pylon
 │ ├ carpentry
 │ │ ├ apiary
 │ │ ├ barrel
@@ -1997,6 +3753,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ female_mannequin
 │ │ ├ fence
 │ │ ├ festive_fir
+│ │ ├ gloryhole
 │ │ ├ handcart
 │ │ ├ hay_bed
 │ │ ├ inn_bed
@@ -2014,18 +3771,28 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ railing
 │ │ ├ spider_nest
 │ │ ├ stool
-│ │ │ └
+│ │ │ └ bar
 │ │ ├ stripper_pole
 │ │ ├ swing_door
+│ │ ├ torture_table
+│ │ ├ torture_table_lever
 │ │ ├ training_dummy
 │ │ ├ viewport_door
 │ │ ├ wall_ladder
 │ │ ├ wooden_cross
+│ │ ├ wooden_horse
+│ │ ├ wooden_horse_metal
+│ │ ├ wooden_horse_mobile
+│ │ ├ wooden_horse_small
 │ │ ├ wooden_stairs_down
 │ │ ├ wooden_table
-│ │ └ wool_bed
+│ │ ├ wool_bed
+│ │ └ x_pillory
 │ ├ dendor
-│ │ └
+│ │ └ shrine
+│ │   ├ saiga
+│ │   ├ troll
+│ │   └ volf
 │ ├ engineering
 │ │ ├ activator
 │ │ ├ artificer_table
@@ -2041,16 +3808,32 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ trapdoor
 │ ├ floor
 │ │ ├ bath
-│ │ │ └
+│ │ │ └ pool
 │ │ ├ bfloorz
 │ │ ├ brick
-│ │ │ └
+│ │ │ └ brown
 │ │ ├ checker
 │ │ ├ checkeralt
 │ │ ├ church
 │ │ ├ church_purple
 │ │ ├ churchbrick
 │ │ ├ concrete
+│ │ ├ desert_citybrick
+│ │ │ ├ five
+│ │ │ ├ four
+│ │ │ ├ one
+│ │ │ ├ six
+│ │ │ ├ three
+│ │ │ └ two
+│ │ ├ desert_darkpath
+│ │ ├ desert_dirt
+│ │ │ └ settled
+│ │ ├ desert_dunes
+│ │ ├ desert_lightpath
+│ │ ├ desert_road
+│ │ ├ desert_sandbrick
+│ │ ├ desert_scrub
+│ │ ├ desert_tile
 │ │ ├ diamond
 │ │ ├ diamond_blue
 │ │ ├ diamond_purple
@@ -2058,6 +3841,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ dirtroad
 │ │ ├ glass
 │ │ ├ grass
+│ │ ├ grass_desert
 │ │ ├ grasscold
 │ │ ├ grasshealthy
 │ │ ├ grassmixyel
@@ -2092,8 +3876,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ ruineddarkturned
 │ │ ├ ruinedspiral
 │ │ ├ ruinedspiralfade
+│ │ ├ sandstone_ground
 │ │ ├ stonefloor
-│ │ │ └
+│ │ │ └ alt
 │ │ ├ stonefloor_blocks
 │ │ ├ stonefloor_blocksgreen
 │ │ ├ stonefloor_blocksred
@@ -2181,21 +3966,32 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ wall
 │ │ ├ craftstone
 │ │ ├ daubwall
-│ │ │ └
+│ │ │ └ vert
 │ │ ├ decorstone
-│ │ │ └
+│ │ │ └ moss
+│ │ │   ├ blue
+│ │ │   └ red
 │ │ ├ decorstone_alt
 │ │ ├ decorstone_center_alt
 │ │ ├ decorstonealt
-│ │ │ └
+│ │ │ └ moss
+│ │ │   ├ blue
+│ │ │   └ red
 │ │ ├ decorstonecand
-│ │ │ └
+│ │ │ └ moss
+│ │ │   ├ blue
+│ │ │   └ red
 │ │ ├ decorstoneend
-│ │ │ └
+│ │ │ └ moss
+│ │ │   ├ blue
+│ │ │   └ red
 │ │ ├ decorstonelong
-│ │ │ └
+│ │ │ └ moss
+│ │ │   ├ blue
+│ │ │   └ red
 │ │ ├ decorstonewindow
 │ │ ├ dwoodwall
+│ │ │ ├ deco
 │ │ │ ├ end
 │ │ │ ├ horizontal
 │ │ │ ├ slit
@@ -2211,10 +4007,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ innercorner
 │ │ │ ├ middle
 │ │ │ └ outercorner
+│ │ ├ sandbrick
+│ │ ├ sandstone
 │ │ ├ silver_window
-│ │ │ └
+│ │ │ └ alt
 │ │ ├ solid_window
-│ │ │ └
+│ │ │ └ alt
 │ │ ├ stonebrick
 │ │ ├ stonewall
 │ │ ├ stonewindow
@@ -2227,7 +4025,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ woodwindow
 │ │ └ yellow_window
 │ └ zizo
-│   └
+│   └ shrine
 ├ blueprint_system
 ├ body_marking
 │ ├ aura
@@ -2245,12 +4043,48 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ butt
 │ ├ butterfly
 │ ├ buttscale
+│ ├ construct_head_round
+│ ├ construct_head_standard
+│ ├ construct_plating_heavy
+│ ├ construct_plating_light
+│ ├ construct_plating_medium
+│ ├ construct_psyclops_eye
+│ ├ construct_standard_eyes
+│ ├ construct_visor_eyes
 │ ├ diagonal_eyes
 │ ├ drake_eyes
 │ ├ eyeliner
 │ ├ flushed_cheeks
 │ ├ front
 │ ├ kobold_scale
+│ ├ moth
+│ │ ├ burnt_off
+│ │ ├ deathhead
+│ │ ├ gothic
+│ │ ├ grayscale
+│ │ │ ├ burnt_off
+│ │ │ ├ deathhead
+│ │ │ ├ gothic
+│ │ │ ├ jungle
+│ │ │ ├ lovers
+│ │ │ ├ moonfly
+│ │ │ ├ oakworm
+│ │ │ ├ poison
+│ │ │ ├ ragged
+│ │ │ ├ reddish
+│ │ │ ├ royal
+│ │ │ ├ whitefly
+│ │ │ └ witchwing
+│ │ ├ jungle
+│ │ ├ lovers
+│ │ ├ moonfly
+│ │ ├ oakworm
+│ │ ├ poison
+│ │ ├ ragged
+│ │ ├ reddish
+│ │ ├ royal
+│ │ ├ whitefly
+│ │ └ witchwing
 │ ├ plain
 │ ├ small
 │ │ ├ backspots
@@ -2260,21 +4094,21 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ front
 │ │ ├ plain
 │ │ ├ sock
-│ │ │ └
+│ │ │ └ tertiary
 │ │ ├ socklonger
 │ │ ├ spotted
 │ │ ├ tie
 │ │ ├ tiesmall
 │ │ └ tips
 │ ├ sock
-│ │ └
+│ │ └ tertiary
 │ ├ socklonger
 │ ├ spotted
 │ ├ stripes
 │ ├ tie
 │ ├ tiesmall
 │ ├ tiger
-│ │ └
+│ │ └ dark
 │ ├ tips
 │ ├ tonage
 │ ├ waist
@@ -2290,33 +4124,62 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ bellyscale
 │ ├ bellysocks
 │ ├ bellysockstertiary
+│ ├ construct_plating_heavy
+│ ├ construct_plating_light
+│ ├ construct_plating_medium
 │ ├ kobold_scale
+│ ├ moth
+│ │ ├ burnt_off
+│ │ ├ deathhead
+│ │ ├ gothic
+│ │ ├ jungle
+│ │ ├ lovers
+│ │ ├ moonfly
+│ │ ├ oakworm
+│ │ ├ poison
+│ │ ├ ragged
+│ │ ├ reddish
+│ │ ├ royal
+│ │ ├ whitefly
+│ │ └ witchwing
 │ ├ none
 │ ├ socks
 │ ├ tiger
 │ └ tiger_dark
+├ body_storage_transfer_item
 ├ bodypart_feature
 │ ├ accessory
 │ ├ bloodsight_brand
-│ ├ bodyhair
 │ ├ face_detail
 │ ├ hair
+│ │ ├ body_hair
+│ │ │ └ pubic
 │ │ ├ facial
 │ │ └ head
 │ ├ piercing
-│ └ vamprire_seal
+│ ├ vamprire_seal
+│ └ visual_emote
+│   ├ blush
+│   ├ cry
+│   └ tongue
 ├ book_entry
 │ ├ attunement
+│ ├ cavity_access
 │ ├ container_craft
 │ ├ essence_crafting
 │ ├ farming_basics
 │ ├ gnome_homunculus
 │ ├ grimoire
 │ ├ grims_guide
+│ ├ lobotomy
 │ ├ mana_sources
+│ ├ organ_surgery
+│ ├ pestran_chimeric
 │ ├ plant_families
 │ ├ plant_genetics
 │ ├ rotation_stress
+│ ├ sewing_repair
+│ ├ smithing_repair
 │ ├ soil_management
 │ └ water_pressure
 ├ boss_active_timed_battle
@@ -2359,9 +4222,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ narcolepsy
 │ │ ├ pacifism
 │ │ ├ paralysis
-│ │ │ └
+│ │ │ └ paraplegic
 │ │ └ split_personality
-│ │   └
+│ │   └ brainwashing
 │ └ special
 │   ├ death_whispers
 │   ├ existential_crisis
@@ -2373,17 +4236,17 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ strawberry
 │ │ └ tangerine
 │ ├ beer
-│ │ └
+│ │ └ oat
 │ ├ brandy
 │ │ ├ pear
 │ │ ├ plum
 │ │ ├ strawberry
 │ │ └ tangerine
 │ ├ butter
-│ │ └
+│ │ └ gote
 │ ├ cabbage
 │ ├ cheese
-│ │ └
+│ │ └ gote
 │ ├ cider
 │ │ ├ pear
 │ │ └ strawberry
@@ -2411,7 +4274,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ input_list
 │ │ ├ input_text
 │ │ ├ listpicker
-│ │ └ preflikepicker
+│ │ ├ preflikepicker
+│ │ └ trap_pocket_prompt
 │ └ noclose
 ├ building_datum
 │ ├ bar
@@ -2452,7 +4316,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ throwing
 │ └ varedit
 ├ callback
-│ └
+│ └ verb_callback
 ├ callback_select
 ├ callout_option
 │ ├ attack
@@ -2461,15 +4325,17 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ mine
 │ ├ move
 │ └ point
+├ carry_weight_modifier
 ├ cave_biome
-│ └
+│ └ mushroom
 ├ cave_feature_template
 ├ cave_generator
-│ └
+│ └ matthios_fragment
 ├ cell_tracker
 ├ changelog
 ├ chat_payload
 ├ chatmessage
+├ chatOutput
 ├ chemical_reaction
 │ ├ fentanyl
 │ ├ grosswaterify
@@ -2490,14 +4356,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ heartbeat
 │ │ ├ mana_spent
 │ │ ├ racist
-│ │ │ └
+│ │ │ └ elf
 │ │ ├ reagent
 │ │ │ ├ alcohol
 │ │ │ └ blood
 │ │ ├ revival
 │ │ ├ spell_cast
 │ │ ├ stress
-│ │ │ └
+│ │ │ └ joy
 │ │ ├ sunlight
 │ │ └ wounded
 │ ├ output
@@ -2548,12 +4414,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ caitiff
 │ ├ crimson_fang
 │ ├ custom
+│ ├ daewalker
 │ ├ eoran
 │ ├ nosferatu
 │ └ thronleer
 ├ clan_hierarchy_interface
 ├ clan_hierarchy_node
 ├ clan_leader
+│ ├ daewalker
 │ ├ eoran
 │ ├ lord
 │ ├ nosferatu
@@ -2584,8 +4452,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ test2
 │ └ test3
 ├ client_interface
+├ clothing_display_helper
 ├ cogbar
 ├ collective_message
+├ color_matrix_editor
 ├ combat_music
 │ ├ acolyte
 │ ├ adjudicator
@@ -2675,13 +4545,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ anti_magic
 │ ├ arousal
 │ ├ art
-│ │ └
+│ │ └ rev
 │ ├ augmentable
 │ ├ aura_healing
 │ ├ bane
 │ ├ banker
 │ ├ beauty
 │ ├ beetlejuice
+│ ├ belly_fullness
 │ ├ blacksmith
 │ ├ blood_stability
 │ ├ body_storage
@@ -2693,6 +4564,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ pubes
 │ │ ├ testicles
 │ │ └ vagina
+│ ├ boss_ring_stat_boost
 │ ├ bounded
 │ ├ breed
 │ ├ butchering
@@ -2709,14 +4581,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ connect_mob_behalf
 │ ├ connect_range
 │ ├ construction
-│ │ └
+│ │ └ unordered
 │ ├ container_craft
 │ ├ convey
 │ ├ damage_shutdown
 │ ├ darkling
 │ ├ deadchat_control
 │ ├ decal
-│ │ └
+│ │ └ blood
 │ ├ dejavu
 │ ├ easy_repair
 │ ├ echolocation
@@ -2725,9 +4597,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ empathic_obsession
 │ ├ enchanted_weapon
 │ ├ equipment_stress
-│ │ └
+│ │ └ job_specific
 │ ├ explodable
 │ ├ familial_bond
+│ ├ field_of_vision
 │ ├ fishing_spot
 │ ├ food_burner
 │ ├ friendship_container
@@ -2739,6 +4612,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ hostage
 │ ├ hovering_information
 │ ├ igniter
+│ ├ internal_womb_hatchling
 │ ├ item_equipped_movement_rustle
 │ ├ itembound
 │ ├ jousting
@@ -2757,22 +4631,28 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ mirage_border
 │ ├ mob_home
 │ ├ modifications
+│ ├ newborn_growth
 │ ├ obeys_commands
 │ ├ orbiter
 │ ├ overlay_lighting
 │ ├ overlord_door_enchantment
+│ ├ ovipositor
 │ ├ particle_spewer
-│ │ └
+│ │ └ sparkle
 │ ├ pellet_cloud
 │ ├ pixel_shift
+│ ├ pocket_access
 │ ├ pollutant
+│ ├ pregnancy
 │ ├ profaned
 │ ├ projectile_fork
 │ ├ projectile_split
 │ ├ psyblessed
+│ ├ quest_ambush_payload
 │ ├ quest_object
 │ │ ├ courier
 │ │ ├ kill
+│ │ │ └ boss
 │ │ ├ mob_spawner
 │ │ └ retrieval
 │ ├ ranged_attacks
@@ -2786,6 +4666,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ mole
 │ │ ├ pig
 │ │ └ saiga
+│ ├ rope
 │ ├ rot
 │ │ ├ corpse
 │ │ │ ├ goblin
@@ -2808,14 +4689,67 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ stillness_timer
 │ ├ stockpile_loot_spawner
 │ ├ storage
-│ │ └
+│ │ └ concrete
+│ │   ├ boots
+│ │   ├ bra
+│ │   ├ grid
+│ │   │ ├ anvil_bin
+│ │   │ ├ backpack
+│ │   │ ├ bag_of_holding
+│ │   │ ├ banking
+│ │   │ ├ belt
+│ │   │ │ ├ assassin
+│ │   │ │ ├ cloth
+│ │   │ │ └ knife_belt
+│ │   │ ├ bin
+│ │   │ ├ bucket
+│ │   │ ├ cannon
+│ │   │ ├ cloak
+│ │   │ │ └ lord
+│ │   │ ├ coin_pouch
+│ │   │ │ └ cloth
+│ │   │ ├ crucible
+│ │   │ ├ cup
+│ │   │ ├ drying_rack
+│ │   │ ├ egg_basket
+│ │   │ ├ food
+│ │   │ │ └ cooking
+│ │   │ │   ├ oven
+│ │   │ │   ├ pan
+│ │   │ │   └ pot
+│ │   │ ├ handbasket
+│ │   │ │ └ easter_special
+│ │   │ ├ headhook
+│ │   │ │ └ bronze
+│ │   │ ├ ifak
+│ │   │ ├ keyring
+│ │   │ ├ kobold_storage
+│ │   │ ├ magebag
+│ │   │ ├ mailmaster
+│ │   │ ├ messkit
+│ │   │ ├ pilltin
+│ │   │ ├ porter
+│ │   │ ├ potion_belt
+│ │   │ ├ sack
+│ │   │ │ └ meat
+│ │   │ ├ satchel
+│ │   │ │ └ cloth
+│ │   │ ├ surgery_bag
+│ │   │ ├ teapot
+│ │   │ ├ tray
+│ │   │ └ zigbox
+│ │   ├ organ
+│ │   └ scabbard
+│ │     ├ kazengun
+│ │     ├ knife
+│ │     └ sword
 │ ├ strong_pull
 │ ├ summoning
 │ ├ sunlight_vulnerability
 │ ├ swarming
 │ ├ tactical
 │ ├ team_monitor
-│ │ └
+│ │ └ worn
 │ ├ temporary_pollution_emission
 │ ├ tether
 │ ├ theme_music
@@ -2827,7 +4761,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ udder
 │ ├ uses_essence
 │ ├ uses_mana
-│ │ └
+│ │ └ spell
 │ ├ vampire_disguise
 │ ├ vine_spreader
 │ ├ vis_radius
@@ -3008,7 +4942,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ client_error_version
 │ │ ├ client_warn_version
 │ │ ├ damage_multiplier
-│ │ │ └
+│ │ │ └ fire
 │ │ ├ default_antag_tickets
 │ │ ├ default_laws
 │ │ ├ dehydration_damage_per_tick
@@ -3084,7 +5018,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ monkey_delay
 │ │ ├ overflow_cap
 │ │ ├ per_tick
-│ │ │ └
+│ │ │ └ max_fire_damage
 │ │ ├ port
 │ │ ├ query_debug_log_timeout
 │ │ ├ reopen_roundstart_suicide_roles_delay
@@ -3115,7 +5049,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ vote_delay
 │ │ └ vote_period
 │ ├ number_list
-│ │ └
+│ │ └ repeated_mode_adjust
 │ └ string
 │   ├ address
 │   ├ alert_blue_downto
@@ -3198,13 +5132,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 ├ container_craft
 │ ├ cooking
 │ │ ├ arcyne
-│ │ │ └
+│ │ │ └ weak_manapot
 │ │ ├ borowiki_stew
 │ │ ├ cabbage_stew
 │ │ ├ cheese_soup
-│ │ │ └
+│ │ │ └ wedge
 │ │ ├ chicken_stew
-│ │ │ └
+│ │ │ └ cutlet
 │ │ ├ drugs
 │ │ │ ├ drukqs
 │ │ │ ├ moondust
@@ -3214,7 +5148,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ fish_stew
 │ │ ├ generic_meat_stew
 │ │ ├ gross_stew
-│ │ │ └
+│ │ │ └ bad_recipe
 │ │ ├ herbal_oil
 │ │ │ ├ mentha_oil
 │ │ │ └ rosa_oil
@@ -3357,14 +5291,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ configuration
 │ ├ failsafe
 │ ├ global_vars
-│ │ └
 │ ├ master
 │ └ subsystem
 │   ├ achievements
 │   ├ acid
 │   ├ adjacent_air
 │   ├ ai_controllers
-│   │ └
+│   │ └ ai_idle_controllers
 │   ├ ambience
 │   ├ area_contents
 │   ├ asset_loading
@@ -3389,6 +5322,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   ├ events
 │   ├ fake_world
 │   ├ familytree
+│   ├ field_of_vision
 │   ├ fire_burning
 │   ├ fire_spread
 │   ├ frenzy_handler
@@ -3431,6 +5365,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   ├ persistence
 │   ├ ping
 │   ├ plexora
+│   ├ pocket_dimensions
 │   ├ pollution
 │   ├ processing
 │   │ ├ action_charge
@@ -3479,14 +5414,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   ├ ticker
 │   ├ time_track
 │   ├ timer
-│   │ └
+│   │ └ runechat
 │   ├ title
 │   ├ trackables
 │   ├ treasury
 │   ├ treesetup
 │   ├ triumphs
 │   ├ verb_manager
-│   │ └
+│   │ └ input
 │   ├ verifications
 │   ├ vis_overlays
 │   ├ vote
@@ -3509,7 +5444,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ heightened_senses
 │ │ └ psychic_projection
 │ ├ blood_rites
-│ │ └
+│ │ └ runic_writing
 │ ├ bloodheal
 │ │ ├ eight
 │ │ ├ five
@@ -3589,17 +5524,17 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ half_orc
 │ │ └ underdark
 │ └ universal
-│   ├ amber_hollow
 │   ├ ambiguous
-│   ├ crimsonlands
-│   ├ grenzelhoft
-│   ├ heartfelt
-│   ├ kingsfield
-│   ├ rockhill
-│   ├ valoria
-│   ├ vanderlin
-│   ├ wintermare
-│   └ zaladin
+│   ├ calimshan
+│   ├ cormyr
+│   ├ duskmar
+│   ├ heartlands
+│   ├ highforest
+│   ├ hordelads
+│   ├ lantan
+│   ├ luskan
+│   ├ marches
+│   └ silvermarch
 ├ curse
 │ ├ astrata
 │ ├ atheism
@@ -3615,26 +5550,38 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ schizophrenic
 │ ├ xylix
 │ └ zizo
-│   └
+│   └ minor
 ├ custom_descriptor_entry
 ├ custom_wave
 ├ customizer
 │ ├ bodypart_feature
 │ │ ├ accessory
-│ │ │ └
-│ │ ├ bodyhair
+│ │ │ └ rakshari
+│ │ ├ body_hair
 │ │ ├ face_detail
 │ │ ├ hair
 │ │ │ ├ facial
-│ │ │ │ └
+│ │ │ │ └ humanoid
+│ │ │ │   ├ rakshari
+│ │ │ │   ├ shaved_default
+│ │ │ │   └ triton
 │ │ │ └ head
-│ │ │   └
-│ │ └ piercing
+│ │ │   └ humanoid
+│ │ │     ├ bald_default
+│ │ │     ├ medicator
+│ │ │     ├ rakshari
+│ │ │     └ triton
+│ │ ├ piercing
+│ │ └ pubic_hair
 │ └ organ
+│   ├ antennas
+│   │ └ moth
 │   ├ ears
 │   │ ├ anthro
 │   │ ├ demihuman
 │   │ ├ elf
+│   │ ├ gnoll
+│   │ ├ goblin
 │   │ ├ halforc
 │   │ ├ harpy
 │   │ ├ lizard
@@ -3642,7 +5589,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ ├ tiefling
 │   │ └ triton
 │   ├ eyes
-│   │ └
+│   │ └ humanoid
 │   ├ frills
 │   │ ├ anthro
 │   │ └ lizard
@@ -3686,17 +5633,19 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ └ wood_elf
 │   ├ neck_feature
 │   │ ├ anthro
-│   │ └ medicator
+│   │ ├ medicator
+│   │ └ moth_fluff
 │   ├ snout
 │   │ ├ anthro
-│   │ │ └
+│   │ │ └ dullahan
 │   │ ├ anthrosmall
 │   │ ├ beak
-│   │ │ └
+│   │ │ └ thin
+│   │ ├ gnoll
 │   │ ├ harpy
 │   │ ├ lamia
 │   │ ├ lizard
-│   │ │ └
+│   │ │ └ dragonborn
 │   │ ├ lupian
 │   │ ├ tabaxi
 │   │ ├ tajaran
@@ -3706,6 +5655,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ ├ anthro
 │   │ ├ aura
 │   │ ├ demihuman
+│   │ ├ gnoll
 │   │ ├ harpy
 │   │ ├ kobold
 │   │ ├ lizard
@@ -3717,26 +5667,41 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ ├ anthro
 │   │ └ lizard_spines
 │   └ wings
+│     ├ aasimar
 │     ├ anthro
 │     ├ dragonborn
-│     └ harpy
+│     ├ harpy
+│     ├ moth
+│     └ seelie
 ├ customizer_choice
 │ ├ bodypart_feature
 │ │ ├ accessory
-│ │ │ └
-│ │ ├ bodyhair
+│ │ │ └ rakshari
+│ │ ├ body_hair
 │ │ ├ face_detail
 │ │ ├ hair
 │ │ │ ├ facial
-│ │ │ │ └
+│ │ │ │ └ humanoid
+│ │ │ │   ├ rakshari
+│ │ │ │   ├ shaved_default
+│ │ │ │   └ triton
 │ │ │ └ head
-│ │ │   └
-│ │ └ piercing
+│ │ │   └ humanoid
+│ │ │     ├ bald_default
+│ │ │     ├ medicator
+│ │ │     ├ rakshari
+│ │ │     └ triton
+│ │ ├ piercing
+│ │ └ pubic_hair
 │ └ organ
+│   ├ antennas
+│   │ └ moth
 │   ├ ears
 │   │ ├ anthro
 │   │ ├ demihuman
 │   │ ├ elf
+│   │ ├ gnoll
+│   │ ├ goblin
 │   │ ├ halforc
 │   │ ├ harpy
 │   │ ├ lizard
@@ -3744,7 +5709,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ ├ tiefling
 │   │ └ triton
 │   ├ eyes
-│   │ └
+│   │ └ humanoid
 │   ├ frills
 │   │ ├ anthro
 │   │ └ lizard
@@ -3766,6 +5731,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ │ ├ human
 │   │ │ ├ human_anthro
 │   │ │ ├ knotted
+│   │ │ ├ ovipositor
 │   │ │ ├ tapered
 │   │ │ ├ tapered_double
 │   │ │ ├ tapered_double_knot
@@ -3784,19 +5750,21 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ ├ anthro
 │   │ ├ demihuman
 │   │ ├ humanoid
-│   │ │ └
+│   │ │ └ aura
 │   │ ├ lamia
 │   │ ├ tiefling
 │   │ ├ tusks
 │   │ └ wood_elf
 │   ├ neck_feature
 │   │ ├ anthro_fluff
-│   │ └ medicator
+│   │ ├ medicator
+│   │ └ moth_fluff
 │   ├ snout
 │   │ ├ anthro
-│   │ │ └
+│   │ │ └ dullahan
 │   │ ├ beak
-│   │ │ └
+│   │ │ └ thin
+│   │ ├ gnoll
 │   │ ├ harpy
 │   │ ├ lamia
 │   │ ├ lizard
@@ -3809,6 +5777,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ ├ anthro
 │   │ ├ aura
 │   │ ├ demihuman
+│   │ ├ gnoll
 │   │ ├ harpy
 │   │ ├ kobold
 │   │ ├ lizard
@@ -3817,26 +5786,31 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ ├ tiefling
 │   │ └ triton
 │   ├ tail_feature
-│   │ └
+│   │ └ lizard_spines
 │   └ wings
+│     ├ aasimar
 │     ├ anthro
 │     ├ dragonborn
-│     └ harpy
+│     ├ harpy
+│     ├ moth
+│     └ seelie
 ├ customizer_entry
+│ ├ body_hair
 │ ├ hair
 │ │ ├ facial
 │ │ └ head
-│ └ organ
-│   ├ eyes
-│   └ genitals
-│     ├ belly
-│     ├ breasts
-│     ├ butt
-│     ├ penis
-│     ├ testicles
-│     └ vagina
+│ ├ organ
+│ │ ├ eyes
+│ │ └ genitals
+│ │   ├ belly
+│ │   ├ breasts
+│ │   ├ butt
+│ │   ├ penis
+│ │   ├ testicles
+│ │   └ vagina
+│ └ pubic_hair
 ├ data
-│ └
+│ └ record
 ├ datacore
 ├ DBQuery
 ├ descriptor_choice
@@ -3898,23 +5872,28 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ pestra_medicine
 │ ├ xylix_gamble
 │ └ xylix_trick
+├ diceroll_modifier
+│ ├ attribute_editor
+│ ├ fervor
+│ ├ guidance
+│ └ stress
 ├ discord_link_record
 ├ dna
-│ └
+│ └ stored
 ├ duel
 ├ effect_system
 │ ├ expl_particles
 │ ├ explosion
-│ │ └
+│ │ └ smoke
 │ ├ foam_spread
-│ │ └
+│ │ └ long
 │ ├ lightning_spread
 │ ├ reagents_explosion
 │ ├ smoke_spread
 │ │ ├ aphrodisiac
 │ │ ├ bad
 │ │ ├ chem
-│ │ │ └
+│ │ │ └ transparent
 │ │ ├ destroy_clothes
 │ │ ├ poison
 │ │ ├ sleeping
@@ -3954,6 +5933,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ one_time_poison
 │ ├ relay_attackers
 │ ├ snailcrawl
+│ ├ submerged
+│ ├ table_crawl
 │ ├ tipped_item
 │ ├ turf_z_transparency
 │ ├ update_icon_blocker
@@ -3986,6 +5967,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ human
 │ │ │ │ ├ cry
 │ │ │ │ ├ eyebrow
+│ │ │ │ ├ glasses
 │ │ │ │ ├ grumble
 │ │ │ │ ├ handshake
 │ │ │ │ ├ mumble
@@ -4008,7 +5990,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ scratch
 │ │ │ ├ screech
 │ │ │ ├ sign
-│ │ │ │ └
+│ │ │ │ └ signal
 │ │ │ ├ tail
 │ │ │ └ wink
 │ │ ├ choke
@@ -4089,9 +6071,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ speed
 │ │ │ └ strength
 │ │ ├ strech
-│ │ ├ subtle
 │ │ ├ sulk
 │ │ ├ sway
+│ │ ├ tongue
 │ │ ├ tremble
 │ │ ├ twitch
 │ │ ├ twitch_s
@@ -4122,14 +6104,19 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ └ void_touched
 ├ erp_preference
 │ ├ bitflag
-│ │ ├ horny_mobs
-│ │ └ subtle
+│ │ ├ horny_mob_types
+│ │ └ horny_mobs
 │ ├ boolean
+│ │ ├ allow_belly_inflation
 │ │ ├ allow_forced_lactation
 │ │ ├ allow_gender_bender
 │ │ ├ allow_genital_surgery
 │ │ ├ allow_horny_leeches
-│ │ └ subtle_session_messages
+│ │ ├ allow_mob_breeding
+│ │ ├ allow_mob_oviposition
+│ │ ├ allow_player_erp_when_disconnected
+│ │ ├ always_show_nsfw_flavor
+│ │ └ nonmatching_horny_mobs_are_nonlethal
 │ ├ list_choice
 │ └ numeric
 ├ error_viewer
@@ -4149,7 +6136,40 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ poison
 │ └ void
 ├ essence_combo
-│ └
+│ └ spell
+│   ├ arcane_focus
+│   ├ balanced_mind
+│   ├ crystal_mastery
+│   ├ divine_order
+│   ├ dwarven_brewing
+│   ├ elven_grace
+│   ├ flame_jet
+│   ├ healing_spring
+│   ├ ice_mastery
+│   ├ kinetic_burst
+│   ├ master_forge
+│   ├ mud_shaping
+│   ├ reality_shift
+│   ├ regeneration_cycle
+│   ├ single
+│   │ ├ air
+│   │ ├ chaos
+│   │ ├ crystal
+│   │ ├ cycle
+│   │ ├ earth
+│   │ ├ energia
+│   │ ├ fire
+│   │ ├ frost
+│   │ ├ life
+│   │ ├ light
+│   │ ├ magic
+│   │ ├ motion
+│   │ ├ order
+│   │ ├ poison
+│   │ ├ void
+│   │ └ water
+│   ├ toxic_cleanse
+│   └ wind_step
 ├ essence_connection
 ├ essence_infusion_recipe
 │ ├ cinnabar
@@ -4161,6 +6181,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 ├ essence_storage
 ├ event_group
 ├ events
+├ examine_effect
 ├ examine_panel
 ├ explosion
 ├ export
@@ -4191,6 +6212,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ └ misfortune
 ├ family_member
 ├ family_tree_interface
+├ fatigue_modifier
+│ ├ endurance
+│ └ weight
 ├ fauna_spawn_rule
 ├ feedback_variable
 ├ fish_movement
@@ -4202,11 +6226,11 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 ├ fish_source
 │ ├ cleanshallow
 │ ├ ocean
-│ │ └
+│ │ └ deep
 │ ├ river
 │ ├ sewer
 │ ├ swamp
-│ │ └
+│ │ └ deep
 │ └ water
 ├ fish_trait
 │ ├ antigrav
@@ -4236,7 +6260,6 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ └ protect
 ├ font
 │ ├ blackmoor
-│ ├ breitkopf
 │ ├ byzantine
 │ ├ dauphin
 │ ├ frisky
@@ -4249,7 +6272,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ vaticanus
 │ └ xaphan
 ├ food_item
-│ └
+│ └ bread
 ├ forced_movement
 ├ forecast
 │ ├ rosewood
@@ -4283,7 +6306,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ └ toper
 ├ getrev
 ├ greyscale_config
-│ └
+│ └ couch
 ├ greyscale_layer
 │ ├ color_matrix
 │ ├ icon_state
@@ -4308,8 +6331,6 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 ├ Heap
 ├ heritage
 ├ holiday
-├ horny_targetting_datum
-│ └
 ├ hover_data
 │ ├ arcane_mark
 │ └ gnome_status
@@ -4337,11 +6358,105 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ guard_leyline
 │ ├ idle_random_bum
 │ ├ idle_random_walk
-│ │ └
+│ │ └ not_while_on_target
+│ │   └ trader
 │ ├ minotaur_patrol
 │ └ nothing
 ├ idle_tendancies
-│ └
+│ └ basic
+├ injury
+│ ├ bite
+│ │ ├ deep
+│ │ │ └ mechanical
+│ │ ├ flesh
+│ │ │ └ mechanical
+│ │ ├ gaping
+│ │ │ └ mechanical
+│ │ ├ gaping_big
+│ │ │ └ mechanical
+│ │ ├ massive
+│ │ │ └ mechanical
+│ │ └ small
+│ │   └ mechanical
+│ ├ bruise
+│ │ ├ huge
+│ │ │ └ mechanical
+│ │ ├ large
+│ │ │ └ mechanical
+│ │ ├ moderate
+│ │ │ └ mechanical
+│ │ ├ monumental
+│ │ │ └ mechanical
+│ │ └ small
+│ │   └ mechanical
+│ ├ burn
+│ │ ├ carbonised
+│ │ │ └ mechanical
+│ │ ├ deep
+│ │ │ └ mechanical
+│ │ ├ large
+│ │ │ └ mechanical
+│ │ ├ moderate
+│ │ │ └ mechanical
+│ │ └ severe
+│ │   └ mechanical
+│ ├ divine
+│ │ ├ brand
+│ │ │ └ mechanical
+│ │ ├ condemned
+│ │ │ └ mechanical
+│ │ ├ severe
+│ │ │ └ mechanical
+│ │ ├ smite
+│ │ │ └ mechanical
+│ │ └ wrath
+│ │   └ mechanical
+│ ├ internal_bruise
+│ │ ├ catastrophic
+│ │ │ └ mechanical
+│ │ ├ critical
+│ │ │ └ mechanical
+│ │ ├ minor
+│ │ │ └ mechanical
+│ │ ├ moderate
+│ │ │ └ mechanical
+│ │ └ severe
+│ │   └ mechanical
+│ ├ lash
+│ │ ├ deep
+│ │ │ └ mechanical
+│ │ ├ flayed
+│ │ │ └ mechanical
+│ │ ├ lash
+│ │ │ └ mechanical
+│ │ ├ severe
+│ │ │ └ mechanical
+│ │ └ welt
+│ │   └ mechanical
+│ ├ puncture
+│ │ ├ flesh
+│ │ │ └ mechanical
+│ │ ├ gaping
+│ │ │ └ mechanical
+│ │ ├ gaping_big
+│ │ │ └ mechanical
+│ │ ├ massive
+│ │ │ └ mechanical
+│ │ └ small
+│ │   └ mechanical
+│ └ slash
+│   ├ deep
+│   │ └ mechanical
+│   ├ flesh
+│   │ └ mechanical
+│   ├ gaping
+│   │ └ mechanical
+│   ├ gaping_big
+│   │ └ mechanical
+│   ├ massive
+│   │ └ mechanical
+│   └ small
+│     └ mechanical
 ├ inqports
 │ ├ articles
 │ │ ├ accusations
@@ -4402,43 +6517,53 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ short
 │ │ │ └ turbulenta
 │ │ └ crossbow
-│ │   └
+│ │   └ slurbow
 │ ├ attach
 │ ├ auto
 │ ├ axe
 │ │ ├ bash
-│ │ │ └
+│ │ │ └ martyr
 │ │ ├ chop
 │ │ │ ├ battle
-│ │ │ │ └
+│ │ │ │ └ greataxe
+│ │ │ │   └ martyr
 │ │ │ ├ great
 │ │ │ ├ greataxe
-│ │ │ │ └
+│ │ │ │ └ doublehead
 │ │ │ └ martyr
 │ │ ├ cut
 │ │ │ ├ battle
-│ │ │ │ └
+│ │ │ │ └ greataxe
+│ │ │ │   └ martyr
 │ │ │ ├ greataxe
-│ │ │ │ └
+│ │ │ │ └ doublehead
 │ │ │ └ martyr
 │ │ └ thrust
+│ ├ belt
+│ │ └ punish
 │ ├ bite
 │ ├ bless
 │ ├ cast
 │ ├ chisel
 │ ├ dagger
 │ │ ├ chop
-│ │ │ └
+│ │ │ └ cleaver
 │ │ ├ cut
-│ │ │ └
+│ │ │ └ stiletto
 │ │ └ thrust
-│ │   └
+│ │   └ stiletto
 │ ├ drill
 │ ├ effect
-│ │ └
+│ │ └ daze
 │ ├ fill
 │ ├ flail
-│ │ └
+│ │ └ strike
+│ │   ├ long
+│ │   ├ matthiosflail
+│ │   └ smash
+│ │     ├ golgotha
+│ │     ├ long
+│ │     └ matthiosflail
 │ ├ flailthresh
 │ ├ food
 │ ├ garrote
@@ -4464,7 +6589,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ katana
 │ │ ├ arc
 │ │ ├ cut
-│ │ │ └
+│ │ │ └ one_hand_cut
 │ │ └ precision_cut
 │ ├ katar
 │ │ ├ cut
@@ -4502,7 +6627,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ plex_dash
 │ ├ polearm
 │ │ ├ bash
-│ │ │ └
+│ │ │ └ martyr
 │ │ ├ chop
 │ │ ├ cut
 │ │ │ ├ martyr
@@ -4518,12 +6643,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ spark
 │ ├ reel
 │ ├ rend
-│ │ └
+│ │ └ reach
 │ ├ shield
 │ │ ├ bash
-│ │ │ └
+│ │ │ └ metal
 │ │ └ block
-│ │   └
+│ │   └ metal
 │ ├ shoot
 │ │ ├ airgun
 │ │ ├ blowgun
@@ -4532,12 +6657,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ short
 │ │ │ └ turbulenta
 │ │ ├ crossbow
-│ │ │ └
+│ │ │ └ slurbow
 │ │ ├ musket
-│ │ │ └
+│ │ │ └ arc
 │ │ ├ neant
 │ │ └ puffer
-│ │   └
+│ │   └ arc
 │ ├ shovelscoop
 │ ├ simple
 │ │ ├ axe
@@ -4621,11 +6746,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ weep
 │ ├ whip
 │ │ ├ crack
-│ │ │ └
+│ │ │ └ metal
 │ │ ├ cut
-│ │ └ lash
-│ │   ├ cane
-│ │   └ metal
+│ │ ├ lash
+│ │ │ ├ cane
+│ │ │ └ metal
+│ │ └ punish
+│ │   └ cane
 │ └ wring
 ├ ip_info
 ├ island_biome
@@ -4671,6 +6798,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ tailor
 │ │ ├ burgmeister
 │ │ │ ├ elected
+│ │ │ ├ lord_captain
 │ │ │ ├ marshall
 │ │ │ ├ patrician
 │ │ │ └ scholar
@@ -4777,6 +6905,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ adjutant
 │ │ │ ├ advisor
 │ │ │ ├ clerk
+│ │ │ ├ first_mate
 │ │ │ └ spymaster
 │ │ ├ forest_ranger
 │ │ │ ├ pathfinder
@@ -4785,6 +6914,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ guild_wizard
 │ │ │ ├ adept
 │ │ │ └ expert
+│ │ ├ ogre
+│ │ │ ├ avatar
+│ │ │ ├ cook
+│ │ │ ├ dumdum
+│ │ │ ├ mercenary
+│ │ │ └ warlord
 │ │ ├ pick_everything
 │ │ ├ servant
 │ │ │ ├ butler
@@ -4803,6 +6938,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ archivist
 │ │ │ ├ artificer
 │ │ │ ├ explorer
+│ │ │ ├ ship_doctor
 │ │ │ └ town_physician
 │ │ ├ town_scholar_apprentice
 │ │ │ ├ artificer
@@ -4818,11 +6954,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ jester
 │ │ │ ├ lumberjack
 │ │ │ ├ miner
+│ │ │ ├ passenger
 │ │ │ ├ patrician
 │ │ │ └ town_mouth
 │ │ ├ watch_guard
 │ │ │ ├ bulwark
 │ │ │ ├ halberdier
+│ │ │ ├ marine
 │ │ │ └ sentinel
 │ │ └ waterdeep_guild_assistant
 │ │   ├ banker_assistant
@@ -4870,6 +7008,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ jestertroupe
 │ │ └ sweetshare
 │ ├ moon_priest
+│ ├ ogre
 │ ├ persistence
 │ │ ├ caravanguard
 │ │ ├ carpenter
@@ -4878,16 +7017,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ stonemason
 │ │ └ woodsman
 │ ├ roguetown
-│ │ ├ adventurer
 │ │ ├ court_agent
-│ │ ├ mercenary
 │ │ └ vampire
-│ │   ├ vampguard
-│ │   ├ vamplord
-│ │   ├ vampservant
-│ │   ├ vampsmith
-│ │   └ vampthrall
 │ ├ rousman
+│ ├ seelie
 │ ├ servant
 │ ├ skeleton
 │ │ ├ knight
@@ -4908,7 +7041,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ waterdeep_banker
 │ ├ waterdeep_guild_assistant
 │ ├ waterdeep_guild_guard
-│ └ waterdeep_merchant
+│ ├ waterdeep_merchant
+│ └ werewolf
 ├ job_boost_panel
 ├ job_pack
 │ ├ consecratia
@@ -4995,6 +7129,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ swap_hands
 │ │ ├ swap_left
 │ │ ├ swap_right
+│ │ ├ swim_down
+│ │ ├ swim_up
 │ │ └ view_pet_data
 │ ├ looc
 │ ├ mob
@@ -5069,10 +7205,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   ├ minimal
 │   └ none
 ├ lift_master
-│ └
+│ └ tram
 ├ light_source
 ├ lighting_corner
-│ └
+│ └ dummy
 ├ liquid_group
 ├ loadout_item
 │ ├ accordion
@@ -5207,6 +7343,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ wooden_cup
 │ ├ wrappings
 │ └ zalad
+├ loadout_menu
 ├ lock
 │ ├ key
 │ │ ├ apothecary
@@ -5219,7 +7356,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ merchant
 │ │ ├ nerve
 │ │ ├ pillory
-│ │ │ └
+│ │ │ └ church
 │ │ ├ purity
 │ │ ├ steward
 │ │ └ vendor
@@ -5299,7 +7436,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ medium
 │ ├ mining_cache
 │ ├ potion_ingredient
-│ │ └
+│ │ └ herb
 │ ├ potion_poisons
 │ ├ potion_stats
 │ ├ potion_vitals
@@ -5310,16 +7447,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 ├ mana_pool
 │ ├ leyline
 │ ├ mana_battery
-│ │ └
+│ │ └ mana_crystal
+│ │   ├ small
+│ │   │ └ focus
+│ │   └ standard
 │ ├ mana_fountain
 │ ├ mana_pylon
 │ ├ mana_star
 │ └ mob
 ├ map_adjustment
-│ ├ daftmarsh
-│ ├ rosewood
-│ ├ voyager
-│ └ whitepalacepass
 ├ map_config
 ├ map_preloader
 ├ map_report
@@ -5337,7 +7473,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ core
 │ ├ dungeon
 │ │ ├ descent
-│ │ │ └
+│ │ │ └ tented
 │ │ ├ entry
 │ │ │ ├ eastentrance
 │ │ │ ├ Northernentrance
@@ -5449,13 +7585,26 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ mines
 │ ├ mountaintown
 │ ├ phylactery
-│ ├ rmh_housing_room1
+│ ├ pocket
+│ │ ├ bag_of_holding
+│ │ ├ lighting_test
+│ │ ├ magic_closet
+│ │ │ └ dungeon
+│ │ ├ test_chamber
+│ │ ├ werewolf_lair
+│ │ └ werewolf_lair_trap
+│ ├ rmh_desertcrypt1
+│ ├ rmh_desertcrypt2
 │ ├ rmh_housing1
 │ ├ rmh_housing2
 │ ├ rmh_housing3
 │ ├ rmh_housing4
 │ ├ rmh_housing5
 │ ├ rmh_housing6
+│ ├ rmh_housing7
+│ ├ rmh_lab1
+│ ├ rmh_labyrinth1
+│ ├ rmh_labyrinth2
 │ ├ rmh_towncrypt_1
 │ ├ rmh_towncrypt_2
 │ ├ rmh_towncrypt_3
@@ -5475,7 +7624,6 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ stone_house_3
 │ ├ stone_house_4
 │ ├ tailor
-│ ├ unit_tests
 │ ├ vanderlin_apartment
 │ ├ vanderlin_apartment_eight
 │ ├ vanderlin_apartment_five
@@ -5514,7 +7662,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ beach
 │ ├ bog
 │ ├ ca
-│ │ └
+│ │ └ maze
 │ ├ cave
 │ │ ├ lava
 │ │ └ spider
@@ -5549,10 +7697,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ bogwater
 │ ├ border
 │ ├ bottomLayer
-│ │ └
+│ │ └ massdelete
+│ │   ├ leave_turfs
+│ │   ├ no_delete_mobs
+│ │   └ regeneration_delete
 │ ├ cave
 │ ├ cavedirt
-│ │ └
+│ │ └ lava
 │ ├ cavespider
 │ ├ dakkatownfield
 │ │ ├ grass
@@ -5609,32 +7760,36 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ grass
 │ │ └ road
 │ ├ rosewoodgrass
-│ │ └
+│ │ └ grass
 │ ├ rosewoodsnow
-│ │ └
+│ │ └ grass
+│ │   └ patchy
 │ ├ rwforestdirt
 │ │ ├ grass
 │ │ └ road
 │ ├ rwforestgrass
-│ │ └
+│ │ └ grass
 │ ├ rwforestgrassgreen
 │ ├ rwforestsnow
-│ │ └
+│ │ └ grass
+│ │   └ patchy
 │ ├ rwforestturfs
-│ │ └
+│ │ └ dirt
 │ ├ rwforestwater
 │ ├ sewerwaterturf
 │ ├ splatterLayer
 │ ├ underdarkmud
 │ ├ underdarkstone
+│ ├ underglimmer
 │ ├ undermountain
 │ ├ wppdirt
 │ │ ├ grass
 │ │ └ road
 │ ├ wppgrass
-│ │ └
+│ │ └ grass
 │ └ wppsnow
-│   └
+│   └ grass
+│     └ patchy
 ├ marked_target
 ├ martial_art
 ├ material
@@ -5651,7 +7806,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ thaumic_iron
 │ └ tin
 ├ material_trait
-│ └
+│ └ silver_bane
 ├ mechanic_tip
 │ ├ bound
 │ └ bounded
@@ -5659,7 +7814,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 ├ migrant_pref
 ├ migrant_role
 │ ├ advclass
-│ │ └
+│ │ └ adventurer
+│ │   ├ maniac
+│ │   ├ vampire
+│ │   └ werewolf
 │ ├ dwarven_company
 │ │ ├ armorsmith
 │ │ ├ captain
@@ -5707,6 +7865,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ milf
 │ │ ├ orc_fiery
 │ │ ├ orc_pleasure
+│ │ ├ quiet
 │ │ ├ tiefling_fiery
 │ │ ├ tiefling_pitch
 │ │ ├ tiefling_pleasure
@@ -5715,7 +7874,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   ├ human_pleasure
 │   ├ human_sensual
 │   ├ human_tense
-│   └ human_tough
+│   ├ human_tough
+│   └ quiet
 ├ mob_affix
 │ ├ armored
 │ ├ berserker
@@ -6028,7 +8188,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 ├ movement_packet
 ├ multi_ready_ui
 ├ nation
-│ └
+│ └ debug_showcase
 ├ native_say
 ├ natural_precursor
 │ ├ abyssalflame
@@ -6135,9 +8295,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ one
 │ │ │ └ two
 │ │ └ loyal
-│ │   └
+│ │   └ one
 │ ├ assassinate
-│ │ └
+│ │ └ internal
 │ ├ bandit
 │ ├ capture
 │ ├ changeling_team_objective
@@ -6146,13 +8306,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ debrain
 │ ├ delf
 │ ├ destroy
-│ │ └
+│ │ └ internal
 │ ├ dominate
 │ │ ├ vampire
 │ │ └ werewolf
 │ ├ dungeoneer
 │ ├ escape
-│ │ └
+│ │ └ prisoner
 │ ├ harlequinn_contract
 │ ├ maniac
 │ ├ martyr
@@ -6183,7 +8343,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ lux_extraction
 │ │ ├ marriage_broker
 │ │ ├ marry
-│ │ │ └
+│ │ │ └ complete_objectiv
 │ │ ├ mock
 │ │ │ ├ monarch
 │ │ │ └ noble
@@ -6201,24 +8361,36 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ wise_trees
 │ ├ prebel
 │ ├ protect
-│ │ └
+│ │ └ nonhuman
 │ ├ protect_object
 │ ├ purishep
 │ ├ rt_maniac
 │ ├ steal
 │ ├ steal_five_of_type
 │ ├ survive
-│ │ └
+│ │ └ exist
 │ ├ werewolf
 │ │ ├ infiltrate
 │ │ │ ├ one
 │ │ │ └ two
 │ │ ├ spread
 │ │ └ survive
+│ ├ werewolf_counter
+│ │ ├ breed
+│ │ ├ contracts
+│ │ ├ convert
+│ │ ├ hunt
+│ │ ├ slay
+│ │ └ trap
 │ ├ zizo
 │ └ zizoserve
 ├ objective_item
-│ └
+│ └ steal
+│   └ rogue
+│     ├ crown
+│     ├ ledger
+│     ├ mkey
+│     └ spices
 ├ orderless_slapcraft
 │ ├ automaton
 │ ├ bouquet
@@ -6246,6 +8418,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ penis
 │ ├ testicles
 │ └ vagina
+├ organ_process
+│ ├ brain
+│ ├ ears
+│ ├ heart
+│ ├ liver
+│ ├ lungs
+│ ├ spleen
+│ └ stomach
 ├ outfit
 │ ├ acolyte
 │ │ ├ base
@@ -6356,6 +8536,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ adventurers_guildmaster
 │ │ ├ eldritch_knight
 │ │ └ ranger
+│ ├ antagonist
+│ │ └ werewolf
 │ ├ arena_skeleton
 │ ├ artifact
 │ ├ artisan_apprentice
@@ -6366,6 +8548,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ blacksmith
 │ ├ burgmeister
 │ │ ├ elected
+│ │ ├ lord_captain
 │ │ ├ marshall
 │ │ ├ patrician
 │ │ └ scholar
@@ -6378,7 +8561,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ adjutant
 │ │ ├ advisor
 │ │ ├ clerk
+│ │ ├ first_mate
 │ │ └ spymaster
+│ ├ daewalker
 │ ├ deathknight
 │ ├ dwarven_company
 │ │ ├ armorsmith
@@ -6386,7 +8571,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ weaponsmith
 │ ├ farmer_p
 │ ├ folkhero
-│ │ └
+│ │ └ swashbuckler
 │ ├ forest_ranger
 │ │ ├ pathfinder
 │ │ ├ scout
@@ -6407,32 +8592,42 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ job
 │ │ ├ human
 │ │ │ ├ northern
-│ │ │ │ └
+│ │ │ │ └ bog_deserters
+│ │ │ │   └ better_gear
 │ │ │ └ species
 │ │ │   ├ elf
-│ │ │   │ └
+│ │ │   │ └ dark
+│ │ │   │   └ drowraider
 │ │ │   └ human
-│ │ │     └
+│ │ │     └ northern
+│ │ │       ├ highwayman
+│ │ │       ├ mad_touched_treasure_hunter
+│ │ │       ├ militia
+│ │ │       ├ searaider
+│ │ │       └ thief
 │ │ ├ npc
-│ │ │ └
+│ │ │ └ rousman
+│ │ │   └ assassin
 │ │ ├ orc
-│ │ │ └
+│ │ │ └ npc
+│ │ │   ├ archer_test
+│ │ │   ├ berserker
+│ │ │   ├ footsoldier
+│ │ │   ├ marauder
+│ │ │   └ warlord
 │ │ ├ quest_miniboss
 │ │ │ ├ blacksteel
 │ │ │ ├ graggar
 │ │ │ ├ hedge_knight
 │ │ │ ├ matthios
 │ │ │ └ zizo
-│ │ ├ roguetown
-│ │ │ ├ vampguard
-│ │ │ ├ vamplord
-│ │ │ │ └
-│ │ │ ├ vampservant
-│ │ │ ├ vampsmith
-│ │ │ └ vampthrall
-│ │ │   └
 │ │ └ skeleton
-│ │   └
+│ │   └ npc
+│ │     ├ easy
+│ │     ├ hard
+│ │     ├ medium
+│ │     ├ pirate
+│ │     └ supereasy
 │ ├ lich
 │ ├ lord
 │ ├ mason
@@ -6454,13 +8649,22 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ ambush
 │ │ │ └ seer
 │ │ └ skeleton
-│ │   └
+│ │   └ random
+│ ├ ogre
+│ │ ├ avatar
+│ │ ├ cook
+│ │ ├ dumdum
+│ │ ├ mercenary
+│ │ └ warlord
+│ ├ ogre_base
+│ ├ ogre_heavy
 │ ├ orcmarauder
 │ ├ orcravager
 │ ├ overlord
 │ ├ rousman
 │ ├ savageorc
 │ ├ savageorc2
+│ ├ seelie
 │ ├ servant
 │ │ ├ butler
 │ │ ├ concubine
@@ -6470,9 +8674,17 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ zizoid
 │ ├ species
 │ │ ├ skeleton
-│ │ │ └
+│ │ │ └ npc
+│ │ │   ├ peasant
+│ │ │   ├ random
+│ │ │   └ warrior
 │ │ └ zizombie
-│ │   └
+│ │   └ npc
+│ │     ├ GRENZEL
+│ │     ├ militiamen
+│ │     ├ peasant
+│ │     ├ random
+│ │     └ warrior
 │ ├ stonemason_p
 │ ├ swamp_witch
 │ │ ├ alchemist
@@ -6490,6 +8702,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ archivist
 │ │ ├ artificer
 │ │ ├ explorer
+│ │ ├ ship_doctor
 │ │ └ town_physician
 │ ├ town_scholar_apprentice
 │ │ ├ artificer
@@ -6505,6 +8718,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ jester
 │ │ ├ lumberjack
 │ │ ├ miner
+│ │ ├ passenger
 │ │ ├ patrician
 │ │ └ town_mouth
 │ ├ treyliam
@@ -6515,6 +8729,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ watch_guard
 │ │ ├ bulwark
 │ │ ├ halberdier
+│ │ ├ marine
 │ │ └ sentinel
 │ ├ watch_sergeant
 │ ├ watch_veteran
@@ -6527,6 +8742,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ waterdeep_merchant
 │ ├ woodsman_p
 │ └ zhongese
+├ oviposition_egg_profile
+│ ├ avian
+│ ├ bog_bug
+│ ├ embryo
+│ ├ harpy
+│ ├ parasitic
+│ ├ softshell
+│ └ spider
+├ oviposition_status_menu
 ├ parsed_map
 ├ particle_weather
 │ ├ fall_leaves
@@ -6612,7 +8836,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ matthios
 │ │ └ zizo
 │ └ psydon
-│   └
+│   └ extremist
 ├ penance
 │ ├ combat
 │ ├ donation
@@ -6641,9 +8865,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ vegetable
 │ ├ forge_ingot
 │ ├ make_drink
-│ │ └
+│ │ └ beer
 │ ├ make_food
-│ │ └
+│ │ └ bread
 │ ├ mine
 │ │ ├ coal
 │ │ ├ gem
@@ -6672,7 +8896,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ select_recipe
 │ │ ├ set_filter
 │ │ ├ set_waypoint
-│ │ │ └
+│ │ │ └ b
 │ │ ├ start_alchemy
 │ │ ├ stop_alchemy
 │ │ ├ stop_move_item
@@ -6749,10 +8973,19 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ westleach
 │ └ wheat
 ├ plant_genetics
-│ └
+│ └ heirloom
+│   ├ apple_heritage
+│   ├ potato_fingerling
+│   ├ tomato_beefsteak
+│   └ wheat_ancient
 ├ player_details
+├ pocket_dimension
+│ └ trap
+│   └ werewolf
+├ pocket_movable_snapshot
 ├ point
-│ └
+│ └ vector
+│   └ processed
 ├ poll_option
 ├ poll_question
 ├ pollutant
@@ -6834,9 +9067,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ vanilla
 │ ├ metallic_scent
 │ ├ rot
-│ │ └
+│ │ └ sewage
 │ ├ smoke
-│ │ └
+│ │ └ thicc
 │ └ steam
 ├ pollution
 ├ position
@@ -6863,7 +9096,19 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 ├ progressbar
 ├ property_controller
 ├ proximity_monitor
-│ └
+│ └ advanced
+│   ├ ai_aggro_tracking
+│   ├ ai_find_tracking
+│   │ └ swim_alternate
+│   ├ ai_target_tracking
+│   │ └ horny
+│   ├ beacon_monitor
+│   ├ debug
+│   ├ debug_lights
+│   │ └ sunlight
+│   ├ meatvine_aura
+│   ├ silence_field
+│   └ stockpile_storage
 ├ qdel_item
 ├ quality_calculator
 │ ├ blacksmithing
@@ -6873,11 +9118,18 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 ├ quest
 │ ├ courier
 │ ├ kill
+│ │ ├ boss
 │ │ ├ clearout
-│ │ ├ easy
-│ │ ├ outlaw
+│ │ ├ hunt
 │ │ └ raid
 │ └ retrieval
+├ quest_map_config
+│ ├ bog
+│ ├ desert
+│ ├ frozen
+│ ├ town
+│ ├ town_snow
+│ └ underdark
 ├ queued_workorder
 ├ quirk
 │ ├ boon
@@ -6887,13 +9139,26 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ beautiful
 │ │ ├ bleublood
 │ │ ├ bookworm
+│ │ ├ bronze_arm_left
+│ │ ├ bronze_arm_right
+│ │ ├ bronze_leg_left
+│ │ ├ bronze_leg_right
 │ │ ├ composed
 │ │ ├ duelist
 │ │ ├ eagle_eyed
 │ │ ├ empath
 │ │ ├ fence
 │ │ ├ folk_hero
+│ │ ├ gold_arm_left
+│ │ ├ gold_arm_right
+│ │ ├ gold_leg_left
+│ │ ├ gold_leg_right
+│ │ ├ goodman
 │ │ ├ greenthumb
+│ │ ├ iron_arm_left
+│ │ ├ iron_arm_right
+│ │ ├ iron_leg_left
+│ │ ├ iron_leg_right
 │ │ ├ iron_will
 │ │ ├ keen_eye
 │ │ ├ languagesavant
@@ -6913,10 +9178,16 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ quick_hands
 │ │ ├ quick_learner
 │ │ ├ resident
+│ │ ├ restored
 │ │ ├ richpouch
 │ │ ├ rider
 │ │ ├ second_language
 │ │ ├ selfaware
+│ │ ├ steel_arm_left
+│ │ ├ steel_arm_right
+│ │ ├ steel_leg_left
+│ │ ├ steel_leg_right
+│ │ ├ summonable_extra_genitals
 │ │ ├ thief
 │ │ ├ training10
 │ │ ├ training2
@@ -6926,11 +9197,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ training8
 │ │ ├ training9
 │ │ └ value
-│ ├ duelist
 │ ├ peculiarity
-│ │ ├ goodman
+│ │ ├ egg_layer
+│ │ ├ extra_genitals
+│ │ ├ extra_genitals_base
+│ │ ├ generous_figure
 │ │ ├ large_sized
 │ │ ├ mystery_box
+│ │ ├ ovipositor
 │ │ ├ selfawaregeni
 │ │ ├ small_sized
 │ │ ├ ugly
@@ -6967,12 +9241,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   ├ lost_keys
 │   ├ lovefiend
 │   ├ loveless
+│   ├ luxless
 │   ├ maniac
 │   ├ masochist
+│   ├ missing_teeth
 │   ├ monochromatic
 │   ├ narcoleptic
 │   ├ nightmares
 │   ├ nimrod
+│   ├ no_dental
 │   ├ no_taste
 │   ├ nopouch
 │   ├ nude_sleeper
@@ -6987,6 +9264,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   ├ smoker
 │   ├ tainted_soul
 │   ├ tongueless
+│   ├ toothless
 │   ├ tortured
 │   ├ traumatized
 │   ├ tremors
@@ -6996,20 +9274,25 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   ├ weak_heart
 │   ├ wild_night
 │   ├ wooden_arm_left
-│   └ wooden_arm_right
+│   ├ wooden_arm_right
+│   ├ wooden_leg_left
+│   └ wooden_leg_right
 ├ radial_menu
-│ └
+│ └ persistent
 ├ radial_menu_choice
 ├ radio_frequency
 ├ rage
-│ └
+│ └ werewolf
 ├ reagent
+│ ├ adrenaline
 │ ├ ash
 │ ├ berrypoison
-│ │ └
+│ │ └ shroom
 │ ├ blastpowder
 │ ├ blood
+│ │ ├ fuel
 │ │ ├ green
+│ │ ├ putrid
 │ │ └ tiefling
 │ ├ buff
 │ │ ├ constitution
@@ -7041,6 +9324,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ dwarf
 │ │ │ ├ elf
 │ │ │ ├ goblinp
+│ │ │ │ └ player
 │ │ │ ├ halfelf
 │ │ │ ├ halforc
 │ │ │ ├ kobold
@@ -7058,7 +9342,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ avarrice
 │ │ │ ├ baijiu
 │ │ │ ├ beer
-│ │ │ │ └
+│ │ │ │ └ emberwine
 │ │ │ ├ blackberry
 │ │ │ │ ├ aged
 │ │ │ │ └ delectable
@@ -7090,8 +9374,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ komuchisake
 │ │ │ ├ limoncello
 │ │ │ ├ luxwine
+│ │ │ │ ├ aged
+│ │ │ │ └ delectable
 │ │ │ ├ mead
-│ │ │ │ └
+│ │ │ │ └ spider
 │ │ │ ├ murkwine
 │ │ │ ├ nocshine
 │ │ │ ├ nred
@@ -7135,7 +9421,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ tiefling
 │ │ ├ golden_calendula_tea
 │ │ ├ herbal
-│ │ │ └
+│ │ │ └ rosa_oil
 │ │ ├ honey
 │ │ ├ ice
 │ │ ├ milk
@@ -7147,7 +9433,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ salted_gote
 │ │ │ └ tiefling
 │ │ ├ nutriment
-│ │ │ └
+│ │ │ └ vitamin
 │ │ ├ sodiumchloride
 │ │ ├ soothing_valerian_tea
 │ │ ├ soup
@@ -7168,7 +9454,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │   ├ potato
 │ │ │   └ turnip
 │ │ ├ sugar
-│ │ │ └
+│ │ │ └ molasses
 │ │ └ tea
 │ │   ├ badidea
 │ │   ├ compot
@@ -7182,6 +9468,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ devour
 │ ├ distillery
 │ ├ dreaddeath
+│ ├ drowsbane
 │ ├ drug
 │ │ ├ mushroomhallucinogen
 │ │ ├ nicotine
@@ -7195,9 +9482,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ lux_tainted
 │ ├ medicine
 │ │ ├ antidote
+│ │ ├ antipregnancy
 │ │ ├ atropine
 │ │ ├ diseasecure
+│ │ ├ endorphin
 │ │ ├ gender_potion
+│ │ ├ hair_growth
+│ │ ├ hair_removal
 │ │ ├ healthpot
 │ │ ├ herbal
 │ │ │ ├ calendula_salve
@@ -7215,7 +9506,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ valeriana_draught
 │ │ │ └ witches_bane
 │ │ ├ manapot
-│ │ │ └
+│ │ │ └ weak
 │ │ ├ rosawater
 │ │ ├ soporpot
 │ │ ├ stampot
@@ -7233,7 +9524,11 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ ozium
 │ ├ paralyze_potion
 │ ├ poison
-│ │ └
+│ │ └ herbal
+│ │   ├ atropa_concentrate
+│ │   ├ matricaria_irritant
+│ │   ├ swamp_miasma
+│ │   └ weak_atropa
 │ ├ rogueacid
 │ ├ sate
 │ ├ sleep_potion
@@ -7267,7 +9562,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ salty
 │ │ └ spicy
 │ └ yuck
-│   └
+│   └ cursed_soup
 ├ reagents
 ├ recipe
 ├ recipe_tree_interface
@@ -7405,7 +9700,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ royal_truffle
 │ │ ├ saltedseeds
 │ │ ├ soap
-│ │ │ └
+│ │ │ └ bath
 │ │ ├ twoegg
 │ │ ├ unbaked_cheesecake
 │ │ ├ unbaked_crimsoncake
@@ -7768,10 +10063,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ gray
 │ │ │ └ speckled
 │ │ ├ bobber
-│ │ │ └
+│ │ │ └ stone
 │ │ ├ fishingrod
 │ │ ├ hook
-│ │ │ └
+│ │ │ └ thorn
 │ │ └ reel
 │ │   ├ leather
 │ │   └ silk
@@ -7841,7 +10136,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ ladycloak
 │ │ ├ leash
 │ │ ├ leathercoat
-│ │ │ └
+│ │ │ └ black
 │ │ ├ leathercollar
 │ │ ├ leatherhood
 │ │ ├ leatherjacket
@@ -7851,7 +10146,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ nobleboots
 │ │ ├ ominous_hood
 │ │ ├ pants
-│ │ │ └
+│ │ │ └ mourning
 │ │ ├ psyaltrist
 │ │ ├ psydonboots
 │ │ ├ red_cloak
@@ -7875,10 +10170,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ boots
 │ │ │ │ ├ masterwork
 │ │ │ │ └ watch
+│ │ │ ├ bracer_scabbard
 │ │ │ ├ bracers
-│ │ │ │ └
+│ │ │ │ └ masterwork
 │ │ │ ├ chausses
-│ │ │ │ └
+│ │ │ │ └ masterwork
+│ │ │ │   └ skirt
 │ │ │ ├ coat
 │ │ │ │ ├ bikini
 │ │ │ │ ├ bra
@@ -7893,7 +10190,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ └ thaumgloves
 │ │ │ ├ grenzelhoft_leather_boots
 │ │ │ ├ helmet
-│ │ │ │ └
+│ │ │ │ └ masterwork
 │ │ │ ├ hlskirt
 │ │ │ ├ inqboots
 │ │ │ ├ inquisitor_duster
@@ -7942,7 +10239,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ pyro_arrow
 │ │ ├ pyro_bolt
 │ │ ├ vial_arrow
-│ │ │ └
+│ │ │ └ water
 │ │ ├ water_arrow
 │ │ └ water_bolt
 │ ├ raisins
@@ -7958,7 +10255,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ saltfish
 │ ├ sewing
 │ │ ├ abyssortemplar
-│ │ │ └
+│ │ │ └ alt
 │ │ ├ adept_robes
 │ │ ├ apron
 │ │ ├ apron_cook
@@ -7968,13 +10265,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ articap
 │ │ ├ astratan_tabard
 │ │ ├ astratatemplar
-│ │ │ └
+│ │ │ └ alt
 │ │ ├ athletic_leotard
+│ │ ├ bandage
 │ │ ├ bandaged_gloves
 │ │ ├ bandaged_gloves_weighted
 │ │ ├ bardhat
 │ │ ├ barding
-│ │ │ └
+│ │ │ └ honse
 │ │ ├ basiceast
 │ │ ├ battlenun_helm
 │ │ ├ battlenun_helm_steel
@@ -7985,8 +10283,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ Bludress
 │ │ ├ bpearl_amulet
 │ │ ├ bra
-│ │ │ └
+│ │ │ └ bikini
 │ │ ├ braies
+│ │ ├ bunny_ears
 │ │ ├ camisole
 │ │ ├ caparison
 │ │ │ ├ astrata
@@ -7994,7 +10293,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ honse
 │ │ │ └ psy
 │ │ ├ cape
-│ │ │ └
+│ │ │ └ shredded
 │ │ ├ captainrobe
 │ │ ├ carpet
 │ │ │ ├ blue
@@ -8010,6 +10309,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ clothgloves
 │ │ ├ clothknapsack
 │ │ ├ clothpouch
+│ │ ├ clothrucksack
 │ │ ├ clothshirt
 │ │ ├ clothtights
 │ │ ├ clothtrou
@@ -8039,13 +10339,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ exoticsilkbra
 │ │ ├ exoticsilkmask
 │ │ ├ fakeeyepatch
+│ │ ├ fancy_spectacles
+│ │ │ └ dark
 │ │ ├ fancyhat
 │ │ ├ feld_collar
 │ │ ├ feld_robe
 │ │ ├ fisher_hat
 │ │ ├ fisherhat
 │ │ ├ fishnet_thighs
-│ │ │ └
+│ │ │ └ fishnet_thighs_cl
 │ │ ├ flowercrown
 │ │ │ ├ rosa
 │ │ │ └ salvia
@@ -8113,13 +10415,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ mesh_half_body
 │ │ ├ necran_tabard
 │ │ ├ necratemplar
-│ │ │ └
+│ │ │ └ alt
 │ │ ├ net_armsleeve
 │ │ ├ net_body
 │ │ ├ net_half_armsleeve
 │ │ ├ net_half_body
 │ │ ├ noctemplar
-│ │ │ └
+│ │ │ └ alt
 │ │ ├ nocwrappings
 │ │ ├ normal_robes
 │ │ ├ panties
@@ -8159,7 +10461,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ silk_half_body
 │ │ ├ silk_stockings_wg
 │ │ ├ silk_thighs
-│ │ │ └
+│ │ │ └ crotchless
 │ │ ├ silkydress
 │ │ ├ silver_order
 │ │ ├ skirt
@@ -8188,14 +10490,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ stockings_sir
 │ │ │ └ stockings_wg
 │ │ ├ stockings_white_fishnet
-│ │ │ └
+│ │ │ └ fishnet_sir
 │ │ ├ stockings_white_silk
 │ │ │ ├ silk_sir
 │ │ │ └ silk_wg
 │ │ ├ strawhat
 │ │ ├ stripedtunic
 │ │ ├ tabard
-│ │ │ └
+│ │ │ └ crusader
 │ │ ├ tailcoat
 │ │ ├ templar
 │ │ ├ thighs
@@ -8206,7 +10508,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ turban
 │ │ ├ undervestments
 │ │ ├ undies
-│ │ │ └
+│ │ │ └ thong
 │ │ ├ undivided_tabard
 │ │ ├ veiled
 │ │ ├ wardencloak
@@ -8325,12 +10627,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ flint
 │ │ ├ mushmound
 │ │ ├ net
-│ │ ├ poor_sewingkit
 │ │ ├ ration_wrapper
 │ │ ├ rope
 │ │ ├ rope_leash
 │ │ ├ sack_clothing
-│ │ ├ sewingkit
 │ │ ├ stake
 │ │ ├ stone_axe
 │ │ ├ stone_hoe
@@ -8348,13 +10648,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ woodenbucket
 │ │ └ woodstaff
 │ ├ tallow
-│ │ └
+│ │ └ red
 │ ├ tiefsugar
 │ ├ westleach
 │ ├ wood_d6
 │ ├ wood_dice_cup
 │ └ woodthresher
-├ required_item
 ├ research_interface
 ├ resurrection_rune_controller
 ├ riddle
@@ -8406,7 +10705,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ hostile
 │ │ └ passive
 │ ├ antagonist
-│ │ └
+│ │ └ solo
+│ │   ├ aspirant
+│ │   ├ ghost
+│ │   │ └ daewalker
+│ │   ├ maniac
+│ │   │ └ midround
+│ │   ├ vampire
+│ │   ├ vampires_and_werewolves
+│ │   └ zizo_cultist
 │ ├ collapsing_earth
 │ ├ crop_growth
 │ ├ fishing_boon
@@ -8436,9 +10743,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ solo
 │ │   ├ aspirant
 │ │   ├ from_ghosts
+│ │   │ └ daewalker
 │ │   ├ lich
 │ │   ├ maniac
-│ │   │ └
+│ │   │ └ midround
 │ │   ├ rebel
 │ │   ├ vampires
 │ │   ├ vampires_and_werewolves
@@ -8580,14 +10888,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ ooc
 │ └ say
 ├ saymode
-│ └
+│ └ vocalcords
 ├ scheduled_event
 ├ schizohelp
 ├ SDQL_parser
 ├ SDQL2_query
 ├ search_object
 ├ secret_door_manager
-├ server
 ├ settlement_building_template
 │ ├ house_1
 │ ├ house_2
@@ -8606,6 +10913,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ blowjob
 │ ├ crotch_nuzzle
 │ ├ cunnilingus
+│ ├ custom
 │ ├ facesitting
 │ ├ foot_lick
 │ ├ frotting
@@ -8616,6 +10924,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ anus_store
 │ │ ├ boobs_remove
 │ │ ├ boobs_store
+│ │ ├ expel_foreign_fluids
+│ │ │ ├ anal
+│ │ │ └ vaginal
 │ │ ├ vagina_remove
 │ │ ├ vagina_remove_deep
 │ │ └ vagina_store
@@ -8623,19 +10934,29 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ masturbate
 │ │ ├ anus
 │ │ ├ breasts
+│ │ ├ clit_rub
+│ │ ├ labia
+│ │ ├ nipples
 │ │ ├ other
 │ │ │ ├ anus
+│ │ │ ├ breasts
 │ │ │ ├ clit
+│ │ │ ├ clit_rub
+│ │ │ ├ labia
+│ │ │ ├ nipples
 │ │ │ ├ penis
+│ │ │ ├ slap_breasts
+│ │ │ ├ slap_pussy
 │ │ │ └ vagina
 │ │ ├ penis
 │ │ ├ penis_over
+│ │ ├ slap_breasts
+│ │ ├ slap_pussy
 │ │ ├ vagina
 │ │ └ vagina_finger
 │ ├ npc
 │ │ ├ npc_anal_ride_sex
 │ │ ├ npc_anal_sex
-│ │ ├ npc_cunnilingus
 │ │ ├ npc_facesitting
 │ │ ├ npc_rimming
 │ │ ├ npc_throat_sex
@@ -8646,15 +10967,28 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ object_anal_other
 │ │ ├ object_vaginal
 │ │ └ object_vaginal_other
-│ │   └
+│ │   └ other
+│ │     └ vagina
 │ ├ portal_base
 │ │ ├ portal_hand
+│ │ ├ portal_hand_anal
+│ │ ├ portal_hand_base
 │ │ ├ portal_object_fuck
 │ │ ├ portal_oral
+│ │ ├ portal_oral_anal
+│ │ ├ portal_oral_base
 │ │ ├ portal_penis_anal
+│ │ ├ portal_penis_base
 │ │ ├ portal_penis_vaginal
+│ │ ├ portal_remove_anal
+│ │ ├ portal_remove_base
 │ │ ├ portal_remove_vaginal
-│ │ └ portal_store_vaginal
+│ │ ├ portal_store_anal
+│ │ ├ portal_store_base
+│ │ ├ portal_store_vaginal
+│ │ ├ portal_vagina_anal
+│ │ ├ portal_vagina_base
+│ │ └ portal_vagina_vaginal
 │ ├ rimming
 │ ├ rub_body
 │ ├ scissoring
@@ -8677,17 +11011,28 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ └ wax_play
 │   ├ breasts
 │   └ butt
+├ sex_custom_action_data
+├ sex_custom_action_template
+│ ├ blank_partner
+│ ├ blank_self
+│ ├ bodyplay
+│ ├ footplay
+│ ├ handplay
+│ ├ oral
+│ └ penetration
 ├ sex_session
 ├ sex_session_lock
 ├ ship_data
 ├ signal
 ├ skill
 │ ├ combat
+│ │ ├ axes
 │ │ ├ axesmaces
 │ │ ├ bows
 │ │ ├ crossbows
 │ │ ├ firearms
 │ │ ├ knives
+│ │ ├ maces
 │ │ ├ polearms
 │ │ ├ shields
 │ │ ├ swords
@@ -8721,30 +11066,51 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ blood
 │ │ ├ druidic
 │ │ └ holy
-│ └ misc
-│   ├ athletics
-│   ├ climbing
-│   ├ lockpicking
-│   ├ medicine
-│   ├ music
-│   ├ reading
-│   ├ riding
-│   ├ sewing
-│   ├ sneaking
-│   ├ stealing
-│   └ swimming
-├ skill_holder
+│ ├ misc
+│ │ ├ athletics
+│ │ ├ climbing
+│ │ ├ lockpicking
+│ │ ├ medicine
+│ │ ├ music
+│ │ ├ reading
+│ │ ├ riding
+│ │ ├ sewing
+│ │ ├ sneaking
+│ │ ├ stealing
+│ │ └ swimming
+│ └ skill
 ├ slapcraft_recipe
 │ ├ alchemy
-│ │ └
+│ │ └ structure
 │ ├ arcyne
-│ │ └
+│ │ └ structure
 │ ├ carpentry
-│ │ └
+│ │ └ structure
 │ ├ engineering
-│ │ └
+│ │ └ structure
 │ └ masonry
-│   └
+│   └ structure
+│     ├ carving_block
+│     └ statue
+│       ├ astrata
+│       ├ astratabling
+│       ├ bstatue
+│       ├ copper
+│       ├ fstatue
+│       │ ├ alt
+│       │ ├ clean
+│       │ ├ cleanlying
+│       │ ├ dancer
+│       │ └ lying
+│       ├ gargoyle
+│       ├ gargoyle_candles
+│       ├ interior_knight
+│       ├ knightalt
+│       ├ mgargoyle
+│       ├ mgargoyle_candles
+│       ├ myth
+│       ├ pillar
+│       └ small
 ├ slapcraft_step
 │ ├ item
 │ │ ├ amethyst
@@ -8755,10 +11121,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ third
 │ │ ├ coal
 │ │ ├ cog
-│ │ │ └
+│ │ │ └ second
 │ │ ├ copper
-│ │ │ └
-│ │ ├ dirtclod
+│ │ │ └ second
+│ │ ├ dirt
 │ │ ├ fiber
 │ │ │ ├ eighth
 │ │ │ ├ fifth
@@ -8775,10 +11141,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ second
 │ │ │ └ third
 │ │ ├ gold
-│ │ │ └
+│ │ │ └ second
 │ │ ├ hide
 │ │ ├ iron
-│ │ │ └
+│ │ │ └ second
 │ │ ├ jacksberry
 │ │ ├ lock
 │ │ ├ mana_crystal
@@ -8797,7 +11163,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ second
 │ │ │ └ third
 │ │ ├ steel
-│ │ │ └
+│ │ │ └ second
 │ │ ├ stick
 │ │ │ ├ second
 │ │ │ └ third
@@ -8809,14 +11175,16 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ second
 │ │ │ └ third
 │ │ └ thaumic
-│ │   └
+│ │   └ second
 │ ├ structure
-│ │ └
+│ │ └ carving_block
 │ └ use_item
 │   ├ carpentry
-│   │ └
+│   │ └ hammer
+│   │   └ second
 │   ├ engineering
-│   │ └
+│   │ └ hammer
+│   │   └ second
 │   ├ masonry
 │   │ ├ chisel
 │   │ │ ├ second
@@ -8825,12 +11193,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │   ├ second
 │   │   └ third
 │   └ sewing
-│     └
+│     └ needle
 ├ sleep_adv
 ├ sort_instance
 ├ soullink
 │ ├ multisharer
-│ │ └
+│ │ └ replacementpool
 │ ├ oneway
 │ ├ sharedbody
 │ └ sharedfate
@@ -8867,6 +11235,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ corn_fed
 │ ├ curseofcain
 │ ├ deadened
+│ ├ drunk_rider
 │ ├ eagle_eyed
 │ ├ glutton
 │ ├ gourmand
@@ -8919,6 +11288,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ anthromorph
 │ ├ anthromorphsmall
 │ ├ automaton
+│ │ └ construct
+│ │   └ doll
 │ ├ demihuman
 │ ├ dracon
 │ ├ dragonborn
@@ -8927,14 +11298,18 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ mountain
 │ ├ elf
 │ │ ├ dark
+│ │ │ └ drider
 │ │ ├ snow
 │ │ └ wood
+│ ├ fluvian
+│ ├ gnoll
 │ ├ gnome
-│ │ └
+│ │ └ deep
 │ ├ goblin
 │ │ ├ cave
 │ │ ├ hell
 │ │ ├ moon
+│ │ ├ player
 │ │ └ sea
 │ ├ half_anthromorphsmall
 │ ├ halfling
@@ -8946,12 +11321,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ northern
 │ │ └ space
 │ ├ kobold
+│ │ └ classic
 │ ├ lizardfolk
 │ ├ medicator
 │ ├ minotaur
+│ ├ ogre
 │ ├ orc
 │ ├ rakshari
 │ ├ rousman
+│ ├ seelie
 │ ├ slime
 │ ├ tabaxi
 │ ├ taur_kin
@@ -8960,6 +11338,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ werewolf
 │ ├ yuanti
 │ └ zizombie
+├ speech_modifier
+│ └ lisp
 ├ spell_interface
 ├ spell_node
 │ ├ acid_splash
@@ -9033,29 +11413,56 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ em
 │ │ │ └ sil
 │ │ ├ eyepierce
-│ │ │ └
+│ │ │ └ alt
 │ │ ├ nothing
 │ │ └ rakshari
 │ │   ├ cat_earrings_g
 │ │   ├ cat_earrings_s
 │ │   ├ gilded_g
 │ │   └ gilded_s
+│ ├ antenna
+│ │ └ moth
+│ │   ├ burnt_off
+│ │   ├ deathhead
+│ │   ├ firewatch
+│ │   ├ gothic
+│ │   ├ jungle
+│ │   ├ lovers
+│ │   ├ moonfly
+│ │   ├ mothra
+│ │   ├ oakworm
+│ │   ├ plain
+│ │   ├ poison
+│ │   ├ ragged
+│ │   ├ reddish
+│ │   ├ regal
+│ │   ├ royal
+│ │   ├ whitefly
+│ │   └ witchwing
+│ ├ body_hair
+│ │ ├ body
+│ │ │ ├ hairy
+│ │ │ ├ shaved
+│ │ │ ├ some_hair
+│ │ │ └ very_hairy
+│ │ └ pubic
+│ │   ├ hairy
+│ │   ├ shaved
+│ │   ├ some_hair
+│ │   ├ stubble
+│ │   └ very_hairy
 │ ├ body_markings
 │ │ ├ dtiger
 │ │ ├ lbelly
 │ │ ├ ltiger
 │ │ └ none
-│ ├ bodyhair
-│ │ ├ bigbush
-│ │ ├ bush
-│ │ └ medbush
 │ ├ brand
-│ │ └
+│ │ └ vampire_seal
 │ ├ caps
-│ │ └
+│ │ └ round
 │ ├ detail
 │ │ ├ brows
-│ │ │ └
+│ │ │ └ dark
 │ │ ├ burneye_l
 │ │ ├ burneye_r
 │ │ ├ burnface_l
@@ -9074,7 +11481,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ tattoo_eye_r
 │ │ ├ tattoo_lips
 │ │ ├ unibrow
-│ │ │ └
+│ │ │ └ dark
 │ │ ├ warpaint_black
 │ │ ├ warpaint_blue
 │ │ ├ warpaint_green
@@ -9110,6 +11517,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ elephant
 │ │ ├ elf
 │ │ ├ elfh
+│ │ ├ elfl
 │ │ ├ elfw
 │ │ ├ fennec
 │ │ ├ fish
@@ -9140,7 +11548,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ vulp
 │ │ └ wolf
 │ ├ eyes
-│ │ └
+│ │ └ humanoid
+│ │   ├ kobold
+│ │   ├ rakshari
+│ │   └ triton
 │ ├ frills
 │ │ ├ aquatic
 │ │ ├ aquaticdualcolor
@@ -9192,6 +11603,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ human
 │ │ │ ├ knotted
 │ │ │ ├ knotted2
+│ │ │ ├ ovipositor
 │ │ │ ├ tapered
 │ │ │ ├ tapered_mammal
 │ │ │ └ tentacle
@@ -9389,6 +11801,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ ├ hprotagonist
 │ │   │ ├ hyenamane
 │ │   │ ├ jade
+│ │   │ ├ jenny
 │ │   │ ├ jensen
 │ │   │ ├ joestar
 │ │   │ ├ junia_tief_f
@@ -9805,7 +12218,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ halo
 │ │ ├ knight
 │ │ ├ large
-│ │ │ └
+│ │ │ └ big_antlers
 │ │ ├ lbroken
 │ │ ├ liftedhorns
 │ │ ├ longhorns
@@ -9826,15 +12239,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ smallramhornsthree
 │ │ ├ stabbers
 │ │ ├ tiefling
-│ │ │ └
+│ │ │ └ alt
 │ │ ├ triton
 │ │ ├ uni
 │ │ └ unihorn
 │ ├ legs
-│ │ └
+│ │ └ none
 │ ├ neck_feature
 │ │ ├ fluff
-│ │ │ └
+│ │ │ └ medicator
 │ │ ├ mammal_fluff
 │ │ │ ├ fluff
 │ │ │ ├ fluff_dual
@@ -9987,7 +12400,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ shortmeme
 │ ├ tail
 │ │ ├ aura
-│ │ │ └
+│ │ │ └ dragontail
 │ │ ├ australian_shepherd
 │ │ ├ axolotl
 │ │ ├ batl
@@ -10095,6 +12508,37 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ ├ harpyowl
 │   │ ├ harpyswept
 │   │ └ harpyswept_alt
+│   ├ moth
+│   │ ├ atlas
+│   │ ├ brown
+│   │ ├ deathhead
+│   │ ├ featherful
+│   │ ├ firewatch
+│   │ ├ gothic
+│   │ ├ jungle
+│   │ ├ lovers
+│   │ ├ luna
+│   │ ├ monarch
+│   │ ├ moonfly
+│   │ ├ oakworm
+│   │ ├ plain
+│   │ ├ plasmafire
+│   │ ├ poison
+│   │ ├ punished
+│   │ ├ ragged
+│   │ ├ reddish
+│   │ ├ rosy
+│   │ ├ royal
+│   │ ├ snow
+│   │ ├ whitefly
+│   │ └ witchwing
+│   ├ seelie
+│   │ ├ bat
+│   │ ├ bee
+│   │ ├ fairy
+│   │ ├ feathery
+│   │ ├ feathery_dark
+│   │ └ feathery_dark_alt
 │   └ wide
 │     ├ dragon_alt1
 │     ├ dragon_alt2
@@ -10112,6 +12556,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │     └ succubus
 ├ stack_canary
 ├ stack_end_detector
+├ stamina_modifier
+│ └ endurance
 ├ status_effect
 │ ├ abyssal_chill
 │ ├ amok
@@ -10133,23 +12579,24 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ alch
 │ │ │ ├ artemisia_luck
 │ │ │ ├ constitutionpot
-│ │ │ │ └
+│ │ │ │ └ weak
 │ │ │ ├ endurancepot
-│ │ │ │ └
+│ │ │ │ └ weak
 │ │ │ ├ fortunepot
 │ │ │ ├ intelligencepot
 │ │ │ ├ perceptionpot
-│ │ │ │ └
+│ │ │ │ └ weak
 │ │ │ ├ speedpot
 │ │ │ └ strengthpot
-│ │ │   └
+│ │ │   └ weak
 │ │ ├ ancestral_smithing
 │ │ ├ arcane_focus
 │ │ ├ arcyne_eye
 │ │ ├ balanced_mind
 │ │ ├ barbrage
-│ │ │ └
+│ │ │ └ briarrage
 │ │ ├ bardic_inspiration
+│ │ ├ battle_song
 │ │ ├ beastsense
 │ │ ├ bladeward
 │ │ ├ blessed
@@ -10160,6 +12607,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ call_to_slaughter
 │ │ ├ calm
 │ │ ├ celerity
+│ │ │ ├ five
+│ │ │ ├ four
+│ │ │ ├ three
+│ │ │ └ two
 │ │ ├ censerbuff
 │ │ ├ churnernegative
 │ │ ├ churnerprotection
@@ -10173,7 +12624,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ drunk
 │ │ ├ drunk_master
 │ │ ├ druqks
-│ │ │ └
+│ │ │ └ baotha
 │ │ ├ elven_grace
 │ │ ├ featherfall
 │ │ ├ flowerfield_resistance
@@ -10189,18 +12640,18 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ spider_cocoon
 │ │ ├ longstrider
 │ │ ├ lux_drank
-│ │ │ └
+│ │ │ └ baothavitae
 │ │ ├ magicconstitution
-│ │ │ └
+│ │ │ └ lesser
 │ │ ├ magicendurance
-│ │ │ └
+│ │ │ └ lesser
 │ │ ├ magicknowledge
 │ │ ├ magicperception
-│ │ │ └
+│ │ │ └ lesser
 │ │ ├ magicspeed
-│ │ │ └
+│ │ │ └ lesser
 │ │ ├ magicstrength
-│ │ │ └
+│ │ │ └ lesser
 │ │ ├ matthioshealing
 │ │ ├ meatvine_endurance
 │ │ ├ meatvine_gigantism
@@ -10217,9 +12668,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ ozium
 │ │ ├ phase_walking
 │ │ ├ playing_music
+│ │ ├ potence
+│ │ │ ├ five
+│ │ │ ├ four
+│ │ │ ├ three
+│ │ │ └ two
 │ │ ├ powered_steam_armor
 │ │ ├ primal_savagery
 │ │ ├ probability_flux
+│ │ ├ protection_evil_good
 │ │ ├ psydonic_endurance
 │ │ ├ psyhealing
 │ │ ├ psyvived
@@ -10229,6 +12686,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ seasonal_attunement
 │ │ ├ secondsight
 │ │ ├ seelie_drugs
+│ │ ├ seelie_grand_glamour
 │ │ ├ stuffed
 │ │ ├ toxin_immunity
 │ │ ├ trollshape
@@ -10245,7 +12703,6 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ comb_hair
 │ ├ confusion
 │ ├ crusher_damage
-│ ├ cyborg_power_regen
 │ ├ darkling_darkly
 │ ├ debuff
 │ │ ├ abrogation
@@ -10264,10 +12721,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ aphrodisiac
 │ │ ├ badmeal
 │ │ ├ badvision
+│ │ ├ baitcd
 │ │ ├ baothadruqks
 │ │ ├ barbfalter
 │ │ ├ bigboobs
-│ │ │ └
+│ │ │ └ permanent
+│ │ │   └ lite
 │ │ ├ bleeding
 │ │ ├ bleedingworse
 │ │ ├ bleedingworst
@@ -10275,6 +12734,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ bloattwo
 │ │ ├ blood_disgust
 │ │ ├ blood_euphoria
+│ │ ├ blood_preference
 │ │ ├ boobs_quirk
 │ │ ├ booming_blade
 │ │ ├ burnedfood
@@ -10299,7 +12759,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ feintcd
 │ │ ├ feinted
 │ │ ├ flatboobs
-│ │ │ └
+│ │ │ └ permanent
+│ │ │   └ lite
 │ │ ├ flaw_lux_taken
 │ │ ├ flower_base
 │ │ ├ frostbite
@@ -10310,7 +12771,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ hungryt4
 │ │ ├ infestation
 │ │ ├ largeboobs
-│ │ │ └
+│ │ │ └ permanent
+│ │ │   └ lite
 │ │ ├ loinspent
 │ │ ├ lost_naledi_mask
 │ │ ├ lux_drained
@@ -10318,15 +12780,19 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ matricaria_remedy
 │ │ ├ mesmerised
 │ │ ├ mob_fucked
+│ │ │ └ male
 │ │ ├ netted
 │ │ ├ nympho_addiction
 │ │ ├ orgasmbroken
 │ │ ├ poppy_arena
 │ │ ├ ravox_burden
 │ │ ├ received_tainted_lux
+│ │ ├ resurrection_trauma
 │ │ ├ revive
 │ │ ├ revived
-│ │ │ └
+│ │ │ └ rune
+│ │ │   ├ light
+│ │ │   └ rough
 │ │ ├ rosa_pacification
 │ │ ├ rotfood
 │ │ ├ rune_glow
@@ -10334,11 +12800,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ silver_bane
 │ │ ├ sleepytime
 │ │ ├ smallboobs
-│ │ │ └
+│ │ │ └ permanent
+│ │ │   └ lite
 │ │ ├ song
-│ │ │ └
+│ │ │ └ suffocationsong
 │ │ ├ specialcd
 │ │ ├ staggered
+│ │ ├ stealthcd
 │ │ ├ stinky_person
 │ │ ├ tainted_lux
 │ │ ├ thirstyt1
@@ -10350,7 +12818,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ vamp_dreams
 │ │ ├ viciousmockery
 │ │ ├ vsmallboobs
-│ │ │ └
+│ │ │ └ permanent
+│ │ │   └ lite
 │ │ ├ vulnerable
 │ │ └ wiz
 │ ├ deep_blessing
@@ -10374,7 +12843,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ exercised
 │ ├ eye_blur
 │ ├ facial
-│ │ └
+│ │ └ internal
 │ ├ fake_virus
 │ ├ fleshmend
 │ ├ freon
@@ -10394,11 +12863,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ hunger
 │ ├ in_love
 │ ├ incapacitating
+│ │ ├ concussion
 │ │ ├ immobilized
 │ │ ├ knockdown
 │ │ ├ off_balanced
 │ │ ├ paralyzed
 │ │ ├ sleeping
+│ │ ├ stumble
 │ │ ├ stun
 │ │ └ unconscious
 │ ├ inspiration
@@ -10414,7 +12885,6 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ knot_gaped
 │ ├ knot_tied
 │ ├ knotted
-│ ├ leash_freepet
 │ ├ leash_owner
 │ ├ leash_pet
 │ ├ light_buff
@@ -10428,26 +12898,27 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ pacify
 │ ├ purpose
 │ ├ regenerative_core
-│ ├ shadow_mend
 │ ├ shapechange_mob
 │ │ ├ die_with_form
 │ │ └ from_spell
 │ ├ shock_recovery
 │ ├ sigil_mark
 │ ├ signal_horn
-│ │ └
+│ │ └ servant_bell
 │ ├ silenced
 │ ├ spasms
 │ ├ stacking
+│ │ ├ baited
 │ │ ├ phobia_reaction
 │ │ └ playing_inspiration
 │ │   ├ recovery_song
 │ │   └ target_nonaudience
-│ │     └
+│ │     └ suffocating_seliloquy
 │ ├ strandling
 │ ├ stress
 │ │ ├ shock_recovery
 │ │ ├ stressbad
+│ │ ├ stressinsane
 │ │ ├ stressvbad
 │ │ └ stressvgood
 │ ├ sword_spin
@@ -10457,15 +12928,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ trance
 │ ├ tremor_grip_loss
 │ ├ void_chill
-│ │ └
+│ │ └ lasting
 │ ├ void_corruption
-│ ├ void_price
 │ ├ water_affected
 │ ├ wheel
 │ └ wish_granters_gift
 ├ stock
 │ ├ bounty
-│ │ └
+│ │ └ treasure
 │ ├ import
 │ │ ├ bull
 │ │ ├ chicken
@@ -10543,7 +13013,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ betterhug
 │ ├ bleeding
 │ ├ blessed
-│ │ └
+│ │ └ permanent
 │ ├ blessing
 │ ├ bloatsex
 │ ├ blue_balls
@@ -10639,9 +13109,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ felldown
 │ ├ fellow_fishface
 │ ├ filth_lover
-│ ├ fish_monster
 │ ├ fishface
-│ ├ fishfaceaintthatugly
 │ ├ focused
 │ ├ forced_clean
 │ ├ forced_orgasm
@@ -10684,7 +13152,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ hot_severe
 │ ├ hug
 │ ├ hungry
+│ ├ hunted
 │ ├ infernal_pain
+│ ├ its_the_fucking_daewalker
 │ ├ jittery
 │ ├ joke
 │ ├ jolly
@@ -10751,11 +13221,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ painful_medicine
 │ ├ painful_reminder
 │ ├ painmax
-│ ├ parablood
-│ ├ paracrowd
-│ ├ paraforeigner
-│ ├ parastr
-│ ├ paratalk
+│ ├ para
+│ │ ├ blood
+│ │ ├ crowd
+│ │ ├ foreigner
+│ │ ├ str
+│ │ └ talk
 │ ├ parched
 │ ├ peckish
 │ ├ penance_assigned
@@ -10845,6 +13316,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ washed_cloth
 │ ├ weed
 │ ├ wellfed
+│ ├ werewolf_restless_1
+│ ├ werewolf_restless_2
+│ ├ werewolf_restless_3
 │ ├ wet_cloth
 │ ├ wine_good
 │ ├ wine_great
@@ -11138,6 +13612,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ spectacles_monocle
 │ │ ├ spectacles_onyxa
 │ │ └ talkstone
+│ ├ medicine
+│ │ └ antipregpot
 │ ├ narcotics
 │ │ ├ aphrodisiac
 │ │ ├ destroy_clothes
@@ -11170,9 +13646,26 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ tin
 │ ├ rogue
 │ │ ├ bath_rogue
-│ │ │ └
+│ │ │ └ piercings
 │ │ └ wardrobe
-│ │   └
+│ │   └ suits
+│ │     ├ stockings_black
+│ │     ├ stockings_black_fishnet
+│ │     ├ stockings_black_silk
+│ │     ├ stockings_blue
+│ │     ├ stockings_blue_fishnet
+│ │     ├ stockings_blue_silk
+│ │     ├ stockings_purple
+│ │     ├ stockings_purple_fishnet
+│ │     ├ stockings_purple_silk
+│ │     ├ stockings_red
+│ │     ├ stockings_red_fishnet
+│ │     ├ stockings_red_silk
+│ │     ├ stockings_wg_white
+│ │     ├ stockings_wg_white_silk
+│ │     ├ stockings_white
+│ │     ├ stockings_white_fishnet
+│ │     └ stockings_white_silk
 │ ├ seeds
 │ │ ├ apple
 │ │ ├ avocado
@@ -11329,9 +13822,6 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 ├ surgery
 │ ├ amputation
 │ ├ augmentation
-│ ├ chimeric_grafting
-│ ├ chimeric_repair
-│ ├ chimeric_transformation
 │ ├ cure_rot
 │ ├ embedded_removal
 │ ├ extract_chimeric_node
@@ -11339,56 +13829,80 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ fix_bone
 │ ├ healing
 │ ├ lux_restore
-│ ├ organ_manipulation
-│ │ └
 │ ├ plastic_surgery
 │ ├ prosthetic_removal
 │ ├ prosthetic_replacement
-│ │ └
+│ │ └ prosthetic
 │ ├ relocate_bone
 │ └ revival
 ├ surgery_step
 │ ├ add_prosthetic
-│ │ └
+│ │ └ prosthetic
 │ ├ add_taur
 │ ├ amputate
 │ ├ bestow_lux
 │ ├ burn_rot
 │ ├ cauterize
 │ ├ clamp
-│ ├ create_chimeric_organ
 │ ├ extract_chimeric_node
 │ ├ extract_lux
-│ ├ graft_chimeric_node
+│ ├ extract_tooth
 │ ├ heal
 │ │ ├ brute
-│ │ │ └
+│ │ │ └ basic
 │ │ ├ burn
-│ │ │ └
+│ │ │ └ basic
 │ │ └ combo
 │ ├ incise
 │ ├ infuse_lux
-│ ├ manipulate_organs
-│ ├ mouth_to_mouth
+│ ├ insert_teeth
 │ ├ relocate_bone
-│ ├ remove_external_organs
 │ ├ remove_object
 │ ├ remove_prosthetic
-│ ├ repair_chimeric_organ
 │ ├ replace_limb
 │ ├ reshape_face
 │ ├ retract
 │ ├ saw
 │ └ set_bone
 ├ taboo_tattoo
-│ └
+│ └ bloodsight
 ├ talent_interface
 ├ talent_node
-│ └
+│ └ debug
+│   ├ adaptive_fighter
+│   ├ agility_boost
+│   ├ basic_power
+│   ├ berserker_rage
+│   ├ combat_training
+│   ├ defensive_stance
+│   ├ efficiency_expert
+│   ├ enhanced_power
+│   ├ evasive_maneuvers
+│   ├ fortified_defense
+│   ├ immovable_object
+│   ├ master_strategist
+│   ├ omniscient_warrior
+│   ├ perfect_balance
+│   ├ quick_reflexes
+│   ├ resource_management
+│   ├ sturdy_build
+│   ├ survival_instinct
+│   ├ tactical_mind
+│   └ unstoppable_force
 ├ talent_tree
-│ └
+│ └ debug
 ├ targetting_datum
-│ └
+│ └ basic
+│   ├ allow_items
+│   │ ├ holding_item
+│   │ ├ meatvine
+│   │ └ not_holding_item
+│   ├ ignore_faction
+│   ├ leyline
+│   ├ not_friends
+│   │ ├ allow_items
+│   │ └ attack_closed_turfs
+│   └ zizoid
 ├ team
 │ ├ custom
 │ └ prebels
@@ -11399,11 +13913,6 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ hat_test
 │ ├ job_render
 │ └ test_craft
-├ tgs_api
-│ ├ latest
-│ ├ v3210
-│ ├ v4
-│ └ v5
 ├ tgs_chat_channel
 ├ tgs_chat_command
 │ ├ adminwho
@@ -11419,17 +13928,16 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ footer
 │ ├ media
 │ ├ provider
-│ │ └
+│ │ └ author
 │ └ structure
 ├ tgs_chat_user
 ├ tgs_event_handler
-│ └
+│ └ impl
 ├ tgs_http_handler
-│ └
 ├ tgs_http_result
 ├ tgs_message_content
 ├ tgs_revision_information
-│ └
+│ └ test_merge
 ├ tgs_version
 ├ tgui
 ├ tgui_alert
@@ -11439,7 +13947,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 ├ tgui_list_input
 ├ tgui_panel
 ├ tgui_window
-│ └
+│ └ stat
 ├ thaumaturgical_essence
 │ ├ air
 │ ├ chaos
@@ -11479,7 +13987,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ three
 │ │ └ two
 │ ├ machines
-│ │ └
+│ │ └ gnomes
 │ ├ resevoir_decay
 │ ├ splitter_efficiency
 │ │ ├ five
@@ -11543,7 +14051,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ node_5_4
 │ └ node_5_5
 ├ trade_agreement
-│ └
+│ └ test_request
 ├ trade_request
 ├ trader_data
 │ ├ alchemist
@@ -11563,12 +14071,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ tool_merchant
 │ └ weapon_merchant
 ├ training_data
-│ └
+│ └ blacksmith
 ├ trap_datum
+├ trap_pocket_tracker
 ├ triumph_buy
 │ ├ communal
 │ │ ├ preround
-│ │ │ └
+│ │ │ └ orphanage_renovation
 │ │ └ psydon_retirement_fund
 │ ├ leprosy
 │ ├ pick_any_class
@@ -11576,7 +14085,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ race_all_jobs
 │ ├ random_curse
 │ ├ seasonal
-│ │ └
+│ │ └ subspecies
+│ │   ├ formikrag_kobold
+│ │   └ underdarkn_dwarf
 │ ├ secret_officiant
 │ ├ storyteller_influence_bonus
 │ │ ├ abyssor
@@ -11610,7 +14121,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   └ zizo
 ├ triumph_buy_menu
 ├ turf_reservation
-│ └
+│ └ transit
 ├ ui_state
 │ ├ admin_state
 │ ├ always_state
@@ -11626,7 +14137,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ never_state
 │ ├ new_player_state
 │ ├ not_incapacitated_state
-│ │ └
+│ │ └ standing
 │ ├ notcontained_state
 │ ├ observer_state
 │ ├ physical
@@ -11635,66 +14146,43 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ └ z_state
 ├ ui_tracker
 ├ ui_updater
-├ unit_test
-│ ├ actions_moved_on_mind_transfer
-│ ├ adult_server_assert
-│ ├ amputation
-│ ├ anchored_mobs
-│ ├ component_duping
-│ ├ connect_loc_basic
-│ ├ connect_loc_change_turf
-│ ├ connect_loc_multiple_on_turf
-│ ├ container_craft_recipe_collisions
-│ ├ container_resist
-│ ├ craftable_clothes
-│ ├ create_and_destroy
-│ ├ defined_inhand_icon_states
-│ ├ find_reference_assoc_investigation
-│ ├ find_reference_baseline
-│ ├ find_reference_esoteric
-│ ├ find_reference_exotic
-│ ├ find_reference_null_key_entry
-│ ├ find_reference_sanity
-│ ├ find_reference_static_investigation
-│ ├ focus_only
-│ │ ├ invalid_emissives
-│ │ ├ invalid_overlays
-│ │ └ sorted_smoothing_groups
-│ ├ head_transplant
-│ ├ job_roundstart_spawnpoints
-│ ├ load_map_security
-│ ├ log_mapping
-│ ├ lootpanel
-│ │ └
-│ ├ missing_clothing_sprites
-│ ├ projectile_movetypes
-│ ├ reagent_id_typos
-│ ├ reagent_names
-│ ├ reagent_recipe_collisions
-│ ├ required_map_items
-│ ├ shapeshift_spell_validity
-│ ├ spawn_humans
-│ ├ spawn_mobs
-│ ├ species_whitelist_check
-│ ├ spell_invocations
-│ ├ spell_names
-│ ├ stop_drop_and_roll
-│ ├ subsystem_init
-│ ├ supply_pack_coverage
-│ ├ tend_wounds
-│ ├ timer_sanity
-│ ├ turf_coverage
-│ └ weapon_icons
 ├ universal_icon
 ├ vampire_project
 │ ├ amulet_crafting
 │ ├ armor_crafting
+│ ├ maille_crafting
 │ ├ power_growth
 │ ├ power_growth_2
 │ ├ power_growth_3
 │ └ power_growth_4
 ├ verbs
-│ └
+│ └ menu
+│   ├ Admin
+│   ├ Example
+│   ├ Icon
+│   │ ├ Scaling
+│   │ └ Size
+│   └ Settings
+│     ├ Ghost
+│     │ ├ chatterbox
+│     │ │ ├ Events
+│     │ │ │ ├ toggle_arrivalrattle
+│     │ │ │ └ toggle_deathrattle
+│     │ │ ├ toggle_ghost_ears
+│     │ │ ├ toggle_ghost_pda
+│     │ │ ├ toggle_ghost_radio
+│     │ │ ├ toggle_ghost_sight
+│     │ │ └ toggle_ghost_whispers
+│     │ └ togglemidroundantag
+│     ├ listen_bank_card
+│     ├ listen_ooc
+│     └ Sound
+│       ├ toggle_announcement_sound
+│       ├ toggle_instruments
+│       ├ toggle_ship_ambience
+│       ├ Toggle_Soundscape
+│       ├ togglemidis
+│       └ toggletitlemusic
 ├ verification_data
 ├ view_data
 ├ vine_controller
@@ -11730,11 +14218,11 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ male
 │ │ ├ assassin
 │ │ ├ dwarf
-│ │ │ └
+│ │ │ └ jester
 │ │ ├ elf
-│ │ │ └
+│ │ │ └ jester
 │ │ ├ evil
-│ │ │ └
+│ │ │ └ blkknight
 │ │ ├ jester
 │ │ ├ knight
 │ │ ├ kobold
@@ -11755,7 +14243,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 ├ wall_segment
 ├ weakref
 ├ weather_effect
-│ └
+│ └ snow
 ├ wet
 ├ whitelist_panel
 ├ withdraw_tab
@@ -11873,6 +14361,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 └ wound
   ├ artery
   │ ├ chest
+  │ ├ dissect
+  │ │ └ neck
   │ ├ neck
   │ └ reattachment
   ├ bite
@@ -11882,9 +14372,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ large
   │ └ small
   ├ cbt
-  │ └
+  │ └ permanent
   ├ dislocation
-  │ └
+  │ └ neck
   ├ dismemberment
   │ ├ head
   │ ├ l_arm
@@ -11893,23 +14383,17 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ r_leg
   │ └ taur
   ├ dynamic
-  │ ├ bite
-  │ ├ bruise
-  │ ├ gouge
-  │ ├ lashing
-  │ ├ puncture
-  │ └ slash
   ├ facial
   │ ├ disfigurement
-  │ │ └
+  │ │ └ nose
   │ ├ ears
   │ ├ eyes
   │ │ ├ left
-  │ │ │ └
+  │ │ │ └ permanent
   │ │ └ right
-  │ │   └
+  │ │   └ permanent
   │ └ tongue
-  │   └
+  │   └ permanent
   ├ fracture
   │ ├ chest
   │ ├ groin
@@ -11928,34 +14412,743 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ large
   │ └ small
   ├ scarring
-  └ slash
-    ├ disembowel
-    ├ incision
-    ├ large
-    └ small
-
+  ├ slash
+  │ ├ disembowel
+  │ ├ large
+  │ └ small
+  ├ spill
+  │ └ gut
+  └ teeth
+/icon
+/image
+├ fov_image
+└ reveal
+/matrix
+/mob
+├ camera
+│ ├ bombard_eye
+│ ├ evolution_picker
+│ └ strategy_controller
+│   └ overlord_controller
+├ dead
+│ ├ new_player
+│ └ observer
+│   ├ profane
+│   ├ rogue
+│   │ ├ arcaneeye
+│   │ └ nodraw
+│   └ screye
+│     └ blackmirror
+├ dview
+├ living
+│ ├ brain
+│ ├ carbon
+│ │ ├ human
+│ │ │ ├ dummy
+│ │ │ └ species
+│ │ │   ├ aasimar
+│ │ │   │ └ base
+│ │ │   │   ├ skilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   ├ unskilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   └ very_skilled
+│ │ │   │     ├ heavy_gear
+│ │ │   │     ├ light_gear
+│ │ │   │     ├ medium_gear
+│ │ │   │     └ naked
+│ │ │   ├ anthromorph
+│ │ │   ├ anthromorphsmall
+│ │ │   ├ automaton
+│ │ │   │ ├ prefilled_vessel
+│ │ │   │ └ vessel
+│ │ │   ├ construct
+│ │ │   ├ demihuman
+│ │ │   │ └ base
+│ │ │   │   ├ skilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   ├ unskilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   └ very_skilled
+│ │ │   │     ├ heavy_gear
+│ │ │   │     ├ light_gear
+│ │ │   │     ├ medium_gear
+│ │ │   │     └ naked
+│ │ │   ├ doll
+│ │ │   ├ dragonborn
+│ │ │   ├ dwarf
+│ │ │   │ ├ duergar
+│ │ │   │ └ mountain
+│ │ │   │   └ base
+│ │ │   │     ├ skilled
+│ │ │   │     │ ├ heavy_gear
+│ │ │   │     │ ├ light_gear
+│ │ │   │     │ ├ medium_gear
+│ │ │   │     │ └ naked
+│ │ │   │     ├ unskilled
+│ │ │   │     │ ├ heavy_gear
+│ │ │   │     │ ├ light_gear
+│ │ │   │     │ ├ medium_gear
+│ │ │   │     │ └ naked
+│ │ │   │     └ very_skilled
+│ │ │   │       ├ heavy_gear
+│ │ │   │       ├ light_gear
+│ │ │   │       ├ medium_gear
+│ │ │   │       └ naked
+│ │ │   ├ elf
+│ │ │   │ ├ dark
+│ │ │   │ │ ├ base
+│ │ │   │ │ │ ├ skilled
+│ │ │   │ │ │ │ ├ heavy_gear
+│ │ │   │ │ │ │ ├ light_gear
+│ │ │   │ │ │ │ ├ medium_gear
+│ │ │   │ │ │ │ └ naked
+│ │ │   │ │ │ ├ unskilled
+│ │ │   │ │ │ │ ├ heavy_gear
+│ │ │   │ │ │ │ ├ light_gear
+│ │ │   │ │ │ │ ├ medium_gear
+│ │ │   │ │ │ │ └ naked
+│ │ │   │ │ │ └ very_skilled
+│ │ │   │ │ │   ├ heavy_gear
+│ │ │   │ │ │   ├ light_gear
+│ │ │   │ │ │   ├ medium_gear
+│ │ │   │ │ │   └ naked
+│ │ │   │ │ ├ drider
+│ │ │   │ │ └ drowraider
+│ │ │   │ │   └ ambush
+│ │ │   │ ├ snow
+│ │ │   │ │ └ base
+│ │ │   │ │   ├ skilled
+│ │ │   │ │   │ ├ heavy_gear
+│ │ │   │ │   │ ├ light_gear
+│ │ │   │ │   │ ├ medium_gear
+│ │ │   │ │   │ └ naked
+│ │ │   │ │   ├ unskilled
+│ │ │   │ │   │ ├ heavy_gear
+│ │ │   │ │   │ ├ light_gear
+│ │ │   │ │   │ ├ medium_gear
+│ │ │   │ │   │ └ naked
+│ │ │   │ │   └ very_skilled
+│ │ │   │ │     ├ heavy_gear
+│ │ │   │ │     ├ light_gear
+│ │ │   │ │     ├ medium_gear
+│ │ │   │ │     └ naked
+│ │ │   │ └ wood
+│ │ │   ├ fluvian
+│ │ │   ├ gnoll
+│ │ │   ├ gnome
+│ │ │   │ └ deep
+│ │ │   ├ goblin
+│ │ │   │ ├ cave
+│ │ │   │ ├ hell
+│ │ │   │ ├ moon
+│ │ │   │ ├ npc
+│ │ │   │ │ ├ ambush
+│ │ │   │ │ │ ├ cave
+│ │ │   │ │ │ ├ hell
+│ │ │   │ │ │ ├ moon
+│ │ │   │ │ │ └ sea
+│ │ │   │ │ ├ cave
+│ │ │   │ │ ├ hell
+│ │ │   │ │ ├ moon
+│ │ │   │ │ └ sea
+│ │ │   │ ├ player
+│ │ │   │ ├ sea
+│ │ │   │ └ slaved
+│ │ │   ├ half_anthromorphsmall
+│ │ │   ├ halfling
+│ │ │   ├ halforc
+│ │ │   │ └ base
+│ │ │   │   ├ skilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   ├ unskilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   └ very_skilled
+│ │ │   │     ├ heavy_gear
+│ │ │   │     ├ light_gear
+│ │ │   │     ├ medium_gear
+│ │ │   │     └ naked
+│ │ │   ├ harpy
+│ │ │   │ └ base
+│ │ │   │   ├ skilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   ├ unskilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   └ very_skilled
+│ │ │   │     ├ heavy_gear
+│ │ │   │     ├ light_gear
+│ │ │   │     ├ medium_gear
+│ │ │   │     └ naked
+│ │ │   ├ human
+│ │ │   │ ├ halfdrow
+│ │ │   │ │ └ base
+│ │ │   │ │   ├ skilled
+│ │ │   │ │   │ ├ heavy_gear
+│ │ │   │ │   │ ├ light_gear
+│ │ │   │ │   │ ├ medium_gear
+│ │ │   │ │   │ └ naked
+│ │ │   │ │   ├ unskilled
+│ │ │   │ │   │ ├ heavy_gear
+│ │ │   │ │   │ ├ light_gear
+│ │ │   │ │   │ ├ medium_gear
+│ │ │   │ │   │ └ naked
+│ │ │   │ │   └ very_skilled
+│ │ │   │ │     ├ heavy_gear
+│ │ │   │ │     ├ light_gear
+│ │ │   │ │     ├ medium_gear
+│ │ │   │ │     └ naked
+│ │ │   │ ├ halfelf
+│ │ │   │ │ └ base
+│ │ │   │ │   ├ skilled
+│ │ │   │ │   │ ├ heavy_gear
+│ │ │   │ │   │ ├ light_gear
+│ │ │   │ │   │ ├ medium_gear
+│ │ │   │ │   │ └ naked
+│ │ │   │ │   ├ unskilled
+│ │ │   │ │   │ ├ heavy_gear
+│ │ │   │ │   │ ├ light_gear
+│ │ │   │ │   │ ├ medium_gear
+│ │ │   │ │   │ └ naked
+│ │ │   │ │   └ very_skilled
+│ │ │   │ │     ├ heavy_gear
+│ │ │   │ │     ├ light_gear
+│ │ │   │ │     ├ medium_gear
+│ │ │   │ │     └ naked
+│ │ │   │ ├ northern
+│ │ │   │ │ ├ base
+│ │ │   │ │ │ ├ skilled
+│ │ │   │ │ │ │ ├ heavy_gear
+│ │ │   │ │ │ │ ├ light_gear
+│ │ │   │ │ │ │ ├ medium_gear
+│ │ │   │ │ │ │ └ naked
+│ │ │   │ │ │ ├ unskilled
+│ │ │   │ │ │ │ ├ heavy_gear
+│ │ │   │ │ │ │ ├ light_gear
+│ │ │   │ │ │ │ ├ medium_gear
+│ │ │   │ │ │ │ └ naked
+│ │ │   │ │ │ └ very_skilled
+│ │ │   │ │ │   ├ heavy_gear
+│ │ │   │ │ │   ├ light_gear
+│ │ │   │ │ │   ├ medium_gear
+│ │ │   │ │ │   └ naked
+│ │ │   │ │ ├ bog_deserters
+│ │ │   │ │ │ ├ ambush
+│ │ │   │ │ │ └ better_gear
+│ │ │   │ │ │   └ ambush
+│ │ │   │ │ ├ bum
+│ │ │   │ │ │ └ ambush
+│ │ │   │ │ ├ clasher
+│ │ │   │ │ ├ deranged_knight
+│ │ │   │ │ │ ├ graggar
+│ │ │   │ │ │ ├ hedgeknight
+│ │ │   │ │ │ └ zizo
+│ │ │   │ │ ├ highwayman
+│ │ │   │ │ │ ├ ambush
+│ │ │   │ │ │ └ dk_goon
+│ │ │   │ │ ├ mad_touched_treasure_hunter
+│ │ │   │ │ │ └ ambush
+│ │ │   │ │ ├ militia
+│ │ │   │ │ │ ├ ambush
+│ │ │   │ │ │ ├ deserter
+│ │ │   │ │ │ └ guard
+│ │ │   │ │ ├ searaider
+│ │ │   │ │ │ └ ambush
+│ │ │   │ │ └ thief
+│ │ │   │ └ space
+│ │ │   │   └ base
+│ │ │   │     ├ skilled
+│ │ │   │     │ ├ heavy_gear
+│ │ │   │     │ ├ light_gear
+│ │ │   │     │ ├ medium_gear
+│ │ │   │     │ └ naked
+│ │ │   │     ├ unskilled
+│ │ │   │     │ ├ heavy_gear
+│ │ │   │     │ ├ light_gear
+│ │ │   │     │ ├ medium_gear
+│ │ │   │     │ └ naked
+│ │ │   │     └ very_skilled
+│ │ │   │       ├ heavy_gear
+│ │ │   │       ├ light_gear
+│ │ │   │       ├ medium_gear
+│ │ │   │       └ naked
+│ │ │   ├ kobold
+│ │ │   │ ├ base
+│ │ │   │ │ ├ skilled
+│ │ │   │ │ │ ├ heavy_gear
+│ │ │   │ │ │ ├ light_gear
+│ │ │   │ │ │ ├ medium_gear
+│ │ │   │ │ │ └ naked
+│ │ │   │ │ ├ unskilled
+│ │ │   │ │ │ ├ heavy_gear
+│ │ │   │ │ │ ├ light_gear
+│ │ │   │ │ │ ├ medium_gear
+│ │ │   │ │ │ └ naked
+│ │ │   │ │ └ very_skilled
+│ │ │   │ │   ├ heavy_gear
+│ │ │   │ │   ├ light_gear
+│ │ │   │ │   ├ medium_gear
+│ │ │   │ │   └ naked
+│ │ │   │ └ classic
+│ │ │   ├ lizardfolk
+│ │ │   ├ medicator
+│ │ │   │ └ base
+│ │ │   │   ├ skilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   ├ unskilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   └ very_skilled
+│ │ │   │     ├ heavy_gear
+│ │ │   │     ├ light_gear
+│ │ │   │     ├ medium_gear
+│ │ │   │     └ naked
+│ │ │   ├ minotaur
+│ │ │   │ ├ custom
+│ │ │   │ │ ├ female
+│ │ │   │ │ └ male
+│ │ │   │ ├ female
+│ │ │   │ └ male
+│ │ │   ├ ogre
+│ │ │   ├ orc
+│ │ │   │ ├ ambush
+│ │ │   │ ├ marauder
+│ │ │   │ ├ npc
+│ │ │   │ │ ├ archer_test
+│ │ │   │ │ ├ berserker
+│ │ │   │ │ ├ footsoldier
+│ │ │   │ │ ├ marauder
+│ │ │   │ │ └ warlord
+│ │ │   │ ├ slaved
+│ │ │   │ ├ tribal
+│ │ │   │ ├ warlord
+│ │ │   │ │ └ skilled
+│ │ │   │ └ warrior
+│ │ │   ├ rakshari
+│ │ │   │ └ base
+│ │ │   │   ├ skilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   ├ unskilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   └ very_skilled
+│ │ │   │     ├ heavy_gear
+│ │ │   │     ├ light_gear
+│ │ │   │     ├ medium_gear
+│ │ │   │     └ naked
+│ │ │   ├ rousman
+│ │ │   │ ├ ambush
+│ │ │   │ ├ assassin
+│ │ │   │ ├ npc
+│ │ │   │ └ seer
+│ │ │   ├ seelie
+│ │ │   ├ skeleton
+│ │ │   │ ├ death_arena
+│ │ │   │ ├ no_equipment
+│ │ │   │ └ npc
+│ │ │   │   ├ ambush
+│ │ │   │   ├ easy
+│ │ │   │   ├ hard
+│ │ │   │   ├ hardspread
+│ │ │   │   ├ medium
+│ │ │   │   ├ mediumspread
+│ │ │   │   ├ no_equipment
+│ │ │   │   ├ peasant
+│ │ │   │   ├ pirate
+│ │ │   │   ├ supereasy
+│ │ │   │   └ warrior
+│ │ │   │     └ skilled
+│ │ │   ├ slime
+│ │ │   ├ tabaxi
+│ │ │   ├ taur_kin
+│ │ │   ├ tieberian
+│ │ │   │ └ base
+│ │ │   │   ├ skilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   ├ unskilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   └ very_skilled
+│ │ │   │     ├ heavy_gear
+│ │ │   │     ├ light_gear
+│ │ │   │     ├ medium_gear
+│ │ │   │     └ naked
+│ │ │   ├ triton
+│ │ │   │ └ base
+│ │ │   │   ├ skilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   ├ unskilled
+│ │ │   │   │ ├ heavy_gear
+│ │ │   │   │ ├ light_gear
+│ │ │   │   │ ├ medium_gear
+│ │ │   │   │ └ naked
+│ │ │   │   └ very_skilled
+│ │ │   │     ├ heavy_gear
+│ │ │   │     ├ light_gear
+│ │ │   │     ├ medium_gear
+│ │ │   │     └ naked
+│ │ │   ├ werewolf
+│ │ │   │ ├ custom
+│ │ │   │ │ ├ female
+│ │ │   │ │ └ male
+│ │ │   │ ├ female
+│ │ │   │ └ male
+│ │ │   ├ yuanti
+│ │ │   └ zizombie
+│ │ │     ├ ambush
+│ │ │     └ npc
+│ │ │       ├ ambush
+│ │ │       ├ GRENZEL
+│ │ │       ├ militiamen
+│ │ │       ├ peasant
+│ │ │       └ warrior
+│ │ ├ monkey
+│ │ │ └ angry
+│ │ └ spirit
+│ ├ simple_animal
+│ │ ├ hostile
+│ │ │ ├ boss
+│ │ │ │ └ fishboss
+│ │ │ ├ deepone
+│ │ │ │ ├ arm
+│ │ │ │ │ └ boss
+│ │ │ │ ├ boss
+│ │ │ │ ├ elite
+│ │ │ │ │ └ boss
+│ │ │ │ ├ spit
+│ │ │ │ │ └ boss
+│ │ │ │ └ wiz
+│ │ │ │   └ boss
+│ │ │ ├ dragger
+│ │ │ ├ dragon_clone
+│ │ │ ├ dreamfiend
+│ │ │ │ ├ ancient
+│ │ │ │ └ major
+│ │ │ ├ gnome_homunculus
+│ │ │ ├ haunt
+│ │ │ ├ kraken_tentacle
+│ │ │ │ ├ grabber
+│ │ │ │ └ spitter
+│ │ │ ├ mirespider_lurker
+│ │ │ │ ├ angry
+│ │ │ │ └ mushroom
+│ │ │ ├ mirespider_paralytic
+│ │ │ │ └ angry
+│ │ │ ├ orc
+│ │ │ │ ├ orc_marauder
+│ │ │ │ │ ├ ravager
+│ │ │ │ │ └ spear
+│ │ │ │ ├ orc2
+│ │ │ │ ├ ranged
+│ │ │ │ ├ spear
+│ │ │ │ └ spear2
+│ │ │ ├ retaliate
+│ │ │ │ ├ astral_projection
+│ │ │ │ ├ banker
+│ │ │ │ ├ bat
+│ │ │ │ │ └ crow
+│ │ │ │ │   └ companion
+│ │ │ │ ├ bigrat
+│ │ │ │ ├ blacksmith
+│ │ │ │ ├ blood
+│ │ │ │ │ ├ ascended
+│ │ │ │ │ └ weird
+│ │ │ │ ├ bobcat
+│ │ │ │ ├ bogbug
+│ │ │ │ ├ bull
+│ │ │ │ ├ chicken
+│ │ │ │ │ └ chick
+│ │ │ │ ├ cow
+│ │ │ │ │ └ cowlet
+│ │ │ │ │   └ bullet
+│ │ │ │ ├ direbear
+│ │ │ │ │ └ companion
+│ │ │ │ ├ ebjik
+│ │ │ │ ├ elemental
+│ │ │ │ │ ├ behemoth
+│ │ │ │ │ ├ collossus
+│ │ │ │ │ ├ crawler
+│ │ │ │ │ └ warden
+│ │ │ │ ├ fae
+│ │ │ │ │ ├ agriopylon
+│ │ │ │ │ │ ├ artemisia
+│ │ │ │ │ │ ├ atropa
+│ │ │ │ │ │ ├ benedictus
+│ │ │ │ │ │ ├ calendula
+│ │ │ │ │ │ ├ euphorbia
+│ │ │ │ │ │ ├ euphrasia
+│ │ │ │ │ │ ├ hypericum
+│ │ │ │ │ │ ├ matricaria
+│ │ │ │ │ │ ├ mentha
+│ │ │ │ │ │ ├ paris
+│ │ │ │ │ │ ├ rosa
+│ │ │ │ │ │ ├ salvia
+│ │ │ │ │ │ ├ symphitum
+│ │ │ │ │ │ ├ taraxacum
+│ │ │ │ │ │ ├ urtica
+│ │ │ │ │ │ └ valeriana
+│ │ │ │ │ ├ dryad
+│ │ │ │ │ ├ glimmerwing
+│ │ │ │ │ ├ sprite
+│ │ │ │ │ └ sylph
+│ │ │ │ ├ fox
+│ │ │ │ ├ frog
+│ │ │ │ ├ gaseousform
+│ │ │ │ ├ gator
+│ │ │ │ ├ goat
+│ │ │ │ │ └ goatlet
+│ │ │ │ │   └ boy
+│ │ │ │ ├ goatmale
+│ │ │ │ ├ headless
+│ │ │ │ ├ honse
+│ │ │ │ │ ├ kid
+│ │ │ │ │ │ └ male
+│ │ │ │ │ ├ male
+│ │ │ │ │ │ └ tame
+│ │ │ │ │ │   └ saddled
+│ │ │ │ │ └ tame
+│ │ │ │ │   └ saddled
+│ │ │ │ ├ infernal
+│ │ │ │ │ ├ fiend
+│ │ │ │ │ ├ hellhound
+│ │ │ │ │ ├ imp
+│ │ │ │ │ └ watcher
+│ │ │ │ ├ lamia
+│ │ │ │ ├ leylinelycan
+│ │ │ │ ├ meatvine
+│ │ │ │ │ ├ artiliery
+│ │ │ │ │ ├ broodmother
+│ │ │ │ │ ├ burrower
+│ │ │ │ │ ├ constructor
+│ │ │ │ │ ├ defender
+│ │ │ │ │ ├ flyer
+│ │ │ │ │ ├ goliath
+│ │ │ │ │ ├ infantry
+│ │ │ │ │ ├ range
+│ │ │ │ │ ├ runner
+│ │ │ │ │ ├ skin_stealer
+│ │ │ │ │ ├ spawnlord
+│ │ │ │ │ ├ stalker
+│ │ │ │ │ ├ tank
+│ │ │ │ │ └ warrior
+│ │ │ │ ├ mimic
+│ │ │ │ ├ minotaur
+│ │ │ │ │ ├ axe
+│ │ │ │ │ │ └ female
+│ │ │ │ │ └ female
+│ │ │ │ ├ mirespider
+│ │ │ │ │ └ angry
+│ │ │ │ ├ mole
+│ │ │ │ │ └ briars
+│ │ │ │ ├ overlord_minion
+│ │ │ │ ├ poltergeist
+│ │ │ │ ├ raccoon
+│ │ │ │ ├ saiga
+│ │ │ │ │ ├ horse
+│ │ │ │ │ │ ├ black
+│ │ │ │ │ │ │ ├ male
+│ │ │ │ │ │ │ │ └ tame
+│ │ │ │ │ │ │ │   └ saddled
+│ │ │ │ │ │ │ └ tame
+│ │ │ │ │ │ │   └ saddled
+│ │ │ │ │ │ ├ brown
+│ │ │ │ │ │ │ ├ male
+│ │ │ │ │ │ │ │ └ tame
+│ │ │ │ │ │ │ │   └ saddled
+│ │ │ │ │ │ │ └ tame
+│ │ │ │ │ │ │   └ saddled
+│ │ │ │ │ │ ├ kid
+│ │ │ │ │ │ │ ├ black
+│ │ │ │ │ │ │ │ └ male
+│ │ │ │ │ │ │ ├ boy
+│ │ │ │ │ │ │ ├ brown
+│ │ │ │ │ │ │ │ └ male
+│ │ │ │ │ │ │ └ raondom
+│ │ │ │ │ │ ├ male
+│ │ │ │ │ │ │ └ tame
+│ │ │ │ │ │ │   └ saddled
+│ │ │ │ │ │ ├ random
+│ │ │ │ │ │ └ tame
+│ │ │ │ │ │   └ saddled
+│ │ │ │ │ ├ saigakid
+│ │ │ │ │ │ └ boy
+│ │ │ │ │ └ tame
+│ │ │ │ │   └ saddled
+│ │ │ │ ├ saigabuck
+│ │ │ │ │ └ tame
+│ │ │ │ │   └ saddled
+│ │ │ │ ├ shade
+│ │ │ │ ├ shark
+│ │ │ │ ├ smallrat
+│ │ │ │ ├ snapper
+│ │ │ │ ├ spider
+│ │ │ │ │ ├ companion
+│ │ │ │ │ ├ mutated
+│ │ │ │ │ └ robotic
+│ │ │ │ ├ swamp_kraken
+│ │ │ │ ├ trader
+│ │ │ │ │ └ faction_trader
+│ │ │ │ ├ troll
+│ │ │ │ │ ├ axe
+│ │ │ │ │ ├ bog
+│ │ │ │ │ ├ broodmother
+│ │ │ │ │ ├ caerbannog
+│ │ │ │ │ ├ cave
+│ │ │ │ │ │ └ ambush
+│ │ │ │ │ ├ quiet
+│ │ │ │ │ ├ rous
+│ │ │ │ │ └ slaved
+│ │ │ │ ├ trufflepig
+│ │ │ │ │ ├ female
+│ │ │ │ │ ├ male
+│ │ │ │ │ └ piglet
+│ │ │ │ │   └ boy
+│ │ │ │ ├ voiddragon
+│ │ │ │ │ └ red
+│ │ │ │ │   └ tsere
+│ │ │ │ ├ voidstoneobelisk
+│ │ │ │ ├ wolf
+│ │ │ │ │ ├ companion
+│ │ │ │ │ └ familiar
+│ │ │ │ └ wolf_undead
+│ │ │ ├ skeleton
+│ │ │ │ ├ axe
+│ │ │ │ ├ bow
+│ │ │ │ ├ guard
+│ │ │ │ └ spear
+│ │ │ └ werewolf
+│ │ └ pet
+│ │   ├ cat
+│ │   │ ├ black
+│ │   │ ├ cabbit
+│ │   │ ├ inn
+│ │   │ ├ kitten
+│ │   │ └ original
+│ │   └ giraffe
+│ └ split_personality
+│   └ traitor
+└ oranges_ear
+/mutable_appearance
+├ appearance_mirror
+└ emissive_blocker
 /obj
 ├ abstract
-│ └
+│ └ visual_ui_element
+│   ├ book_background
+│   ├ console_input
+│   ├ console_text
+│   ├ current_recipe
+│   ├ failsafe
+│   ├ hoverable
+│   │ ├ book_close
+│   │ ├ draw_runes_guided
+│   │ ├ draw_runes_manual
+│   │ ├ erase_runes
+│   │ ├ movable
+│   │ │ ├ cultist
+│   │ │ ├ move_book
+│   │ │ └ test_move
+│   │ ├ recipe_button
+│   │ ├ rune_close
+│   │ ├ rune_word
+│   │ │ ├ rune_blood
+│   │ │ ├ rune_destroy
+│   │ │ ├ rune_hell
+│   │ │ ├ rune_hide
+│   │ │ ├ rune_join
+│   │ │ ├ rune_other
+│   │ │ ├ rune_see
+│   │ │ ├ rune_self
+│   │ │ ├ rune_technology
+│   │ │ └ rune_travel
+│   │ ├ scroll_handle
+│   │ │ ├ book
+│   │ │ ├ dummy
+│   │ │ └ recipe
+│   │ ├ scroll_one
+│   │ ├ scroll_two
+│   │ ├ tab_selection
+│   │ │ ├ four
+│   │ │ ├ three
+│   │ │ └ two
+│   │ ├ test_close
+│   │ └ test_hello
+│   ├ recipe_info_break
+│   ├ recipe_info_one_liner
+│   ├ scroll_track
+│   │ ├ book
+│   │ ├ dummy
+│   │ └ recipe
+│   ├ scrollable
+│   │ ├ console_output
+│   │ ├ recipe_group
+│   │ ├ selected_recipe
+│   │ └ test_scroll
+│   ├ test_back
+│   └ test_window
 ├ effect
 │ ├ abstract
+│ │ ├ contract_preview_proxy
 │ │ ├ faux_density
 │ │ ├ fire
 │ │ │ ├ big_fire
 │ │ │ ├ medium_fire
 │ │ │ └ small_fire
+│ │ ├ fov_object
 │ │ ├ info
 │ │ ├ liquid_turf
 │ │ ├ marker
-│ │ │ └
+│ │ │ └ at
 │ │ ├ mirage_holder
 │ │ ├ particle
 │ │ ├ particle_holder
+│ │ ├ pocket_dimension_storage
 │ │ ├ pollution
 │ │ ├ property_noop
 │ │ ├ shared_particle_holder
 │ │ └ sync_holder
-│ │   └
+│ │   └ veil
 │ ├ acid
 │ ├ after_image
 │ ├ afterimage
@@ -11966,7 +15159,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ beam
 │ ├ bee_swarm
 │ ├ bees
-│ │ └
+│ │ └ wild
 │ ├ blessing
 │ ├ blood_ritual
 │ │ ├ confusion
@@ -12000,20 +15193,36 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ celerity
 │ ├ conflicting_area
 │ ├ contextual_actor
-│ │ └
+│ │ └ preset
+│ │   ├ flickering
+│ │   └ other
 │ ├ countdown
-│ │ └
+│ │ └ hourglass
 │ ├ debugging
 │ │ ├ mapfix_marker
 │ │ └ marker
 │ ├ decal
+│ │ ├ alizeria
+│ │ │ └ decals
+│ │ │   ├ wooddecal1
+│ │ │   ├ wooddecal2
+│ │ │   ├ wooddecal3
+│ │ │   ├ wooddecal4
+│ │ │   ├ wooddecal5
+│ │ │   ├ wooddecal6
+│ │ │   ├ wooddecal7
+│ │ │   ├ wooddecal8
+│ │ │   ├ woodpath1
+│ │ │   ├ woodpath2
+│ │ │   ├ woodpath3
+│ │ │   └ woodpath4
 │ │ ├ borderfall
 │ │ ├ carpet
 │ │ │ ├ kover_black
 │ │ │ ├ kover_darkred
 │ │ │ ├ kover_purple
 │ │ │ └ square
-│ │ │   └
+│ │ │   └ black
 │ │ ├ chempuff
 │ │ ├ cleanable
 │ │ │ ├ ash
@@ -12043,7 +15252,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ └ wood
 │ │ │ ├ dirt
 │ │ │ │ ├ cobweb
-│ │ │ │ │ └
+│ │ │ │ │ └ cobweb2
 │ │ │ │ ├ dust
 │ │ │ │ └ paper
 │ │ │ ├ dreamfiend_ichor
@@ -12071,7 +15280,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ meatvine_acid
 │ │ │ ├ meatvine_slow
 │ │ │ ├ molten_object
-│ │ │ │ └
+│ │ │ │ └ large
 │ │ │ ├ plasma
 │ │ │ ├ roguerune
 │ │ │ │ ├ arcyne
@@ -12091,7 +15300,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ divine
 │ │ │ │ └ druid
 │ │ │ ├ shreds
-│ │ │ │ └
+│ │ │ │ └ clay
 │ │ │ ├ sigil
 │ │ │ │ ├ E
 │ │ │ │ ├ N
@@ -12104,30 +15313,32 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ trail_holder
 │ │ │ ├ undeadash
 │ │ │ ├ vomit
-│ │ │ │ └
+│ │ │ │ └ old
 │ │ │ └ xenoblood
 │ │ │   ├ xgibs
 │ │ │   │ ├ body
 │ │ │   │ ├ core
 │ │ │   │ ├ down
 │ │ │   │ ├ larva
-│ │ │   │ │ └
+│ │ │   │ │ └ body
 │ │ │   │ ├ limb
 │ │ │   │ ├ torso
 │ │ │   │ └ up
 │ │ │   └ xsplatter
 │ │ ├ cobble
-│ │ │ └
+│ │ │ └ mossy
 │ │ ├ cobbleedge
 │ │ │ ├ alt
 │ │ │ ├ mossy
 │ │ │ └ snow
 │ │ ├ cobblerockedge
-│ │ │ └
+│ │ │ └ alt
 │ │ ├ desertgrassedge
+│ │ ├ duneedge
 │ │ ├ edge
 │ │ ├ edge_corner
 │ │ ├ floor_selune
+│ │ ├ grass_edges
 │ │ ├ herringbone
 │ │ ├ marker_export
 │ │ ├ mossy
@@ -12151,9 +15362,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ troll
 │ │ │ ├ wolf
 │ │ │ └ xeno
-│ │ │   └
+│ │ │   └ larva
 │ │ ├ shadow_floor
-│ │ │ └
+│ │ │ └ corner
 │ │ └ wood
 │ │   ├ herringbone
 │ │   └ herringbone2
@@ -12163,19 +15374,21 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ dummy
 │ │ ├ bush_disguise
 │ │ ├ lighting_obj
-│ │ │ └
+│ │ │ └ moblight
+│ │ │   └ fire
 │ │ └ phased_mob
-│ │   └
+│ │   └ spell_jaunt
 │ ├ dungeon_directional_helper
 │ │ ├ east
-│ │ │ └
+│ │ │ └ top
 │ │ ├ north
-│ │ │ └
+│ │ │ └ top
 │ │ ├ south
-│ │ │ └
+│ │ │ └ top
 │ │ └ west
-│ │   └
+│ │   └ top
 │ ├ ebeam
+│ │ ├ gut
 │ │ ├ leyline
 │ │ ├ meat
 │ │ └ reacting
@@ -12187,12 +15400,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ falling_sakura
 │ ├ fishing_float
 │ ├ flora_patch_spawner
-│ │ └
+│ │ └ plains
 │ ├ flyer_shadow
 │ ├ fog_parter
 │ ├ foodspot
 │ ├ forcefield
-│ │ └
+│ │ └ wizard
 │ ├ fullbright
 │ ├ fun_balloon
 │ │ ├ scatter
@@ -12200,11 +15413,11 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ fuse
 │ ├ gibspawner
 │ │ ├ generic
-│ │ │ └
+│ │ │ └ animal
 │ │ └ human
-│ │   └
+│ │   └ bodypartless
 │ ├ god_hand
-│ │ └
+│ │ └ photorealistic
 │ ├ hotspot
 │ ├ island_tester
 │ ├ landmark
@@ -12223,7 +15436,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ carpspawn
 │ │ ├ chest_or_mimic
 │ │ ├ death_arena
-│ │ │ └
+│ │ │ └ second
 │ │ ├ ert_spawn
 │ │ ├ event_spawn
 │ │ ├ events
@@ -12231,7 +15444,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ haunts
 │ │ │ └ testportal
 │ │ ├ hammer
-│ │ │ └
+│ │ │ └ dev_text
 │ │ ├ house_spot
 │ │ ├ latejoin
 │ │ ├ lift_id
@@ -12239,11 +15452,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ bog_shack_small
 │ │ │ ├ malum_dungeon
 │ │ │ ├ rmh
+│ │ │ │ ├ desertcrypt
+│ │ │ │ ├ desertlabyr
 │ │ │ │ ├ towncrypt
 │ │ │ │ ├ towncrypt2
 │ │ │ │ └ towncrypt3
 │ │ │ └ stonekeep_dungeon
-│ │ │   └
+│ │ │   └ roguetown_bog
 │ │ ├ mapGenerator
 │ │ │ ├ anvil
 │ │ │ ├ beach
@@ -12273,13 +15488,24 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ └ forest
 │ │ │ ├ underdark
 │ │ │ └ whitepalacepass
-│ │ │   └
+│ │ │   └ field
 │ │ ├ observer_start
+│ │ ├ pocket_dimension
+│ │ │ ├ drop_spot
+│ │ │ ├ entry
+│ │ │ └ exit
+│ │ │   ├ closet
+│ │ │   └ werewolf
 │ │ ├ prisonwarp
 │ │ ├ quest_spawner
 │ │ │ ├ easy
 │ │ │ ├ hard
 │ │ │ └ medium
+│ │ ├ resurrection_rune_destination
+│ │ │ ├ antag
+│ │ │ ├ city
+│ │ │ ├ outlaw
+│ │ │ └ vampire
 │ │ ├ river_waypoint
 │ │ ├ ruin
 │ │ ├ settlement_mob_spawn
@@ -12338,11 +15564,26 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ waterdeep_banker
 │ │ │ ├ waterdeep_guild_assistant
 │ │ │ ├ waterdeep_guild_guard
-│ │ │ └ waterdeep_merchant
+│ │ │ ├ waterdeep_merchant
+│ │ │ └ werewolf
 │ │ ├ terrain_generation_marker
-│ │ │ └
+│ │ │ └ deferred
 │ │ ├ tram
-│ │ │ └
+│ │ │ └ queued_path
+│ │ │   ├ cargo_exit
+│ │ │   ├ cargo_map_enter
+│ │ │   ├ cargo_map_exit
+│ │ │   ├ cargo_pre_enter
+│ │ │   ├ cargo_stop
+│ │ │   ├ cargo_storage_point
+│ │ │   ├ debug_1
+│ │ │   ├ debug_2
+│ │ │   ├ fence_exit
+│ │ │   ├ fence_map_enter
+│ │ │   ├ fence_map_exit
+│ │ │   ├ fence_pre_enter
+│ │ │   ├ fence_stop
+│ │ │   └ fence_storage_point
 │ │ ├ treyliam
 │ │ ├ underworld_pull_location
 │ │ ├ underworld_spawnpoint
@@ -12358,7 +15599,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ three
 │ │ └ two
 │ ├ list_container
-│ │ └
+│ │ └ mobl
 │ ├ mapping_helpers
 │ │ ├ access
 │ │ │ ├ keyset
@@ -12389,8 +15630,11 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ physician
 │ │ │ │ │ ├ steward
 │ │ │ │ │ └ vault
+│ │ │ │ ├ rmh_outsider
+│ │ │ │ │ └ witch
 │ │ │ │ ├ rmh_town
-│ │ │ │ │ └
+│ │ │ │ │ ├ bakery
+│ │ │ │ │ └ townmouth
 │ │ │ │ ├ thatchwood
 │ │ │ │ │ ├ farm
 │ │ │ │ │ ├ inn1
@@ -12428,7 +15672,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ keep
 │ │ │ └ thieves_guild
 │ │ ├ structure
-│ │ │ └
+│ │ │ └ breaker
 │ │ └ thieves_cant_helper
 │ ├ meatvine_controller
 │ ├ mine
@@ -12438,35 +15682,56 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ healing
 │ │ │ └ speed
 │ │ ├ sound
-│ │ │ └
+│ │ │ └ bwoink
 │ │ └ stun
 │ ├ mob_spawn
-│ │ └
+│ │ └ human
+│ │   ├ corpse
+│ │   │ ├ damaged
+│ │   │ └ delayed
+│ │   ├ demi
+│ │   │ └ trader
+│ │   ├ dwarf
+│ │   │ └ trader
+│ │   ├ elf
+│ │   │ ├ artifact
+│ │   │ └ trader
+│ │   ├ orc
+│ │   │ └ corpse
+│ │   │   ├ orcmarauder
+│ │   │   ├ orcravager
+│ │   │   ├ savageorc
+│ │   │   └ savageorc2
+│ │   ├ rakshari
+│ │   │ ├ banker
+│ │   │ └ trader
+│ │   └ trition
+│ │     └ zhong
 │ ├ obeliskbeam
 │ ├ overlay
 │ │ ├ happiness_overlay
-│ │ │ └
+│ │ │ └ hunger
 │ │ ├ hover
 │ │ ├ light_visible
 │ │ ├ sparkles
 │ │ ├ thermite
 │ │ ├ vis
 │ │ ├ water
-│ │ │ └
+│ │ │ └ top
 │ │ └ zone_sel
 │ ├ overlayTest
 │ ├ particle_effect
 │ │ ├ expl_particles
 │ │ ├ foam
-│ │ │ └
+│ │ │ └ long_life
 │ │ ├ ion_trails
-│ │ │ └
+│ │ │ └ flight
 │ │ ├ shockwave
 │ │ ├ smoke
 │ │ │ ├ aphrodisiac
 │ │ │ ├ bad
 │ │ │ ├ chem
-│ │ │ │ └
+│ │ │ │ └ transparent
 │ │ │ ├ destroy_clothes
 │ │ │ ├ poison
 │ │ │ ├ sleeping
@@ -12480,12 +15745,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ portal
 │ │ ├ anom
 │ │ ├ permanent
-│ │ │ └
+│ │ │ └ one_way
+│ │ │   ├ destroy
+│ │ │   └ keep
 │ │ └ vampire
-│ ├ proc_holder
-│ │ └
 │ ├ projectile
-│ │ └
+│ │ └ tracer
+│ │   ├ blood
+│ │   ├ bloodsteal
+│ │   └ stun
 │ ├ projectile_lighting
 │ ├ quest_spawn
 │ ├ skill_tracker
@@ -12500,7 +15768,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ cutlery
 │ │ │ │ └ steward_keys
 │ │ │ └ single
-│ │ │   └
+│ │ │   └ cup
 │ │ ├ lootdrop
 │ │ ├ map_spawner
 │ │ │ ├ beartrap
@@ -12535,7 +15803,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ magic
 │ │ │ │ ├ medium
 │ │ │ │ ├ potion_ingredient
-│ │ │ │ │ └
+│ │ │ │ │ └ herb
 │ │ │ │ ├ potion_poisons
 │ │ │ │ ├ potion_stats
 │ │ │ │ ├ potion_vitals
@@ -12584,7 +15852,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ stopper
 │ │ ├ teleport_fancy
 │ │ ├ teleporter
-│ │ │ └
+│ │ │ └ random
 │ │ └ thrower
 │ ├ stun_indicator
 │ ├ supplypod_selector
@@ -12610,22 +15878,25 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ chronophase_transform
 │ │ ├ coral_spawn
 │ │ ├ cult
-│ │ │ └
+│ │ │ └ sparks
 │ │ ├ curse
 │ │ ├ cut
 │ │ ├ daylight_orb
 │ │ ├ decoy
-│ │ │ └
+│ │ │ └ fading
+│ │ │   ├ fivesecond
+│ │ │   ├ halfsecond
+│ │ │   └ threesecond
 │ │ ├ desynchronizer
 │ │ ├ dir_setting
 │ │ │ ├ attack_effect
 │ │ │ ├ block
 │ │ │ ├ bloodsplatter
-│ │ │ │ └
+│ │ │ │ └ xenosplatter
 │ │ │ ├ curse
 │ │ │ │ ├ blob
 │ │ │ │ ├ grasp_portal
-│ │ │ │ │ └
+│ │ │ │ │ └ fading
 │ │ │ │ └ hand
 │ │ │ ├ entropic
 │ │ │ ├ firing_effect
@@ -12636,12 +15907,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ ninja
 │ │ │ │ ├ cloak
 │ │ │ │ ├ phase
-│ │ │ │ │ └
+│ │ │ │ │ └ out
 │ │ │ │ └ shadow
 │ │ │ ├ speedbike_trail
 │ │ │ ├ tailsweep
 │ │ │ ├ wraith
-│ │ │ │ └
+│ │ │ │ └ out
 │ │ │ ├ wraith_grab
 │ │ │ ├ wraith_phase_in
 │ │ │ ├ wraith_phase_out
@@ -12650,7 +15921,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ dragon_explosion
 │ │ ├ dragon_explosion_target
 │ │ ├ dragon_flight
-│ │ │ └
+│ │ │ └ end
 │ │ ├ dragon_phase_strike
 │ │ ├ dragon_shadow
 │ │ ├ dragon_strike
@@ -12666,22 +15937,24 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ pulse
 │ │ ├ essence_sparkle
 │ │ ├ explosion
-│ │ │ └
+│ │ │ └ fast
 │ │ ├ fire
 │ │ ├ fireball
 │ │ ├ flame_jet
 │ │ ├ gem_growth
 │ │ ├ gib_animation
-│ │ │ └
+│ │ │ └ animal
 │ │ ├ gravity
 │ │ ├ gravpush
 │ │ ├ guardian
-│ │ │ └
+│ │ │ └ phase
+│ │ │   └ out
 │ │ ├ harvest_glow
 │ │ ├ heal
 │ │ ├ heal_rogue
 │ │ ├ heart
-│ │ │ └
+│ │ │ └ sex_effects
+│ │ │   └ red_heart
 │ │ ├ impact_effect
 │ │ │ ├ blue_laser
 │ │ │ ├ green_laser
@@ -12689,7 +15962,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ neurotoxin
 │ │ │ ├ purple_laser
 │ │ │ ├ red_laser
-│ │ │ │ └
+│ │ │ │ └ wall
 │ │ │ └ shrink
 │ │ ├ kinetic_blast
 │ │ ├ kinetic_burst
@@ -12700,37 +15973,37 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ lightning
 │ │ ├ liquid_splash
 │ │ ├ love_heart
-│ │ │ └
+│ │ │ └ invisible
 │ │ ├ lycan
 │ │ ├ marker
 │ │ ├ meatvine_mark
 │ │ ├ mind_spike
-│ │ │ └
+│ │ │ └ warn
 │ │ ├ minotaur_charge
 │ │ ├ minotaur_fury_zone
-│ │ │ └
+│ │ │ └ strong
 │ │ ├ minotaur_impact
 │ │ ├ minotaur_magic
 │ │ ├ minotaur_rage
 │ │ ├ minotaur_slam
 │ │ ├ mist_veil
 │ │ ├ monkeyify
-│ │ │ └
+│ │ │ └ humanify
 │ │ ├ mummy_animation
 │ │ ├ music_rogue
 │ │ ├ offered_item_effect
 │ │ ├ particle_up
 │ │ ├ paw_swipe
 │ │ ├ point
-│ │ │ └
+│ │ │ └ still
 │ │ ├ psyheal_rogue
 │ │ ├ reality_crack
 │ │ ├ retaliate
 │ │ ├ silence_zone
 │ │ ├ slowdown_spell_aoe
-│ │ │ └
+│ │ │ └ long
 │ │ ├ small_smoke
-│ │ │ └
+│ │ │ └ halfsecond
 │ │ ├ snake
 │ │ │ ├ swarm
 │ │ │ └ twin_up
@@ -12756,7 +16029,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ trapice
 │ │ ├ truffle_overlay
 │ │ ├ vamp_summon
-│ │ │ └
+│ │ │ └ end
 │ │ ├ vamp_teleport
 │ │ ├ void_corruption
 │ │ ├ void_corruption_spread
@@ -12764,33 +16037,33 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ wave_up
 │ │ ├ wine_projectile_impact
 │ │ └ wizard
-│ │   └
+│ │   └ out
 │ ├ tracker
 │ │ ├ drain
 │ │ └ soul
 │ ├ turf_decal
 │ │ ├ magedecal
 │ │ ├ sand
-│ │ │ └
+│ │ │ └ plating
 │ │ └ weather
 │ │   ├ dirt
 │ │   ├ sand
-│ │   │ └
+│ │   │ └ light
 │ │   └ snow
-│ │     └
+│ │     └ corner
 │ ├ visual_effect
-│ │ └
+│ │ └ turf_break
 │ ├ waterfall
-│ │ └
+│ │ └ acid
 │ ├ whirlpool
 │ ├ wisp
-│ │ └
+│ │ └ prestidigitation
 │ └ workspot
 ├ fae_trickery_trap
 │ ├ disorient
 │ └ drop
 ├ gblock
-│ └
+│ └ not_opaque
 ├ item
 │ ├ alch
 │ │ ├ airdust
@@ -12833,37 +16106,46 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ viscera
 │ │ └ waterdust
 │ ├ ammo_box
-│ │ └
+│ │ └ magazine
+│ │   └ internal
+│ │     └ shot
+│ │       ├ airgun
+│ │       ├ blowgun
+│ │       ├ bow
+│ │       ├ musk
+│ │       │ └ loaded
+│ │       └ xbow
 │ ├ ammo_casing
 │ │ ├ caseless
 │ │ │ ├ arrow
 │ │ │ │ ├ poison
-│ │ │ │ │ └
+│ │ │ │ │ └ potent
 │ │ │ │ ├ pyro
 │ │ │ │ ├ stone
 │ │ │ │ ├ vial
-│ │ │ │ │ └
+│ │ │ │ │ └ water
 │ │ │ │ └ water
 │ │ │ ├ bolt
 │ │ │ │ ├ holy
 │ │ │ │ ├ poison
-│ │ │ │ │ └
+│ │ │ │ │ └ potent
 │ │ │ │ ├ pyro
 │ │ │ │ ├ vial
-│ │ │ │ │ └
+│ │ │ │ │ └ water
 │ │ │ │ └ water
 │ │ │ ├ bullet
 │ │ │ ├ cball
-│ │ │ │ └
+│ │ │ │ └ grapeshot
 │ │ │ ├ dart
-│ │ │ │ └
+│ │ │ │ └ poison
 │ │ │ └ grenadeshell
 │ │ ├ spent
 │ │ └ xenospit
-│ │   └
+│ │   └ spread
+│ │     └ lethal
 │ ├ ammo_holder
 │ │ ├ bullet
-│ │ │ └
+│ │ │ └ bullets
 │ │ ├ dartpouch
 │ │ │ ├ darts
 │ │ │ └ poisondarts
@@ -12922,7 +16204,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ crackers
 │ │ ├ trash
 │ │ └ water
-│ │   └
+│ │   └ gross
 │ ├ bodybag
 │ ├ bodypart
 │ │ ├ chest
@@ -12967,6 +16249,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ rousman
 │ │ │ ├ spirit
 │ │ │ └ zizombie
+│ │ ├ mouth
 │ │ ├ r_arm
 │ │ │ ├ devil
 │ │ │ ├ goblin
@@ -12996,6 +16279,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ zizombie
 │ │ └ taur
 │ │   ├ ant
+│ │   ├ arachne
 │ │   ├ canine
 │ │   ├ centipede
 │ │   ├ deer
@@ -13005,6 +16289,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   ├ feline
 │ │   ├ horse
 │ │   ├ insect
+│ │   ├ jdeer
 │ │   ├ kitsune
 │ │   ├ lamia
 │ │   ├ lamiastriped
@@ -13023,7 +16308,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   ├ venard
 │ │   └ wasp
 │ ├ bone
-│ │ └
+│ │ └ splinter
 │ ├ book
 │ │ ├ abyssor
 │ │ ├ advice_farming
@@ -13032,7 +16317,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ arcyne
 │ │ ├ beardling
 │ │ ├ bibble
-│ │ │ └
+│ │ │ └ psy
 │ │ ├ blackmountain
 │ │ ├ book_name_here
 │ │ ├ bookofpriests
@@ -13044,7 +16329,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ action
 │ │ │ ├ crafting_recipe
 │ │ │ ├ spell
-│ │ │ │ └
+│ │ │ │ └ magick
+│ │ │ │   ├ blindness
+│ │ │ │   ├ fetch
+│ │ │ │   ├ fireball
+│ │ │ │   ├ greaterfireball
+│ │ │ │   ├ invisibility
+│ │ │ │   └ lightning
 │ │ │ ├ spell_points
 │ │ │ └ spellbook
 │ │ │   ├ adept
@@ -13074,10 +16365,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ thesis
 │ │ ├ robber
 │ │ ├ rogue
-│ │ │ └
+│ │ │ └ howtogaffer
 │ │ ├ secret
 │ │ │ ├ ledger
-│ │ │ │ └
+│ │ │ │ └ fence
 │ │ │ └ xylix
 │ │ ├ sword
 │ │ ├ tales1
@@ -13088,7 +16379,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ book_crafting_kit
 │ ├ bottle_kit
 │ ├ bottlemessage
-│ │ └
+│ │ └ ancient
 │ ├ bounty_marker
 │ ├ bouquet
 │ │ ├ calendula
@@ -13103,29 +16394,32 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ gold
 │ │ │ │ ├ lit
 │ │ │ │ └ single
-│ │ │ │   └
+│ │ │ │   └ lit
 │ │ │ └ silver
 │ │ │   ├ lit
 │ │ │   └ single
-│ │ │     └
+│ │ │     └ lit
 │ │ ├ eora
-│ │ │ └
+│ │ │ └ lit
 │ │ ├ gold
-│ │ │ └
+│ │ │ └ lit
 │ │ ├ infinite
 │ │ ├ lit
 │ │ ├ silver
-│ │ │ └
+│ │ │ └ lit
 │ │ ├ skull
 │ │ │ ├ darkskull
-│ │ │ │ └
+│ │ │ │ └ lit
 │ │ │ └ lit
 │ │ ├ tin
-│ │ │ └
+│ │ │ └ lit
 │ │ └ yellow
-│ │   └
+│ │   └ lit
+│ │     └ infinite
+│ │       └ strong
+│ │         └ skull
 │ ├ canvas
-│ │ └
+│ │ └ random_painting
 │ ├ caparison
 │ │ ├ astrata
 │ │ ├ azure
@@ -13279,28 +16573,34 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   ├ urn
 │ │   └ vase
 │ ├ catbell
-│ │ └
+│ │ └ cow
 │ ├ chair
 │ │ ├ bronze
 │ │ ├ chair_nobles
 │ │ │ ├ purple
 │ │ │ └ red
 │ │ ├ chair3
-│ │ │ └
+│ │ │ └ crafted
 │ │ ├ fancy
-│ │ │ └
+│ │ │ └ crafted
 │ │ ├ stool
+│ │ │ ├ alizeriadecoritem
+│ │ │ │ ├ stool1
+│ │ │ │ ├ stool2
+│ │ │ │ └ stool3
 │ │ │ ├ bar
 │ │ │ └ crafted
 │ │ └ wood
 │ ├ chalk
-│ │ └
+│ │ └ natural
 │ ├ chilltouch
 │ ├ chimeric_node
 │ ├ cigbutt
 │ ├ clothing
 │ │ ├ accessory
-│ │ │ └
+│ │ │ └ medal
+│ │ │   └ gold
+│ │ │     └ ordom
 │ │ ├ armor
 │ │ │ ├ amazon_chainkini
 │ │ │ ├ basiceast
@@ -13310,28 +16610,30 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ brigandine
 │ │ │ │ ├ abyssor
 │ │ │ │ ├ bikini
-│ │ │ │ │ └
+│ │ │ │ │ └ bra
 │ │ │ │ ├ captain
 │ │ │ │ ├ coatplates
 │ │ │ │ └ light
 │ │ │ ├ chainmail
+│ │ │ │ ├ ancient
 │ │ │ │ ├ bikini
-│ │ │ │ │ └
+│ │ │ │ │ └ bra
 │ │ │ │ ├ hauberk
 │ │ │ │ │ ├ ancient
 │ │ │ │ │ ├ atgervi
 │ │ │ │ │ ├ bikini
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ bra
 │ │ │ │ │ ├ fluted
-│ │ │ │ │ ├ iron
-│ │ │ │ │ └ vampire
+│ │ │ │ │ └ iron
 │ │ │ │ └ iron
 │ │ │ │   ├ bikini
-│ │ │ │   │ └
+│ │ │ │   │ └ bra
 │ │ │ │   └ orc
 │ │ │ ├ corset
-│ │ │ │ └
+│ │ │ │ └ colored
+│ │ │ │   └ black
 │ │ │ ├ cuirass
+│ │ │ │ ├ ancient
 │ │ │ │ ├ copperchest
 │ │ │ │ ├ fencer
 │ │ │ │ ├ fluted
@@ -13344,62 +16646,69 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ ornate
 │ │ │ │ ├ psydon
 │ │ │ │ ├ rare
-│ │ │ │ │ └
+│ │ │ │ │ └ elven
 │ │ │ │ └ vampire
 │ │ │ ├ gambeson
 │ │ │ │ ├ apothecary
 │ │ │ │ ├ arming
 │ │ │ │ ├ bikini
-│ │ │ │ │ └
+│ │ │ │ │ └ bra
 │ │ │ │ ├ colored
-│ │ │ │ │ └
+│ │ │ │ │ └ town_watch
 │ │ │ │ ├ explorer
 │ │ │ │ ├ hand
-│ │ │ │ │ └
+│ │ │ │ │ └ spy
 │ │ │ │ ├ heavy
 │ │ │ │ │ ├ bikini
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ bra
 │ │ │ │ │ ├ colored
 │ │ │ │ │ │ ├ dark
 │ │ │ │ │ │ └ town_watch
 │ │ │ │ │ ├ dress
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ alt
 │ │ │ │ │ ├ inq
+│ │ │ │ │ │ └ daewalker
 │ │ │ │ │ ├ lakkarijupon
 │ │ │ │ │ ├ otavan
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ inq
 │ │ │ │ │ └ winterdress
 │ │ │ │ ├ light
 │ │ │ │ │ ├ bikini
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ bra
 │ │ │ │ │ ├ colored
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ black
 │ │ │ │ │ ├ steppe
 │ │ │ │ │ └ striped
 │ │ │ │ ├ shadowrobe
 │ │ │ │ ├ sophisticated_coat
-│ │ │ │ │ └
+│ │ │ │ │ └ colored
+│ │ │ │ │   └ random
 │ │ │ │ ├ sophisticated_jacket
 │ │ │ │ ├ steward
-│ │ │ │ │ └
+│ │ │ │ │ └ townhall
+│ │ │ │ ├ treasure_island
+│ │ │ │ │ ├ blue
+│ │ │ │ │ ├ green
+│ │ │ │ │ └ red
 │ │ │ │ └ winter_coat
 │ │ │ ├ leather
 │ │ │ │ ├ advanced
 │ │ │ │ │ ├ bikini
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ bra
 │ │ │ │ │ ├ druid
+│ │ │ │ │ ├ foreign_habit
 │ │ │ │ │ ├ forrester
 │ │ │ │ │ └ rousman
 │ │ │ │ ├ bikini
-│ │ │ │ │ └
+│ │ │ │ │ └ bra
 │ │ │ │ ├ courtphysician
-│ │ │ │ │ └
+│ │ │ │ │ └ female
 │ │ │ │ ├ goblin
 │ │ │ │ ├ heavy
-│ │ │ │ │ └
+│ │ │ │ │ └ atgervi
 │ │ │ │ ├ hide
 │ │ │ │ │ ├ bikini
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ bra
 │ │ │ │ │ ├ goblin
 │ │ │ │ │ ├ orc
 │ │ │ │ │ ├ rousman
@@ -13407,32 +16716,35 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ jacket
 │ │ │ │ │ ├ apothecary
 │ │ │ │ │ ├ artijacket
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ porter
 │ │ │ │ │ ├ courtphysician
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ female
 │ │ │ │ │ ├ gatemaster_jacket
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ armored
+│ │ │ │ │ │   └ bulwark
 │ │ │ │ │ ├ hand
 │ │ │ │ │ ├ handjacket
 │ │ │ │ │ ├ leathercoat
 │ │ │ │ │ │ ├ black
 │ │ │ │ │ │ ├ colored
-│ │ │ │ │ │ │ └
+│ │ │ │ │ │ │ └ wretchrenegade
 │ │ │ │ │ │ ├ confessor
 │ │ │ │ │ │ ├ duelcoat
 │ │ │ │ │ │ └ renegade
 │ │ │ │ │ ├ sea
 │ │ │ │ │ ├ silk_coat
 │ │ │ │ │ └ tailcoat
-│ │ │ │ │   └
+│ │ │ │ │   └ lord
 │ │ │ │ ├ masterwork
-│ │ │ │ │ └
+│ │ │ │ │ └ bikini
+│ │ │ │ │   └ bra
 │ │ │ │ ├ splint
 │ │ │ │ ├ studded
 │ │ │ │ │ ├ bikini
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ bra
 │ │ │ │ │ ├ mail
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ bikini
+│ │ │ │ │ │   └ bra
 │ │ │ │ │ └ psyaltrist
 │ │ │ │ └ vest
 │ │ │ │   ├ colored
@@ -13445,25 +16757,27 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ medium
 │ │ │ │ ├ scale
 │ │ │ │ │ ├ bikini
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ bra
 │ │ │ │ │ ├ inqcoat
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ armored
+│ │ │ │ │ │   └ daewalker
 │ │ │ │ │ └ steppe
 │ │ │ │ └ surcoat
-│ │ │ │   └
+│ │ │ │   └ heartfelt
 │ │ │ ├ plate
 │ │ │ │ ├ ancient
 │ │ │ │ ├ bikini
-│ │ │ │ │ └
+│ │ │ │ │ └ bra
 │ │ │ │ ├ blkknight
-│ │ │ │ │ └
+│ │ │ │ │ └ death
 │ │ │ │ ├ decorated
-│ │ │ │ │ └
+│ │ │ │ │ └ corset
 │ │ │ │ ├ fluted
-│ │ │ │ │ └
+│ │ │ │ │ └ ornate
+│ │ │ │ │   └ ordinator
 │ │ │ │ ├ full
 │ │ │ │ │ ├ bikini
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ bra
 │ │ │ │ │ ├ graggar
 │ │ │ │ │ ├ holysee
 │ │ │ │ │ ├ iron
@@ -13471,23 +16785,25 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ silver
 │ │ │ │ │ └ zizo
 │ │ │ │ ├ iron
-│ │ │ │ │ └
+│ │ │ │ │ └ bikini
+│ │ │ │ │   └ bra
 │ │ │ │ ├ orc
-│ │ │ │ │ └
+│ │ │ │ │ └ warlord
 │ │ │ │ ├ rust
-│ │ │ │ ├ snakekini
-│ │ │ │ └ vampire
+│ │ │ │ └ snakekini
 │ │ │ ├ rare
 │ │ │ │ ├ dwarfplate
 │ │ │ │ ├ elfplate
-│ │ │ │ │ └
+│ │ │ │ │ └ welfplate
 │ │ │ │ ├ grenzelplate
 │ │ │ │ ├ hoplite
 │ │ │ │ └ zaladplate
 │ │ │ ├ regenerating
-│ │ │ │ └
+│ │ │ │ └ skin
+│ │ │ │   ├ disciple
+│ │ │ │   └ werewolf_skin
 │ │ │ ├ skin_armor
-│ │ │ │ └
+│ │ │ │ └ vampire_fortitude
 │ │ │ └ steam
 │ │ ├ armsleeves
 │ │ │ ├ mesh
@@ -13500,12 +16816,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ barding
 │ │ │ ├ chain
 │ │ │ └ honse
-│ │ │   └
+│ │ │   └ chain
 │ │ ├ bra
 │ │ │ ├ bikini
 │ │ │ └ exoticsilkbra
 │ │ ├ choker
-│ │ │ └
+│ │ │ └ emerald
 │ │ ├ climbing_gear
 │ │ ├ cloak
 │ │ │ ├ absolutionistrobe
@@ -13514,7 +16830,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ cook
 │ │ │ │ ├ maid
 │ │ │ │ └ waist
-│ │ │ │   └
+│ │ │ │   └ colored
+│ │ │ │     ├ bar
+│ │ │ │     └ brown
 │ │ │ ├ battlenun
 │ │ │ ├ black_cloak
 │ │ │ ├ boiler
@@ -13532,15 +16850,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ guard
 │ │ │ │ ├ inquisitor
 │ │ │ │ └ puritan
-│ │ │ │   └
+│ │ │ │   └ townhall
 │ │ │ ├ captain
-│ │ │ │ └
+│ │ │ │ └ town_watch
 │ │ │ ├ chasuble
 │ │ │ ├ eastcloak1
 │ │ │ ├ eastcloak2
 │ │ │ ├ faceless
 │ │ │ ├ forrestercloak
-│ │ │ │ └
+│ │ │ │ └ snow
 │ │ │ ├ graggar
 │ │ │ ├ guildguard
 │ │ │ ├ half
@@ -13549,7 +16867,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ random
 │ │ │ │ │ └ red
 │ │ │ │ ├ duelcape
-│ │ │ │ │ └
+│ │ │ │ │ └ townhall
 │ │ │ │ ├ guard
 │ │ │ │ ├ guardsecond
 │ │ │ │ ├ shadowcloak
@@ -13559,18 +16877,19 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ heartfelt
 │ │ │ ├ holysee
 │ │ │ ├ lordcloak
-│ │ │ │ └
+│ │ │ │ └ ladycloak
 │ │ │ ├ martyr
 │ │ │ ├ matron
 │ │ │ ├ ordinatorcape
-│ │ │ │ └
+│ │ │ │ └ townhall
 │ │ │ ├ pantheon
 │ │ │ ├ pegasusknight
 │ │ │ ├ poncho
-│ │ │ │ └
+│ │ │ │ └ colored
+│ │ │ │   └ random
 │ │ │ ├ psyaltrist
 │ │ │ ├ psydontabard
-│ │ │ │ └
+│ │ │ │ └ alt
 │ │ │ ├ raincloak
 │ │ │ │ ├ colored
 │ │ │ │ │ ├ blue
@@ -13581,32 +16900,34 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ random
 │ │ │ │ │ └ red
 │ │ │ │ └ furcloak
-│ │ │ │   └
+│ │ │ │   └ colored
+│ │ │ │     ├ black
+│ │ │ │     └ brown
 │ │ │ ├ ravox
 │ │ │ ├ shredded
 │ │ │ ├ silktabard
 │ │ │ ├ stabard
 │ │ │ │ ├ colored
-│ │ │ │ │ └
+│ │ │ │ │ └ dungeon
 │ │ │ │ ├ crusader
-│ │ │ │ │ └
+│ │ │ │ │ └ t
 │ │ │ │ ├ guard
 │ │ │ │ ├ jupon
-│ │ │ │ │ └
+│ │ │ │ │ └ guard
 │ │ │ │ ├ kaledon
 │ │ │ │ ├ mercenary
 │ │ │ │ └ templar
 │ │ │ │   ├ abyssor
-│ │ │ │   │ └
+│ │ │ │   │ └ alt
 │ │ │ │   ├ astrata
-│ │ │ │   │ └
+│ │ │ │   │ └ alt
 │ │ │ │   ├ dendor
 │ │ │ │   ├ eora
 │ │ │ │   ├ malum
 │ │ │ │   ├ necra
-│ │ │ │   │ └
+│ │ │ │   │ └ alt
 │ │ │ │   ├ noc
-│ │ │ │   │ └
+│ │ │ │   │ └ alt
 │ │ │ │   ├ pestra
 │ │ │ │   ├ ravox
 │ │ │ │   └ xylix
@@ -13617,9 +16938,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ adept
 │ │ │ │ ├ blkknight
 │ │ │ │ ├ crusader
-│ │ │ │ │ └
+│ │ │ │ │ └ tief
 │ │ │ │ └ knight
-│ │ │ │   └
+│ │ │ │   └ guard
 │ │ │ ├ templar
 │ │ │ │ ├ astratan
 │ │ │ │ ├ eora
@@ -13665,8 +16986,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ silvernosechain
 │ │ │ │ ├ silverveil
 │ │ │ │ ├ steel
+│ │ │ │ │ ├ ancient
 │ │ │ │ │ ├ confessor
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ lensed
 │ │ │ │ │ ├ harlequin
 │ │ │ │ │ ├ mad_touched
 │ │ │ │ │ ├ steppe
@@ -13681,16 +17003,16 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ faceless
 │ │ │ │ ├ l
 │ │ │ │ └ naledi
-│ │ │ │   └
+│ │ │ │   └ sojourner
 │ │ │ ├ onyxamask
 │ │ │ ├ opalmask
 │ │ │ ├ operavisage
 │ │ │ ├ phys
-│ │ │ │ └
+│ │ │ │ └ plaguebearer
 │ │ │ ├ physician
 │ │ │ ├ rosemask
 │ │ │ ├ sack
-│ │ │ │ └
+│ │ │ │ └ psy
 │ │ │ ├ shellmask
 │ │ │ ├ shepherd
 │ │ │ │ ├ clothmask
@@ -13703,10 +17025,11 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ fancy_dark
 │ │ │ │ ├ golden
 │ │ │ │ ├ inq
-│ │ │ │ │ └
+│ │ │ │ │ └ spawnpair
 │ │ │ │ ├ inqglasses
 │ │ │ │ ├ monocle
 │ │ │ │ └ sglasses
+│ │ │ │   └ daewalker
 │ │ │ └ turqmask
 │ │ ├ garter
 │ │ ├ gloves
@@ -13717,27 +17040,27 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ pugilist
 │ │ │ │ └ weighted
 │ │ │ ├ chain
+│ │ │ │ ├ ancient
 │ │ │ │ ├ iron
-│ │ │ │ │ └
-│ │ │ │ ├ psydon
-│ │ │ │ └ vampire
+│ │ │ │ │ └ shadowgauntlets
+│ │ │ │ └ psydon
 │ │ │ ├ eastgloves1
 │ │ │ ├ eastgloves2
 │ │ │ ├ essence_gauntlet
 │ │ │ ├ fingerless
-│ │ │ │ └
+│ │ │ │ └ shadowgloves
 │ │ │ ├ leather
 │ │ │ │ ├ advanced
 │ │ │ │ ├ apothecary
 │ │ │ │ ├ black
 │ │ │ │ ├ courtphysician
-│ │ │ │ │ └
+│ │ │ │ │ └ female
 │ │ │ │ ├ duelgloves
-│ │ │ │ │ └
+│ │ │ │ │ └ townhall
 │ │ │ │ ├ feld
 │ │ │ │ ├ masterwork
 │ │ │ │ ├ otavan
-│ │ │ │ │ └
+│ │ │ │ │ └ inqgloves
 │ │ │ │ ├ phys
 │ │ │ │ └ thaumgloves
 │ │ │ ├ nomagic
@@ -13745,7 +17068,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ ancient
 │ │ │ │ ├ atgervi
 │ │ │ │ ├ blk
-│ │ │ │ │ └
+│ │ │ │ │ └ death
 │ │ │ │ ├ graggar
 │ │ │ │ ├ iron
 │ │ │ │ ├ matthios
@@ -13756,23 +17079,31 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ rare
 │ │ │   ├ dwarfplate
 │ │ │   ├ elfplate
-│ │ │   │ └
+│ │ │   │ └ welfplate
 │ │ │   ├ grenzelplate
 │ │ │   └ zaladplate
 │ │ ├ head
 │ │ │ ├ adeptcowl
 │ │ │ ├ antlerhood
 │ │ │ ├ armingcap
-│ │ │ │ └
+│ │ │ │ └ colored
+│ │ │ │   └ dwarf
 │ │ │ ├ articap
-│ │ │ │ └
+│ │ │ │ └ porter
 │ │ │ ├ bardhat
 │ │ │ ├ beekeeper
 │ │ │ ├ brimmed
+│ │ │ ├ bunny
 │ │ │ ├ chaperon
-│ │ │ │ └
+│ │ │ │ └ colored
+│ │ │ │   └ greyscale
+│ │ │ │     ├ chaperonsecondary
+│ │ │ │     ├ random
+│ │ │ │     ├ silk
+│ │ │ │     │ └ random
+│ │ │ │     └ townhall
 │ │ │ ├ cookhat
-│ │ │ │ └
+│ │ │ │ └ chef
 │ │ │ ├ corruptflower
 │ │ │ ├ courtierhat
 │ │ │ ├ courtphysician
@@ -13790,16 +17121,16 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ rose
 │ │ │ │ │ ├ shell
 │ │ │ │ │ ├ silverdiadem
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ moon_priest
 │ │ │ │ │ ├ silverheaddress
 │ │ │ │ │ ├ sleepless
 │ │ │ │ │ ├ stink
 │ │ │ │ │ ├ turq
 │ │ │ │ │ └ vision
 │ │ │ │ ├ nyle
-│ │ │ │ │ └
+│ │ │ │ │ └ consortcrown
 │ │ │ │ ├ serpcrown
-│ │ │ │ │ └
+│ │ │ │ │ └ surplus
 │ │ │ │ └ sparrowcrown
 │ │ │ ├ desert_sorceress
 │ │ │ ├ dungeoneer
@@ -13814,16 +17145,17 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ hatfur
 │ │ │ ├ headband
 │ │ │ │ ├ colored
-│ │ │ │ │ └
+│ │ │ │ │ └ red
 │ │ │ │ └ naledi
 │ │ │ ├ headdress
-│ │ │ │ └
+│ │ │ │ └ alt
 │ │ │ ├ helmet
+│ │ │ │ ├ ancient
 │ │ │ │ ├ bascinet
 │ │ │ │ │ ├ atgervi
 │ │ │ │ │ └ steppe
 │ │ │ │ ├ battlenun
-│ │ │ │ │ └
+│ │ │ │ │ └ steel
 │ │ │ │ ├ blacksteel
 │ │ │ │ │ ├ bucket
 │ │ │ │ │ └ psythorns
@@ -13841,9 +17173,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ baotha
 │ │ │ │ │ ├ blkknight
 │ │ │ │ │ ├ bucket
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ gold
 │ │ │ │ │ ├ crusader
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ t
 │ │ │ │ │ ├ decorated
 │ │ │ │ │ │ ├ bascinet
 │ │ │ │ │ │ ├ bucket
@@ -13869,7 +17201,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ necrahelm
 │ │ │ │ │ ├ nochelm
 │ │ │ │ │ ├ ordinatorhelm
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ plume
 │ │ │ │ │ ├ psybucket
 │ │ │ │ │ ├ psydonbarbute
 │ │ │ │ │ ├ psydonhelm
@@ -13882,38 +17214,42 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ vampire
 │ │ │ │ │ ├ viking
 │ │ │ │ │ ├ volfplate
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ puritan
 │ │ │ │ │ ├ xylixhelm
 │ │ │ │ │ └ zizo
 │ │ │ │ ├ horned
 │ │ │ │ ├ ironpot
-│ │ │ │ │ └
+│ │ │ │ │ └ lakkariancap
 │ │ │ │ ├ kettle
 │ │ │ │ │ ├ iron
 │ │ │ │ │ └ slit
 │ │ │ │ │   ├ atarms
-│ │ │ │ │   │ └
+│ │ │ │ │   │ └ town_watch
 │ │ │ │ │   └ iron
 │ │ │ │ ├ leather
 │ │ │ │ │ ├ advanced
 │ │ │ │ │ ├ conical
 │ │ │ │ │ ├ goblin
 │ │ │ │ │ ├ headscarf
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ colored
+│ │ │ │ │ │   └ red
 │ │ │ │ │ ├ hood_ominous
 │ │ │ │ │ ├ inquisitor
 │ │ │ │ │ ├ masterwork
 │ │ │ │ │ ├ minershelm
 │ │ │ │ │ ├ orc
 │ │ │ │ │ ├ saiga
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ atgervi
 │ │ │ │ │ ├ tricorn
+│ │ │ │ │ │ └ treasure_island
 │ │ │ │ │ └ volfhelm
 │ │ │ │ ├ medium
-│ │ │ │ │ └
+│ │ │ │ │ └ decorated
+│ │ │ │ │   ├ rousskullmet
+│ │ │ │ │   └ skullmet
 │ │ │ │ ├ nasal
 │ │ │ │ ├ orc
-│ │ │ │ │ └
+│ │ │ │ │ └ warlord
 │ │ │ │ ├ pegasusknight
 │ │ │ │ ├ rousman
 │ │ │ │ ├ sallet
@@ -13922,7 +17258,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ iron
 │ │ │ │ │ └ zalad
 │ │ │ │ ├ sargebarbute
-│ │ │ │ │ └
+│ │ │ │ │ └ town_watch
 │ │ │ │ ├ skullcap
 │ │ │ │ │ ├ cult
 │ │ │ │ │ └ grenzelhoft
@@ -13930,7 +17266,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ townwatch
 │ │ │ │ │ ├ alt
 │ │ │ │ │ ├ gatemaster
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ bulwark
 │ │ │ │ │ └ town_warden
 │ │ │ │ ├ visored
 │ │ │ │ │ ├ captain
@@ -13940,9 +17276,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ │ └ iron
 │ │ │ │ │ ├ royalknight
 │ │ │ │ │ ├ sallet
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ iron
 │ │ │ │ │ ├ silver
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ armet
 │ │ │ │ │ ├ warden
 │ │ │ │ │ └ zizo
 │ │ │ │ └ winged
@@ -13952,19 +17288,20 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ adept
 │ │ │ │ │ └ sorcerer
 │ │ │ │ └ rainhood
-│ │ │ │   └
+│ │ │ │   └ furhood
 │ │ │ ├ inqarticles
-│ │ │ │ └
+│ │ │ │ └ blackbag
 │ │ │ ├ jester
+│ │ │ │ └ foreign_habit_jester
 │ │ │ ├ knitcap
 │ │ │ ├ leather
 │ │ │ │ ├ duelhat
 │ │ │ │ └ inqhat
-│ │ │ │   └
+│ │ │ │   └ vigilante
 │ │ │ ├ maidband
 │ │ │ ├ maniac
 │ │ │ ├ menacing
-│ │ │ │ └
+│ │ │ │ └ mad_touched_treasure_hunter
 │ │ │ ├ mentorhat
 │ │ │ ├ nun
 │ │ │ ├ padded
@@ -13982,7 +17319,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ rare
 │ │ │ │ ├ dwarfplate
 │ │ │ │ ├ elfplate
-│ │ │ │ │ └
+│ │ │ │ │ └ welfplate
 │ │ │ │ ├ grenzelplate
 │ │ │ │ ├ hoplite
 │ │ │ │ └ zaladplate
@@ -14007,15 +17344,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ phys
 │ │ │ │ ├ priest
 │ │ │ │ ├ psydon
-│ │ │ │ │ └
+│ │ │ │ │ └ confessor
 │ │ │ │ └ rousman
-│ │ │ │   └
+│ │ │ │   └ rousseer
 │ │ │ ├ roguetown
 │ │ │ │ ├ courtphysician
-│ │ │ │ │ └
+│ │ │ │ │ └ female
 │ │ │ │ ├ duchess_hood
 │ │ │ │ └ helmet
-│ │ │ │   └
+│ │ │ │   └ guildguard
 │ │ │ ├ sack
 │ │ │ ├ sexy_nun_hat
 │ │ │ ├ sexy_nun_hat_alt
@@ -14030,8 +17367,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ turban
 │ │ │ ├ vampire
 │ │ │ ├ veiled
-│ │ │ │ └
+│ │ │ │ └ loudmouth
 │ │ │ ├ warrior_nun
+│ │ │ ├ wig
 │ │ │ └ wizhat
 │ │ │   ├ gen
 │ │ │   ├ random
@@ -14054,6 +17392,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ └ white
 │ │ │ ├ fishnet_thighs
 │ │ │ ├ fishnet_thighs_cl
+│ │ │ ├ foreign_habit_stockings
 │ │ │ ├ priestess
 │ │ │ ├ purple
 │ │ │ ├ random
@@ -14102,19 +17441,23 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ amberamulet
 │ │ │ ├ bellcollar
 │ │ │ ├ bevor
-│ │ │ │ └
+│ │ │ │ └ iron
 │ │ │ ├ blkknight
 │ │ │ ├ bogcowl
 │ │ │ ├ chaincoif
-│ │ │ │ └
+│ │ │ │ ├ ancient
+│ │ │ │ └ iron
 │ │ │ ├ coif
-│ │ │ │ └
+│ │ │ │ └ cloth
+│ │ │ │   └ colored
+│ │ │ │     └ berryblue
 │ │ │ ├ coralamulet
 │ │ │ ├ courtphysician
 │ │ │ ├ elfears
 │ │ │ ├ feld
 │ │ │ ├ fencerguard
-│ │ │ │ └
+│ │ │ │ └ inq
+│ │ │ ├ formal
 │ │ │ ├ goldamulet
 │ │ │ ├ gorget
 │ │ │ │ ├ ancient
@@ -14122,10 +17465,20 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ explosive
 │ │ │ │ └ hoplite
 │ │ │ ├ highcollier
-│ │ │ │ └
+│ │ │ │ └ iron
+│ │ │ │   └ renegadecollar
 │ │ │ ├ jadeamulet
 │ │ │ ├ keffiyeh
-│ │ │ │ └
+│ │ │ │ └ colored
+│ │ │ │   ├ black
+│ │ │ │   ├ blue
+│ │ │ │   ├ green
+│ │ │ │   ├ orange
+│ │ │ │   ├ purple
+│ │ │ │   ├ red
+│ │ │ │   ├ uncolored
+│ │ │ │   ├ white
+│ │ │ │   └ yellow
 │ │ │ ├ leathercollar
 │ │ │ ├ mana_star
 │ │ │ ├ menears
@@ -14141,6 +17494,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ steppesman
 │ │ │ │ ├ underdweller
 │ │ │ │ └ zaladin
+│ │ │ ├ moonshackle_collar
 │ │ │ ├ onyxaamulet
 │ │ │ ├ opalamulet
 │ │ │ ├ phys
@@ -14151,16 +17505,27 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ g
 │ │ │ │ ├ pearl
 │ │ │ │ ├ shell
-│ │ │ │ │ └
+│ │ │ │ │ └ bracelet
 │ │ │ │ ├ silver
 │ │ │ │ │ ├ abyssor
 │ │ │ │ │ ├ astrata
 │ │ │ │ │ ├ dendor
+│ │ │ │ │ ├ divine
+│ │ │ │ │ │ ├ abyssor
+│ │ │ │ │ │ ├ astrata
+│ │ │ │ │ │ ├ dendor
+│ │ │ │ │ │ ├ eora
+│ │ │ │ │ │ ├ malum
+│ │ │ │ │ │ ├ necra
+│ │ │ │ │ │ ├ noc
+│ │ │ │ │ │ ├ pestra
+│ │ │ │ │ │ ├ ravox
+│ │ │ │ │ │ └ xylix
 │ │ │ │ │ ├ eora
 │ │ │ │ │ ├ holy
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ eora
 │ │ │ │ │ ├ malum
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ steel
 │ │ │ │ │ ├ necra
 │ │ │ │ │ ├ noc
 │ │ │ │ │ ├ pestra
@@ -14171,7 +17536,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ └ zizo
 │ │ │ ├ roseamulet
 │ │ │ ├ shalal
-│ │ │ │ └
+│ │ │ │ └ emir
 │ │ │ ├ shellamulet
 │ │ │ ├ silveramulet
 │ │ │ ├ slave_collar
@@ -14188,7 +17553,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ skirt
 │ │ │ │ │ └ studdedskirt
 │ │ │ │ ├ kilt
-│ │ │ │ │ └
+│ │ │ │ │ ├ ancient
+│ │ │ │ │ └ iron
 │ │ │ │ └ skirt
 │ │ │ ├ grenzelpants
 │ │ │ ├ loincloth
@@ -14202,7 +17568,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ platelegs
 │ │ │ │ ├ ancient
 │ │ │ │ ├ blk
-│ │ │ │ │ └
+│ │ │ │ │ └ death
 │ │ │ │ ├ captain
 │ │ │ │ ├ graggar
 │ │ │ │ ├ holysee
@@ -14211,7 +17577,6 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ rust
 │ │ │ │ ├ silver
 │ │ │ │ ├ skirt
-│ │ │ │ ├ vampire
 │ │ │ │ └ zizo
 │ │ │ ├ skirt
 │ │ │ │ ├ colored
@@ -14222,9 +17587,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ └ red
 │ │ │ │ ├ courtphysician
 │ │ │ │ ├ patkilt
-│ │ │ │ │ └
+│ │ │ │ │ └ colored
+│ │ │ │ │   ├ blue
+│ │ │ │ │   ├ green
+│ │ │ │ │   ├ mageblue
+│ │ │ │ │   ├ red
+│ │ │ │ │   └ sembian
 │ │ │ │ └ pencil
-│ │ │ │   └
+│ │ │ │   └ colored
 │ │ │ ├ tights
 │ │ │ │ ├ colored
 │ │ │ │ │ ├ black
@@ -14246,13 +17616,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ apothecary
 │ │ │ │ ├ artipants
 │ │ │ │ ├ beltpants
+│ │ │ │ │ └ daewalker
 │ │ │ │ ├ courtphysician
 │ │ │ │ ├ formal
-│ │ │ │ │ └
+│ │ │ │ │ └ shorts
 │ │ │ │ ├ leather
 │ │ │ │ │ ├ advanced
 │ │ │ │ │ │ ├ colored
-│ │ │ │ │ │ │ └
+│ │ │ │ │ │ │ └ duelpants
+│ │ │ │ │ │ │   └ townhall
 │ │ │ │ │ │ └ skirt
 │ │ │ │ │ ├ atgervi
 │ │ │ │ │ ├ courtphysician
@@ -14261,10 +17633,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ explorer
 │ │ │ │ │ ├ guard
 │ │ │ │ │ ├ masterwork
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ skirt
 │ │ │ │ │ ├ mourning
 │ │ │ │ │ ├ quiltedkilt
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ colored
+│ │ │ │ │ │   ├ blue
+│ │ │ │ │ │   ├ linen
+│ │ │ │ │ │   └ red
 │ │ │ │ │ ├ skirt
 │ │ │ │ │ └ splint
 │ │ │ │ ├ leathertights
@@ -14272,7 +17647,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ webs
 │ │ ├ ring
 │ │ │ ├ active
-│ │ │ │ └
+│ │ │ │ └ nomag
 │ │ │ ├ amber
 │ │ │ ├ apothecary_ring
 │ │ │ ├ arcanesigil
@@ -14281,11 +17656,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ feldsher_ring
 │ │ │ ├ gold
 │ │ │ │ ├ blortz
+│ │ │ │ ├ boss_prize
 │ │ │ │ ├ burden
 │ │ │ │ ├ dorpel
 │ │ │ │ ├ gemerald
 │ │ │ │ ├ guild_mercator
 │ │ │ │ ├ protection
+│ │ │ │ ├ quest_deadly_prize
 │ │ │ │ ├ ravox
 │ │ │ │ ├ rontz
 │ │ │ │ ├ saffira
@@ -14297,7 +17674,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ shell
 │ │ │ ├ shimmeringlens
 │ │ │ ├ signet
-│ │ │ │ └
+│ │ │ │ └ silver
 │ │ │ ├ silver
 │ │ │ │ ├ blortz
 │ │ │ │ ├ calm
@@ -14309,12 +17686,16 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ saffira
 │ │ │ │ └ toper
 │ │ │ ├ slave_control
-│ │ │ │ └
+│ │ │ │ └ master
 │ │ │ └ turq
 │ │ ├ shirt
 │ │ │ ├ apothshirt
 │ │ │ ├ clothvest
-│ │ │ │ └
+│ │ │ │ └ colored
+│ │ │ │   ├ random
+│ │ │ │   ├ red
+│ │ │ │   ├ townhall
+│ │ │ │   └ waterdeep_guild
 │ │ │ ├ dress
 │ │ │ │ ├ courtesan
 │ │ │ │ ├ gen
@@ -14327,7 +17708,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ │ ├ purple
 │ │ │ │ │ │ └ random
 │ │ │ │ │ └ sexy
-│ │ │ │ │   └
+│ │ │ │ │   └ colored
+│ │ │ │ │     └ black
 │ │ │ │ ├ gown
 │ │ │ │ │ ├ fallgown
 │ │ │ │ │ ├ summergown
@@ -14353,16 +17735,17 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ skyrim_dress
 │ │ │ │ ├ skyrim_taven
 │ │ │ │ └ stewarddress
-│ │ │ │   └
+│ │ │ │   └ townhall
 │ │ │ ├ exoticsilkbra
 │ │ │ ├ grenzelhoft
 │ │ │ ├ jester
 │ │ │ ├ leo_robe
-│ │ │ │ └
+│ │ │ │ └ colored
 │ │ │ ├ maid_dress
 │ │ │ ├ maniac
 │ │ │ ├ nightgown
-│ │ │ │ └
+│ │ │ │ └ colored
+│ │ │ │   └ random
 │ │ │ ├ ornate
 │ │ │ │ ├ dress
 │ │ │ │ └ tunic
@@ -14384,7 +17767,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ courtphysician
 │ │ │ │ ├ dendor
 │ │ │ │ ├ eora
-│ │ │ │ │ └
+│ │ │ │ │ └ alt
 │ │ │ │ ├ faceless
 │ │ │ │ ├ feld
 │ │ │ │ ├ kimono
@@ -14409,7 +17792,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ └ wizard
 │ │ │ ├ shadowshirt
 │ │ │ ├ shortshirt
-│ │ │ │ └
+│ │ │ │ └ colored
+│ │ │ │   ├ merc
+│ │ │ │   ├ random
+│ │ │ │   └ uncolored
 │ │ │ ├ toga
 │ │ │ ├ tribalrag
 │ │ │ ├ tunic
@@ -14442,7 +17828,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ uncolored
 │ │ │ │ │ └ vagrant
 │ │ │ │ ├ courtphysician
-│ │ │ │ │ └
+│ │ │ │ │ └ female
 │ │ │ │ ├ desert_sorceress
 │ │ │ │ ├ eastshirt1
 │ │ │ │ ├ eastshirt2
@@ -14452,13 +17838,20 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ fancy
 │ │ │ │ ├ formal
 │ │ │ │ ├ lowcut
-│ │ │ │ │ └
+│ │ │ │ │ └ colored
+│ │ │ │ │   └ black
 │ │ │ │ ├ priest
 │ │ │ │ ├ puritan
 │ │ │ │ ├ sailor
-│ │ │ │ │ └
+│ │ │ │ │ └ red
 │ │ │ │ ├ sash
-│ │ │ │ │ └
+│ │ │ │ │ └ colored
+│ │ │ │ │   ├ blue
+│ │ │ │ │   ├ green
+│ │ │ │ │   ├ mageblue
+│ │ │ │ │   ├ random
+│ │ │ │ │   ├ sembian
+│ │ │ │ │   └ white
 │ │ │ │ ├ sexy_nun_robe
 │ │ │ │ ├ sexy_nun_robe_alt
 │ │ │ │ ├ tamer_priestess
@@ -14471,46 +17864,49 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ apothboots
 │ │ │ ├ boots
 │ │ │ │ ├ armor
+│ │ │ │ │ ├ ancient
 │ │ │ │ │ ├ blkknight
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ death
 │ │ │ │ │ ├ graggar
 │ │ │ │ │ ├ ironmaille
+│ │ │ │ │ │ └ ancient
 │ │ │ │ │ ├ light
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ rust
 │ │ │ │ │ ├ matthios
 │ │ │ │ │ ├ silver
 │ │ │ │ │ ├ steam
-│ │ │ │ │ ├ vampire
 │ │ │ │ │ └ zizo
 │ │ │ │ ├ clothlinedanklets
+│ │ │ │ ├ foreign_habit_boots
 │ │ │ │ ├ furlinedanklets
 │ │ │ │ ├ furlinedboots
 │ │ │ │ ├ leather
 │ │ │ │ │ ├ advanced
-│ │ │ │ │ │ └
+│ │ │ │ │ │ └ watch
 │ │ │ │ │ ├ atgervi
+│ │ │ │ │ ├ daewalker
 │ │ │ │ │ └ masterwork
 │ │ │ │ └ rare
 │ │ │ │   ├ dwarfplate
 │ │ │ │   ├ elfplate
-│ │ │ │   │ └
+│ │ │ │   │ └ welfplate
 │ │ │ │   ├ grenzelplate
 │ │ │ │   └ zaladplate
 │ │ │ ├ courtphysician
-│ │ │ │ └
+│ │ │ │ └ female
 │ │ │ ├ gladiator
 │ │ │ ├ heels
 │ │ │ │ ├ color
-│ │ │ │ │ └
+│ │ │ │ │ └ courtesan
 │ │ │ │ └ courtphysician
-│ │ │ │   └
+│ │ │ │   └ female
 │ │ │ ├ jester
 │ │ │ ├ nobleboot
 │ │ │ │ ├ duelboots
-│ │ │ │ │ └
+│ │ │ │ │ └ townhall
 │ │ │ │ └ thighboots
 │ │ │ ├ otavan
-│ │ │ │ └
+│ │ │ │ └ inqboots
 │ │ │ ├ psydonboots
 │ │ │ ├ rare
 │ │ │ │ ├ grenzelhoft
@@ -14523,11 +17919,22 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ simpleshoes
 │ │ │ │ ├ buckle
 │ │ │ │ └ colored
-│ │ │ │   └
+│ │ │ │   └ lord
 │ │ │ ├ toga_sandals
 │ │ │ └ tribal
 │ │ ├ suit
-│ │ │ └
+│ │ │ └ roguetown
+│ │ │   └ armor
+│ │ │     ├ councillor
+│ │ │     ├ guildguard
+│ │ │     └ leather
+│ │ │       ├ adjutant
+│ │ │       ├ banker
+│ │ │       ├ burgmeister
+│ │ │       ├ duchess
+│ │ │       ├ heiress
+│ │ │       ├ magos
+│ │ │       └ marshall
 │ │ ├ undershirt
 │ │ │ ├ athletic_leotard
 │ │ │ ├ fullbody
@@ -14555,11 +17962,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   │ ├ jackchain
 │ │   │ ├ leather
 │ │   │ │ ├ advanced
-│ │   │ │ └ masterwork
+│ │   │ │ ├ masterwork
+│ │   │ │ └ scabbard
+│ │   │ │   └ daewalker
 │ │   │ ├ naledi
 │ │   │ ├ psythorns
 │ │   │ └ rare
-│ │   │   └
+│ │   │   └ hoplite
 │ │   ├ gem
 │ │   │ ├ amberbracelet
 │ │   │ ├ coralbracelet
@@ -14574,22 +17983,22 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   ├ royalsleeves
 │ │   ├ silverbracelet
 │ │   └ wrappings
-│ │     └
+│ │     └ common
 │ ├ coin
 │ │ ├ copper
-│ │ │ └
+│ │ │ └ pile
 │ │ ├ electrum
 │ │ ├ gild
-│ │ │ └
+│ │ │ └ pile
 │ │ ├ gold
-│ │ │ └
+│ │ │ └ pile
 │ │ ├ inqcoin
-│ │ │ └
+│ │ │ └ pile
 │ │ ├ platinum
 │ │ └ silver
 │ │   ├ inqpile
 │ │   └ pile
-│ │     └
+│ │     └ xylix
 │ ├ collar_detonator
 │ ├ contraption
 │ │ ├ linker
@@ -14601,10 +18010,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ skewer
 │ ├ corruptedheart
 │ ├ crystalball
+│ ├ cushion
+│ │ ├ desert1
+│ │ ├ desert2
+│ │ └ zybantine
 │ ├ customlock
-│ │ └
+│ │ └ finished
 │ ├ debug
-│ │ └
+│ │ └ human_spawner
 │ ├ debug_particle_holder
 │ ├ deepone_artifact
 │ ├ dendor_blessing
@@ -14635,11 +18048,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ fourdd6
 │ │ └ fudge
 │ ├ dice_cup
-│ │ └
+│ │ └ wooden
+│ │   └ liars_dice
 │ ├ dildo
 │ │ ├ gold
 │ │ ├ iron
 │ │ ├ plug
+│ │ │ ├ bunny
 │ │ │ ├ copper
 │ │ │ ├ glass
 │ │ │ ├ gold
@@ -14689,12 +18104,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ wood
 │ ├ essence_connector
 │ ├ essence_node_jar
-│ │ └
+│ │ └ advanced
 │ ├ essence_node_portable
 │ ├ essence_vial
 │ ├ explosive
 │ │ ├ bottle
-│ │ │ └
+│ │ │ └ homemade
 │ │ ├ canister_bomb
 │ │ └ deathshell
 │ ├ fake_machine
@@ -14703,7 +18118,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ merchant
 │ ├ fertilizer
 │ │ ├ ash
-│ │ │ └
+│ │ │ └ snappop_phoenix
 │ │ ├ bone_meal
 │ │ └ compost
 │ ├ fishing
@@ -14746,11 +18161,22 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   └ twine
 │ ├ fishingrod
 │ │ ├ abyssor_trident
-│ │ │ └
+│ │ │ └ arcane
 │ │ ├ crafted
 │ │ └ fisher
 │ ├ flashlight
-│ │ └
+│ │ └ flare
+│ │   ├ light
+│ │   └ torch
+│ │     ├ lantern
+│ │     │ ├ bronzelamptern
+│ │     │ ├ copper
+│ │     │ ├ psycenser
+│ │     │ ├ shrunken
+│ │     │ └ voidlamptern
+│ │     ├ metal
+│ │     │ └ prelit
+│ │     └ prelit
 │ ├ flint
 │ ├ folding_table_stored
 │ ├ fuse
@@ -14784,14 +18210,36 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ violet
 │ │ └ yellow
 │ ├ gem_device
-│ │ └
+│ │ └ goldface
 │ ├ grabbing
-│ │ └
+│ │ └ bite
 │ ├ grapplinghook
 │ ├ grown
-│ │ └
+│ │ └ log
+│ │   ├ bamboo
+│ │   └ tree
+│ │     ├ essence
+│ │     ├ small
+│ │     ├ stake
+│ │     └ stick
 │ ├ gun
-│ │ └
+│ │ └ ballistic
+│ │   └ revolver
+│ │     ├ grenadelauncher
+│ │     │ ├ airgun
+│ │     │ │ └ prefilled
+│ │     │ ├ blowgun
+│ │     │ ├ bow
+│ │     │ │ ├ long
+│ │     │ │ ├ short
+│ │     │ │ └ turbulenta
+│ │     │ ├ crossbow
+│ │     │ │ └ slurbow
+│ │     │ └ pistol
+│ │     │   ├ conjured
+│ │     │   └ musket
+│ │     │     └ umbrella
+│ │     └ last_resort
 │ ├ hair_dye_cream
 │ ├ hairbrush
 │ ├ hand_mirror
@@ -14813,18 +18261,18 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ iron
 │ │ ├ silver
 │ │ ├ silverblessed
-│ │ │ └
+│ │ │ └ bullion
 │ │ ├ steel
 │ │ ├ steel_slag
 │ │ ├ steelholy
 │ │ ├ thaumic
 │ │ └ tin
 │ ├ inhand_tester
-│ │ └
+│ │ └ big
 │ ├ inqarticles
 │ │ ├ bmirror
 │ │ ├ garrote
-│ │ │ └
+│ │ │ └ razor
 │ │ ├ indexer
 │ │ ├ spyglass
 │ │ └ tallowpot
@@ -14834,13 +18282,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ flute
 │ │ ├ guitar
 │ │ ├ harp
-│ │ │ └
+│ │ │ └ turbulenta
 │ │ ├ hurdygurdy
 │ │ ├ lute
 │ │ ├ psyaltery
 │ │ ├ viola
 │ │ └ vocals
-│ │   └
+│ │   └ harpy_vocals
 │ ├ jingle_bells
 │ ├ key
 │ │ ├ apartments
@@ -14923,6 +18371,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ inquisition
 │ │ ├ lieutenant
 │ │ ├ lord
+│ │ ├ loudmouth
 │ │ ├ luxroomi
 │ │ ├ luxroomii
 │ │ ├ luxroomiii
@@ -14944,6 +18393,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ mnoble1_blue
 │ │ ├ mnoble2_yellow
 │ │ ├ mnoble3_red
+│ │ ├ outsider
+│ │ │ └ witch
 │ │ ├ porta
 │ │ ├ priest
 │ │ ├ psydonkey
@@ -14993,7 +18444,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ chain
 │ │ └ leather
 │ ├ lighter
-│ │ └
+│ │ └ greyscale
 │ ├ lipstick
 │ │ ├ black
 │ │ ├ blue
@@ -15005,34 +18456,40 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ listeningdevice
 │ ├ lockpick
 │ ├ lockpickring
-│ │ └
+│ │ └ mundane
 │ ├ magnifying_glass
 │ ├ mana_battery
-│ │ └
+│ │ └ mana_crystal
+│ │   ├ cut
+│ │   ├ small
+│ │   │ └ focus
+│ │   └ standard
 │ ├ maneaterseed
 │ ├ manuscript
 │ ├ match
-│ │ └
+│ │ └ firebrand
 │ ├ melee
 │ │ ├ touch_attack
 │ │ │ ├ bladeofpsydon
 │ │ │ ├ darkvision
 │ │ │ ├ nondetection
 │ │ │ ├ orison
-│ │ │ │ └
+│ │ │ │ └ lesser
 │ │ │ ├ prestidigitation
 │ │ │ └ quietus
 │ │ └ transforming
 │ ├ merctoken
 │ ├ mimictrinket
 │ ├ mob_holder
+│ │ └ internal_womb
 │ ├ mobilestove
 │ ├ mould
-│ │ └
+│ │ └ ingot
+│ │   └ advanced
 │ ├ multitool
 │ │ ├ field_debug
 │ │ └ light_debug
-│ │   └
+│ │   └ sunlight
 │ ├ mystery
 │ ├ natural
 │ │ ├ abyssalflame
@@ -15041,7 +18498,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ brick
 │ │ ├ bundle
 │ │ │ ├ bone
-│ │ │ │ └
+│ │ │ │ └ full
 │ │ │ ├ brick
 │ │ │ ├ carpet_roll
 │ │ │ │ ├ blue
@@ -15051,17 +18508,20 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ └ red
 │ │ │ ├ cloth
 │ │ │ │ ├ bandage
-│ │ │ │ │ └
+│ │ │ │ │ └ full
 │ │ │ │ ├ full
 │ │ │ │ └ roll
 │ │ │ ├ curred_hide
 │ │ │ ├ fibers
-│ │ │ │ └
+│ │ │ │ └ full
 │ │ │ ├ glass
 │ │ │ ├ plank
 │ │ │ ├ silk
 │ │ │ ├ stick
 │ │ │ ├ stoneblock
+│ │ │ ├ teeth
+│ │ │ │ ├ fang
+│ │ │ │ └ gold
 │ │ │ └ worms
 │ │ ├ carpet_fibers
 │ │ │ ├ blue
@@ -15076,18 +18536,20 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ clay
 │ │ │ ├ claybrick
 │ │ │ └ claystatue
+│ │ ├ clod
+│ │ │ ├ dirt
+│ │ │ └ sand
 │ │ ├ cloth
-│ │ │ └
+│ │ │ └ bandage
 │ │ ├ cured
-│ │ │ └
-│ │ ├ dirtclod
+│ │ │ └ essence
 │ │ ├ elementalfragment
 │ │ ├ elementalmote
 │ │ ├ elementalrelic
 │ │ ├ elementalshard
 │ │ ├ fairydust
 │ │ ├ feather
-│ │ │ └
+│ │ │ └ infernal
 │ │ ├ fibers
 │ │ ├ fur
 │ │ │ ├ bobcat
@@ -15100,7 +18562,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ rous
 │ │ │ └ volf
 │ │ ├ glass
-│ │ │ └
+│ │ │ └ shard
 │ │ ├ head
 │ │ │ ├ bug
 │ │ │ ├ direbear
@@ -15117,7 +18579,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ heartwoodcore
 │ │ ├ hellhoundfang
 │ │ ├ hide
-│ │ │ └
+│ │ │ └ cured
 │ │ ├ infernalash
 │ │ ├ iridescentscale
 │ │ ├ leyline
@@ -15137,6 +18599,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ cinnabar
 │ │ │ ├ coal
 │ │ │ ├ copper
+│ │ │ ├ desert
 │ │ │ ├ gemerald
 │ │ │ ├ gold
 │ │ │ ├ iron
@@ -15149,13 +18612,16 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ saddle
 │ │ ├ silk
 │ │ ├ stone
-│ │ │ └
+│ │ │ └ sending
 │ │ ├ stoneblock
 │ │ ├ sylvanessence
+│ │ ├ teeth
+│ │ │ ├ fang
+│ │ │ └ gold
 │ │ ├ thorn
 │ │ ├ voidstone
 │ │ ├ wood
-│ │ │ └
+│ │ │ └ plank
 │ │ └ worms
 │ │   ├ grub_silk
 │ │   └ leech
@@ -15164,14 +18630,68 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ needle
 │ │ ├ blessed
 │ │ └ thorn
-│ ├ net
 │ ├ neuFarm
-│ │ └
+│ │ └ seed
+│ │   ├ apple
+│ │   ├ artemisia
+│ │   ├ atropa
+│ │   ├ avocado
+│ │   ├ benedictus
+│ │   ├ berry
+│ │   ├ blackberry
+│ │   ├ cabbage
+│ │   ├ calendula
+│ │   ├ coffee
+│ │   ├ dragonfruit
+│ │   ├ euphorbia
+│ │   ├ euphrasia
+│ │   ├ fyritius
+│ │   ├ hypericum
+│ │   ├ lemon
+│ │   ├ lime
+│ │   ├ manabloom
+│ │   ├ mango
+│ │   ├ mangosteen
+│ │   ├ matricaria
+│ │   ├ mentha
+│ │   ├ mixed_seed
+│ │   ├ oat
+│ │   ├ onion
+│ │   ├ paris
+│ │   ├ pear
+│ │   ├ pineapple
+│ │   ├ plum
+│ │   ├ poison_berries
+│ │   ├ poppy
+│ │   ├ potato
+│ │   ├ raspberry
+│ │   ├ rosa
+│ │   ├ salvia
+│ │   ├ spore
+│ │   │ ├ borowiki
+│ │   │ ├ capillus
+│ │   │ ├ caveweep
+│ │   │ ├ merkel
+│ │   │ └ waddle
+│ │   ├ strawberry
+│ │   ├ sugarcane
+│ │   ├ sunflower
+│ │   ├ swampleaf
+│ │   ├ symphitum
+│ │   ├ tangerine
+│ │   ├ taraxacum
+│ │   ├ tea
+│ │   ├ turnip
+│ │   ├ urtica
+│ │   ├ valeriana
+│ │   ├ westleach
+│ │   └ wheat
+│ │     └ ancient
 │ ├ offhand
 │ ├ ore
 │ │ ├ cinnabar
 │ │ ├ coal
-│ │ │ └
+│ │ │ └ charcoal
 │ │ ├ copper
 │ │ ├ dust
 │ │ │ ├ copper
@@ -15184,7 +18704,18 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ silver
 │ │ └ tin
 │ ├ organ
+│ │ ├ antennas
+│ │ │ └ moth
 │ │ ├ appendix
+│ │ ├ artery
+│ │ │ ├ chest
+│ │ │ ├ head
+│ │ │ ├ l_arm
+│ │ │ ├ l_leg
+│ │ │ ├ mouth
+│ │ │ ├ neck
+│ │ │ ├ r_arm
+│ │ │ └ r_leg
 │ │ ├ brain
 │ │ │ ├ alien
 │ │ │ ├ automaton
@@ -15202,22 +18733,35 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ eyes
 │ │ │ ├ automaton
 │ │ │ ├ elf
-│ │ │ │ └
+│ │ │ │ ├ left
+│ │ │ │ └ less
+│ │ │ │   └ left
 │ │ │ ├ kobold
+│ │ │ │ └ left
+│ │ │ ├ left
 │ │ │ ├ night_vision
 │ │ │ │ ├ alien
+│ │ │ │ │ └ left
+│ │ │ │ ├ left
 │ │ │ │ ├ mushroom
+│ │ │ │ │ └ left
 │ │ │ │ ├ nightmare
+│ │ │ │ │ └ left
 │ │ │ │ ├ werewolf
+│ │ │ │ │ └ left
 │ │ │ │ └ zombie
+│ │ │ │   └ left
 │ │ │ ├ no_render
+│ │ │ │ └ left
 │ │ │ ├ rakshari
+│ │ │ │ └ left
 │ │ │ └ triton
+│ │ │   └ left
 │ │ ├ frills
-│ │ │ └
+│ │ │ └ lizard
 │ │ ├ genitals
 │ │ │ ├ belly
-│ │ │ │ └
+│ │ │ │ └ internal
 │ │ │ ├ butt
 │ │ │ │ ├ goblin
 │ │ │ │ │ ├ cave
@@ -15229,7 +18773,11 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ filling_organ
 │ │ │ │ ├ anus
 │ │ │ │ ├ breasts
-│ │ │ │ │ └
+│ │ │ │ │ └ goblin
+│ │ │ │ │   ├ cave
+│ │ │ │ │   ├ hell
+│ │ │ │ │   ├ moon
+│ │ │ │ │   └ sea
 │ │ │ │ ├ testicles
 │ │ │ │ │ ├ goblin
 │ │ │ │ │ │ ├ cave
@@ -15239,7 +18787,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ internal
 │ │ │ │ │ └ invisible
 │ │ │ │ └ vagina
-│ │ │ │   └
+│ │ │ │   └ goblin
 │ │ │ ├ nipple
 │ │ │ │ ├ left
 │ │ │ │ └ right
@@ -15253,7 +18801,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ moon
 │ │ │ │ │ └ sea
 │ │ │ │ ├ knotted
-│ │ │ │ │ └
+│ │ │ │ │ └ big
+│ │ │ │ ├ ovipositor
 │ │ │ │ ├ tapered
 │ │ │ │ ├ tapered_double
 │ │ │ │ ├ tapered_double_knotted
@@ -15276,24 +18825,25 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ slime
 │ │ ├ neck_feature
 │ │ │ ├ anthro_fluff
-│ │ │ └ medicator
+│ │ │ ├ medicator
+│ │ │ └ moth_fluff
 │ │ ├ snout
-│ │ │ ├ akula
 │ │ │ ├ anthro
 │ │ │ ├ beak
 │ │ │ ├ cat
 │ │ │ ├ harpy
+│ │ │ ├ lamia
 │ │ │ ├ lizard
-│ │ │ │ └
+│ │ │ │ └ psy_vault_guard
 │ │ │ ├ lupian
 │ │ │ ├ synth
 │ │ │ ├ tajaran
 │ │ │ ├ triton
 │ │ │ ├ vox
 │ │ │ └ vulpkanin
+│ │ ├ spleen
 │ │ ├ stomach
 │ │ │ ├ acid_spit
-│ │ │ ├ ethereal
 │ │ │ ├ fly
 │ │ │ └ plasmaman
 │ │ ├ tail
@@ -15303,7 +18853,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ dragontail
 │ │ │ ├ harpy
 │ │ │ ├ kobold
-│ │ │ │ └
+│ │ │ │ └ round
 │ │ │ ├ lizard
 │ │ │ ├ medicator
 │ │ │ ├ tiefling
@@ -15313,7 +18863,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ └ vox_marking
 │ │ ├ tongue
 │ │ │ ├ bone
-│ │ │ │ └
+│ │ │ │ └ plasmaman
 │ │ │ ├ fish
 │ │ │ ├ fly
 │ │ │ ├ lizard
@@ -15321,22 +18871,26 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ snail
 │ │ │ └ zombie
 │ │ ├ vocal_cords
-│ │ │ └
+│ │ │ └ harpy
 │ │ └ wings
 │ │   ├ anthro
 │ │   └ flight
+│ │     ├ aasimar
 │ │     ├ dragonborn
 │ │     ├ harpy
 │ │     ├ kobold
-│ │     └ night_kin
+│ │     ├ moth
+│ │     ├ night_kin
+│ │     └ seelie
+│ ├ oviposition_egg
 │ ├ paint_brush
 │ ├ paint_palette
-│ │ └
+│ │ └ filled
 │ ├ painting
 │ │ ├ castle
 │ │ ├ crown
 │ │ ├ lorehead
-│ │ │ └
+│ │ │ └ one
 │ │ ├ queen
 │ │ ├ seraphina
 │ │ └ skull
@@ -15358,9 +18912,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ scroll
 │ │   ├ cargo
 │ │   ├ frumentarii
-│ │   │ └
+│ │   │ └ roundstart
 │ │   ├ keep_plans
 │ │   ├ quest
+│ │   │ └ werewolf_hidden
 │ │   ├ sell_price_changes
 │ │   ├ sold_manifest
 │ │   └ trade_requests
@@ -15403,18 +18958,500 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ shell
 │ │ ├ silver
 │ │ └ turq
+│ ├ pocket_dimension_tester
 │ ├ portallight
 │ ├ psydonmusicbox
-│ ├ quest_compass
 │ ├ queen_bee
+│ ├ quest_compass
 │ ├ quicksilver
-│ │ └
+│ │ └ luxinfused
 │ ├ ramrod
-│ │ └
+│ │ └ musket
 │ ├ ration
 │ ├ reagent_containers
 │ │ ├ food
-│ │ │ └
+│ │ │ └ snacks
+│ │ │   ├ apple_dried
+│ │ │   ├ badrecipe
+│ │ │   ├ biscuit
+│ │ │   │ ├ good
+│ │ │   │ └ poison
+│ │ │   ├ blackberrybutterdough
+│ │ │   ├ bookbreadslice
+│ │ │   │ ├ blackberry
+│ │ │   │ ├ chocolate
+│ │ │   │ ├ jacksberry
+│ │ │   │ │ └ poison
+│ │ │   │ ├ lemon
+│ │ │   │ ├ pear
+│ │ │   │ ├ plum
+│ │ │   │ ├ raspberry
+│ │ │   │ └ tangerine
+│ │ │   ├ bread
+│ │ │   │ ├ bookbread
+│ │ │   │ │ ├ blackberry
+│ │ │   │ │ ├ chocolate
+│ │ │   │ │ ├ jacksberry
+│ │ │   │ │ │ └ poison
+│ │ │   │ │ ├ lemon
+│ │ │   │ │ ├ pear
+│ │ │   │ │ ├ plum
+│ │ │   │ │ ├ raspberry
+│ │ │   │ │ └ tangerine
+│ │ │   │ └ raisin
+│ │ │   │   └ poison
+│ │ │   ├ breadslice
+│ │ │   │ ├ raisin
+│ │ │   │ │ └ poison
+│ │ │   │ └ toast
+│ │ │   ├ bun
+│ │ │   ├ butter
+│ │ │   ├ butterdough
+│ │ │   ├ butterdough_slice
+│ │ │   ├ butterslice
+│ │ │   ├ cabbage_fried
+│ │ │   ├ cake
+│ │ │   ├ cheddar
+│ │ │   │ └ aged
+│ │ │   ├ cheddarslice
+│ │ │   │ └ aged
+│ │ │   ├ cheese
+│ │ │   │ └ gote
+│ │ │   ├ cheese_wedge
+│ │ │   │ └ aged
+│ │ │   ├ cheesebun
+│ │ │   ├ cheesecake_cooked
+│ │ │   │ └ poison
+│ │ │   ├ cheesecake_slice
+│ │ │   │ └ poison
+│ │ │   ├ chescake
+│ │ │   ├ chescake_ready
+│ │ │   │ └ poison
+│ │ │   ├ chip
+│ │ │   ├ chip_cocaumole
+│ │ │   ├ chip_drowsbane
+│ │ │   ├ chippile
+│ │ │   │ ├ cocaumole
+│ │ │   │ └ drowsbane
+│ │ │   ├ choccy_chip_dough
+│ │ │   ├ choccy_cookie
+│ │ │   ├ choccy_cookie_raw
+│ │ │   ├ choco_bun
+│ │ │   ├ choco_bun_raw
+│ │ │   ├ choco_butterdough_slice
+│ │ │   ├ choco_pastry
+│ │ │   ├ chocolate
+│ │ │   │ ├ bunny
+│ │ │   │ ├ egg
+│ │ │   │ │ ├ aphrodisiac
+│ │ │   │ │ └ random
+│ │ │   │ └ egg_large
+│ │ │   │   ├ aphrodisiac
+│ │ │   │   └ random
+│ │ │   ├ chocolate_carp
+│ │ │   ├ chocolatebutterdough
+│ │ │   ├ clothing
+│ │ │   ├ cocaumole
+│ │ │   │ └ slice
+│ │ │   ├ cooked
+│ │ │   │ ├ coppiette
+│ │ │   │ ├ egg
+│ │ │   │ ├ frybird
+│ │ │   │ ├ frybird_tatos
+│ │ │   │ ├ frysteak
+│ │ │   │ ├ frysteak_onion
+│ │ │   │ ├ frysteak_tatos
+│ │ │   │ ├ griddledog
+│ │ │   │ ├ ham
+│ │ │   │ ├ herbbird
+│ │ │   │ ├ herbsteak
+│ │ │   │ ├ roastchicken
+│ │ │   │ ├ royal_truffle
+│ │ │   │ ├ sausage
+│ │ │   │ │ └ wiener
+│ │ │   │ ├ sausage_cabbage
+│ │ │   │ ├ sausage_onion
+│ │ │   │ ├ sausage_potato
+│ │ │   │ ├ sausage_sticked
+│ │ │   │ ├ strange
+│ │ │   │ ├ truffle
+│ │ │   │ ├ twin_egg
+│ │ │   │ └ valorian_omlette
+│ │ │   ├ crimsoncake
+│ │ │   ├ crimsoncake_cooked
+│ │ │   ├ crimsoncake_ready
+│ │ │   ├ crimsoncake_slice
+│ │ │   ├ crow
+│ │ │   │ └ dead
+│ │ │   ├ dough
+│ │ │   ├ dough_base
+│ │ │   ├ dough_slice
+│ │ │   ├ drowsbanejam
+│ │ │   │ └ slice
+│ │ │   ├ ebjik
+│ │ │   │ └ dead
+│ │ │   ├ egg
+│ │ │   ├ eighthscake
+│ │ │   │ ├ lemon
+│ │ │   │ └ lime
+│ │ │   ├ eighthscake_slice
+│ │ │   │ ├ lemon
+│ │ │   │ └ lime
+│ │ │   ├ eighthscake_unbaked
+│ │ │   │ ├ lemon
+│ │ │   │ └ lime
+│ │ │   ├ estrella
+│ │ │   ├ fat
+│ │ │   │ └ salo
+│ │ │   │   └ slice
+│ │ │   ├ fish
+│ │ │   │ ├ angler
+│ │ │   │ ├ carp
+│ │ │   │ ├ clownfish
+│ │ │   │ ├ dead
+│ │ │   │ ├ eel
+│ │ │   │ ├ shrimp
+│ │ │   │ └ swordfish
+│ │ │   ├ foodbase
+│ │ │   │ ├ applegriddlecake_raw
+│ │ │   │ ├ berrygriddlecake_raw
+│ │ │   │ ├ biscuit_raw
+│ │ │   │ │ └ good
+│ │ │   │ ├ cheesebun_raw
+│ │ │   │ ├ cheesewheel_start
+│ │ │   │ ├ cheesewheel_three
+│ │ │   │ ├ cheesewheel_two
+│ │ │   │ ├ fritter_raw
+│ │ │   │ │ └ good
+│ │ │   │ ├ griddlecake_raw
+│ │ │   │ ├ griddledog_raw
+│ │ │   │ ├ handpieraw
+│ │ │   │ │ ├ apple
+│ │ │   │ │ ├ berry
+│ │ │   │ │ ├ cheese
+│ │ │   │ │ ├ mince
+│ │ │   │ │ └ mushroom
+│ │ │   │ ├ hardtack_raw
+│ │ │   │ ├ huskbunbase
+│ │ │   │ ├ huskbunraw
+│ │ │   │ │ ├ cheese
+│ │ │   │ │ ├ meat
+│ │ │   │ │ ├ onion
+│ │ │   │ │ └ potato
+│ │ │   │ ├ lemongriddlecake_raw
+│ │ │   │ ├ piebottom
+│ │ │   │ ├ prezzel_raw
+│ │ │   │ │ └ good
+│ │ │   │ ├ saigaita
+│ │ │   │ │ ├ cheese
+│ │ │   │ │ ├ egg
+│ │ │   │ │ ├ meat
+│ │ │   │ │ ├ onion
+│ │ │   │ │ └ potato
+│ │ │   │ ├ scone_raw
+│ │ │   │ ├ scone_raw_plum
+│ │ │   │ ├ scone_raw_tangerine
+│ │ │   │ └ tartcrust
+│ │ │   ├ friedcrow
+│ │ │   ├ friedmessenger
+│ │ │   ├ friedrat
+│ │ │   ├ fritter
+│ │ │   │ └ good
+│ │ │   ├ fruit
+│ │ │   │ ├ avocado_half
+│ │ │   │ ├ dragonfruit_half
+│ │ │   │ ├ mango_half
+│ │ │   │ ├ mangosteen_opened
+│ │ │   │ ├ pineapple_slice
+│ │ │   │ └ pompkaun_goo
+│ │ │   │   └ cooked
+│ │ │   ├ frybread
+│ │ │   ├ fryfish
+│ │ │   │ ├ angler
+│ │ │   │ │ └ rare
+│ │ │   │ ├ carp
+│ │ │   │ │ └ rare
+│ │ │   │ ├ clownfish
+│ │ │   │ │ └ rare
+│ │ │   │ ├ eel
+│ │ │   │ │ └ rare
+│ │ │   │ ├ shrimp
+│ │ │   │ └ swordfish
+│ │ │   ├ gingerbread
+│ │ │   ├ grenzelbun
+│ │ │   ├ griddlecake
+│ │ │   │ ├ apple
+│ │ │   │ ├ berry
+│ │ │   │ │ └ poison
+│ │ │   │ └ lemon
+│ │ │   ├ grown
+│ │ │   ├ handpie
+│ │ │   │ └ good
+│ │ │   ├ hardtack
+│ │ │   ├ huskbun
+│ │ │   ├ jacksberrybutterdough
+│ │ │   │ └ poison
+│ │ │   ├ jellycake_apple
+│ │ │   ├ jellycake_base
+│ │ │   ├ jellycake_lime
+│ │ │   ├ jellycake_pear
+│ │ │   ├ jellycake_plum
+│ │ │   ├ jellycake_tangerine
+│ │ │   ├ jellyslice_apple
+│ │ │   ├ jellyslice_base
+│ │ │   ├ jellyslice_lime
+│ │ │   ├ jellyslice_pear
+│ │ │   ├ jellyslice_plum
+│ │ │   ├ jellyslice_tangerine
+│ │ │   ├ lemonbutterdough
+│ │ │   ├ masa
+│ │ │   ├ masa_base
+│ │ │   ├ masa_flat
+│ │ │   ├ masa_honey
+│ │ │   ├ masa_slice
+│ │ │   ├ meat
+│ │ │   │ ├ fatty
+│ │ │   │ │ ├ dwarf
+│ │ │   │ │ └ kobold
+│ │ │   │ ├ mince
+│ │ │   │ │ ├ beef
+│ │ │   │ │ │ ├ cooked
+│ │ │   │ │ │ └ mett
+│ │ │   │ │ │   └ slice
+│ │ │   │ │ ├ fish
+│ │ │   │ │ │ └ cooked
+│ │ │   │ │ └ poultry
+│ │ │   │ │   └ cooked
+│ │ │   │ ├ organ
+│ │ │   │ │ ├ heart
+│ │ │   │ │ ├ liver
+│ │ │   │ │ └ lungs
+│ │ │   │ ├ poultry
+│ │ │   │ │ └ cutlet
+│ │ │   │ │   └ harpy
+│ │ │   │ ├ salami
+│ │ │   │ │ └ slice
+│ │ │   │ ├ sausage
+│ │ │   │ │ └ wiener
+│ │ │   │ ├ steak
+│ │ │   │ │ └ human
+│ │ │   │ ├ strange
+│ │ │   │ │ └ inhumen
+│ │ │   │ └ triton
+│ │ │   ├ messenger_bird
+│ │ │   │ └ dead
+│ │ │   ├ onion_fried
+│ │ │   ├ oviposition_egg
+│ │ │   │ └ color
+│ │ │   │   ├ black
+│ │ │   │   ├ blue
+│ │ │   │   ├ gray
+│ │ │   │   ├ green
+│ │ │   │   └ red
+│ │ │   ├ oviposition_eggs
+│ │ │   │ └ color
+│ │ │   │   ├ black
+│ │ │   │   ├ blue
+│ │ │   │   ├ gray
+│ │ │   │   ├ green
+│ │ │   │   └ red
+│ │ │   ├ pastry
+│ │ │   ├ pear_dried
+│ │ │   ├ pearbutterdough
+│ │ │   ├ pestranstick
+│ │ │   ├ pie
+│ │ │   │ └ cooked
+│ │ │   │   ├ apple
+│ │ │   │   │ └ good
+│ │ │   │   ├ berry
+│ │ │   │   │ ├ good
+│ │ │   │   │ └ poison
+│ │ │   │   ├ borowiki
+│ │ │   │   │ └ good
+│ │ │   │   ├ meat
+│ │ │   │   │ ├ fish
+│ │ │   │   │ │ └ good
+│ │ │   │   │ ├ meat
+│ │ │   │   │ │ ├ good
+│ │ │   │   │ │ └ smite
+│ │ │   │   │ └ pot
+│ │ │   │   │   └ good
+│ │ │   │   ├ pear
+│ │ │   │   │ └ good
+│ │ │   │   └ pot
+│ │ │   │     └ good
+│ │ │   ├ piedough
+│ │ │   ├ pieslice
+│ │ │   │ └ good
+│ │ │   │   ├ apple
+│ │ │   │   ├ berry
+│ │ │   │   │ └ poison
+│ │ │   │   ├ borowiki
+│ │ │   │   ├ fish
+│ │ │   │   ├ meat
+│ │ │   │   ├ pear
+│ │ │   │   └ pot
+│ │ │   ├ plum_dried
+│ │ │   ├ plumbutterdough
+│ │ │   ├ prezzel
+│ │ │   │ └ good
+│ │ │   ├ produce
+│ │ │   │ ├ amanita
+│ │ │   │ ├ coffee
+│ │ │   │ ├ coffeebeans
+│ │ │   │ ├ coffeebeansroasted
+│ │ │   │ ├ dry_westleach
+│ │ │   │ ├ fruit
+│ │ │   │ │ ├ apple
+│ │ │   │ │ ├ avocado
+│ │ │   │ │ ├ blackberry
+│ │ │   │ │ ├ dragonfruit
+│ │ │   │ │ ├ jacksberry
+│ │ │   │ │ │ └ poison
+│ │ │   │ │ ├ lemon
+│ │ │   │ │ ├ lime
+│ │ │   │ │ ├ mango
+│ │ │   │ │ ├ mangosteen
+│ │ │   │ │ ├ pear
+│ │ │   │ │ ├ pineapple
+│ │ │   │ │ ├ plum
+│ │ │   │ │ ├ raspberry
+│ │ │   │ │ ├ strawberry
+│ │ │   │ │ └ tangerine
+│ │ │   │ ├ fyritius
+│ │ │   │ │ └ bloodied
+│ │ │   │ ├ garlic
+│ │ │   │ ├ grain
+│ │ │   │ │ ├ oat
+│ │ │   │ │ └ wheat
+│ │ │   │ ├ manabloom
+│ │ │   │ ├ mushroom
+│ │ │   │ │ ├ borowiki
+│ │ │   │ │ ├ capillus
+│ │ │   │ │ ├ caveweep
+│ │ │   │ │ ├ merkel
+│ │ │   │ │ └ waddle
+│ │ │   │ ├ poppy
+│ │ │   │ ├ sugarcane
+│ │ │   │ ├ sunflower
+│ │ │   │ ├ swampweed
+│ │ │   │ ├ swampweed_dried
+│ │ │   │ ├ tea
+│ │ │   │ ├ tealeaves_dry
+│ │ │   │ ├ tealeaves_ground
+│ │ │   │ ├ vegetable
+│ │ │   │ │ ├ cabbage
+│ │ │   │ │ ├ onion
+│ │ │   │ │ ├ potato
+│ │ │   │ │ │ ├ baked
+│ │ │   │ │ │ └ fried
+│ │ │   │ │ ├ sunreed_cooked
+│ │ │   │ │ └ turnip
+│ │ │   │ └ westleach
+│ │ │   ├ raisindough
+│ │ │   ├ raisins
+│ │ │   │ └ poison
+│ │ │   ├ raspberrybutterdough
+│ │ │   ├ raw_pie
+│ │ │   │ ├ apple
+│ │ │   │ ├ berry
+│ │ │   │ ├ borowiki
+│ │ │   │ ├ fish
+│ │ │   │ ├ meat
+│ │ │   │ ├ pear
+│ │ │   │ └ pot_pie
+│ │ │   ├ raw_tart
+│ │ │   │ ├ avocado
+│ │ │   │ ├ dragonfruit
+│ │ │   │ ├ mango
+│ │ │   │ ├ mangosteen
+│ │ │   │ └ pineapple
+│ │ │   ├ roastseeds
+│ │ │   ├ rotten
+│ │ │   │ ├ bacon
+│ │ │   │ ├ breadslice
+│ │ │   │ ├ chickenleg
+│ │ │   │ ├ egg
+│ │ │   │ ├ meat
+│ │ │   │ ├ mince
+│ │ │   │ ├ poultry
+│ │ │   │ └ sausage
+│ │ │   ├ saigaita_cooked
+│ │ │   ├ salad
+│ │ │   ├ saltfish
+│ │ │   ├ saltseeds
+│ │ │   ├ scone
+│ │ │   ├ scone_plum
+│ │ │   ├ scone_tangerine
+│ │ │   ├ slime_core_egg
+│ │ │   │ ├ black
+│ │ │   │ ├ blue
+│ │ │   │ ├ gray
+│ │ │   │ ├ green
+│ │ │   │ └ red
+│ │ │   ├ smallrat
+│ │ │   │ └ dead
+│ │ │   ├ spiderhoney
+│ │ │   │ └ honey
+│ │ │   │   ├ luminescent
+│ │ │   │   ├ mad
+│ │ │   │   ├ poppy
+│ │ │   │   ├ toxic
+│ │ │   │   └ wild
+│ │ │   ├ stale_bread
+│ │ │   │ └ raisin
+│ │ │   │   └ poison
+│ │ │   ├ store
+│ │ │   ├ strawberry_dried
+│ │ │   ├ strawbycake
+│ │ │   ├ strawbycake_cooked
+│ │ │   ├ strawbycake_ready
+│ │ │   ├ strawbycake_slice
+│ │ │   ├ sugar
+│ │ │   ├ sunreed_bread
+│ │ │   │ └ honey
+│ │ │   ├ sunreed_bread_slice
+│ │ │   │ └ honey
+│ │ │   ├ tallow
+│ │ │   │ └ red
+│ │ │   ├ tangerine_dried
+│ │ │   ├ tangerinebutterdough
+│ │ │   ├ tangerinecake
+│ │ │   ├ tangerinecake_cooked
+│ │ │   ├ tangerinecake_ready
+│ │ │   ├ tangerinecake_slice
+│ │ │   ├ tart
+│ │ │   │ └ cooked
+│ │ │   │   ├ avocado
+│ │ │   │   ├ dragonfruit
+│ │ │   │   ├ mango
+│ │ │   │   ├ mangosteen
+│ │ │   │   └ pineapple
+│ │ │   ├ tartslice
+│ │ │   │ ├ avocado
+│ │ │   │ ├ dragonfruit
+│ │ │   │ ├ mango
+│ │ │   │ ├ mangosteen
+│ │ │   │ └ pineapple
+│ │ │   ├ tiefsugar
+│ │ │   ├ tostada
+│ │ │   ├ tostada_meat
+│ │ │   │ ├ chicken
+│ │ │   │ ├ egg
+│ │ │   │ └ fish
+│ │ │   ├ truffles
+│ │ │   │ └ toxic
+│ │ │   ├ veg
+│ │ │   │ ├ cabbage_sliced
+│ │ │   │ ├ onion_sliced
+│ │ │   │ ├ potato_sliced
+│ │ │   │ └ turnip_sliced
+│ │ │   ├ waddle_dried
+│ │ │   ├ xenoburger
+│ │ │   ├ zybcake
+│ │ │   ├ zybcake_cooked
+│ │ │   ├ zybcake_ready
+│ │ │   └ zybcake_slice
 │ │ ├ glass
 │ │ │ ├ alchemical
 │ │ │ ├ bottle
@@ -15424,6 +19461,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ └ healthpotnew
 │ │ │ │ ├ amanitin
 │ │ │ │ ├ antidote
+│ │ │ │ ├ antipregnancy
 │ │ │ │ ├ apfelweinheim
 │ │ │ │ ├ avarmead
 │ │ │ │ ├ avarrice
@@ -15465,8 +19503,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ fentanyl
 │ │ │ │ ├ glazed_teacup
 │ │ │ │ ├ glazed_teapot
-│ │ │ │ │ └
+│ │ │ │ │ └ tea
 │ │ │ │ ├ gronnmead
+│ │ │ │ ├ hairgrowthpot
+│ │ │ │ ├ hairremovalpot
 │ │ │ │ ├ healthpot
 │ │ │ │ ├ jagdtrunk
 │ │ │ │ ├ kgunlager
@@ -15493,7 +19533,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ strongstampot
 │ │ │ │ ├ sugar
 │ │ │ │ ├ teapot
-│ │ │ │ │ └
+│ │ │ │ │ └ random
 │ │ │ │ ├ tiefling_wine
 │ │ │ │ ├ toxin
 │ │ │ │ ├ venom
@@ -15504,6 +19544,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ destroy_clothes
 │ │ │ │ │ ├ endpot
 │ │ │ │ │ ├ genderpot
+│ │ │ │ │ ├ hairgrowthpot
+│ │ │ │ │ ├ hairremovalpot
 │ │ │ │ │ ├ healthpot
 │ │ │ │ │ ├ intpot
 │ │ │ │ │ ├ lucpot
@@ -15521,7 +19563,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ welding_fuel
 │ │ │ │ ├ whitewine
 │ │ │ │ └ wine
-│ │ │ │   └
+│ │ │ │   └ sourwine
 │ │ │ ├ bowl
 │ │ │ │ ├ amber
 │ │ │ │ ├ clay
@@ -15540,15 +19582,16 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ pot
 │ │ │ │ │ ├ copper
 │ │ │ │ │ └ stone
+│ │ │ │ ├ tinypot
 │ │ │ │ └ wooden
-│ │ │ │   └
+│ │ │ │   └ alter
 │ │ │ ├ carafe
 │ │ │ │ ├ decanter
 │ │ │ │ ├ gold
-│ │ │ │ │ └
+│ │ │ │ │ └ redwine
 │ │ │ │ ├ redwine
 │ │ │ │ ├ silver
-│ │ │ │ │ └
+│ │ │ │ │ └ redwine
 │ │ │ │ ├ teapot
 │ │ │ │ │ ├ amber
 │ │ │ │ │ ├ bronze
@@ -15591,15 +19634,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ skull
 │ │ │ │ ├ steel
 │ │ │ │ ├ teacup
-│ │ │ │ │ └
+│ │ │ │ │ └ fancy
 │ │ │ │ ├ turq
 │ │ │ │ ├ turqfancy
 │ │ │ │ └ wooden
-│ │ │ │   └
+│ │ │ │   └ crafted
 │ │ │ ├ mortar
 │ │ │ └ rag
 │ │ ├ lux
-│ │ │ └
+│ │ │ └ pragmas
 │ │ ├ lux_tainted
 │ │ ├ peppermill
 │ │ ├ pill
@@ -15639,19 +19682,39 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ poor_sewingkit
 │ │ └ sewingkit
 │ ├ restraints
-│ │ └
+│ │ └ legcuffs
+│ │   └ beartrap
+│ │     ├ armed
+│ │     │ └ camouflage
+│ │     └ crafted
+│ │       └ makeshift
+│ ├ resurrection_compass
 │ ├ riddleofsteel
 │ ├ riding_offhand
+│ ├ rmh_waystone_chunk
+│ │ └ empty
 │ ├ roguestatue
 │ │ ├ clay
 │ │ └ glass
+│ ├ rogueweapon
+│ │ ├ shield
+│ │ │ └ iron
+│ │ │   └ zybantine
+│ │ └ woodstaff
+│ │   └ riddle_of_steel
+│ │     └ serpent
 │ ├ roller_sorter_lister
 │ ├ rope
 │ │ ├ chain
-│ │ │ └
+│ │ │ └ bindingshackles
+│ │ │   ├ t2
+│ │ │   ├ t3
+│ │ │   ├ t4
+│ │ │   └ t5
 │ │ ├ inqarticles
-│ │ │ └
-│ │ └ net
+│ │ │ └ inquirycord
+│ │ ├ net
+│ │ └ spider_silk
 │ ├ rotation_contraption
 │ │ ├ boiler
 │ │ ├ cog
@@ -15659,7 +19722,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ horizontal
 │ │ ├ large_cog
 │ │ ├ minecart_rail
-│ │ │ └
+│ │ │ └ railbreak
 │ │ ├ pressurizer
 │ │ ├ pump
 │ │ ├ shaft
@@ -15687,17 +19750,17 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ thul
 │ │ └ tir
 │ ├ scomstone
-│ │ └
+│ │ └ bad
 │ ├ scrying
-│ │ └
+│ │ └ eye
 │ ├ sendingstonesummoner
 │ ├ servant_bell
-│ │ └
+│ │ └ lord
 │ ├ signal_horn
 │ ├ skull
 │ ├ slapcraft_assembly
 │ ├ sleepingbag
-│ │ └
+│ │ └ deluxe
 │ ├ smokebomb
 │ │ ├ aphrodisiac
 │ │ ├ destroy_clothes
@@ -15709,9 +19772,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ speakerinq
 │ ├ spell_crystal
 │ ├ spellbook_unfinished
-│ │ └
+│ │ └ pre_arcyne
 │ ├ staff
-│ │ └
+│ │ └ stick
 │ ├ statue
 │ │ ├ bronze
 │ │ │ ├ bust
@@ -15742,7 +19805,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ vasefancy
 │ │ │ └ volf
 │ │ ├ iron
-│ │ │ └
+│ │ │ └ deformed
 │ │ ├ silver
 │ │ │ ├ bust
 │ │ │ ├ cameo
@@ -15768,16 +19831,18 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ └ porter
 │ │ │ │ └ bagpack
 │ │ │ ├ bag_of_holding
+│ │ │ ├ bag_of_many_items
 │ │ │ ├ banking_storage
 │ │ │ └ satchel
 │ │ │   ├ black
 │ │ │   ├ cloth
+│ │ │   │ └ big
 │ │ │   ├ heartfelt
 │ │ │   ├ mule
 │ │ │   ├ musketeer
 │ │ │   ├ otavan
 │ │ │   └ surgbag
-│ │ │     └
+│ │ │     └ shit
 │ │ ├ bag
 │ │ ├ belt
 │ │ │ ├ leather
@@ -15786,7 +19851,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ assassin
 │ │ │ │ ├ bandit
 │ │ │ │ ├ black
-│ │ │ │ │ └
+│ │ │ │ │ └ adventurers_subclasses
 │ │ │ │ ├ cloth
 │ │ │ │ │ ├ bandit
 │ │ │ │ │ ├ heart_priest
@@ -15807,14 +19872,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ ├ black
 │ │ │ │ │ └ shalal
 │ │ │ │ ├ plaquegold
-│ │ │ │ │ └
+│ │ │ │ │ └ adventurers_subclasses
 │ │ │ │ ├ plaquesilver
-│ │ │ │ │ └
+│ │ │ │ │ └ adventurers_subclasses
 │ │ │ │ ├ rope
 │ │ │ │ │ ├ adventurers_subclasses
 │ │ │ │ │ └ dark
 │ │ │ │ ├ shalal
-│ │ │ │ │ └
+│ │ │ │ │ └ adventurers_subclasses
 │ │ │ │ ├ steel
 │ │ │ │ │ ├ adventurers_subclasses
 │ │ │ │ │ └ watch_captain
@@ -15854,15 +19919,19 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ fancy
 │ │ │ ├ candle_box
 │ │ │ ├ cigarettes
-│ │ │ │ └
+│ │ │ │ └ zig
+│ │ │ │   └ empty
 │ │ │ ├ egg_box
 │ │ │ ├ ifak
 │ │ │ └ pilltin
 │ │ │   ├ devour
 │ │ │   └ sate
 │ │ ├ handbasket
+│ │ │ └ easter
 │ │ ├ hip
-│ │ │ └
+│ │ │ └ headhook
+│ │ │   ├ bronze
+│ │ │   └ royal
 │ │ ├ keyring
 │ │ │ ├ adept
 │ │ │ ├ adventurers_guild
@@ -15908,15 +19977,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ meatbag
 │ │ ├ messkit
 │ │ ├ pill_bottle
-│ │ │ └
+│ │ │ └ dice
 │ │ ├ sack
 │ │ └ smuggling_pouch
 │ ├ surgeontoolspawner
 │ ├ tablecloth
-│ │ └
+│ │ └ silk
 │ ├ talisman
 │ ├ teleportation_scroll
-│ │ └
+│ │ └ apprentice
 │ ├ tent_kit
 │ ├ textbook
 │ │ ├ apprentice
@@ -15950,32 +20019,29 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   ├ mathematics
 │ │   └ medicine
 │ ├ throwing_star
-│ │ └
+│ │ └ ninja
 │ ├ tome
 │ ├ toy
 │ │ ├ cards
 │ │ │ ├ cardhand
 │ │ │ ├ deck
-│ │ │ │ └
+│ │ │ │ └ syndicate
 │ │ │ └ singlecard
 │ │ └ snappop
-│ │   └
+│ │   └ phoenix
 │ ├ trash
 │ │ ├ applecore
 │ │ ├ candle
-│ │ ├ mangosteenshell
-│ │ ├ pistachios
-│ │ └ plate
+│ │ └ mangosteenshell
 │ ├ tray
-│ │ └
+│ │ └ psy
 │ ├ udder
 │ ├ underworld
-│ │ └
+│ │ └ coin
 │ ├ undies
-│ ├ watches_mock_calls
 │ └ weapon
 │   ├ arms
-│   │ └
+│   │ └ gangrel
 │   ├ axe
 │   │ ├ battle
 │   │ ├ boneaxe
@@ -16000,31 +20066,32 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   ├ estoc
 │   ├ flail
 │   │ ├ militia
-│   │ │ └
+│   │ │ └ conjured
 │   │ ├ peasant
-│   │ │ └
+│   │ │ └ conjured
 │   │ ├ peasantwarflail
-│   │ │ └
+│   │ │ └ matthios
 │   │ ├ psydon
-│   │ │ └
+│   │ │ └ relic
 │   │ ├ sflail
 │   │ │ ├ ancient
 │   │ │ └ necraflail
 │   │ └ towner
 │   ├ greataxe
 │   │ ├ dreamscape
-│   │ │ └
+│   │ │ └ active
 │   │ ├ psy
 │   │ └ steel
 │   │   ├ conjured
 │   │   ├ doublehead
-│   │   │ └
+│   │   │ └ graggar
 │   │   └ grandmaster
 │   ├ hammer
 │   │ ├ copper
 │   │ ├ iron
 │   │ ├ sledgehammer
-│   │ │ └
+│   │ │ └ war
+│   │ │   └ malum
 │   │ ├ steel
 │   │ └ wood
 │   ├ hoe
@@ -16035,7 +20102,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ └ psydon
 │   ├ knife
 │   │ ├ cleaver
-│   │ │ └
+│   │ │ └ combat
 │   │ ├ copper
 │   │ ├ dagger
 │   │ │ ├ bayonet
@@ -16048,9 +20115,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ │ │ └ psydon
 │   │ │ └ steel
 │   │ │   ├ dirk
-│   │ │   │ └
+│   │ │   │ └ baotha
 │   │ │   ├ hand
-│   │ │   │ └
+│   │ │   │ └ parry
 │   │ │   ├ jile
 │   │ │   ├ njora
 │   │ │   ├ pestrasickle
@@ -16059,9 +20126,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ │   ├ special
 │   │ │   └ stiletto
 │   │ ├ hunting
-│   │ │ └
+│   │ │ └ kukri
+│   │ │   └ iron
 │   │ ├ scissors
-│   │ │ └
+│   │ │ └ steel
 │   │ ├ stone
 │   │ │ ├ kukri
 │   │ │ └ opal
@@ -16078,9 +20146,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   ├ lordscepter
 │   ├ mace
 │   │ ├ bludgeon
-│   │ │ └
+│   │ │ └ copper
 │   │ ├ bronze
-│   │ │ └
+│   │ │ └ shishpar
 │   │ ├ cane
 │   │ │ ├ bronze
 │   │ │ ├ courtphysician
@@ -16107,46 +20175,49 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ │   ├ grandmaster
 │   │ │   └ warhammer
 │   │ ├ rungu
-│   │ │ └
+│   │ │ └ silver
 │   │ ├ shishpar
 │   │ ├ spiked
 │   │ ├ steel
 │   │ │ ├ morningstar
-│   │ │ │ └
+│   │ │ │ └ conjured
 │   │ │ ├ rungu
 │   │ │ └ shishpar
 │   │ ├ stunmace
 │   │ ├ warhammer
-│   │ │ └
+│   │ │ └ steel
 │   │ └ woodclub
-│   │   └
+│   │   └ train_sword
 │   ├ magicbrick
 │   ├ pick
 │   │ ├ copper
 │   │ ├ drill
+│   │ ├ paxe
 │   │ ├ steel
 │   │ └ stone
 │   ├ pitchfork
-│   │ └
+│   │ └ copper
 │   ├ polearm
 │   │ ├ eaglebeak
-│   │ │ └
+│   │ │ └ lucerne
 │   │ ├ halberd
 │   │ │ ├ bardiche
 │   │ │ │ ├ ancient
 │   │ │ │ ├ dendor
 │   │ │ │ ├ warcutter
 │   │ │ │ └ woodcutter
-│   │ │ │   └
+│   │ │ │   └ gorefeast
 │   │ │ └ psydon
-│   │ │   └
+│   │ │   └ relic
 │   │ ├ neant
 │   │ ├ spear
 │   │ │ ├ abyssor
 │   │ │ ├ assegai
-│   │ │ │ └
+│   │ │ │ └ steel
 │   │ │ ├ billhook
-│   │ │ │ └
+│   │ │ │ └ ji
+│   │ │ │   ├ bronze
+│   │ │ │   └ iron
 │   │ │ ├ bonespear
 │   │ │ ├ bronze
 │   │ │ ├ grandmaster
@@ -16156,9 +20227,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ │ ├ naginata
 │   │ │ ├ psydon
 │   │ │ ├ steel
-│   │ │ │ └
+│   │ │ │ └ assegai
+│   │ │ │   └ conjured
 │   │ │ └ stone
-│   │ │   └
+│   │ │   └ copper
 │   │ └ woodstaff
 │   │   ├ aries
 │   │   ├ naledi
@@ -16175,7 +20247,6 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ │ ├ gold
 │   │ │ └ steel
 │   │ ├ knife
-│   │ │ ├ hand
 │   │ │ ├ noble
 │   │ │ └ royal
 │   │ └ sword
@@ -16184,7 +20255,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   ├ shield
 │   │ ├ atgervi
 │   │ ├ heater
-│   │ │ └
+│   │ │ └ crafted
 │   │ ├ tower
 │   │ │ ├ buckleriron
 │   │ │ ├ hoplite
@@ -16196,7 +20267,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │   ├ adept
 │   │   └ crafted
 │   ├ shovel
-│   │ └
+│   │ └ small
+│   │   └ crafted
 │   ├ sickle
 │   │ ├ copper
 │   │ └ scythe
@@ -16205,31 +20277,35 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ ├ cautery
 │   │ ├ hammer
 │   │ ├ hemostat
-│   │ │ └
+│   │ │ └ improv
 │   │ ├ retractor
-│   │ │ └
+│   │ │ └ improv
 │   │ ├ saw
-│   │ │ └
+│   │ │ └ improv
 │   │ └ scalpel
 │   ├ sword
 │   │ ├ arming
-│   │ │ └
+│   │ │ └ conjured
 │   │ ├ bronze
 │   │ ├ coppermesser
 │   │ ├ decorated
 │   │ ├ gladius
 │   │ ├ iron
 │   │ ├ kaskara
-│   │ │ └
+│   │ │ └ iron
 │   │ ├ katana
-│   │ │ └
+│   │ │ └ mulyeog
+│   │ │   ├ rumacaptain
+│   │ │   └ rumahench
 │   │ ├ khopesh
 │   │ ├ long
 │   │ │ ├ aruval
-│   │ │ │ └
+│   │ │ │ └ iron
 │   │ │ ├ broadsword
-│   │ │ │ └
+│   │ │ │ └ psy
+│   │ │ │   └ relic
 │   │ │ ├ conjured
+│   │ │ ├ daewalker
 │   │ │ ├ death
 │   │ │ ├ decorated
 │   │ │ ├ exe
@@ -16252,20 +20328,20 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ │ │ └ zwei
 │   │ │ ├ heirloom
 │   │ │ ├ judgement
-│   │ │ │ └
+│   │ │ │ └ evil
 │   │ │ ├ martyr
 │   │ │ ├ oldpsysword
 │   │ │ ├ pleonexia
 │   │ │ ├ psydon
-│   │ │ │ └
+│   │ │ │ └ relic
 │   │ │ ├ ravox
 │   │ │ ├ replica
-│   │ │ │ └
+│   │ │ │ └ death
 │   │ │ ├ rider
 │   │ │ │ ├ copper
 │   │ │ │ └ steppe
 │   │ │ ├ shotel
-│   │ │ │ └
+│   │ │ │ └ iron
 │   │ │ └ vlord
 │   │ ├ rapier
 │   │ │ ├ caneblade
@@ -16273,12 +20349,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ │ │ └ hand
 │   │ │ ├ conjured
 │   │ │ ├ dec
-│   │ │ │ └
+│   │ │ │ └ lord
 │   │ │ ├ eora
 │   │ │ ├ ironestoc
 │   │ │ ├ nimcha
 │   │ │ ├ psy
-│   │ │ │ └
+│   │ │ │ └ relic
 │   │ │ └ silver
 │   │ ├ sabre
 │   │ │ ├ cutlass
@@ -16294,26 +20370,26 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ ├ scimitar
 │   │ │ ├ falchion
 │   │ │ ├ lakkarikhopesh
-│   │ │ │ └
+│   │ │ │ └ iron
 │   │ │ ├ messer
 │   │ │ ├ sengese
 │   │ │ │ ├ bronze
 │   │ │ │ ├ iron
 │   │ │ │ └ silver
 │   │ │ └ wodao
-│   │ │   └
+│   │ │   └ iron
 │   │ ├ short
 │   │ │ ├ bronze
 │   │ │ ├ ida
 │   │ │ ├ iron
-│   │ │ │ └
+│   │ │ │ └ ida
 │   │ │ └ psy
 │   │ ├ silver
 │   │ └ stone
 │   ├ thresher
-│   │ └
+│   │ └ military
 │   ├ tongs
-│   │ └
+│   │ └ stone
 │   ├ werewolf_claw
 │   │ ├ left
 │   │ └ right
@@ -16323,7 +20399,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ ├ chain
 │   │ ├ nagaika
 │   │ ├ psydon
-│   │ │ └
+│   │ │ └ relic
 │   │ ├ silver
 │   │ ├ spiderwhip
 │   │ ├ urumi
@@ -16334,7 +20410,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   └ woodchopper
 ├ machinery
 │ ├ anvil
-│ │ └
+│ │ └ crafted
 │ ├ artificer_table
 │ ├ essence
 │ │ ├ combiner
@@ -16343,7 +20419,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ infuser
 │ │ ├ research_matrix
 │ │ ├ reservoir
-│ │ │ └
+│ │ │ └ filled
+│ │ │   └ life
 │ │ ├ splitter
 │ │ └ test_tube
 │ ├ light
@@ -16352,8 +20429,6 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ densefire
 │ │ │ │ ├ longlived
 │ │ │ │ └ pyre
-│ │ │ ├ candle
-│ │ │ │ └
 │ │ │ ├ cauldron
 │ │ │ ├ chand
 │ │ │ ├ firebowl
@@ -16363,12 +20438,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ │ └ unholyfire
 │ │ │ │ ├ firebowlb
 │ │ │ │ ├ standing
-│ │ │ │ │ └
+│ │ │ │ │ └ blue
 │ │ │ │ ├ stump
 │ │ │ │ ├ stumpb
 │ │ │ │ └ stumpg
 │ │ │ ├ forge
-│ │ │ │ └
+│ │ │ │ └ arcane
 │ │ │ ├ hearth
 │ │ │ │ ├ big_fireplace
 │ │ │ │ └ mobilestove
@@ -16387,7 +20462,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ torchholder
 │ │ │ │ ├ c
 │ │ │ │ ├ hotspring
-│ │ │ │ │ └
+│ │ │ │ │ └ standing
 │ │ │ │ ├ l
 │ │ │ │ ├ metal_torch
 │ │ │ │ │ ├ east
@@ -16396,27 +20471,53 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ └ r
 │ │ │ └ wallfire
 │ │ │   ├ big_fireplace
-│ │ │   └ candle
-│ │ │     ├ blue
-│ │ │     │ ├ l
-│ │ │     │ └ r
-│ │ │     ├ l
-│ │ │     ├ lamp
-│ │ │     ├ r
-│ │ │     ├ skull
-│ │ │     │ ├ l
-│ │ │     │ └ r
-│ │ │     └ weak
-│ │ │       ├ l
-│ │ │       └ r
-│ │ └ fueledstreet
-│ │   ├ blue
-│ │   │ ├ midlamp
-│ │   │ └ wall
-│ │   ├ midlamp
-│ │   └ orange
-│ │     ├ postd
-│ │     └ wall
+│ │ │   ├ candle
+│ │ │   │ ├ blue
+│ │ │   │ │ ├ l
+│ │ │   │ │ └ r
+│ │ │   │ ├ l
+│ │ │   │ ├ lamp
+│ │ │   │ ├ r
+│ │ │   │ ├ skull
+│ │ │   │ │ ├ l
+│ │ │   │ │ └ r
+│ │ │   │ └ weak
+│ │ │   │   ├ l
+│ │ │   │   └ r
+│ │ │   └ floorcandle
+│ │ │     ├ alt
+│ │ │     │ └ pink
+│ │ │     └ pink
+│ │ ├ fueledstreet
+│ │ │ ├ blue
+│ │ │ │ ├ midlamp
+│ │ │ │ └ wall
+│ │ │ ├ midlamp
+│ │ │ └ orange
+│ │ │   ├ postd
+│ │ │   └ wall
+│ │ └ rogue
+│ │   ├ campfire
+│ │   │ └ fireplace
+│ │   │   └ desert
+│ │   ├ firebowl
+│ │   │ ├ alizeria
+│ │   │ │ └ decor
+│ │   │ │   ├ offw
+│ │   │ │   │ ├ redlight1
+│ │   │ │   │ └ redlight2
+│ │   │ │   ├ redlight1
+│ │   │ │   └ redlight2
+│ │   │ └ standing
+│ │   │   └ alizeria
+│ │   │     └ decor
+│ │   │       └ red
+│ │   └ wallfire
+│ │     └ candle
+│ │       └ alizeria
+│ │         └ decor
+│ │           └ red
+│ │             └ off
 │ ├ loom
 │ ├ printingpress
 │ ├ tanningrack
@@ -16437,20 +20538,20 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ ├ spiced
 │ │ │ │ ├ stone
 │ │ │ │ ├ vial
-│ │ │ │ │ └
+│ │ │ │ │ └ water
 │ │ │ │ └ water
 │ │ │ ├ bolt
 │ │ │ │ ├ holy
 │ │ │ │ ├ pyro
 │ │ │ │ ├ vial
-│ │ │ │ │ └
+│ │ │ │ │ └ water
 │ │ │ │ └ water
 │ │ │ ├ bullet
 │ │ │ ├ cannonball
 │ │ │ ├ dart
-│ │ │ │ └
+│ │ │ │ └ poison
 │ │ │ └ deepone
-│ │ │   └
+│ │ │   └ enhanced
 │ │ ├ shrap
 │ │ ├ spider
 │ │ └ spider_shroom
@@ -16459,10 +20560,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ grapple_hook
 │ ├ magic
 │ │ ├ acidsplash
-│ │ │ └
+│ │ │ └ quietus
 │ │ ├ antimagic
 │ │ ├ aoe
-│ │ │ └
+│ │ │ └ fireball
+│ │ │   ├ flare
+│ │ │   └ rogue
+│ │ │     ├ fiend
+│ │ │     └ great
 │ │ ├ arcane_barrage
 │ │ ├ bloodlightning
 │ │ ├ bloodsteal
@@ -16470,7 +20575,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ bounty
 │ │ ├ death
 │ │ ├ energy
-│ │ │ └
+│ │ │ └ rogue3
 │ │ ├ eora
 │ │ ├ falcon_dive
 │ │ ├ fetch
@@ -16478,12 +20583,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ flashpowder
 │ │ ├ flying
 │ │ ├ frostbolt
-│ │ │ └
+│ │ │ └ greater
 │ │ ├ lightning
 │ │ ├ moondagger
 │ │ ├ necropotence
 │ │ ├ profane
-│ │ │ └
+│ │ │ └ major
 │ │ ├ repel
 │ │ ├ resurrection
 │ │ ├ safety
@@ -16492,39 +20597,56 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ spellblade
 │ │ ├ swordfish
 │ │ ├ teleport
-│ │ └ unholy_grasp
+│ │ ├ unholy_grasp
+│ │ └ waterbolt
 │ ├ meatbullet
 │ ├ neurotoxin
 │ │ ├ acid
-│ │ │ └
+│ │ │ └ spitter_spread
 │ │ └ spitter_spread
 │ ├ orbital
 │ ├ perfume_cloud
 │ └ tentacle_acid
 ├ random
-│ └
+│ └ spider
 ├ screen
 │ ├ evolution_choice
 │ └ wormhole_navigate
 └ structure
   ├ abyss_window
   ├ activator
+  ├ alizeria
+  │ ├ curtainaliz
+  │ │ ├ green
+  │ │ ├ purple
+  │ │ └ yellow
+  │ └ decor
+  │   ├ barricade1
+  │   ├ barricade2
+  │   ├ barricade3
+  │   ├ barricade4
+  │   └ barricade5
   ├ apiary
-  │ └
+  │ └ starter
   ├ astratanshard
   ├ barricade
-  │ └
+  │ └ wooden
+  │   └ crude
   ├ bars
+  │ ├ alizeria
+  │ │ └ decor
+  │ │   └ fence1
   │ ├ alt
   │ ├ bent
   │ ├ cemetery
-  │ │ └
+  │ │ └ underworld
   │ ├ chainlink
   │ ├ grille
   │ ├ passage
-  │ │ └
+  │ │ └ shutter
+  │ │   └ open
   │ ├ pipe
-  │ │ └
+  │ │ └ left
   │ ├ shop
   │ ├ steel
   │ └ tough
@@ -16534,20 +20656,29 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ fake_world
   │ ├ hay
   │ ├ inn
-  │ │ └
+  │ │ └ double
   │ ├ mediocre
   │ ├ shit
   │ ├ sleepingbag
-  │ │ └
+  │ │ └ deluxe
   │ └ wool
-  │   └
+  │   └ double
   ├ beehive
-  │ └
+  │ └ wild
   ├ bell_barrier
+  ├ bell_common
   ├ blueprint
   ├ boards
+  ├ boatbell
+  │ └ fluff
   ├ bobcatpelt
   ├ boiler
+  ├ bondage
+  │ ├ chains
+  │ ├ gloryhole
+  │ ├ torture_table
+  │ │ └ lever
+  │ └ x_pillory
   ├ bonepile
   ├ bookcase
   │ ├ random
@@ -16566,6 +20697,52 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ orc
   │ └ troll
   ├ buried_cache
+  ├ call_bell
+  │ ├ adventurers_guild
+  │ │ └ small
+  │ ├ archive
+  │ │ └ small
+  │ ├ artificer
+  │ │ └ small
+  │ ├ bank
+  │ │ └ small
+  │ ├ baths
+  │ │ └ small
+  │ ├ blacksmith
+  │ │ └ small
+  │ ├ carpenter
+  │ │ └ small
+  │ ├ chapel
+  │ │ └ small
+  │ ├ forest_ranger
+  │ │ └ small
+  │ ├ grove_druid
+  │ │ └ small
+  │ ├ guild_guard
+  │ │ └ small
+  │ ├ loudmouth
+  │ │ └ small
+  │ ├ mason
+  │ │ └ small
+  │ ├ merchant
+  │ │ └ small
+  │ ├ physician
+  │ │ └ small
+  │ ├ small
+  │ ├ swamp_witch
+  │ │ └ small
+  │ ├ tailor
+  │ │ └ small
+  │ ├ tavern
+  │ │ └ small
+  │ ├ townhall_rulers
+  │ │ └ small
+  │ ├ townhall_servant
+  │ │ └ small
+  │ ├ townwatch
+  │ │ └ small
+  │ └ wizards
+  │   └ small
   ├ cannon
   ├ carpet
   │ ├ blue
@@ -16574,6 +20751,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ purple
   │ └ red
   ├ chair
+  │ ├ alizeriadecor
+  │ │ ├ stool1
+  │ │ ├ stool2
+  │ │ └ stool3
   │ ├ bench
   │ │ ├ ancientlog
   │ │ ├ church
@@ -16605,12 +20786,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │ ├ redleft
   │ │ │ └ redright
   │ │ ├ couchablack
-  │ │ │ └
+  │ │ │ └ r
   │ │ ├ couchamagenta
-  │ │ │ └
+  │ │ │ └ r
   │ │ ├ throne
   │ │ └ ultimacouch
-  │ │   └
+  │ │   └ r
   │ ├ hotspring_bench
   │ │ ├ corner
   │ │ ├ left
@@ -16626,8 +20807,25 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ stool
   │ │ ├ bar
   │ │ └ crafted
-  │ └ wood
-  │   └
+  │ ├ wood
+  │ │ ├ alt
+  │ │ │ ├ chair_noble
+  │ │ │ │ ├ purple
+  │ │ │ │ └ red
+  │ │ │ ├ chair3
+  │ │ │ │ └ crafted
+  │ │ │ ├ fancy
+  │ │ │ │ ├ chair4
+  │ │ │ │ ├ chair5
+  │ │ │ │ └ crafted
+  │ │ │ └ uncomfortable
+  │ │ ├ rogue
+  │ │ │ └ throne
+  │ │ │   └ zybantine
+  │ │ └ zybantine
+  │ └ zybantine_sofa
+  │   ├ left
+  │   └ right
   ├ channel_connector
   │ ├ drain
   │ ├ furnace
@@ -16641,7 +20839,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │ ├ crafted
   │ │ │ ├ crate
   │ │ │ ├ gold
-  │ │ │ │ └
+  │ │ │ │ └ debug
   │ │ │ ├ inqcrate
   │ │ │ │ ├ articles
   │ │ │ │ │ ├ accusations
@@ -16677,7 +20875,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │ │   ├ nobledressup
   │ │ │ │   └ psydonian
   │ │ │ ├ inqreliquary
-  │ │ │ │ └
+  │ │ │ │ └ relic
+  │ │ │ │   ├ bullion
+  │ │ │ │   └ crankbox
   │ │ │ ├ lootbox
   │ │ │ ├ lostandfound
   │ │ │ ├ magical
@@ -16685,7 +20885,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │ ├ neu
   │ │ │ ├ neu_fancy
   │ │ │ ├ neu_iron
-  │ │ │ │ └
+  │ │ │ │ └ corpse
   │ │ │ ├ old_crate
   │ │ │ ├ steward
   │ │ │ │ ├ bull
@@ -16704,7 +20904,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │   ├ random_mushroom
   │ │ │   └ random_soilson
   │ │ ├ coffin
-  │ │ │ └
+  │ │ │ ├ sarcophagus
+  │ │ │ └ vampire
   │ │ ├ crafted_closet
   │ │ │ ├ atarms
   │ │ │ ├ crafted
@@ -16713,14 +20914,21 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │ │ ├ chest
   │ │ │ │ └ south
   │ │ │ ├ lord
+  │ │ │ ├ magic
+  │ │ │ │ └ dungeon
   │ │ │ └ steward
   │ │ ├ drawer
   │ │ │ ├ inn
   │ │ │ └ random
-  │ │ └ miningcar
+  │ │ ├ miningcar
+  │ │ └ roguecloset
+  │ │   └ inn
+  │ │     └ south
+  │ │       └ alizeria
+  │ │         └ closet1
   │ ├ dirthole
   │ │ ├ closed
-  │ │ │ └
+  │ │ │ └ loot
   │ │ └ grave
   │ ├ fake_world
   │ └ supplypod
@@ -16731,12 +20939,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ full
   │ └ halffull
   ├ coral_formation
-  │ └
+  │ └ small
   ├ curtain
   │ ├ black
   │ ├ blue
   │ ├ bounty
-  │ │ └
+  │ │ └ dir
   │ ├ brown
   │ ├ dir
   │ ├ green
@@ -16745,36 +20953,47 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ └ red
   ├ desert_elevator
   ├ desert_window
-  │ └
+  │ └ open
   ├ desertbarrier
   ├ dock_bell
   ├ door
   │ ├ abyss
   │ ├ arcyne
-  │ │ └
+  │ │ ├ bolt
+  │ │ │ └ caster
+  │ │ └ key
+  │ ├ desertdoor
+  │ ├ desertdoorperm
   │ ├ driftwood
   │ ├ fancy
   │ ├ green
   │ ├ iron
-  │ │ └
+  │ │ └ bars
+  │ │   └ cell
   │ ├ red
   │ ├ secret
   │ ├ stone
   │ ├ swing
   │ ├ town
   │ ├ viewport
-  │ │ └
+  │ │ └ stone
+  │ │   └ broken
   │ ├ violet
   │ ├ weak
-  │ │ └
+  │ │ └ bolt
+  │ │   └ shutter
   │ └ window
+  ├ drape
+  │ ├ desert
+  │ └ zybantine
   ├ dryclothes
   ├ dungeon_descent
   ├ dungeon_entry
-  │ └
+  │ └ center
+  │   └ vanderlin
   ├ dungeon_exit
   ├ dye_bin
-  │ └
+  │ └ luxury
   ├ easel
   ├ essence_node
   │ ├ air
@@ -16791,6 +21010,8 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ ├ left
   │ │ └ right
   │ ├ contractledger
+  │ │ └ antag
+  │ │   └ werewolf
   │ ├ drug_chute
   │ ├ drugmachine
   │ ├ hailer
@@ -16815,6 +21036,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ └ r
   │ ├ steward
   │ ├ stockpile
+  │ ├ stockpile_withdraw
   │ ├ submission
   │ ├ titan
   │ └ vendor
@@ -16837,6 +21059,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ blackgoat
   │ ├ coffee
   │ ├ distiller
+  │ ├ fancypot
+  │ │ ├ beer
+  │ │ ├ random
+  │ │ │ ├ beer
+  │ │ │ ├ water
+  │ │ │ └ wine
+  │ │ ├ water
+  │ │ └ wine
   │ ├ gronmead
   │ ├ hagwoodbitter
   │ ├ jagt
@@ -16847,6 +21077,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ └ water
   │ ├ redwine
   │ ├ saigamilk
+  │ ├ sandpot
+  │ │ ├ beer
+  │ │ ├ random
+  │ │ │ ├ beer
+  │ │ │ ├ water
+  │ │ │ └ wine
+  │ │ ├ water
+  │ │ └ wine
   │ ├ sourwine
   │ ├ tea
   │ ├ water
@@ -16854,12 +21092,27 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   ├ fireaxecabinet
   │ ├ south
   │ └ unforgotten
-  │   └
+  │   └ south
   ├ fish_mount
-  │ └
+  │ └ bar
   ├ floordoor
-  │ └
+  │ └ gatehatch
+  │   ├ inner
+  │   └ outer
   ├ flora
+  │ ├ alizeria
+  │ │ └ decor
+  │ │   ├ leaves1
+  │ │   ├ leaves10
+  │ │   ├ leaves2
+  │ │   ├ leaves3
+  │ │   ├ leaves4
+  │ │   ├ leaves5
+  │ │   ├ leaves6
+  │ │   ├ leaves7
+  │ │   ├ leaves8
+  │ │   ├ leaves9
+  │ │   └ leavesr
   │ ├ astrata
   │ ├ ausbushes
   │ │ ├ brflowers
@@ -16878,6 +21131,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ ├ sunnybush
   │ │ └ ywflowers
   │ ├ bush
+  │ ├ crystal
   │ ├ driftwood
   │ ├ field
   │ │ ├ calendula
@@ -16887,6 +21141,17 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ ├ poppy
   │ │ ├ rosa
   │ │ └ salvia
+  │ ├ gemcrystals
+  │ │ ├ aquamarine
+  │ │ │ └ small
+  │ │ ├ emerald
+  │ │ │ └ small
+  │ │ ├ lapiz
+  │ │ ├ rube
+  │ │ │ └ small
+  │ │ ├ sapphiresmall
+  │ │ └ topaz
+  │ │   └ small
   │ ├ grass
   │ │ ├ both
   │ │ ├ brown
@@ -16907,6 +21172,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │ ├ green3
   │ │ │ ├ tundra
   │ │ │ └ yellow
+  │ │ ├ crawlvines
   │ │ ├ fullgrass
   │ │ ├ green
   │ │ ├ herb
@@ -16928,19 +21194,20 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │ ├ urtica
   │ │ │ └ valeriana
   │ │ ├ jungle
-  │ │ │ └
+  │ │ │ └ b
   │ │ ├ maneater
-  │ │ │ └
+  │ │ │ └ real
+  │ │ │   └ juvenile
   │ │ ├ mushroom
   │ │ ├ pyroclasticflowers
   │ │ ├ sparegrass
   │ │ ├ swampweed
   │ │ ├ tangler
-  │ │ │ └
+  │ │ │ └ real
   │ │ ├ thorn_bush
   │ │ ├ tundra
   │ │ └ water
-  │ │   └
+  │ │   └ reeds
   │ ├ hotspring_rocks
   │ │ ├ grassy
   │ │ └ small
@@ -16954,12 +21221,21 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ └ large
   │ ├ kelp
   │ ├ mushroomcluster
+  │ ├ new_shroom
+  │ │ ├ cyan
+  │ │ ├ cyanf
+  │ │ ├ cyansmall
+  │ │ ├ purple
+  │ │ ├ purplef
+  │ │ ├ purplesmall
+  │ │ ├ red
+  │ │ └ redwall
   │ ├ newbranch
   │ │ ├ connector
   │ │ │ ├ scorched
   │ │ │ └ snow
   │ │ ├ leafless
-  │ │ │ └
+  │ │ │ └ scorched
   │ │ ├ palm
   │ │ └ snow
   │ ├ newleaf
@@ -16977,13 +21253,29 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ ├ coral
   │ │ ├ jungle
   │ │ ├ pile
-  │ │ │ └
+  │ │ │ └ largejungle
   │ │ └ water
+  │ ├ roguegrass
+  │ │ └ bush
+  │ │   ├ desert
+  │ │   ├ desertshrub
+  │ │   └ wall
+  │ │     └ tall
+  │ │       └ desert
+  │ ├ roguetree
+  │ │ ├ palm
+  │ │ └ stump
+  │ │   └ palm
   │ ├ sakura
   │ ├ sandbrick
   │ ├ shells
   │ ├ shroom_tree
-  │ │ └
+  │ │ └ happy
+  │ │   ├ mushroom2
+  │ │   ├ mushroom3
+  │ │   ├ mushroom4
+  │ │   ├ mushroom5
+  │ │   └ random
   │ ├ starfish
   │ ├ tinymushrooms
   │ └ tree
@@ -16996,12 +21288,19 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │   │ ├ festive
   │   │ ├ festive_snowy
   │   │ └ snowy
+  │   ├ newtree
+  │   ├ newtree2
   │   ├ pine
-  │   │ └
+  │   │ └ dead
   │   ├ stump
-  │   │ └
+  │   │ └ pine
+  │   │   └ fir
   │   ├ underworld
   │   └ wise
+  ├ flowerpot
+  │ ├ bong
+  │ ├ medium
+  │ └ small
   ├ fluff
   │ ├ alch
   │ ├ arc
@@ -17014,7 +21313,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │ └ booth02
   │ │ ├ green
   │ │ └ side
-  │ │   └
+  │ │   └ end
   │ ├ celebration
   │ │ ├ canopy
   │ │ └ flags
@@ -17022,8 +21321,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ ├ dense
   │ │ └ zizoclock
   │ ├ clockwork
-  │ │ └
+  │ │ └ alloy_shards
+  │ │   ├ large
+  │ │   ├ medium
+  │ │   ├ medium_gearbit
+  │ │   └ small
   │ ├ clodpile
+  │ │ ├ dirt
+  │ │ └ sand
   │ ├ customsign
   │ ├ festive_flags
   │ │ ├ blue
@@ -17056,10 +21361,14 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ └ red
   │ ├ psycross
   │ │ ├ astrata
-  │ │ │ └
+  │ │ │ └ gold
   │ │ ├ copper
   │ │ ├ crafted
-  │ │ │ └
+  │ │ │ └ shrine
+  │ │ │   ├ dendor_gote
+  │ │ │   ├ dendor_saiga
+  │ │ │   ├ dendor_troll
+  │ │ │   └ dendor_volf
   │ │ ├ psycrucifix
   │ │ │ ├ silver
   │ │ │ └ stone
@@ -17068,6 +21377,11 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │ └ metal
   │ │ └ zizocross
   │ ├ railing
+  │ │ ├ alizeria
+  │ │ │ ├ stone1
+  │ │ │ ├ stone2
+  │ │ │ ├ stone3
+  │ │ │ └ stone4
   │ │ ├ border
   │ │ │ ├ east
   │ │ │ ├ north
@@ -17078,7 +21392,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │ └ south_west
   │ │ ├ stonehedge
   │ │ ├ tall
-  │ │ │ └
+  │ │ │ └ palisade
   │ │ └ wood
   │ │   ├ east
   │ │   ├ north
@@ -17091,11 +21405,34 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │   └ tall
   │ │     ├ alt
   │ │     └ broken
-  │ │       └
+  │ │       └ alt
   │ ├ statue
   │ │ ├ aasimar
+  │ │ ├ alizeria
+  │ │ │ ├ decor
+  │ │ │ │ ├ ykaz1
+  │ │ │ │ ├ ykaz10
+  │ │ │ │ ├ ykaz11
+  │ │ │ │ ├ ykaz2
+  │ │ │ │ ├ ykaz3
+  │ │ │ │ ├ ykaz4
+  │ │ │ │ ├ ykaz5
+  │ │ │ │ ├ ykaz6
+  │ │ │ │ ├ ykaz7
+  │ │ │ │ ├ ykaz8
+  │ │ │ │ └ ykaz9
+  │ │ │ ├ mogil1
+  │ │ │ ├ mogil2
+  │ │ │ ├ mogil3
+  │ │ │ ├ mogil4
+  │ │ │ ├ mogil5
+  │ │ │ └ mogil6
+  │ │ ├ alizeriadecor
+  │ │ │ ├ stolb1
+  │ │ │ ├ stolb2
+  │ │ │ └ stolb3
   │ │ ├ astrata
-  │ │ │ └
+  │ │ │ └ bling
   │ │ ├ carving_block
   │ │ ├ eilistraee
   │ │ ├ evil
@@ -17112,7 +21449,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ ├ gargoyle
   │ │ │ ├ candles
   │ │ │ └ moss
-  │ │ │   └
+  │ │ │   └ candles
   │ │ ├ knight
   │ │ │ ├ interior
   │ │ │ │ ├ gen
@@ -17143,6 +21480,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ telescope
   │ ├ testportal
   │ ├ traveltile
+  │ │ ├ alashurentrance
   │ │ ├ bandit
   │ │ ├ exit_bandit
   │ │ ├ exit_inhumen
@@ -17161,6 +21499,55 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │   └ r
   │ ├ walldeco
   │ │ ├ alarm
+  │ │ ├ alizeria
+  │ │ │ ├ decor
+  │ │ │ │ ├ flag1
+  │ │ │ │ ├ flag10
+  │ │ │ │ ├ flag11
+  │ │ │ │ ├ flag12
+  │ │ │ │ ├ flag13
+  │ │ │ │ ├ flag2
+  │ │ │ │ ├ flag3
+  │ │ │ │ ├ flag4
+  │ │ │ │ ├ flag5
+  │ │ │ │ ├ flag6
+  │ │ │ │ ├ flag7
+  │ │ │ │ ├ flag8
+  │ │ │ │ ├ flag9
+  │ │ │ │ ├ flagorkind1
+  │ │ │ │ ├ flagorkind2
+  │ │ │ │ ├ plakat1
+  │ │ │ │ ├ plakat10
+  │ │ │ │ ├ plakat11
+  │ │ │ │ ├ plakat12
+  │ │ │ │ ├ plakat2
+  │ │ │ │ ├ plakat3
+  │ │ │ │ ├ plakat4
+  │ │ │ │ ├ plakat5
+  │ │ │ │ ├ plakat6
+  │ │ │ │ ├ plakat7
+  │ │ │ │ ├ plakat8
+  │ │ │ │ ├ plakat9
+  │ │ │ │ ├ plakatspawner
+  │ │ │ │ ├ sign1
+  │ │ │ │ ├ sign2
+  │ │ │ │ └ sign3
+  │ │ │ ├ plants1
+  │ │ │ ├ plants2
+  │ │ │ ├ plants3
+  │ │ │ ├ plants4
+  │ │ │ ├ plants5
+  │ │ │ ├ plants6
+  │ │ │ ├ plants7
+  │ │ │ └ plants8
+  │ │ ├ alizeriapaintings
+  │ │ │ ├ crown
+  │ │ │ ├ demon
+  │ │ │ ├ monsters
+  │ │ │ ├ muscet
+  │ │ │ ├ queen
+  │ │ │ ├ strange
+  │ │ │ └ sybaris
   │ │ ├ artificerflag
   │ │ ├ barbersign
   │ │ ├ barbersignreverse
@@ -17179,22 +21566,23 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │ │ └ outie
   │ │ │ └ wallrope
   │ │ ├ bigpainting
-  │ │ │ └
+  │ │ │ └ lake
   │ │ ├ bsmith
   │ │ ├ chains
   │ │ ├ church
-  │ │ │ └
+  │ │ │ └ line
   │ │ ├ customflag
+  │ │ │ └ deserttown
   │ │ ├ feldshersign
   │ │ ├ gear
-  │ │ │ └
+  │ │ │ └ small
   │ │ ├ goblet
   │ │ ├ innsign
   │ │ ├ mageguild
   │ │ ├ mageguild2
   │ │ ├ maidendrape
   │ │ ├ maidensigil
-  │ │ │ └
+  │ │ │ └ r
   │ │ ├ masonflag
   │ │ ├ med
   │ │ ├ med2
@@ -17212,7 +21600,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ │ ├ seraphina
   │ │ │ └ skull
   │ │ ├ psybanner
-  │ │ │ └
+  │ │ │ └ red
   │ │ ├ selune_banner
   │ │ │ ├ ban1
   │ │ │ ├ ban2
@@ -17224,19 +21612,19 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ │ ├ serpflag
   │ │ ├ sign
   │ │ │ ├ apothecarysign
-  │ │ │ │ └
+  │ │ │ │ └ left
   │ │ │ ├ armorsmithsign
-  │ │ │ │ └
+  │ │ │ │ └ left
   │ │ │ ├ bakerysign
   │ │ │ ├ merchantsign
-  │ │ │ │ └
+  │ │ │ │ └ left
   │ │ │ ├ saiga
-  │ │ │ │ └
+  │ │ │ │ └ left
   │ │ │ ├ tailorsign
-  │ │ │ │ └
+  │ │ │ │ └ left
   │ │ │ ├ trophy
   │ │ │ └ weaponsmithsign
-  │ │ │   └
+  │ │ │   └ left
   │ │ ├ skullspike
   │ │ ├ sparrowflag
   │ │ ├ steward
@@ -17256,12 +21644,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   ├ fluid_drain
   ├ forcefield
   │ ├ casted
-  │ │ └
+  │ │ └ strong
   │ └ strong
   ├ foxpelt
   ├ gate
   │ ├ bars
-  │ │ └
+  │ │ └ preopen
   │ └ preopen
   ├ gearbox
   ├ giantfur
@@ -17273,12 +21661,25 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   ├ guillotine
   ├ handcart
   ├ hay_stack
-  │ └
+  │ └ rope
   ├ healing_spring
   ├ healingfountain
   ├ heart_of_nature
   ├ hotspring
-  │ └
+  │ └ border
+  │   ├ eight
+  │   ├ eleven
+  │   ├ five
+  │   ├ four
+  │   ├ fourteen
+  │   ├ nine
+  │   ├ seven
+  │   ├ six
+  │   ├ ten
+  │   ├ thirteen
+  │   ├ three
+  │   ├ twelve
+  │   └ two
   ├ ice_bridge
   ├ ice_zone
   ├ industrial_lift
@@ -17288,14 +21689,17 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   ├ inert_bonepile
   ├ innocent_bush
   ├ innouous_rock
-  │ └
+  │ └ safe
   ├ irrigation_channel
   ├ island_ascent
   ├ island_descent
   ├ kneestingers
-  │ └
+  │ └ decaying
   ├ kybraxor
   ├ ladder
+  │ ├ alizeria
+  │ │ ├ hatch
+  │ │ └ hatch2
   │ ├ earth
   │ ├ hatch
   │ └ unbreakable
@@ -17320,7 +21724,9 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   ├ mana_pylon
   ├ maniac_return_machine
   ├ mannequin
-  │ └
+  │ └ male
+  │   ├ decorative
+  │   └ female
   ├ material_bin
   ├ meathook
   ├ meatvine
@@ -17335,17 +21741,19 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   ├ meatvineborder
   ├ metal_channel
   ├ minecart_rail
-  │ └
+  │ └ railbreak
   ├ mirror
-  │ └
+  │ └ fancy
   ├ mob_wrap
   ├ nocdevice
   ├ noose
-  │ └
+  │ └ gallows
   ├ noticeboard
   ├ orphan_smasher
   ├ overlord_phylactery
   ├ overlord_portal
+  ├ pillar
+  │ └ sand1
   ├ pillory
   │ ├ church
   │ │ ├ double
@@ -17355,14 +21763,22 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   ├ piston_head
   ├ plank
   ├ plasticflaps
-  │ └
+  │ └ opaque
   ├ plough
+  ├ pocket_dimension_exit
+  │ ├ closet
+  │ └ hole
   ├ portal
   ├ pottery_lathe
   ├ pressure_plate
   ├ pressurizer
   ├ punji_sticks
   ├ rack
+  │ ├ rogue
+  │ │ └ shelf
+  │ │   └ alizeria
+  │ │     ├ shelf1
+  │ │     └ shelf2
   │ ├ shelf
   │ │ ├ big
   │ │ ├ biggest
@@ -17374,7 +21790,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ dust
   │ ├ observer
   │ ├ piston
-  │ │ └
+  │ │ └ sticky
   │ ├ pressure_plate
   │ ├ repeater
   │ ├ torch
@@ -17382,36 +21798,79 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   ├ reliquarybox
   ├ repeater
   ├ resurrection_rune
-  │ └
+  │ ├ antag
+  │ ├ city
+  │ ├ control
+  │ ├ outlaw
+  │ └ werewolf
+  ├ rmh_waystone
+  ├ roguecratesal
+  │ └ alizeria
+  │   └ decor
+  │     ├ crates1
+  │     ├ crates10
+  │     ├ crates11
+  │     ├ crates12
+  │     ├ crates13
+  │     ├ crates14
+  │     ├ crates15
+  │     ├ crates16
+  │     ├ crates17
+  │     ├ crates18
+  │     ├ crates19
+  │     ├ crates2
+  │     ├ crates20
+  │     ├ crates21
+  │     ├ crates22
+  │     ├ crates23
+  │     ├ crates24
+  │     ├ crates3
+  │     ├ crates4
+  │     ├ crates5
+  │     ├ crates6
+  │     ├ crates7
+  │     ├ crates8
+  │     └ crates9
   ├ roguerock
   ├ roguetent
-  │ └
+  │ └ preopen
   ├ roller
   ├ roller_sorter
   ├ rotation_piece
-  │ └
+  │ └ cog
+  │   └ large
   ├ rousman_alarm
   ├ rousman_hole
   ├ sacrificealtar
+  ├ sandrock
+  │ ├ sandrock1
+  │ ├ sandrock2
+  │ ├ sandrock3
+  │ └ sandrock4
   ├ sawblade_trap
   ├ ship_wheel
   ├ shisha
-  │ └
+  │ └ hookah
   ├ sign
-  │ └
+  │ └ property_sign
+  │   ├ claim
+  │   └ for_sale
   ├ snow
   ├ soil
   │ ├ debug_soil
-  │ │ └
+  │ │ └ random
   │ └ mushmound
-  │   └
+  │   └ debug_mushmound
+  │     └ random
   ├ soul
   ├ spawner
-  │ └
+  │ └ wait
+  │   ├ goblin
+  │   └ skeleton
   ├ spider
   │ ├ cocoon
   │ ├ nest
-  │ │ └
+  │ │ └ constructed
   │ └ stickyweb
   │   ├ mirespider
   │   └ solo
@@ -17419,19 +21878,31 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   ├ sprinkler
   ├ stairs
   │ ├ abyss
+  │ ├ ccw
+  │ ├ ccwdown
+  │ ├ cw
+  │ ├ cwdown
   │ ├ d
+  │ ├ desert
   │ ├ fancy
   │ │ ├ c
   │ │ ├ l
   │ │ └ r
   │ └ stone
+  │   ├ ccw
+  │   ├ ccwdown
   │   ├ church
+  │   ├ cw
+  │   ├ cwdown
   │   ├ d
   │   └ reddish
   ├ stalagmite
   ├ stationary_bell
   ├ statue
-  │ └
+  │ └ bone
+  │   ├ rib
+  │   └ skull
+  │     └ half
   ├ steam_recharger
   ├ stockpile_storage
   │ ├ food
@@ -17455,14 +21926,15 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │   ├ burnt
   │   └ cracked
   ├ stripper_pole
-  │ └
+  │ └ wood
   ├ table
   │ ├ church
   │ │ ├ alt
   │ │ ├ end
-  │ │ │ └
+  │ │ │ └ alt
+  │ │ │   └ north
   │ │ └ m
-  │ │   └
+  │ │   └ alt
   │ ├ map
   │ │ ├ amber
   │ │ ├ baotha
@@ -17474,7 +21946,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ optable
   │ ├ stone_small
   │ ├ vtable
-  │ │ └
+  │ │ └ v2
   │ └ wood
   │   ├ bar
   │   ├ cooling
@@ -17496,7 +21968,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │   │ ├ royalblack
   │   │ └ royalblue
   │   ├ fine
-  │   │ └
+  │   │ └ altar
   │   ├ folding
   │   ├ large
   │   │ ├ corner
@@ -17536,7 +22008,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   ├ toilet
   ├ train
   │ ├ carriage
-  │ │ └
+  │ │ └ not_train
   │ └ far_travel
   ├ trap
   │ ├ bomb
@@ -17548,10 +22020,10 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ shock
   │ ├ spike
   │ └ wall_projectile
-  │   └
+  │   └ fireball
   ├ trench
   ├ trophy
-  │ └
+  │ └ deer
   ├ underworld
   │ ├ barrier
   │ ├ carriage
@@ -17562,12 +22034,12 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ └ ship
   │   ├ ramp
   │   └ smol
-  │     └
+  │     └ old
   ├ vampire
   │ ├ bloodpool
   │ ├ necromanticbook
   │ ├ portal
-  │ │ └
+  │ │ └ sending
   │ ├ portalmaker
   │ └ scryingorb
   ├ vertical_gearbox
@@ -17575,19 +22047,21 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   ├ voidstoneobelisk
   ├ wallladder
   ├ warningbell
-  │ └
+  │ └ townhall
   ├ water_dam
   ├ water_pipe
   ├ water_pump
   ├ water_vent
   ├ waterwheel
-  │ └
+  │ └ smol
   ├ well
   │ ├ climb_down
   │ ├ climb_up
   │ ├ fountain
-  │ │ └
+  │ │ └ mana
   │ └ poisoned
+  ├ werewolf_lair_entrance
+  ├ werewolf_lair_trap_maw
   ├ wild_plant
   │ ├ manabloom
   │ ├ nospread
@@ -17633,817 +22107,51 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
   │ ├ harem2
   │ ├ harem3
   │ ├ openclose
-  │ │ └
+  │ │ └ reinforced
   │ ├ solid
   │ └ stained
   │   ├ silver
-  │   │ └
+  │   │ └ alt
   │   ├ yellow
   │   └ zizo
   ├ wine_bubble
-  └ wonder
-
-/mob
-├ camera
-│ ├ bombard_eye
-│ ├ evolution_picker
-│ └ strategy_controller
-│   └
-├ dead
-│ ├ new_player
-│ └ observer
-│   ├ profane
-│   ├ rogue
-│   │ ├ arcaneeye
-│   │ └ nodraw
-│   └ screye
-│     └
-├ dview
-├ living
-│ ├ brain
-│ ├ carbon
-│ │ ├ human
-│ │ │ ├ dummy
-│ │ │ └ species
-│ │ │   ├ aasimar
-│ │ │   │ └
-│ │ │   ├ anthromorph
-│ │ │   ├ anthromorphsmall
-│ │ │   ├ automaton
-│ │ │   │ ├ prefilled_vessel
-│ │ │   │ └ vessel
-│ │ │   ├ demihuman
-│ │ │   │ └
-│ │ │   ├ dragonborn
-│ │ │   ├ dwarf
-│ │ │   │ ├ duergar
-│ │ │   │ └ mountain
-│ │ │   │   └
-│ │ │   ├ elf
-│ │ │   │ ├ dark
-│ │ │   │ │ ├ base
-│ │ │   │ │ │ ├ skilled
-│ │ │   │ │ │ │ ├ heavy_gear
-│ │ │   │ │ │ │ ├ light_gear
-│ │ │   │ │ │ │ ├ medium_gear
-│ │ │   │ │ │ │ └ naked
-│ │ │   │ │ │ ├ unskilled
-│ │ │   │ │ │ │ ├ heavy_gear
-│ │ │   │ │ │ │ ├ light_gear
-│ │ │   │ │ │ │ ├ medium_gear
-│ │ │   │ │ │ │ └ naked
-│ │ │   │ │ │ └ very_skilled
-│ │ │   │ │ │   ├ heavy_gear
-│ │ │   │ │ │   ├ light_gear
-│ │ │   │ │ │   ├ medium_gear
-│ │ │   │ │ │   └ naked
-│ │ │   │ │ └ drowraider
-│ │ │   │ │   └
-│ │ │   │ ├ snow
-│ │ │   │ │ └
-│ │ │   │ └ wood
-│ │ │   ├ gnome
-│ │ │   │ └
-│ │ │   ├ goblin
-│ │ │   │ ├ cave
-│ │ │   │ ├ hell
-│ │ │   │ ├ moon
-│ │ │   │ ├ npc
-│ │ │   │ │ ├ ambush
-│ │ │   │ │ │ ├ cave
-│ │ │   │ │ │ ├ hell
-│ │ │   │ │ │ ├ moon
-│ │ │   │ │ │ └ sea
-│ │ │   │ │ ├ cave
-│ │ │   │ │ ├ hell
-│ │ │   │ │ ├ moon
-│ │ │   │ │ └ sea
-│ │ │   │ ├ sea
-│ │ │   │ └ slaved
-│ │ │   ├ half_anthromorphsmall
-│ │ │   ├ halfling
-│ │ │   ├ halforc
-│ │ │   │ └
-│ │ │   ├ harpy
-│ │ │   │ └
-│ │ │   ├ human
-│ │ │   │ ├ halfdrow
-│ │ │   │ │ └
-│ │ │   │ ├ halfelf
-│ │ │   │ │ └
-│ │ │   │ ├ northern
-│ │ │   │ │ ├ base
-│ │ │   │ │ │ ├ skilled
-│ │ │   │ │ │ │ ├ heavy_gear
-│ │ │   │ │ │ │ ├ light_gear
-│ │ │   │ │ │ │ ├ medium_gear
-│ │ │   │ │ │ │ └ naked
-│ │ │   │ │ │ ├ unskilled
-│ │ │   │ │ │ │ ├ heavy_gear
-│ │ │   │ │ │ │ ├ light_gear
-│ │ │   │ │ │ │ ├ medium_gear
-│ │ │   │ │ │ │ └ naked
-│ │ │   │ │ │ └ very_skilled
-│ │ │   │ │ │   ├ heavy_gear
-│ │ │   │ │ │   ├ light_gear
-│ │ │   │ │ │   ├ medium_gear
-│ │ │   │ │ │   └ naked
-│ │ │   │ │ ├ bog_deserters
-│ │ │   │ │ │ ├ ambush
-│ │ │   │ │ │ └ better_gear
-│ │ │   │ │ │   └
-│ │ │   │ │ ├ bum
-│ │ │   │ │ │ └
-│ │ │   │ │ ├ clasher
-│ │ │   │ │ ├ deranged_knight
-│ │ │   │ │ │ ├ graggar
-│ │ │   │ │ │ ├ hedgeknight
-│ │ │   │ │ │ └ zizo
-│ │ │   │ │ ├ highwayman
-│ │ │   │ │ │ ├ ambush
-│ │ │   │ │ │ └ dk_goon
-│ │ │   │ │ ├ mad_touched_treasure_hunter
-│ │ │   │ │ │ └
-│ │ │   │ │ ├ militia
-│ │ │   │ │ │ ├ ambush
-│ │ │   │ │ │ ├ deserter
-│ │ │   │ │ │ └ guard
-│ │ │   │ │ ├ searaider
-│ │ │   │ │ │ └
-│ │ │   │ │ └ thief
-│ │ │   │ └ space
-│ │ │   │   └
-│ │ │   ├ kobold
-│ │ │   │ └
-│ │ │   ├ lizardfolk
-│ │ │   ├ medicator
-│ │ │   │ └
-│ │ │   ├ minotaur
-│ │ │   │ ├ custom
-│ │ │   │ │ ├ female
-│ │ │   │ │ └ male
-│ │ │   │ ├ female
-│ │ │   │ └ male
-│ │ │   ├ orc
-│ │ │   │ ├ ambush
-│ │ │   │ ├ marauder
-│ │ │   │ ├ npc
-│ │ │   │ │ ├ archer_test
-│ │ │   │ │ ├ berserker
-│ │ │   │ │ ├ footsoldier
-│ │ │   │ │ ├ marauder
-│ │ │   │ │ └ warlord
-│ │ │   │ ├ slaved
-│ │ │   │ ├ tribal
-│ │ │   │ ├ warlord
-│ │ │   │ │ └
-│ │ │   │ └ warrior
-│ │ │   ├ rakshari
-│ │ │   │ └
-│ │ │   ├ rousman
-│ │ │   │ ├ ambush
-│ │ │   │ ├ assassin
-│ │ │   │ ├ npc
-│ │ │   │ └ seer
-│ │ │   ├ skeleton
-│ │ │   │ ├ death_arena
-│ │ │   │ ├ no_equipment
-│ │ │   │ └ npc
-│ │ │   │   ├ ambush
-│ │ │   │   ├ easy
-│ │ │   │   ├ hard
-│ │ │   │   ├ hardspread
-│ │ │   │   ├ medium
-│ │ │   │   ├ mediumspread
-│ │ │   │   ├ no_equipment
-│ │ │   │   ├ peasant
-│ │ │   │   ├ pirate
-│ │ │   │   ├ supereasy
-│ │ │   │   └ warrior
-│ │ │   │     └
-│ │ │   ├ slime
-│ │ │   ├ tabaxi
-│ │ │   ├ taur_kin
-│ │ │   ├ tieberian
-│ │ │   │ └
-│ │ │   ├ triton
-│ │ │   │ └
-│ │ │   ├ werewolf
-│ │ │   │ ├ custom
-│ │ │   │ │ ├ female
-│ │ │   │ │ └ male
-│ │ │   │ ├ female
-│ │ │   │ └ male
-│ │ │   ├ yuanti
-│ │ │   └ zizombie
-│ │ │     ├ ambush
-│ │ │     └ npc
-│ │ │       ├ ambush
-│ │ │       ├ GRENZEL
-│ │ │       ├ militiamen
-│ │ │       ├ peasant
-│ │ │       └ warrior
-│ │ ├ monkey
-│ │ │ └
-│ │ ├ spirit
-│ │ └ superior_animal
-│ ├ simple_animal
-│ │ ├ hostile
-│ │ │ ├ boss
-│ │ │ │ └
-│ │ │ ├ deepone
-│ │ │ │ ├ arm
-│ │ │ │ │ └
-│ │ │ │ ├ boss
-│ │ │ │ ├ elite
-│ │ │ │ │ └
-│ │ │ │ ├ spit
-│ │ │ │ │ └
-│ │ │ │ └ wiz
-│ │ │ │   └
-│ │ │ ├ dragger
-│ │ │ ├ dragon_clone
-│ │ │ ├ dreamfiend
-│ │ │ │ ├ ancient
-│ │ │ │ └ major
-│ │ │ ├ gnome_homunculus
-│ │ │ ├ haunt
-│ │ │ ├ kraken_tentacle
-│ │ │ │ ├ grabber
-│ │ │ │ └ spitter
-│ │ │ ├ mirespider_lurker
-│ │ │ │ ├ angry
-│ │ │ │ └ mushroom
-│ │ │ ├ mirespider_paralytic
-│ │ │ │ └
-│ │ │ ├ orc
-│ │ │ │ ├ orc_marauder
-│ │ │ │ │ ├ ravager
-│ │ │ │ │ └ spear
-│ │ │ │ ├ orc2
-│ │ │ │ ├ ranged
-│ │ │ │ ├ spear
-│ │ │ │ └ spear2
-│ │ │ ├ retaliate
-│ │ │ │ ├ astral_projection
-│ │ │ │ ├ banker
-│ │ │ │ ├ bat
-│ │ │ │ │ └
-│ │ │ │ ├ bigrat
-│ │ │ │ ├ blacksmith
-│ │ │ │ ├ blood
-│ │ │ │ │ ├ ascended
-│ │ │ │ │ └ weird
-│ │ │ │ ├ bobcat
-│ │ │ │ ├ bogbug
-│ │ │ │ ├ bull
-│ │ │ │ ├ chicken
-│ │ │ │ │ └
-│ │ │ │ ├ cow
-│ │ │ │ │ └
-│ │ │ │ ├ direbear
-│ │ │ │ │ └
-│ │ │ │ ├ ebjik
-│ │ │ │ ├ elemental
-│ │ │ │ │ ├ behemoth
-│ │ │ │ │ ├ collossus
-│ │ │ │ │ ├ crawler
-│ │ │ │ │ └ warden
-│ │ │ │ ├ fae
-│ │ │ │ │ ├ agriopylon
-│ │ │ │ │ │ ├ artemisia
-│ │ │ │ │ │ ├ atropa
-│ │ │ │ │ │ ├ benedictus
-│ │ │ │ │ │ ├ calendula
-│ │ │ │ │ │ ├ euphorbia
-│ │ │ │ │ │ ├ euphrasia
-│ │ │ │ │ │ ├ hypericum
-│ │ │ │ │ │ ├ matricaria
-│ │ │ │ │ │ ├ mentha
-│ │ │ │ │ │ ├ paris
-│ │ │ │ │ │ ├ rosa
-│ │ │ │ │ │ ├ salvia
-│ │ │ │ │ │ ├ symphitum
-│ │ │ │ │ │ ├ taraxacum
-│ │ │ │ │ │ ├ urtica
-│ │ │ │ │ │ └ valeriana
-│ │ │ │ │ ├ dryad
-│ │ │ │ │ ├ glimmerwing
-│ │ │ │ │ ├ sprite
-│ │ │ │ │ └ sylph
-│ │ │ │ ├ fox
-│ │ │ │ ├ frog
-│ │ │ │ ├ gaseousform
-│ │ │ │ ├ gator
-│ │ │ │ ├ goat
-│ │ │ │ │ └
-│ │ │ │ ├ goatmale
-│ │ │ │ ├ headless
-│ │ │ │ ├ honse
-│ │ │ │ │ ├ kid
-│ │ │ │ │ │ └
-│ │ │ │ │ ├ male
-│ │ │ │ │ │ └
-│ │ │ │ │ └ tame
-│ │ │ │ │   └
-│ │ │ │ ├ infernal
-│ │ │ │ │ ├ fiend
-│ │ │ │ │ ├ hellhound
-│ │ │ │ │ ├ imp
-│ │ │ │ │ └ watcher
-│ │ │ │ ├ lamia
-│ │ │ │ ├ leylinelycan
-│ │ │ │ ├ meatvine
-│ │ │ │ │ ├ artiliery
-│ │ │ │ │ ├ broodmother
-│ │ │ │ │ ├ burrower
-│ │ │ │ │ ├ constructor
-│ │ │ │ │ ├ defender
-│ │ │ │ │ ├ flyer
-│ │ │ │ │ ├ goliath
-│ │ │ │ │ ├ infantry
-│ │ │ │ │ ├ range
-│ │ │ │ │ ├ runner
-│ │ │ │ │ ├ skin_stealer
-│ │ │ │ │ ├ spawnlord
-│ │ │ │ │ ├ stalker
-│ │ │ │ │ ├ tank
-│ │ │ │ │ └ warrior
-│ │ │ │ ├ mimic
-│ │ │ │ ├ minotaur
-│ │ │ │ │ ├ axe
-│ │ │ │ │ │ └
-│ │ │ │ │ └ female
-│ │ │ │ ├ mirespider
-│ │ │ │ │ └
-│ │ │ │ ├ mole
-│ │ │ │ │ └
-│ │ │ │ ├ overlord_minion
-│ │ │ │ ├ poltergeist
-│ │ │ │ ├ raccoon
-│ │ │ │ ├ saiga
-│ │ │ │ │ ├ horse
-│ │ │ │ │ │ ├ black
-│ │ │ │ │ │ │ ├ male
-│ │ │ │ │ │ │ │ └
-│ │ │ │ │ │ │ └ tame
-│ │ │ │ │ │ │   └
-│ │ │ │ │ │ ├ brown
-│ │ │ │ │ │ │ ├ male
-│ │ │ │ │ │ │ │ └
-│ │ │ │ │ │ │ └ tame
-│ │ │ │ │ │ │   └
-│ │ │ │ │ │ ├ kid
-│ │ │ │ │ │ │ ├ black
-│ │ │ │ │ │ │ │ └
-│ │ │ │ │ │ │ ├ boy
-│ │ │ │ │ │ │ ├ brown
-│ │ │ │ │ │ │ │ └
-│ │ │ │ │ │ │ └ raondom
-│ │ │ │ │ │ ├ male
-│ │ │ │ │ │ │ └
-│ │ │ │ │ │ ├ random
-│ │ │ │ │ │ └ tame
-│ │ │ │ │ │   └
-│ │ │ │ │ ├ saigakid
-│ │ │ │ │ │ └
-│ │ │ │ │ └ tame
-│ │ │ │ │   └
-│ │ │ │ ├ saigabuck
-│ │ │ │ │ └
-│ │ │ │ ├ shade
-│ │ │ │ ├ shark
-│ │ │ │ ├ smallrat
-│ │ │ │ ├ snapper
-│ │ │ │ ├ spider
-│ │ │ │ │ ├ companion
-│ │ │ │ │ ├ mutated
-│ │ │ │ │ └ robotic
-│ │ │ │ ├ swamp_kraken
-│ │ │ │ ├ trader
-│ │ │ │ ├ troll
-│ │ │ │ │ ├ axe
-│ │ │ │ │ ├ bog
-│ │ │ │ │ ├ broodmother
-│ │ │ │ │ ├ caerbannog
-│ │ │ │ │ ├ cave
-│ │ │ │ │ │ └
-│ │ │ │ │ ├ quiet
-│ │ │ │ │ ├ rous
-│ │ │ │ │ └ slaved
-│ │ │ │ ├ trufflepig
-│ │ │ │ │ ├ female
-│ │ │ │ │ ├ male
-│ │ │ │ │ └ piglet
-│ │ │ │ │   └
-│ │ │ │ ├ voiddragon
-│ │ │ │ │ └
-│ │ │ │ ├ voidstoneobelisk
-│ │ │ │ ├ wolf
-│ │ │ │ │ ├ companion
-│ │ │ │ │ └ familiar
-│ │ │ │ └ wolf_undead
-│ │ │ ├ skeleton
-│ │ │ │ ├ axe
-│ │ │ │ ├ bow
-│ │ │ │ ├ guard
-│ │ │ │ └ spear
-│ │ │ └ werewolf
-│ │ └ pet
-│ │   ├ cat
-│ │   │ ├ black
-│ │   │ ├ cabbit
-│ │   │ ├ inn
-│ │   │ ├ kitten
-│ │   │ └ original
-│ │   └ giraffe
-│ └ split_personality
-│   └
-└ oranges_ear
-
-/atom
-└
-
-/area
-├ delver
-├ indoors
-│ ├ bandit_lair
-│ ├ butchershop
-│ ├ cave
-│ │ ├ central
-│ │ ├ east
-│ │ ├ late
-│ │ ├ northern
-│ │ ├ rmh_cave
-│ │ │ ├ cold
-│ │ │ ├ greenskins
-│ │ │ ├ mine
-│ │ │ ├ minotaur
-│ │ │ ├ to_underdark
-│ │ │ └ wet
-│ │ │   ├ lake
-│ │ │   └ mindflayer
-│ │ ├ rmh_desertcaves
-│ │ ├ rmh_dwarf_keep
-│ │ │ ├ communal
-│ │ │ ├ entrance
-│ │ │ ├ forge
-│ │ │ ├ grand
-│ │ │ ├ living
-│ │ │ ├ smelters
-│ │ │ ├ throne
-│ │ │ └ treasury
-│ │ ├ southern
-│ │ ├ underhamlet
-│ │ └ west
-│ ├ dungeon
-│ ├ inq
-│ │ ├ basement
-│ │ └ office
-│ ├ lich
-│ ├ mountains
-│ │ └
-│ ├ rmh_desert
-│ │ ├ phouse
-│ │ └ tea
-│ ├ shelter
-│ │ ├ basin
-│ │ ├ bog
-│ │ │ └
-│ │ ├ mountains
-│ │ │ ├ decap
-│ │ │ └ rmh_mountains
-│ │ │   └
-│ │ ├ rmh_desert
-│ │ │ └
-│ │ ├ rmh_field
-│ │ ├ town
-│ │ │ ├ rmh
-│ │ │ │ └
-│ │ │ └ roofs
-│ │ └ woods
-│ │   └
-│ ├ ship
-│ ├ soilsons
-│ ├ town
-│ │ ├ bath
-│ │ │ └
-│ │ ├ cell
-│ │ ├ church
-│ │ │ ├ chapel
-│ │ │ └ inquisition
-│ │ ├ clinic_large
-│ │ │ ├ apothecary
-│ │ │ └ feldsher
-│ │ ├ clocktower
-│ │ ├ dwarfin
-│ │ ├ entrance
-│ │ ├ fire_chamber
-│ │ ├ garrison
-│ │ │ └
-│ │ ├ keep
-│ │ │ ├ archivist
-│ │ │ ├ captain
-│ │ │ ├ dungeoneer
-│ │ │ ├ feast
-│ │ │ ├ garrison
-│ │ │ ├ gate
-│ │ │ ├ guest
-│ │ │ │ ├ guest1
-│ │ │ │ ├ guest2
-│ │ │ │ └ meeting
-│ │ │ ├ halls
-│ │ │ │ ├ e
-│ │ │ │ ├ n
-│ │ │ │ ├ s
-│ │ │ │ └ w
-│ │ │ ├ hand
-│ │ │ ├ heir
-│ │ │ │ ├ heir1
-│ │ │ │ └ heir2
-│ │ │ ├ jester
-│ │ │ ├ kitchen
-│ │ │ │ └
-│ │ │ ├ knight
-│ │ │ │ ├ knight1
-│ │ │ │ └ knight2
-│ │ │ ├ library
-│ │ │ ├ lord_appt
-│ │ │ ├ magician
-│ │ │ ├ phys
-│ │ │ ├ servant
-│ │ │ ├ servanthead
-│ │ │ ├ squire
-│ │ │ │ ├ squire1
-│ │ │ │ └ squire2
-│ │ │ └ throne
-│ │ ├ magician
-│ │ ├ manor
-│ │ │ ├ archivist
-│ │ │ ├ captain
-│ │ │ ├ dungeoneer
-│ │ │ ├ feast
-│ │ │ ├ garrison
-│ │ │ ├ guest
-│ │ │ │ ├ guest1
-│ │ │ │ ├ guest2
-│ │ │ │ └ meeting
-│ │ │ ├ halls
-│ │ │ │ ├ e
-│ │ │ │ ├ n
-│ │ │ │ ├ s
-│ │ │ │ └ w
-│ │ │ ├ hand
-│ │ │ ├ heir
-│ │ │ │ ├ heir1
-│ │ │ │ └ heir2
-│ │ │ ├ jester
-│ │ │ ├ kitchen
-│ │ │ │ └
-│ │ │ ├ knight
-│ │ │ │ ├ knight1
-│ │ │ │ └ knight2
-│ │ │ ├ library
-│ │ │ ├ lord_appt
-│ │ │ ├ phys
-│ │ │ ├ servant
-│ │ │ ├ servanthead
-│ │ │ ├ squire
-│ │ │ │ ├ squire1
-│ │ │ │ └ squire2
-│ │ │ └ throne
-│ │ ├ manorgate
-│ │ ├ merc_guild
-│ │ ├ noble_manor
-│ │ │ ├ blue
-│ │ │ ├ red
-│ │ │ └ yellow
-│ │ ├ orphanage
-│ │ ├ rmh
-│ │ │ ├ bank
-│ │ │ ├ barber
-│ │ │ ├ bath
-│ │ │ ├ cell
-│ │ │ ├ chapel
-│ │ │ │ └
-│ │ │ ├ crafters_guild
-│ │ │ │ └
-│ │ │ ├ farm
-│ │ │ ├ garrison
-│ │ │ │ └
-│ │ │ ├ library
-│ │ │ ├ magician
-│ │ │ │ └
-│ │ │ ├ manor
-│ │ │ │ ├ basement
-│ │ │ │ ├ bath
-│ │ │ │ └ vault
-│ │ │ ├ merchant
-│ │ │ ├ miner
-│ │ │ ├ sawmill
-│ │ │ ├ tavern
-│ │ │ ├ town_hall
-│ │ │ └ witch
-│ │ ├ shop
-│ │ ├ smithy
-│ │ ├ steward
-│ │ ├ tavern
-│ │ │ └
-│ │ ├ theatre
-│ │ ├ thieves_guild
-│ │ ├ town_elder
-│ │ │ └
-│ │ ├ vault
-│ │ └ warehouse
-│ ├ vampire_manor
-│ ├ villagegarrison
-│ └ wilderness
-│   ├ garrison
-│   ├ magic
-│   ├ shop
-│   └ tavern
-├ misc
-│ └
-├ outdoors
-│ ├ basin
-│ │ └
-│ ├ beach
-│ │ ├ boat
-│ │ └ rmh_beach
-│ ├ bog
-│ │ ├ inhumen_camp
-│ │ └ rmh
-│ │   ├ north
-│ │   ├ south
-│ │   └ travel
-│ │     ├ forest_to_main
-│ │     ├ main
-│ │     ├ swamp_to_main
-│ │     └ underdark
-│ ├ caves
-│ ├ caves_rmh
-│ ├ coast
-│ ├ eora
-│ ├ exposed
-│ │ ├ bath
-│ │ │ └
-│ │ ├ cell
-│ │ ├ church
-│ │ ├ decap
-│ │ ├ dwarf
-│ │ ├ magiciantower
-│ │ ├ manorgarri
-│ │ ├ rmh
-│ │ │ ├ bath
-│ │ │ ├ chapel
-│ │ │ ├ crafters
-│ │ │ ├ manorgarri
-│ │ │ ├ merchant
-│ │ │ ├ tavern
-│ │ │ └ under
-│ │ │   └
-│ │ ├ rmh_dwarf_keep
-│ │ ├ shop
-│ │ ├ tavern
-│ │ │ └
-│ │ ├ theatre
-│ │ ├ town
-│ │ │ └
-│ │ └ under
-│ │   ├ basement
-│ │   ├ rmh
-│ │   │ └
-│ │   ├ sewer
-│ │   └ town
-│ ├ farm
-│ ├ mountains
-│ │ ├ anvil
-│ │ │ ├ castle
-│ │ │ ├ grove
-│ │ │ ├ lavaexposed
-│ │ │ ├ peak
-│ │ │ ├ snowy
-│ │ │ └ snowyforest
-│ │ ├ decap
-│ │ ├ deception
-│ │ └ rmh_mountains
-│ │   └
-│ ├ river
-│ ├ rmh_air
-│ ├ rmh_desert
-│ │ ├ dungeon1
-│ │ ├ oasis
-│ │ ├ port
-│ │ ├ roofs
-│ │ ├ sea
-│ │ ├ tea
-│ │ └ valley
-│ ├ rmh_field
-│ │ ├ camp
-│ │ ├ druid
-│ │ ├ east
-│ │ ├ north
-│ │ ├ north_mountain
-│ │ ├ tavel
-│ │ │ ├ desert
-│ │ │ ├ forest
-│ │ │ ├ mount_to_rivermist
-│ │ │ ├ mount_to_underdark
-│ │ │ ├ mountain
-│ │ │ ├ swamps
-│ │ │ └ vampires
-│ │ └ west
-│ ├ spidercave
-│ │ └
-│ ├ town
-│ │ ├ keep
-│ │ ├ noble_manor
-│ │ │ ├ blue
-│ │ │ ├ red
-│ │ │ └ yellow
-│ │ ├ rmh
-│ │ │ └
-│ │ └ roofs
-│ ├ wilderness
-│ │ └
-│ ├ woods
-│ │ └
-│ └ woods_safe
-├ overlord_lair
-├ ship
-│ ├ middeck
-│ ├ nobledeck
-│ ├ shipbrig
-│ └ topdeck
-├ start
-├ template_noop
-├ under
-│ ├ cave
-│ │ ├ mazedungeon
-│ │ ├ orcdungeon
-│ │ ├ rmh
-│ │ │ └
-│ │ └ spider
-│ │   └
-│ ├ cavelava
-│ │ ├ acid
-│ │ └ rmh
-│ │   └
-│ ├ cavewet
-│ │ ├ bogcaves
-│ │ │ ├ camp
-│ │ │ ├ central
-│ │ │ ├ coastcaves
-│ │ │ ├ north
-│ │ │ ├ south
-│ │ │ └ west
-│ │ └ rmh
-│ │   ├ swamp_caves
-│ │   ├ werewolf
-│ │   └ wolf
-│ ├ dungeon
-│ ├ lake
-│ ├ mountains
-│ │ └
-│ ├ rmh_bedrock
-│ ├ rmh_desert
-│ │ ├ pyramid
-│ │ ├ spider
-│ │ ├ tea
-│ │ │ ├ harem
-│ │ │ ├ hareml
-│ │ │ ├ palacecasemates
-│ │ │ └ palacecellar
-│ │ └ ziqurat
-│ ├ spiderbase
-│ ├ tomb
-│ │ ├ cave
-│ │ │ ├ lava
-│ │ │ ├ spider
-│ │ │ └ wet
-│ │ ├ indoors
-│ │ │ ├ church
-│ │ │ ├ magic
-│ │ │ ├ rest
-│ │ │ └ royal
-│ │ ├ lake
-│ │ ├ sewer
-│ │ └ wilds
-│ │   ├ ambush
-│ │   └ bog
-│ ├ town
-│ │ ├ basement
-│ │ │ └
-│ │ ├ rmh
-│ │ │ ├ bank
-│ │ │ ├ basement
-│ │ │ ├ sewer
-│ │ │ └ treasury
-│ │ └ sewer
-│ └ underdark
-│   └
-└ underworld
-
+  ├ wonder
+  └ wooden_horse
+    ├ metal
+    ├ mobile
+    └ small
+/particles
+├ echo
+├ fog
+│ └ breath
+├ hotspring_steam
+├ leaf
+├ mist
+│ └ waterfall
+├ papameat
+├ particle_song
+├ sakura
+├ smoke
+│ ├ ash
+│ ├ burning
+│ │ └ small
+│ ├ cig
+│ │ └ big
+│ │   └ steam
+│ └ steam
+│   ├ bad
+│   ├ mild
+│   └ water_vent
+├ sparks
+├ water_spray
+└ weather
+  ├ dark
+  ├ fall_leaves
+  ├ fog
+  │ └ swamp
+  ├ rain
+  └ snow
+/procpath
 /turf
 ├ baseturf_bottom
 ├ baseturf_skipover
@@ -18452,6 +22160,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ dungeon_void
 │ ├ indestructible
 │ │ ├ baseturfs_ded
+│ │ ├ pocket_border
 │ │ ├ rock
 │ │ ├ roguewindow
 │ │ └ wooddark
@@ -18459,22 +22168,23 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │   └ mast
 │ ├ mineral
 │ │ ├ bedrock
-│ │ │ └
+│ │ │ ├ cold
+│ │ │ └ sandstone
 │ │ ├ cinnabar
-│ │ │ └
+│ │ │ └ cold
 │ │ ├ coal
-│ │ │ └
+│ │ │ └ cold
 │ │ ├ cold
 │ │ ├ copper
-│ │ │ └
+│ │ │ └ cold
 │ │ ├ gemeralds
-│ │ │ └
+│ │ │ └ cold
 │ │ ├ gold
-│ │ │ └
+│ │ │ └ cold
 │ │ ├ iron
-│ │ │ └
+│ │ │ └ cold
 │ │ ├ mana_crystal
-│ │ │ └
+│ │ │ └ cold
 │ │ ├ random
 │ │ │ ├ cold
 │ │ │ │ ├ high
@@ -18486,13 +22196,28 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ low_valuable
 │ │ │ ├ med
 │ │ │ ├ med_nonval
-│ │ │ └ med_valuable
+│ │ │ ├ med_valuable
+│ │ │ ├ random
+│ │ │ │ └ sandstone
+│ │ │ │   ├ high
+│ │ │ │   └ med
+│ │ │ └ sandstone
+│ │ │   ├ cinnabar
+│ │ │   ├ coal
+│ │ │   ├ copper
+│ │ │   ├ gem
+│ │ │   ├ gold
+│ │ │   ├ iron
+│ │ │   ├ salt
+│ │ │   ├ silver
+│ │ │   └ tin
 │ │ ├ salt
-│ │ │ └
+│ │ │ └ cold
+│ │ ├ sandstone
 │ │ ├ silver
-│ │ │ └
+│ │ │ └ cold
 │ │ └ tin
-│ │   └
+│ │   └ cold
 │ ├ sea_fog
 │ ├ splashscreen
 │ └ wall
@@ -18507,13 +22232,13 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ │ └ window
 │   │ ├ decostone
 │   │ │ ├ cand
-│   │ │ │ └
+│   │ │ │ └ reddish
 │   │ │ ├ center
 │   │ │ ├ end
 │   │ │ ├ fluffstone
-│   │ │ │ └
+│   │ │ │ └ reddish
 │   │ │ ├ long
-│   │ │ │ └
+│   │ │ │ └ east_west
 │   │ │ └ moss
 │   │ │   ├ blue
 │   │ │   │ ├ cand
@@ -18527,33 +22252,39 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │   │ │     ├ end
 │   │ │     └ long
 │   │ ├ decowood
-│   │ │ └
+│   │ │ └ vert
 │   │ ├ desert_sandstone
-│   │ │ └
+│   │ │ └ window
+│   │ │   └ brass
 │   │ ├ desert_soapstone
 │   │ ├ pipe
 │   │ │ ├ joint
-│   │ │ │ └
+│   │ │ │ └ four
 │   │ │ └ line
 │   │ ├ roofwall
 │   │ │ ├ center
 │   │ │ ├ innercorner
 │   │ │ ├ middle
 │   │ │ └ outercorner
+│   │ ├ sandbrick
+│   │ ├ sandstone
 │   │ ├ stone
 │   │ │ ├ moss
 │   │ │ │ ├ blue
 │   │ │ │ └ red
 │   │ │ └ window
-│   │ │   └
+│   │ │   └ moss
+│   │ │     ├ blue
+│   │ │     └ red
 │   │ ├ stonebrick
-│   │ │ └
+│   │ │ └ reddish
 │   │ ├ tent
 │   │ ├ underbrick
-│   │ │ └
+│   │ │ └ fake_world
 │   │ ├ wood
-│   │ │ └
+│   │ │ └ window
 │   │ └ wooddark
+│   │   ├ deco
 │   │   ├ end
 │   │   ├ horizontal
 │   │   ├ slitted
@@ -18569,7 +22300,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ dungeon_trap
 │ ├ floor
 │ │ ├ abyss_sand
-│ │ │ └
+│ │ │ └ path
 │ │ ├ abyss_tile
 │ │ │ ├ three
 │ │ │ └ two
@@ -18579,14 +22310,20 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ ├ carved
 │ │ │ ├ green
 │ │ │ ├ newstone
-│ │ │ │ └
+│ │ │ │ └ alt
 │ │ │ ├ paving
-│ │ │ │ └
+│ │ │ │ └ vert
 │ │ │ ├ platform
 │ │ │ ├ snow
 │ │ │ └ stonered
-│ │ │   └
+│ │ │   └ tiny
 │ │ ├ carpet
+│ │ │ ├ alizeria
+│ │ │ │ └ tiles
+│ │ │ │   ├ carpet1
+│ │ │ │   ├ carpet2
+│ │ │ │   ├ carpet3
+│ │ │ │   └ carpet4
 │ │ │ ├ green
 │ │ │ ├ inn
 │ │ │ ├ lord
@@ -18631,14 +22368,42 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ concrete
 │ │ ├ cracked_earth
 │ │ ├ dark_ice
+│ │ ├ desert
+│ │ │ ├ citybrick
+│ │ │ │ ├ citybrick1
+│ │ │ │ ├ citybrick2
+│ │ │ │ ├ citybrick3
+│ │ │ │ ├ citybrick4
+│ │ │ │ ├ citybrick5
+│ │ │ │ └ citybrick6
+│ │ │ ├ darkpath
+│ │ │ ├ desert_grass
+│ │ │ ├ deserttile
+│ │ │ │ ├ tiledrab2
+│ │ │ │ ├ tilegreeny
+│ │ │ │ ├ tilegreyblu
+│ │ │ │ ├ tilegreywhite
+│ │ │ │ ├ tilespecial
+│ │ │ │ ├ tilewhiteblue
+│ │ │ │ ├ tilewhitebluespecial
+│ │ │ │ └ tilewhitegreen
+│ │ │ ├ dunes
+│ │ │ ├ lightpath
+│ │ │ └ sandbrick
+│ │ ├ desert_grass
+│ │ │ └ nospawn
 │ │ ├ dirt
 │ │ │ ├ ambush
+│ │ │ ├ desert
+│ │ │ │ └ nospawn
 │ │ │ ├ road
-│ │ │ │ └
+│ │ │ │ ├ desert
+│ │ │ │ └ snowy
 │ │ │ └ snowy
 │ │ ├ flesh
 │ │ ├ grass
 │ │ │ ├ cold
+│ │ │ ├ desert
 │ │ │ ├ eora
 │ │ │ ├ healthy
 │ │ │ ├ hell
@@ -18659,18 +22424,48 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ metal
 │ │ │ ├ alt
 │ │ │ └ barograte
-│ │ │   └
+│ │ │   └ open
 │ │ ├ mushroom
 │ │ │ ├ blue
 │ │ │ └ green
 │ │ ├ naturalstone
+│ │ │ └ sandstone
 │ │ ├ plank
-│ │ │ └
+│ │ │ └ h
 │ │ ├ plasteel
-│ │ │ └
+│ │ │ └ maniac
+│ │ │   └ damaged
 │ │ ├ rooftop
-│ │ │ └
+│ │ │ └ green
+│ │ │   ├ corner1
+│ │ │   ├ east
+│ │ │   ├ north
+│ │ │   └ west
 │ │ ├ ruinedwood
+│ │ │ ├ alizeria
+│ │ │ │ └ tiles
+│ │ │ │   ├ carpet1
+│ │ │ │   ├ wood1
+│ │ │ │   ├ wood10
+│ │ │ │   ├ wood19
+│ │ │ │   ├ wood2
+│ │ │ │   ├ wood20
+│ │ │ │   ├ wood21
+│ │ │ │   ├ wood22
+│ │ │ │   ├ wood23
+│ │ │ │   ├ wood24
+│ │ │ │   ├ wood25
+│ │ │ │   ├ wood26
+│ │ │ │   ├ wood27
+│ │ │ │   ├ wood28
+│ │ │ │   ├ wood29
+│ │ │ │   ├ wood3
+│ │ │ │   ├ wood4
+│ │ │ │   ├ wood5
+│ │ │ │   ├ wood6
+│ │ │ │   ├ wood7
+│ │ │ │   ├ wood8
+│ │ │ │   └ wood9
 │ │ │ ├ alt
 │ │ │ ├ chevron
 │ │ │ ├ darker
@@ -18686,27 +22481,6 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ sand
 │ │ │ ├ bloodied
 │ │ │ ├ desert
-│ │ │ ├ desertsand
-│ │ │ │ ├ oasis
-│ │ │ │ └ sandpath
-│ │ │ ├ dunes
-│ │ │ │ ├ citybrick
-│ │ │ │ │ ├ citybrick1
-│ │ │ │ │ ├ citybrick2
-│ │ │ │ │ ├ citybrick3
-│ │ │ │ │ ├ citybrick4
-│ │ │ │ │ ├ citybrick5
-│ │ │ │ │ └ citybrick6
-│ │ │ │ ├ darkpath
-│ │ │ │ ├ desert_grass
-│ │ │ │ ├ deserttile
-│ │ │ │ ├ dirt
-│ │ │ │ │ ├ desert
-│ │ │ │ │ └ road
-│ │ │ │ │   └
-│ │ │ │ ├ lightpath
-│ │ │ │ └ sandbrick
-│ │ │ ├ sandbrick
 │ │ │ └ sandstone
 │ │ ├ sandstone
 │ │ ├ sandstone_tile
@@ -18718,9 +22492,19 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ ├ snow
 │ │ │ ├ patchy
 │ │ │ └ rough
+│ │ ├ snowpath
+│ │ │ ├ snowcorner
+│ │ │ ├ snowpatht
+│ │ │ └ snowpathx
 │ │ ├ tile
+│ │ │ ├ alizeria
+│ │ │ │ └ tiles
+│ │ │ │   ├ stonefloor1
+│ │ │ │   ├ stonefloor2
+│ │ │ │   ├ stonefloor3
+│ │ │ │   └ stonefloor4
 │ │ │ ├ bath
-│ │ │ │ └
+│ │ │ │ └ pool
 │ │ │ ├ bfloorz
 │ │ │ ├ brick
 │ │ │ ├ brownbrick
@@ -18740,19 +22524,21 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ │ │ └ spiral
 │ │ │ └ tilerg
 │ │ ├ twig
-│ │ │ └
+│ │ │ └ platform
 │ │ ├ underworld
 │ │ │ ├ arena
 │ │ │ ├ road
 │ │ │ └ space
 │ │ │   ├ quiet
 │ │ │   └ sparkle_quiet
-│ │ │     └
+│ │ │     └ fake_world
 │ │ ├ volcanic
 │ │ ├ wood
-│ │ │ └
+│ │ │ └ nosmooth
+│ │ │   └ saiga
 │ │ └ woodturned
-│ │   └
+│ │   └ nosmooth
+│ │     └ saiga
 │ ├ glass
 │ ├ lava
 │ │ ├ acid
@@ -18760,70 +22546,32 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ ├ openspace
 │ └ water
 │   ├ acid
-│   │ └
+│   │ └ mapped
 │   ├ bath
-│   │ └
+│   │ └ pool
+│   │   └ mid
 │   ├ blood
-│   ├ cleanshallow
-│   │ └
+│   ├ clean
+│   │ ├ dirt
+│   │ │ └ under
+│   │ └ under
 │   ├ marsh
-│   │ └
+│   │ └ deep
 │   ├ ocean
-│   │ └
+│   │ ├ abyss
+│   │ │ └ under
+│   │ └ under
 │   ├ pond
 │   ├ river
 │   │ ├ blood
 │   │ ├ creatable
-│   │ └ dirt
+│   │ ├ dirt
+│   │ │ └ under
+│   │ └ under
 │   ├ sewer
+│   │ └ under
 │   └ swamp
-│     └
+│     └ deep
 └ template_noop
-
-/client
-
-/image
-└
-
-/mutable_appearance
-└
-
-/particles
-├ echo
-├ fog
-│ └
-├ hotspring_steam
-├ leaf
-├ mist
-│ └
-├ papameat
-├ particle_song
-├ sakura
-├ smoke
-│ ├ ash
-│ ├ burning
-│ │ └
-│ ├ cig
-│ │ └
-│ └ steam
-│   ├ bad
-│   ├ mild
-│   └ water_vent
-├ sparks
-├ water_spray
-└ weather
-  ├ dark
-  ├ fall_leaves
-  ├ fog
-  │ └
-  ├ rain
-  └ snow
-
-/matrix
-
-/icon
-
-/procpath
-
 /world
 ```

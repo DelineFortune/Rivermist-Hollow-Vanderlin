@@ -1,9 +1,9 @@
 ﻿# Subsystem Map
 
-Generated on 2026-03-11 from subsystem macro declarations in `code/controllers/subsystem/**`.
+Generated on 2026-05-23 from subsystem macro declarations in `code/controllers/subsystem/**`.
 
-- Total subsystem declarations detected: **127**
-- Macro family breakdown: AI_CONTROLLER_SUBSYSTEM_DEF=1, MOVEMENT_SUBSYSTEM_DEF=2, PROCESSING_SUBSYSTEM_DEF=30, SUBSYSTEM_DEF=92, TIMER_SUBSYSTEM_DEF=1, VERB_MANAGER_SUBSYSTEM_DEF=1
+- Total subsystem declarations detected: **129**
+- Macro family breakdown: AI_CONTROLLER_SUBSYSTEM_DEF=1, MOVEMENT_SUBSYSTEM_DEF=2, PROCESSING_SUBSYSTEM_DEF=30, SUBSYSTEM_DEF=94, TIMER_SUBSYSTEM_DEF=1, VERB_MANAGER_SUBSYSTEM_DEF=1
 - Naming rule: macros in `code/__DEFINES/MC.dm` synthesize globals in the form `SS<name>` and the corresponding type path under `/datum/controller/subsystem/...`.
 
 ## Category Summary
@@ -12,11 +12,11 @@ Generated on 2026-03-11 from subsystem macro declarations in `code/controllers/s
 | --- | ---: | --- |
 | AI & movement | 4 | `SSconveyors`, `SSminecarts`, `SSmove_manager`, `SSmovement` |
 | Boot, assets & infrastructure | 10 | `SSasset_loading`, `SSassets`, `SSatoms`, `SSban_cache`, `SSblackbox` |
-| Gameplay simulation | 57 | `SSachievements`, `SSacid`, `SSadjacent_air`, `SSai_controllers`, `SSai_idle_controllers` |
+| Gameplay simulation | 58 | `SSachievements`, `SSacid`, `SSadjacent_air`, `SSai_controllers`, `SSai_idle_controllers` |
 | Processing loops | 25 | `SSaction_charge`, `SSaggro`, `SSai_behaviors`, `SSai_movement`, `SSanvil` |
 | Round flow & player lifecycle | 7 | `SSgamemode`, `SSjob`, `SSlobbymenu`, `SSrole_class_handler`, `SSticker` |
 | UI, comms & admin | 10 | `SSchat`, `SScommunications`, `SSdiscord`, `SSinput`, `SSradio` |
-| World generation & map state | 14 | `SSdungeon_generator`, `SSfire_burning`, `SSfire_spread`, `SSlighting`, `SSliquids` |
+| World generation & map state | 15 | `SSdungeon_generator`, `SSfire_burning`, `SSfire_spread`, `SSlighting`, `SSliquids` |
 
 ## Quick Lookup
 
@@ -53,8 +53,8 @@ This is one of the most important patterns in SS13. When in doubt about `Initial
 - If you need cross-object setup at world start, always use `LateInitialize()`, never `sleep()` hacks in `Initialize()`.
 
 ### How to check if a parent returns LATELOAD
-```
-grep -n "INITIALIZE_HINT_LATELOAD\|return INITIALIZE_HINT" code/game/objects/structures/fake_machines/_fake_machine.dm
+```sh
+rg -n "INITIALIZE_HINT_LATELOAD|return INITIALIZE_HINT" code/game/objects/structures/fake_machines/_fake_machine.dm
 ```
 If nothing found → parent returns NORMAL → you must override.
 
@@ -92,6 +92,7 @@ If nothing found → parent returns NORMAL → you must override.
 | `SSdeath_arena` | standard | Gameplay simulation | `/datum/controller/subsystem/death_arena` | Handles death arena. | `code\\controllers\\subsystem\death_arena.dm` |
 | `SSeconomy` | standard | Gameplay simulation | `/datum/controller/subsystem/economy` | Handles economy. | `code\\controllers\\subsystem\economy.dm` |
 | `SSevents` | standard | Gameplay simulation | `/datum/controller/subsystem/events` | Handles events. | `code\\controllers\\subsystem\events.dm` |
+| `SSfield_of_vision` | standard | Gameplay simulation | `/datum/controller/subsystem/field_of_vision` | Runs object-permanence updates for registered FoV components. | `code\\controllers\\subsystem\processing\fov.dm` |
 | `SSfamilytree` | standard | Gameplay simulation | `/datum/controller/subsystem/familytree` | Handles familytree. | `code\\controllers\\subsystem\familytree.dm` |
 | `SSfrenzy_handler` | standard | Gameplay simulation | `/datum/controller/subsystem/frenzy_handler` | Handles frenzy handler. | `code\\controllers\\subsystem\frenzy_handler.dm` |
 | `SSgreyscale` | standard | Gameplay simulation | `/datum/controller/subsystem/greyscale` | Handles greyscale. | `code\\controllers\\subsystem\greyscale.dm` |
@@ -186,6 +187,7 @@ If nothing found → parent returns NORMAL → you must override.
 | `SSParticleWeather` | standard | World generation & map state | `/datum/controller/subsystem/ParticleWeather` | Handles ParticleWeather. | `code\\controllers\\subsystem\particle_weather.dm` |
 | `SSpathfinder` | standard | World generation & map state | `/datum/controller/subsystem/pathfinder` | Handles pathfinder. | `code\\controllers\\subsystem\pathfinder.dm` |
 | `SSpollution` | standard | World generation & map state | `/datum/controller/subsystem/pollution` | Handles pollution. | `code\\controllers\\subsystem\pollution.dm` |
+| `SSpocket_dimensions` | standard | World generation & map state | `/datum/controller/subsystem/pocket_dimensions` | Caches pocket templates, manages live pocket instances, and advances their lifecycle. | `code\\controllers\\subsystem\pocket_dimensions.dm` |
 | `SSspatial_grid` | standard | World generation & map state | `/datum/controller/subsystem/spatial_grid` | Handles spatial grid. | `code\\controllers\\subsystem\spatial_grid.dm` |
 | `SSterrain_generation` | standard | World generation & map state | `/datum/controller/subsystem/terrain_generation` | Handles terrain generation. | `code\\controllers\\subsystem\voyage.dm` |
 | `SSwaterlevel` | standard | World generation & map state | `/datum/controller/subsystem/waterlevel` | Handles waterlevel. | `code\\controllers\\subsystem\water_level.dm` |

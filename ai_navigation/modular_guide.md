@@ -1,10 +1,10 @@
 # Modular RMH Guide
 
-`modular_rmh/` is a late-included overlay layer. It extends the core codebase without replacing it.
+`modular_rmh/` is the dominant late-included overlay layer. It extends the core codebase without replacing it.
 
 ## What "Late-Included" Means
 
-`modular_rmh` is included near the end of `vanderlin.dme`. This means:
+`modular_rmh` is included near the end of `vanderlin.dme`, after a small late cluster from `modular_alizeria` and `modular_ratwood`. This means:
 
 - it can subtype any core type and override procs
 - it can add new subtypes to existing branches
@@ -12,6 +12,8 @@
 - core singletons (`SS*`, `Master`) are owned by core; RMH piggybacks on them
 
 **Rule for agents:** find the core type first in `code/`, then check `modular_rmh` for descendants or behavior overrides on the same branch.
+
+In practice, `modular_rmh` is still the main late extension layer you should check after `code/`; the small pre-RMH modular slices do not change that navigation rule.
 
 ## Directory Map
 

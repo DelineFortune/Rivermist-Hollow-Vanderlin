@@ -1,6 +1,6 @@
 # Router
 
-Generated on 2026-03-11. Last validated 2026-03-14. This is the primary Fast Start entrypoint for normal tasks.
+Generated on 2026-03-11. Last validated 2026-05-23. This is the primary Fast Start entrypoint for normal tasks.
 
 ## Always
 

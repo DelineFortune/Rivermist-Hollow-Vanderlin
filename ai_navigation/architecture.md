@@ -1,12 +1,12 @@
 # Architecture Overview
 
-Generated on 2026-03-11. This file explains how the repository is put together and where runtime ownership lives.
+Generated on 2026-05-23. This file explains how the repository is put together and where runtime ownership lives.
 
 ## Composition Model
 
 - The project is a BYOND/Dream Maker codebase with a classic tgstation-style linear `.dme` include graph.
-- The high-level include order is: maps/templates -> world/defines -> helpers -> globalvars -> controllers -> datums -> modules -> game atoms/objects -> interface -> `modular_rmh` late extensions.
-- Because `modular_rmh` is included near the end of `vanderlin.dme`, it acts as an overlay layer: it can extend existing type trees and piggyback on core singletons without replacing the architecture.
+- The high-level include order is: maps/templates -> world/defines -> helpers -> globalvars -> controllers -> datums -> modules -> game atoms/objects -> interface -> a small late `modular_alizeria`/`modular_ratwood` cluster -> `modular_rmh`.
+- Because `modular_rmh` is included at the end of that late modular cluster in `vanderlin.dme`, it acts as the dominant overlay layer: it can extend existing type trees and piggyback on core singletons without replacing the architecture.
 
 ## Runtime Backbone
 
@@ -76,7 +76,7 @@ Use this table to identify the runtime owner before opening `ai_navigation/subsy
 | Jobs, roles, latejoins | `SSjob`, `SSmigrants`, `SSrole_class_handler` | `code/modules/jobs/**`, `code/datums/migrants/**` |
 | Antagonists, events | `SSgamemode`, `SSevents` | `code/modules/antagonists/**`, `code/modules/events/**` |
 | Economy, housing, factions | `SSeconomy`, `SShousing`, `SStreasury` | `code/modules/economy/**`, `code/datums/world_factions/**` |
-| Mapping, worldgen, dungeons | `SSmapping`, `SSdungeon_generator` | `_maps/**`, `code/modules/mapping/**`, `code/modules/procedural_mapping/**` |
+| Mapping, worldgen, dungeons | `SSmapping`, `SSpocket_dimensions`, `SSdungeon_generator` | `_maps/**`, `code/modules/mapping/**`, `code/modules/mapping/pocket_dimensions.dm`, `code/controllers/subsystem/pocket_dimensions.dm`, `code/modules/procedural_mapping/**` |
 | Overlays, visual state | `SSoverlays` | `code/controllers/subsystem/overlays.dm` |
 | Lighting | `SSlighting` | `code/controllers/subsystem/lighting/**` |
 | UI, browser, TGUI | `SStgui`, `SSvisual_ui` | `code/modules/tgui/**`, `tgui/packages/**` |

@@ -1,6 +1,6 @@
 # Type Index
 
-Generated on 2026-03-11. Use this file when the task gives a BYOND type path and you need the cheapest route before opening the full `ai_navigation/type_tree.md`.
+Generated on 2026-05-23. Use this file when the task gives a BYOND type path and you need the cheapest route before opening the full `ai_navigation/type_tree.md`.
 
 ## Major Roots
 
@@ -24,8 +24,11 @@ Generated on 2026-03-11. Use this file when the task gives a BYOND type path and
 | `/datum/action/...` | `code/modules/spells/**` and feature-specific module files | `ai_navigation/runtime_flow.md`, `code/datums/status_effects/**` |
 | `/datum/status_effect/...` | `code/datums/status_effects/**` | `code/modules/spells/**`, `code/datums/components/**`, `code/datums/elements/**` |
 | `/datum/component/...` | `code/datums/components/**` | `code/__DEFINES/dcs/**`, `ai_navigation/runtime_flow.md` |
+| `/datum/component/field_of_vision/...` | `code/datums/components/fov.dm` | `code/controllers/subsystem/processing/fov.dm`, `ai_navigation/subsystem_map.md` |
 | `/datum/element/...` | `code/datums/elements/**` | `code/__DEFINES/dcs/**`, `ai_navigation/runtime_flow.md` |
 | `/datum/ai_controller/...` or `/datum/ai_behavior/...` | `code/datums/ai/**` | `code/modules/mob/**`, `ai_navigation/subsystem_map.md` |
+| `/datum/map_template/pocket/...` | `code/modules/mapping/pocket_dimensions.dm` | `code/controllers/subsystem/pocket_dimensions.dm`, `code/controllers/subsystem/mapping.dm` |
+| `/datum/pocket_dimension/...` | `code/modules/mapping/pocket_dimensions.dm` | `code/controllers/subsystem/pocket_dimensions.dm`, `code/modules/admin/verbs/pocket_dimensions.dm` |
 | `/datum/storyteller/...`, `/datum/round_event_control/...`, `/datum/round_event/...` | `code/datums/storytellers/**`, `code/modules/events/**` | `ai_navigation/runtime_flow.md`, `ai_navigation/system_dependencies.md` |
 | `/datum/migrant_wave/...` or `/datum/migrant_role/...` | `code/datums/migrants/**` | `code/modules/jobs/**`, `modular_rmh/code/modules/jobs/**` |
 | `/mob/living/...` | `code/modules/mob/living/**` | feature modules touching that mob family |

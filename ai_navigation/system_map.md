@@ -1,6 +1,6 @@
 # System Map
 
-Generated on 2026-03-11. Last validated 2026-03-14. Use this file as the fast index of gameplay and infrastructure systems before opening source files.
+Generated on 2026-05-23. Last validated 2026-05-23. Use this file as the fast index of gameplay and infrastructure systems before opening source files.
 
 ## Repository Hotspots
 
@@ -9,22 +9,22 @@ Generated on 2026-03-11. Last validated 2026-03-14. Use this file as the fast in
 - `modular_rmh/code/modules` largest slices: `jobs (157 DM files)`, `mob (22)`, `spells (33)`, `clothing (49)`.
 - `modular_rmh/code/datums` focuses on `religion (6)`, `status_effects (3)`, `stress (2)`, `ai (4)`, plus `character_flaw`, `reflection`, and standalone `sexcon` and `components`.
 
-**Type path counts as of 2026-03-14 (grep-measured, includes subtypes and proc overrides on same root):**
+**Type path counts as of 2026-05-23 (compiled-include extraction from `vanderlin.dme`; explicit type declarations only):**
 
 | Type root | Count |
 |---|---|
-| `/mob` | ~2278 |
-| `/datum/action` | ~1115 |
-| `/datum/ai_behavior` | ~555 |
-| `/datum/component` | ~658 |
-| `/datum/status_effect` | ~830 |
-| `/datum/ai_controller` | ~91 |
-| `/datum/antagonist` | ~119 |
-| `/datum/element` | ~100 |
-| `/datum/quirk` | ~282 |
-| `/datum/wound` | ~142 |
+| `/datum` | 13009 |
+| `/obj` | 6918 |
+| `/mob` | 642 |
+| `/atom` | 640 |
+| `/area` | 469 |
+| `/turf` | 410 |
+| `/particles` | 31 |
+| `/image` | 3 |
+| `/mutable_appearance` | 3 |
+| `/world` | 1 |
 
-Note: original system_map counts (634 mob, 355 status_effect, 222 component, etc.) were measured with a different method and are ~3× lower than the grep-based counts above. Trust the grep-based values for ordering and scope decisions.
+Note: the regenerated `ai_navigation/type_tree.md` also synthesized `414` missing ancestor nodes to keep inheritance readable. Section-level counts below still use targeted grep/file-slice estimates when that gives a more useful branch-specific picture than a root-only total.
 - `modular_rmh/modular` standalone packs include `piercing`, `selectable_moanpacks`, `resurrection_rune`, `fluids`, `comfy`, `ceramics`, `loot`, and helpers.
 
 ## Major Systems
@@ -32,7 +32,7 @@ Note: original system_map counts (634 mob, 355 status_effect, 222 component, etc
 ### Master Controller and Round Flow
 
 - Main type root(s): `/datum/controller/subsystem`
-- Approximate path count under the root(s): `127` subsystem macro declarations
+- Approximate path count under the root(s): `129` subsystem macro declarations
 - Primary directories: `code/world.dm`, `code/controllers/**`
 - Main controllers/subsystems: `Master`, `SSticker`, `SSatoms`, `SStimer`
 - Notes: `/world` boots the game; `Master` discovers subsystem subtypes, sorts by `init_order`, and drives runlevels/tick budgets.
@@ -119,11 +119,11 @@ Note: original system_map counts (634 mob, 355 status_effect, 222 component, etc
 
 ### Skills, Dreams, and Experience
 
-- Main type root(s): `/datum/skill`
+- Main type root(s): `/datum/attribute/skill` (legacy `/datum/skill` aliases still resolve)
 - Approximate path count under the root(s): split across `combat`, `craft`, `labor`, `magic`, `misc` skill families
-- Primary directories: `code/datums/skills/**`
+- Primary directories: `code/datums/attributes/attributes/skills/**`, `code/datums/attributes/__holder.dm`, `code/datums/attributes/__legacy.dm`
 - Main controllers/subsystems: `SSskills`
-- Notes: Skills are character-level progression datums with XP thresholds, dream unlock costs, and level-gated effects. `skill_holder` lives on the mob. Job skill grants are in `modular_rmh/code/modules/jobs/**`. No per-tick processing — XP changes are event-driven via signal hooks.
+- Notes: Skills are attribute-backed progression datums with XP thresholds, dream unlock costs, and level-gated effects. Mobs store them through `mob.attributes` (`/datum/attribute_holder`), while legacy `/datum/skill` paths and rank helpers remain as compatibility shims. Job skill grants are in `modular_rmh/code/modules/jobs/**`. No per-tick processing — XP changes are event-driven via signal hooks.
 
 ### Questing and Contracts
 
@@ -173,55 +173,21 @@ Note: original system_map counts (634 mob, 355 status_effect, 222 component, etc
 - Main controllers/subsystems: `SSskills`, `SSstatusprocess`, `SSmood`
 - Notes: Character state is distributed across faith/devotion, mana, quirks, wounds, stress, rage, and organ systems.
 
-### Skills
-
-- Main type root(s): `/datum/skill`
-- Primary directories: `code/datums/skills/**`
-- Main controllers/subsystems: `SSskills`
-- Notes: Skills are split into combat, misc, craft, labor, and magic families. Each skill has leveled `int_reqs`, a `dream_cost` curve, and optional `dreams` list for XP advancement. Skill grants happen at spawn via job files; RMH jobs extend skill loadouts in `modular_rmh/code/modules/jobs/**`.
-
-### Questing and Contracts
-
-- Main type root(s): `/datum/quest`, `/datum/component/quest_object`
-- Primary directories: `code/modules/questing/**`
-- Main controllers/subsystems: `SSdcs` (no dedicated SS* — component-driven)
-- Notes: Quests are `/datum/quest` instances. `quest_object` is a component attached to items or mobs that marks them as quest targets with a visual outline filter. The `contractledger` structure (`/obj/structure/fake_machine/contractledger`) is the world-facing UI. Quest types: kill, retrieval, courier.
-
-### Combat — Special Intents and Clash
-
-- Main type root(s): `/datum/special_intent`, `/datum/status_effect/buff/clash`
-- Primary directories: `code/modules/combat/**`
-- Main controllers/subsystems: `SSdcs`, combat chain
-- Notes: `special_intent` defines AOE weapon abilities with tile coordinate patterns, pre/post sounds and icon states, and stamina costs. The clash system (`code/modules/combat/clash/`) handles parry/riposte resolution via `process_clash()` on `/mob/living`. Integrates into the main hit chain via `ai_navigation/combat_signal_map.md`.
-
-### Culture
-
-- Main type root(s): `/datum/culture`
-- Primary directories: `code/datums/culture/**`
-- Main controllers/subsystems: none — applied at spawn
-- Notes: Character background datum linked to species or universal pools. `is_selectable()` gates availability based on prefs/species. `on_after_spawn()` fires from `job/after_spawn()`. Two abstract subtrees: `/datum/culture/universal` and `/datum/culture/species`.
-
-### Cooking and Food
-
-- Main type root(s): `/obj/item/reagent_containers/food`
-- Primary directories: `code/modules/cooking/**`, `code/modules/food_and_drinks/**`
-- Main controllers/subsystems: `SSanvil`, `SSskills`
-- Notes: NeuFood system (`NeuFood.dm`) is slapcrafting-based; raw food items apply `debuff/uncookedfood` status effect when eaten uncooked. Teas and brews in `Teas_and_Brews.dm`. Cooked and raw subtrees in `cooked/**` and `raw/**`. Reagent interactions via `code/modules/reagents/**`.
-
-### Rage
-
-- Main type root(s): `/datum/rage`
-- Primary directories: `code/datums/rage/**`
-- Main controllers/subsystems: none — signal-driven on mob life tick
-- Notes: Rage meter datum attached to a mob via `rage_datum` var. Ticks on `COMSIG_HUMAN_LIFE`. Rage thresholds unlock ability tiers dynamically. Key signals: `COMSIG_RAGE_CHANGED`, `COMSIG_RAGE_BOTTOMED`, `COMSIG_RAGE_OVERRAGE`. Supports a secondary mob reference for transformed states (e.g. werewolf). Subtype: `werewolf_rage.dm`.
-
 ### Mapping, Dungeons, Voyage, and Procedural Generation
 
 - Main type root(s): `/datum/map_template`
 - Approximate path count under the root(s): map templates are spread across `_maps/**` and several mapgen slices
 - Primary directories: `_maps/**`, `code/modules/mapping/**`, `code/modules/procedural_mapping/**`, `modular_rmh/code/game/modules/mapgen/**`
-- Main controllers/subsystems: `SSmapping`, `SSminor_mapping`, `SSdungeon_generator`, `SSterrain_generation`, `SSpathfinder`
-- Notes: Static DMM templates, procedural mapgen, dungeon placement, and voyage terrain generation coexist.
+- Main controllers/subsystems: `SSmapping`, `SSpocket_dimensions`, `SSminor_mapping`, `SSdungeon_generator`, `SSterrain_generation`, `SSpathfinder`
+- Notes: Static DMM templates, procedural mapgen, dungeon placement, pocket-dimension reservations, and voyage terrain generation coexist.
+
+### Pocket Dimensions and Spatial Reservations
+
+- Main type root(s): `/datum/map_template/pocket`, `/datum/pocket_dimension`
+- Approximate path count under the root(s): compact template-and-instance tree centered in `code/modules/mapping/pocket_dimensions.dm`
+- Primary directories: `code/modules/mapping/pocket_dimensions.dm`, `code/controllers/subsystem/pocket_dimensions.dm`, `code/controllers/subsystem/mapping.dm`, `code/modules/admin/verbs/pocket_dimensions.dm`
+- Main controllers/subsystems: `SSpocket_dimensions`, `SSmapping`, `SSlighting`
+- Notes: `SSpocket_dimensions` rebuilds pocket template caches from `SSmapping.map_templates`, manages instance creation/wake/hibernate/collapse lifecycle, and relies on `SSmapping.RequestPocketBlockReservation(...)` plus lighting refreshes during activation. Admin debugging tools live under `code/modules/admin/verbs/pocket_dimensions.dm`.
 
 ### World Simulation: Liquids, Weather, Fire, Overlays
 
@@ -245,7 +211,7 @@ Note: original system_map counts (634 mob, 355 status_effect, 222 component, etc
 - Approximate path count under the root(s): RMH contributes heavily to jobs, clothing, spells, mobs, religion, status effects, and standalone modular packs
 - Primary directories: `modular_rmh/code/**`, `modular_rmh/modular/**`
 - Main controllers/subsystems: uses the same core `SS*` singletons
-- Notes: Loaded late in `vanderlin.dme`; treat it as an overlay layer rather than a separate architecture.
+- Notes: Loaded late in the modular include cluster in `vanderlin.dme`, with small `modular_alizeria` and `modular_ratwood` slices landing immediately before RMH. Treat RMH as the dominant overlay layer rather than a separate architecture.
 
 ## High-Level Dependency Awareness
 
@@ -254,5 +220,5 @@ Note: original system_map counts (634 mob, 355 status_effect, 222 component, etc
 - Event-driven communication is pervasive: `RegisterSignal` appears at ~`1209` call sites, `SEND_SIGNAL` at ~`991`, so many systems are decoupled by signals instead of direct proc calls.
 - Important: combat and item signals (`COMSIG_ITEM_*`, `COMSIG_HUMAN_*`, `COMSIG_PROJECTILE_*`, `COMSIG_COMBAT_*`) live in `code/__DEFINES/components.dm`, not the DCS subfolder.
 - Mob creation is relatively centralized: only `52` direct `new /mob` call sites were detected, while round setup, migrants, event controllers, and spawners handle most mob lifecycle orchestration.
-- Map and worldgen systems are layered: static `_maps` templates feed mapping helpers, while `SSmapping`, `SSminor_mapping`, `SSdungeon_generator`, and `SSterrain_generation` own runtime placement/generation passes.
+- Map and worldgen systems are layered: static `_maps` templates feed mapping helpers, while `SSmapping`, `SSpocket_dimensions`, `SSminor_mapping`, `SSdungeon_generator`, and `SSterrain_generation` own runtime placement/generation passes.
 - The modular RMH layer does not introduce a second runtime architecture; it extends existing roots and reuses the same `SS*` infrastructure, so always check `modular_rmh` after locating the core path in `code/`.
