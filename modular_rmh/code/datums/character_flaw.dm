@@ -1,7 +1,7 @@
 /datum/quirk/vice/lovefiend
 	name = "Nymphomaniac"
 	desc = "I must make love!"
-	time = 40 MINUTES
+	time = 2 HOURS
 	needsate_text = "I'm so horny..."
 	sated_text = "That's much better..."
 	point_value = 3
