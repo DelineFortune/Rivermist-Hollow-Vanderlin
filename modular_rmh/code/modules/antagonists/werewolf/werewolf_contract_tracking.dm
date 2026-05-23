@@ -435,7 +435,7 @@
 	assigned_quest.quest_receiver_reference = WEAKREF(current_body)
 	return TRUE
 
-/obj/item/paper/scroll/quest/werewolf_hidden/get_quest_assignees(var/mob/user, var/include_giver = FALSE)
+/obj/item/paper/scroll/quest/werewolf_hidden/get_quest_assignees(mob/user, include_giver = FALSE)
 	var/list/assignees = ..()
 	var/datum/antagonist/werewolf/owner_werewolf = get_owner_werewolf()
 	var/mob/living/current_body = owner_werewolf?.owner?.current

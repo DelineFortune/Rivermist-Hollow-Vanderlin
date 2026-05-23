@@ -119,13 +119,13 @@
 			}
 		</style>
 		<body>
-		  <div>
-		    <h1>[name]</h1>
-		    <div>
-		      <h2>Requirements</h2>
-			  <br>
-			  <strong>Rotational Sweetspot: [speed_sweetspot]</strong>
-			  <br>
+		<div>
+		<h1>[name]</h1>
+		<div>
+		<h2>Requirements</h2>
+			<br>
+			<strong>Rotational Sweetspot: [speed_sweetspot]</strong>
+			<br>
 		"}
 	var/number = 0
 	for(var/atom/path as anything in recipe_steps)

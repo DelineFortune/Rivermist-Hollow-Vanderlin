@@ -55,9 +55,9 @@
 	// Additional vars may be found in items.dm for things solely related to lock access
 
 	/**
-	 * A list of lockids for keys and locks
-	 * If something has a lock it's used to set access of the lock then nulled
-	 */
+	* A list of lockids for keys and locks
+	* If something has a lock it's used to set access of the lock then nulled
+	*/
 	var/list/lockids
 	/// A lock datum that handles access and lockpicking
 	var/datum/lock/lock

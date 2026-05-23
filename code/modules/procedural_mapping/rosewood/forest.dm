@@ -158,8 +158,8 @@
 							/turf/open/water/swamp/deep)
 	excluded_turfs = list(/turf/open/water/river)
 	spawnableAtoms = list(/obj/structure/flora/grass/water = 20,
-		                    /obj/structure/flora/grass/water/reeds = 30,
-	                        /obj/structure/kneestingers = 20,
+							/obj/structure/flora/grass/water/reeds = 30,
+							/obj/structure/kneestingers = 20,
 							/obj/structure/roguerock = 5)
 	allowed_areas = list(/area/outdoors/wilderness,
 							/area/outdoors/woods_safe,

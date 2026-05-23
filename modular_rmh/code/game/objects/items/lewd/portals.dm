@@ -12,17 +12,17 @@
 */
 
 /obj/item/portallight
-    name = "portal light"
-    desc = "A softly pulsing arcane device."
-    icon = 'modular_rmh/icons/obj/lewd/fleshlight.dmi'
-    icon_state = "unpaired"
-    var/obj/item/clothing/undies/portalpanties/linked_underwear = null
-    var/mutable_appearance/organ_overlay
-    var/mutable_appearance/sleeve_overlay
-    var/org_target = ORGAN_SLOT_VAGINA
-    loadout_blacklisted = TRUE
-    w_class = WEIGHT_CLASS_SMALL
-    body_storage_bulk = 100 //so that people can't stuff it in for now
+	name = "portal light"
+	desc = "A softly pulsing arcane device."
+	icon = 'modular_rmh/icons/obj/lewd/fleshlight.dmi'
+	icon_state = "unpaired"
+	var/obj/item/clothing/undies/portalpanties/linked_underwear = null
+	var/mutable_appearance/organ_overlay
+	var/mutable_appearance/sleeve_overlay
+	var/org_target = ORGAN_SLOT_VAGINA
+	loadout_blacklisted = TRUE
+	w_class = WEIGHT_CLASS_SMALL
+	body_storage_bulk = 100 //so that people can't stuff it in for now
 
 /obj/item/portallight/Destroy()
 	if(linked_underwear?.linked_light == src)
@@ -162,19 +162,19 @@
 */
 
 /obj/item/clothing/undies/portalpanties
-    name = "portal panties"
-    desc = "Laced with unstable portal magic."
-    icon = 'modular_rmh/icons/obj/lewd/fleshlight.dmi'
-    mob_overlay_icon = 'modular_rmh/icons/obj/lewd/portals_onmob.dmi'
-    item_state = "panties"
-    icon_state = "panties"
-    gendered = TRUE
-    slot_flags = ITEM_SLOT_UNDER_BOTTOM
-    loadout_blacklisted = TRUE
+	name = "portal panties"
+	desc = "Laced with unstable portal magic."
+	icon = 'modular_rmh/icons/obj/lewd/fleshlight.dmi'
+	mob_overlay_icon = 'modular_rmh/icons/obj/lewd/portals_onmob.dmi'
+	item_state = "panties"
+	icon_state = "panties"
+	gendered = TRUE
+	slot_flags = ITEM_SLOT_UNDER_BOTTOM
+	loadout_blacklisted = TRUE
 
-    var/obj/item/portallight/linked_light = null
-    var/org_target = ORGAN_SLOT_VAGINA
-    misc_flags = CRAFTING_TEST_EXCLUDE
+	var/obj/item/portallight/linked_light = null
+	var/org_target = ORGAN_SLOT_VAGINA
+	misc_flags = CRAFTING_TEST_EXCLUDE
 
 /obj/item/clothing/undies/portalpanties/proc/get_current_wearer()
 	if(!ishuman(loc))
@@ -290,12 +290,12 @@
  * BASE PORTAL ACTION
 */
 /datum/sex_action/portal_base
-    abstract_type = /datum/sex_action/portal_base
-    target_priority = 50
-    var/obj/item/portallight/light
-    var/mob/living/carbon/human/target
-    check_same_tile = FALSE
-    check_distance = FALSE
+	abstract_type = /datum/sex_action/portal_base
+	target_priority = 50
+	var/obj/item/portallight/light
+	var/mob/living/carbon/human/target
+	check_same_tile = FALSE
+	check_distance = FALSE
 
 /datum/sex_action/portal_base/proc/get_held_portal_light(mob/living/user)
 	if(!iscarbon(user))
@@ -1018,11 +1018,11 @@
 	user_priority = 100
 	target_priority = 1
 
-    var/self = FALSE
+	var/self = FALSE
 
-    var/obj/item/organ/genitals/target_organ
+	var/obj/item/organ/genitals/target_organ
 
-    continous = TRUE
+	continous = TRUE
 
 
 /datum/sex_action/portal_base/portal_object_fuck/shows_on_menu(mob/living/user, mob/living/target)

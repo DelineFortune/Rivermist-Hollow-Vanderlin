@@ -27,9 +27,9 @@
 	var/oxy   = getOxyLoss()
 
 	if(brute >= threshold_brute || \
-	   burn  >= threshold_burn  || \
-	   tox   >= threshold_tox   || \
-	   oxy   >= threshold_oxy)
+	burn  >= threshold_burn  || \
+	tox   >= threshold_tox   || \
+	oxy   >= threshold_oxy)
 
 
 		if(prob(chance_escape && legcuffed == null && handcuffed == null && buckled == null && !pulledby))

@@ -77,9 +77,9 @@
 		newA = area_choice
 
 	/**
-	 * A list of all machinery tied to an area along with the area itself. key=area name,value=list(area,list of machinery)
-	 * we use this to keep track of what areas are affected by the blueprints & what machinery of these areas needs to be reconfigured accordingly
-	 */
+	* A list of all machinery tied to an area along with the area itself. key=area name,value=list(area,list of machinery)
+	* we use this to keep track of what areas are affected by the blueprints & what machinery of these areas needs to be reconfigured accordingly
+	*/
 	var/list/area/affected_areas = list()
 	for(var/turf/the_turf as anything in turfs)
 		var/area/old_area = the_turf.loc

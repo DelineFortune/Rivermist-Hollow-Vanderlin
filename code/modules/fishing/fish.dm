@@ -75,9 +75,9 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	// Fishing related properties
 
 	/**
-	 * List of fish trait types, these may modify probabilty/difficulty depending on rod/user properties
-	 * or dictate how the fish behaves or some of its qualities.
-	 */
+	* List of fish trait types, these may modify probabilty/difficulty depending on rod/user properties
+	* or dictate how the fish behaves or some of its qualities.
+	*/
 	var/list/fish_traits = list()
 
 	/// path to datums that dictate how the fish moves during the fishing minigame
@@ -87,15 +87,15 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	var/fishing_difficulty_modifier = 0
 
 	/**
-	 * Bait identifiers that make catching this fish easier and more likely
-	 * Bait identifiers: Path | Trait | list("Type"="Foodtype","Value"= Food Type Flag like [MEAT])
-	 */
+	* Bait identifiers that make catching this fish easier and more likely
+	* Bait identifiers: Path | Trait | list("Type"="Foodtype","Value"= Food Type Flag like [MEAT])
+	*/
 	var/list/favorite_bait = list()
 
 	/**
-	 * Bait identifiers that make catching this fish harder and less likely
-	 * Bait identifiers: Path | Trait | list("Type"="Foodtype","Value"= Food Type Flag like [MEAT])
-	 */
+	* Bait identifiers that make catching this fish harder and less likely
+	* Bait identifiers: Path | Trait | list("Type"="Foodtype","Value"= Food Type Flag like [MEAT])
+	*/
 	var/list/disliked_bait = list()
 
 	/// Size in centimeters. Null until update_size_and_weight is called. Number of fillets and w_class scale with it.
@@ -127,18 +127,18 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	var/catch_date
 
 	/**
-	 * If you wonder why this isn't being tracked by the edible component instead:
-	 * We reset the this value when revived, and slowly chip it away as we heal.
-	 * Of course, it would be daunting to get this to be handled by the edible component
-	 * given its complexity.
-	 */
+	* If you wonder why this isn't being tracked by the edible component instead:
+	* We reset the this value when revived, and slowly chip it away as we heal.
+	* Of course, it would be daunting to get this to be handled by the edible component
+	* given its complexity.
+	*/
 	var/bites_amount = 0
 
 	/**
-	 * An identifier for this fish used to track progress for fish caught between rounds in
-	 * a way that's resilient to repathing (and removing paths). Only catchable fish need it.
-	 * Once set, the value shouldn't be changed, so don't make typos.
-	 */
+	* An identifier for this fish used to track progress for fish caught between rounds in
+	* a way that's resilient to repathing (and removing paths). Only catchable fish need it.
+	* Once set, the value shouldn't be changed, so don't make typos.
+	*/
 	var/fish_id
 	///Used to redirect to another fish path so that catching this fish unlocks its entry instead.
 	var/obj/item/reagent_containers/food/snacks/fish/fish_id_redirect_path
@@ -615,9 +615,9 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 		incompatible_traits |= trait.incompatible_traits
 	/**
-	 * shuffle the traits, so, in the case of incompatible traits, we don't have to choose which to discard.
-	 * Instead we let the random numbers do it for us in a first come, first served basis.
-	 */
+	* shuffle the traits, so, in the case of incompatible traits, we don't have to choose which to discard.
+	* Instead we let the random numbers do it for us in a first come, first served basis.
+	*/
 	for(var/trait_type in shuffle(all_traits))
 		if(trait_type in fish_traits)
 			continue //likely a fixed trait

@@ -76,15 +76,15 @@
 	attack_sound = list('modular_rmh/sound/mob/abyssal/abyssal_attack.ogg','modular_rmh/sound/mob/abyssal/abyssal_attack2.ogg')
 
 /mob/living/simple_animal/hostile/dreamfiend/get_sound(input)
-    switch(input)
-        if("aggro")
-            return pick('modular_rmh/sound/mob/abyssal/abyssal_aggro.ogg')
-        if("pain")
-            return pick('modular_rmh/sound/mob/abyssal/abyssal_pain.ogg')
-        if("death")
-            return pick('modular_rmh/sound/mob/abyssal/abyssal_pain.ogg')
-        if("idle")
-            return pick('modular_rmh/sound/mob/abyssal/abyssal_idle.ogg')
+	switch(input)
+		if("aggro")
+			return pick('modular_rmh/sound/mob/abyssal/abyssal_aggro.ogg')
+		if("pain")
+			return pick('modular_rmh/sound/mob/abyssal/abyssal_pain.ogg')
+		if("death")
+			return pick('modular_rmh/sound/mob/abyssal/abyssal_pain.ogg')
+		if("idle")
+			return pick('modular_rmh/sound/mob/abyssal/abyssal_idle.ogg')
 
 /mob/living/simple_animal/hostile/dreamfiend/Initialize()
 	AddElement(/datum/element/ai_retaliate)
@@ -109,7 +109,7 @@
 	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
 	. = ..()
 
-/mob/living/simple_animal/hostile/dreamfiend/proc/blink_to_target(var/mob/target)
+/mob/living/simple_animal/hostile/dreamfiend/proc/blink_to_target(mob/target)
 	if(world.time < next_blink || QDELETED(target) || target.stat == DEAD)
 		return FALSE
 

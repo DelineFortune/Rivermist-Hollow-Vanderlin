@@ -52,5 +52,5 @@
 	allowed_turfs = list(/turf/open/water/clean)
 	allowed_areas = list(/area/under/town/sewer)
 	spawnableAtoms = list(/obj/structure/flora/grass/water = 20,
-	                        /obj/structure/kneestingers = 1)
+	/obj/structure/kneestingers = 1)
 

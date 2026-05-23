@@ -100,10 +100,10 @@
 	var/toggle_helmet = TRUE
 
 	/**
-	 * list of items that should go in the backpack of the user
-	 *
-	 * Format of this list should be: list(path=count,otherpath=count)
-	 */
+	* list of items that should go in the backpack of the user
+	*
+	* Format of this list should be: list(path=count,otherpath=count)
+	*/
 	var/list/backpack_contents = null
 
 	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
@@ -116,19 +116,19 @@
 	var/can_be_admin_equipped = TRUE
 
 	/**
-	 * extra types for chameleon outfit changes, mostly guns
-	 *
-	 * Format of this list is (typepath, typepath, typepath)
-	 *
-	 * These are all added and returns in the list for get_chamelon_diguise_info proc
-	 */
+	* extra types for chameleon outfit changes, mostly guns
+	*
+	* Format of this list is (typepath, typepath, typepath)
+	*
+	* These are all added and returns in the list for get_chamelon_diguise_info proc
+	*/
 	var/list/chameleon_extras
 
 	/**
-	  * The sheaths this job should start with
-	  *
-	  * Format of this list is (typepath, typepath, typepath)
-	  */
+	* The sheaths this job should start with
+	*
+	* Format of this list is (typepath, typepath, typepath)
+	*/
 	var/list/scabbards = null
 
 /**

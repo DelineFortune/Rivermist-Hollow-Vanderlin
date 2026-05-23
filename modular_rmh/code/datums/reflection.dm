@@ -6,17 +6,17 @@
  */
 /datum/component/reflection
 	/**
-	 * The direction from which the component gets its visual overlays.
-	 * The visuals are also flipped horizontally or vertically based on it.
-	 */
+	* The direction from which the component gets its visual overlays.
+	* The visuals are also flipped horizontally or vertically based on it.
+	*/
 	var/reflected_dir
 	/// the movable which the reflected movables are attached to, in turn added to the vis contents of the parent.
 	VAR_PRIVATE/obj/effect/abstract/reflection_holder
 	/**
-	 * A lazy assoc list that keeps track of all movables in range that either could be reflected or are reflected.
-	 *
-	 * The key is the movable, and the value is the reflection object (or null - the reflection object is also lazy loaded).
-	 */
+	* A lazy assoc list that keeps track of all movables in range that either could be reflected or are reflected.
+	*
+	* The key is the movable, and the value is the reflection object (or null - the reflection object is also lazy loaded).
+	*/
 	VAR_PRIVATE/list/reflected_movables
 	/// A callback used check to know which movables should be reflected and which not.
 	var/datum/callback/can_reflect

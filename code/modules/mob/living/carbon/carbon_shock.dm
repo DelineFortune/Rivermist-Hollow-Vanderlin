@@ -166,9 +166,9 @@
 
 	if((shock_stage >= SHOCK_STAGE_1) && (previous_shock_stage < SHOCK_STAGE_1))
 		/** Please be very careful when calling custom_pain() from within code that relies on pain/trauma values. There's the
-		 * possibility of a feedback loop from custom_pain() being called with a positive power, incrementing pain on a limb,
-		 * which triggers this proc, which calls custom_pain(), etc. Make sure you call it with nopainloss = TRUE in these cases!
-		 */
+		* possibility of a feedback loop from custom_pain() being called with a positive power, incrementing pain on a limb,
+		* which triggers this proc, which calls custom_pain(), etc. Make sure you call it with nopainloss = TRUE in these cases!
+		*/
 		custom_pain("[pick("It hurts so much", "I really need some opium", "Ooh, the pain")]!", 10, nopainloss = TRUE)
 
 	if((shock_stage >= SHOCK_STAGE_2) && (previous_shock_stage < SHOCK_STAGE_2))

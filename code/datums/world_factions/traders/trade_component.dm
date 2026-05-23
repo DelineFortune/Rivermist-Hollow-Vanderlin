@@ -32,29 +32,29 @@
 /datum/component/trader
 
 	/**
-	 * Format; list(TYPEPATH = list(PRICE, QUANTITY))
-	 * Associated list of items the NPC sells with how much they cost and the quantity available before a restock
-	 * This list is filled by Initialize(), if you want to change the starting products, modify initial_products()
-	 * *
-	 */
+	* Format; list(TYPEPATH = list(PRICE, QUANTITY))
+	* Associated list of items the NPC sells with how much they cost and the quantity available before a restock
+	* This list is filled by Initialize(), if you want to change the starting products, modify initial_products()
+	* *
+	*/
 	var/list/obj/item/products = list()
 	/**
-	 * A list of wanted items that the trader would wish to buy, each typepath has a assigned value, quantity and additional flavor text
-	 *
-	 * CHILDREN OF TYPEPATHS INCLUDED IN WANTED_ITEMS WILL BE TREATED AS THE PARENT IF NO ENTRY EXISTS FOR THE CHILDREN
-	 *
-	 * As an additional note; if you include multiple children of a typepath; the typepath with the most children should be placed after all other typepaths
-	 * Bad; list(/obj/item/milk = list(100, 1, ""), /obj/item/milk/small = list(50, 2, ""))
-	 * Good; list(/obj/item/milk/small = list(50, 2, ""), /obj/item/milk = list(100, 1, ""))
-	 * This is mainly because sell_item() uses a istype(item_being_sold, item_in_entry) to determine what parent should the child be automatically considered as
-	 * If /obj/item/milk/small/spooky was being sold; /obj/item/milk/small would be the first to check against rather than /obj/item/milk
-	 *
-	 * Format; list(TYPEPATH = list(PRICE, QUANTITY, ADDITIONAL_DESCRIPTION))
-	 * Associated list of items able to be sold to the NPC with the money given for them.
-	 * The price given should be the "base" price; any price manipulation based on variables should be done with apply_sell_price_mods()
-	 * ADDITIONAL_DESCRIPTION is any additional text added to explain how the variables of the item effect the price; if it's stack based, its final price depends how much is in the stack
-	 * EX; /obj/item/stack/sheet/mineral/diamond = list(500, INFINITY, ", per 100 cm3 sheet of diamond")
-	 * This list is filled by Initialize(), if you want to change the starting wanted items, modify initial_wanteds()
+	* A list of wanted items that the trader would wish to buy, each typepath has a assigned value, quantity and additional flavor text
+	*
+	* CHILDREN OF TYPEPATHS INCLUDED IN WANTED_ITEMS WILL BE TREATED AS THE PARENT IF NO ENTRY EXISTS FOR THE CHILDREN
+	*
+	* As an additional note; if you include multiple children of a typepath; the typepath with the most children should be placed after all other typepaths
+	* Bad; list(/obj/item/milk = list(100, 1, ""), /obj/item/milk/small = list(50, 2, ""))
+	* Good; list(/obj/item/milk/small = list(50, 2, ""), /obj/item/milk = list(100, 1, ""))
+	* This is mainly because sell_item() uses a istype(item_being_sold, item_in_entry) to determine what parent should the child be automatically considered as
+	* If /obj/item/milk/small/spooky was being sold; /obj/item/milk/small would be the first to check against rather than /obj/item/milk
+	*
+	* Format; list(TYPEPATH = list(PRICE, QUANTITY, ADDITIONAL_DESCRIPTION))
+	* Associated list of items able to be sold to the NPC with the money given for them.
+	* The price given should be the "base" price; any price manipulation based on variables should be done with apply_sell_price_mods()
+	* ADDITIONAL_DESCRIPTION is any additional text added to explain how the variables of the item effect the price; if it's stack based, its final price depends how much is in the stack
+	* EX; /obj/item/stack/sheet/mineral/diamond = list(500, INFINITY, ", per 100 cm3 sheet of diamond")
+	* This list is filled by Initialize(), if you want to change the starting wanted items, modify initial_wanteds()
 	*/
 	var/list/wanted_items = list()
 

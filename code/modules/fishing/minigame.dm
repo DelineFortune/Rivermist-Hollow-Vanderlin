@@ -174,9 +174,9 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	deceleration_mult *= rod.deceleration_mult
 	gravity_velocity *= rod.gravity_mult
 	/**
-	 * The overlap multiplier is lower than 1 by default and exponentiation will make it even lower,
-	 * to offset the harder control however a bait velocity higher (or lower) than normal.
-	 */
+	* The overlap multiplier is lower than 1 by default and exponentiation will make it even lower,
+	* to offset the harder control however a bait velocity higher (or lower) than normal.
+	*/
 	overlap_velocity_mult = overlap_velocity_mult ** rod.bait_speed_mult
 
 /datum/fishing_challenge/Destroy(force)
@@ -734,9 +734,9 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 			velocity_change -= auto_adjustment
 
 	/**
-	 * Pull the brake on the velocity if the current velocity and the acceleration
-	 * have different directions, making the bait less slippery, thus easier to control
-	 */
+	* Pull the brake on the velocity if the current velocity and the acceleration
+	* have different directions, making the bait less slippery, thus easier to control
+	*/
 	if(bait_velocity > 0 && velocity_change < 0)
 		bait_velocity += max(-bait_velocity, velocity_change * deceleration_mult)
 	else if(bait_velocity < 0 && velocity_change > 0)
@@ -863,9 +863,9 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	icon_state = "float"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	/**
-	 * A list with two keys delimiting the spinning interval in which a mouse click has to be pressed while fishing.
-	 * If set, an emissive overlay will be added, colored green when the lure is ready to be spun, otherwise red.
-	 */
+	* A list with two keys delimiting the spinning interval in which a mouse click has to be pressed while fishing.
+	* If set, an emissive overlay will be added, colored green when the lure is ready to be spun, otherwise red.
+	*/
 	var/list/spin_frequency
 	///Is the bait ready to be spun?
 	var/spin_ready = FALSE

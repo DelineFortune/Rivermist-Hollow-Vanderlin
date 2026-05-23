@@ -1574,1520 +1574,1520 @@
 	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/antenna
-    name = "Ahoge"
-    icon_state = "antenna"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ahoge"
+	icon_state = "antenna"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/balding
-    name = "Balding Hair"
-    icon_state = "balding"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Balding Hair"
+	icon_state = "balding"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bedhead
-    name = "Bedhead"
-    icon_state = "bedhead"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bedhead"
+	icon_state = "bedhead"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bedhead2
-    name = "Bedhead 2"
-    icon_state = "bedhead2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bedhead 2"
+	icon_state = "bedhead2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bedhead3
-    name = "Bedhead 3"
-    icon_state = "bedhead3"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bedhead 3"
+	icon_state = "bedhead3"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bedheadlong
-    name = "Bedhead (Long)"
-    icon_state = "bedhead-long"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bedhead (Long)"
+	icon_state = "bedhead-long"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/badlycut
-    name = "Shorter Long Bedhead"
-    icon_state = "hair_verybadlycut"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Shorter Long Bedhead"
+	icon_state = "hair_verybadlycut"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/beehive
-    name = "Beehive"
-    icon_state = "beehive"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Beehive"
+	icon_state = "beehive"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/beehive2
-    name = "Beehive 2"
-    icon_state = "beehive2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Beehive 2"
+	icon_state = "beehive2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bob2
-    name = "Bobcut 2"
-    icon_state = "bob2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bobcut 2"
+	icon_state = "bob2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bob3
-    name = "Bobcut 3"
-    icon_state = "bob3"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bobcut 3"
+	icon_state = "bob3"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bob4
-    name = "Bobcut 4"
-    icon_state = "bob4"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bobcut 4"
+	icon_state = "bob4"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bobcurl
-    name = "Bobcurl"
-    icon_state = "bobcurl"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bobcurl"
+	icon_state = "bobcurl"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/boddicker
-    name = "Boddicker"
-    icon_state = "boddicker"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Boddicker"
+	icon_state = "boddicker"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bowlcut2
-    name = "Bowlcut 2"
-    icon_state = "bowlcut2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bowlcut 2"
+	icon_state = "bowlcut2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/braid
-    name = "Braid (Floorlength)"
-    icon_state = "braid"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Braid (Floorlength)"
+	icon_state = "braid"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/front_braid
-    name = "Braided Front"
-    icon_state = "braid-front"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Braided Front"
+	icon_state = "braid-front"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/not_floorlength_braid
-    name = "Braid (High)"
-    icon_state = "braid-high"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Braid (High)"
+	icon_state = "braid-high"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/lowbraid
-    name = "Braid (Low)"
-    icon_state = "braid-low"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Braid (Low)"
+	icon_state = "braid-low"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/shortbraid
-    name = "Braid (Short)"
-    icon_state = "braid-short"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Braid (Short)"
+	icon_state = "braid-short"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/braided
-    name = "Braided"
-    icon_state = "braided"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Braided"
+	icon_state = "braided"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/braidtail
-    name = "Braided Tail"
-    icon_state = "braided-tail"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Braided Tail"
+	icon_state = "braided-tail"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bun
-    name = "Bun Head"
-    icon_state = "bun"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bun Head"
+	icon_state = "bun"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bun2
-    name = "Bun Head 2"
-    icon_state = "bun2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bun Head 2"
+	icon_state = "bun2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bun3
-    name = "Bun Head 3"
-    icon_state = "bun3"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bun Head 3"
+	icon_state = "bun3"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/largebun
-    name = "Bun (Large)"
-    icon_state = "bun-large"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bun (Large)"
+	icon_state = "bun-large"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/manbun
-    name = "Bun (Manbun)"
-    icon_state = "bun-manbun"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bun (Manbun)"
+	icon_state = "bun-manbun"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/tightbun
-    name = "Bun (Tight)"
-    icon_state = "bun-tight"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bun (Tight)"
+	icon_state = "bun-tight"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/business
-    name = "Business Hair"
-    icon_state = "business"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Business Hair"
+	icon_state = "business"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/business2
-    name = "Business Hair 2"
-    icon_state = "business2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Business Hair 2"
+	icon_state = "business2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/business3
-    name = "Business Hair 3"
-    icon_state = "business3"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Business Hair 3"
+	icon_state = "business3"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/business4
-    name = "Business Hair 4"
-    icon_state = "business4"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Business Hair 4"
+	icon_state = "business4"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/buzz
-    name = "Buzzcut"
-    icon_state = "buzzcut"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Buzzcut"
+	icon_state = "buzzcut"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/cia
-    name = "CIA"
-    icon_state = "cia"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "CIA"
+	icon_state = "cia"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/coffeehouse
-    name = "Coffee House"
-    icon_state = "coffeehouse"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Coffee House"
+	icon_state = "coffeehouse"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/combover
-    name = "Combover"
-    icon_state = "combover"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Combover"
+	icon_state = "combover"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/comet
-    name = "Comet"
-    icon_state = "comet"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Comet"
+	icon_state = "comet"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/cornrows1
-    name = "Cornrows"
-    icon_state = "cornrows"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Cornrows"
+	icon_state = "cornrows"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/cornrows2
-    name = "Cornrows 2"
-    icon_state = "cornrows2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Cornrows 2"
+	icon_state = "cornrows2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/cornrowbraid
-    name = "Cornrow Braid"
-    icon_state = "cornrow-braid"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Cornrow Braid"
+	icon_state = "cornrow-braid"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/cornrowbun
-    name = "Cornrow Bun"
-    icon_state = "cornrow-bun"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Cornrow Bun"
+	icon_state = "cornrow-bun"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/cornrowdualtail
-    name = "Cornrow Tail"
-    icon_state = "cornrow-tail"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Cornrow Tail"
+	icon_state = "cornrow-tail"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/crew
-    name = "Crewcut"
-    icon_state = "crewcut"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Crewcut"
+	icon_state = "crewcut"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/cut
-    name = "Cut Hair"
-    icon_state = "cut"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Cut Hair"
+	icon_state = "cut"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/dandpompadour
-    name = "Dandy Pompadour"
-    icon_state = "dandypompadour"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Dandy Pompadour"
+	icon_state = "dandypompadour"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/devillock
-    name = "Devil Lock"
-    icon_state = "devillock"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Devil Lock"
+	icon_state = "devillock"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/doublebun
-    name = "Double Bun"
-    icon_state = "doublebun"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Double Bun"
+	icon_state = "doublebun"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/dreadlocks
-    name = "Dreadlocks"
-    icon_state = "dreads"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Dreadlocks"
+	icon_state = "dreads"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/drillhair
-    name = "Drillruru"
-    icon_state = "drillruru"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Drillruru"
+	icon_state = "drillruru"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/drillhairextended
-    name = "Drill Hair (Extended)"
-    icon_state = "drillhairextended"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Drill Hair (Extended)"
+	icon_state = "drillhairextended"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/emo
-    name = "Emo"
-    icon_state = "emo"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Emo"
+	icon_state = "emo"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/emo2
-    name = "Emo 2"
-    icon_state = "emo2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Emo 2"
+	icon_state = "emo2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/emofringe
-    name = "Emo Fringe"
-    icon_state = "emofringe"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Emo Fringe"
+	icon_state = "emofringe"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/longemo
-    name = "Emo Long"
-    icon_state = "emolong"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Emo Long"
+	icon_state = "emolong"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/nofade
-    name = "Fade (None)"
-    icon_state = "fade-none"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Fade (None)"
+	icon_state = "fade-none"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/lowfade
-    name = "Fade (Low)"
-    icon_state = "fade-low"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Fade (Low)"
+	icon_state = "fade-low"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/medfade
-    name = "Fade (Medium)"
-    icon_state = "fade-medium"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Fade (Medium)"
+	icon_state = "fade-medium"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/highfade
-    name = "Fade (High)"
-    icon_state = "fade-high"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Fade (High)"
+	icon_state = "fade-high"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/baldfade
-    name = "Fade (Bald)"
-    icon_state = "fade-bald"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Fade (Bald)"
+	icon_state = "fade-bald"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/father
-    name = "Father"
-    icon_state = "father"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Father"
+	icon_state = "father"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/feather
-    name = "Feather"
-    icon_state = "feather"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Feather"
+	icon_state = "feather"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/flair
-    name = "Flair"
-    icon_state = "flair"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Flair"
+	icon_state = "flair"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/flattop
-    name = "Flat Top / Sergeant"
-    icon_state = "flattop"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Flat Top / Sergeant"
+	icon_state = "flattop"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/flattop_big
-    name = "Flat Top (Big)"
-    icon_state = "flattop-big"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Flat Top (Big)"
+	icon_state = "flattop-big"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/flow_hair
-    name = "Flow Hair"
-    icon_state = "flow"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Flow Hair"
+	icon_state = "flow"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/gelled
-    name = "Gelled Back"
-    icon_state = "gelled"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Gelled Back"
+	icon_state = "gelled"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/gentle
-    name = "Gentle"
-    icon_state = "gentle"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Gentle"
+	icon_state = "gentle"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/halfbang
-    name = "Half-banged Hair"
-    icon_state = "halfbang"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Half-banged Hair"
+	icon_state = "halfbang"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/halfbang2
-    name = "Half-banged Hair 2"
-    icon_state = "halfbang2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Half-banged Hair 2"
+	icon_state = "halfbang2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/halfshaved
-    name = "Half-shaved"
-    icon_state = "halfshaved"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Half-shaved"
+	icon_state = "halfshaved"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/hedgehog
-    name = "Hedgehog Hair"
-    icon_state = "hedgehog"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Hedgehog Hair"
+	icon_state = "hedgehog"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/himecut
-    name = "Hime Cut"
-    icon_state = "himecut"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Hime Cut"
+	icon_state = "himecut"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/himecut2
-    name = "Hime Cut 2"
-    icon_state = "himecut2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Hime Cut 2"
+	icon_state = "himecut2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/himeup
-    name = "Hime Updo"
-    icon_state = "himeup"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Hime Updo"
+	icon_state = "himeup"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/hitop
-    name = "Hitop"
-    icon_state = "hitop"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Hitop"
+	icon_state = "hitop"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/jade
-    name = "Jade"
-    icon_state = "jade"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Jade"
+	icon_state = "jade"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/jensen
-    name = "Jensen Hair"
-    icon_state = "jensen"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Jensen Hair"
+	icon_state = "jensen"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/joestar
-    name = "Joestar"
-    icon_state = "joestar"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Joestar"
+	icon_state = "joestar"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/keanu
-    name = "Keanu Hair"
-    icon_state = "keanu"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Keanu Hair"
+	icon_state = "keanu"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/kusangi
-    name = "Kusanagi Hair"
-    icon_state = "kusanagi"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Kusanagi Hair"
+	icon_state = "kusanagi"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/long
-    name = "Long Hair 1"
-    icon_state = "long"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Long Hair 1"
+	icon_state = "long"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/long2
-    name = "Long Hair 2"
-    icon_state = "long2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Long Hair 2"
+	icon_state = "long2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/long3
-    name = "Long Hair 3"
-    icon_state = "long3"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Long Hair 3"
+	icon_state = "long3"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/long_over_eye
-    name = "Long Over Eye"
-    icon_state = "longovereye"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Long Over Eye"
+	icon_state = "longovereye"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/longbangs
-    name = "Long Bangs"
-    icon_state = "lbangs"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Long Bangs"
+	icon_state = "lbangs"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/longfringe
-    name = "Long Fringe"
-    icon_state = "longfringe"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Long Fringe"
+	icon_state = "longfringe"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/sidepartlongalt
-    name = "Long Side Part"
-    icon_state = "longsidepart"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Long Side Part"
+	icon_state = "longsidepart"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/megaeyebrows
-    name = "Mega Eyebrows"
-    icon_state = "megaeyebrows"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Mega Eyebrows"
+	icon_state = "megaeyebrows"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/modern
-    name = "Modern"
-    icon_state = "modern"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Modern"
+	icon_state = "modern"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/modern2
-    name = "Modern (New)"
-    icon_state = "modern2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Modern (New)"
+	icon_state = "modern2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/mohawk
-    name = "Mohawk"
-    icon_state = "mohawk"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Mohawk"
+	icon_state = "mohawk"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/reversemohawk
-    name = "Mohawk (Reverse)"
-    icon_state = "mohawk-reverse"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Mohawk (Reverse)"
+	icon_state = "mohawk-reverse"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/shavedmohawk
-    name = "Mohawk (Shaved)"
-    icon_state = "mohawk-shaved"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Mohawk (Shaved)"
+	icon_state = "mohawk-shaved"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/unshavenmohawk
-    name = "Mohawk (Big)"
-    icon_state = "mohawk-unshaven"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Mohawk (Big)"
+	icon_state = "mohawk-unshaven"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/mulder
-    name = "Mulder"
-    icon_state = "mulder"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Mulder"
+	icon_state = "mulder"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/nitori
-    name = "Nitori"
-    icon_state = "nitori"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Nitori"
+	icon_state = "nitori"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/newyou
-    name = "New You"
-    icon_state = "newyou"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "New You"
+	icon_state = "newyou"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/odango
-    name = "Odango"
-    icon_state = "odango"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Odango"
+	icon_state = "odango"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/ombre
-    name = "Ombre"
-    icon_state = "ombre"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ombre"
+	icon_state = "ombre"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/oneshoulder
-    name = "One Shoulder"
-    icon_state = "oneshoulder"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "One Shoulder"
+	icon_state = "oneshoulder"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/over_eye
-    name = "Over Eye"
-    icon_state = "shortovereye"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Over Eye"
+	icon_state = "shortovereye"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/oxton
-    name = "Oxton"
-    icon_state = "oxton"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Oxton"
+	icon_state = "oxton"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/parted
-    name = "Parted"
-    icon_state = "parted"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Parted"
+	icon_state = "parted"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/partedside
-    name = "Parted (Side)"
-    icon_state = "part"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Parted (Side)"
+	icon_state = "part"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/pigtails
-    name = "Pigtails"
-    icon_state = "pigtails"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Pigtails"
+	icon_state = "pigtails"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/pigtails2
-    name = "Pigtails 2"
-    icon_state = "pigtails2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Pigtails 2"
+	icon_state = "pigtails2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/pigtails3
-    name = "Pigtails 3"
-    icon_state = "pigtails3"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Pigtails 3"
+	icon_state = "pigtails3"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/kagami
-    name = "Pigtails (Kagami)"
-    icon_state = "pigtails-kagami"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Pigtails (Kagami)"
+	icon_state = "pigtails-kagami"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/pixie
-    name = "Pixie Cut"
-    icon_state = "pixie"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Pixie Cut"
+	icon_state = "pixie"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/pompadour
-    name = "Pompadour"
-    icon_state = "pompadour"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Pompadour"
+	icon_state = "pompadour"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bigpompadour
-    name = "Pompadour (Big)"
-    icon_state = "pompadour-big"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Pompadour (Big)"
+	icon_state = "pompadour-big"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/ponytail1
-    name = "Ponytail"
-    icon_state = "ponytail"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail"
+	icon_state = "ponytail"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/ponytail2
-    name = "Ponytail 2"
-    icon_state = "ponytail2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail 2"
+	icon_state = "ponytail2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/ponytail3
-    name = "Ponytail 3"
-    icon_state = "ponytail3"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail 3"
+	icon_state = "ponytail3"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/ponytail4
-    name = "Ponytail 4"
-    icon_state = "ponytail4"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail 4"
+	icon_state = "ponytail4"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/ponytail5
-    name = "Ponytail 5"
-    icon_state = "ponytail5"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail 5"
+	icon_state = "ponytail5"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/ponytail6
-    name = "Ponytail 6"
-    icon_state = "ponytail6"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail 6"
+	icon_state = "ponytail6"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/ponytail7
-    name = "Ponytail 7"
-    icon_state = "ponytail7"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail 7"
+	icon_state = "ponytail7"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/highponytail
-    name = "Ponytail (High)"
-    icon_state = "ponytail-high"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail (High)"
+	icon_state = "ponytail-high"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/longponytail
-    name = "Ponytail (Long)"
-    icon_state = "ponytail-longstraight"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail (Long)"
+	icon_state = "ponytail-longstraight"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/stail
-    name = "Ponytail (Short)"
-    icon_state = "ponytail-short"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail (Short)"
+	icon_state = "ponytail-short"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/countryponytail
-    name = "Ponytail (Country)"
-    icon_state = "ponytail-country"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail (Country)"
+	icon_state = "ponytail-country"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/fringetail
-    name = "Ponytail (Fringe)"
-    icon_state = "fringetail"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail (Fringe)"
+	icon_state = "fringetail"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/sidetail
-    name = "Ponytail (Side)"
-    icon_state = "sidetail"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail (Side)"
+	icon_state = "sidetail"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/sidetail2
-    name = "Ponytail (Side) 2"
-    icon_state = "sidetail2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail (Side) 2"
+	icon_state = "sidetail2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/sidetail3
-    name = "Ponytail (Side) 3"
-    icon_state = "sidetail3"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail (Side) 3"
+	icon_state = "sidetail3"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/sidetail4
-    name = "Ponytail (Side) 4"
-    icon_state = "sidetail4"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail (Side) 4"
+	icon_state = "sidetail4"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/spikyponytail
-    name = "Ponytail (Spiky)"
-    icon_state = "spikyponytail"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ponytail (Spiky)"
+	icon_state = "spikyponytail"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/poofy
-    name = "Poofy"
-    icon_state = "poofy"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Poofy"
+	icon_state = "poofy"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/quiff
-    name = "Quiff"
-    icon_state = "quiff"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Quiff"
+	icon_state = "quiff"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/ronin
-    name = "Ronin"
-    icon_state = "ronin"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ronin"
+	icon_state = "ronin"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/shavedpart
-    name = "Shaved Part"
-    icon_state = "shavedpart"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Shaved Part"
+	icon_state = "shavedpart"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/shortbangs
-    name = "Short Bangs"
-    icon_state = "shortbangs"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Short Bangs"
+	icon_state = "shortbangs"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/short
-    name = "Short Hair"
-    icon_state = "short"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Short Hair"
+	icon_state = "short"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/shorthair2
-    name = "Short Hair 2"
-    icon_state = "shorthair2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Short Hair 2"
+	icon_state = "shorthair2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/shorthair3
-    name = "Short Hair 3"
-    icon_state = "shorthair3"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Short Hair 3"
+	icon_state = "shorthair3"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/shorthair7
-    name = "Short Hair 7"
-    icon_state = "shorthairg"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Short Hair 7"
+	icon_state = "shorthairg"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/rosa
-    name = "Short Hair Rosa"
-    icon_state = "rosa"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Short Hair Rosa"
+	icon_state = "rosa"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/shoulderlength
-    name = "Shoulder-length Hair"
-    icon_state = "shoulder"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Shoulder-length Hair"
+	icon_state = "shoulder"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/sidecut
-    name = "Sidecut"
-    icon_state = "sidecut"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Sidecut"
+	icon_state = "sidecut"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/skinhead
-    name = "Skinhead"
-    icon_state = "skinhead"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Skinhead"
+	icon_state = "skinhead"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/protagonist
-    name = "Slightly Long Hair"
-    icon_state = "protagonist"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Slightly Long Hair"
+	icon_state = "protagonist"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/spiky
-    name = "Spiky"
-    icon_state = "spikey"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Spiky"
+	icon_state = "spikey"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/spiky2
-    name = "Spiky 2"
-    icon_state = "spiky"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Spiky 2"
+	icon_state = "spiky"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/spiky3
-    name = "Spiky 3"
-    icon_state = "spiky2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Spiky 3"
+	icon_state = "spiky2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/swept
-    name = "Swept Back Hair"
-    icon_state = "swept"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Swept Back Hair"
+	icon_state = "swept"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/swept2
-    name = "Swept Back Hair 2"
-    icon_state = "swept2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Swept Back Hair 2"
+	icon_state = "swept2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/thinning
-    name = "Thinning"
-    icon_state = "thinning"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Thinning"
+	icon_state = "thinning"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/thinningfront
-    name = "Thinning (Front)"
-    icon_state = "thinningfront"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Thinning (Front)"
+	icon_state = "thinningfront"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/thinningrear
-    name = "Thinning (Rear)"
-    icon_state = "thinningrear"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Thinning (Rear)"
+	icon_state = "thinningrear"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/topknot
-    name = "Topknot"
-    icon_state = "topknot"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Topknot"
+	icon_state = "topknot"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/tressshoulder
-    name = "Tress Shoulder"
-    icon_state = "tressshoulder"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Tress Shoulder"
+	icon_state = "tressshoulder"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/trimmed
-    name = "Trimmed"
-    icon_state = "trimmed"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Trimmed"
+	icon_state = "trimmed"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/trimflat
-    name = "Trim Flat"
-    icon_state = "trimflat"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Trim Flat"
+	icon_state = "trimflat"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/twintails
-    name = "Twintails"
-    icon_state = "twintail"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Twintails"
+	icon_state = "twintail"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/undercut
-    name = "Undercut"
-    icon_state = "undercut"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Undercut"
+	icon_state = "undercut"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/undercutleft
-    name = "Undercut Left"
-    icon_state = "undercutleft"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Undercut Left"
+	icon_state = "undercutleft"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/undercutright
-    name = "Undercut Right"
-    icon_state = "undercutright"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Undercut Right"
+	icon_state = "undercutright"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/unkept
-    name = "Unkept"
-    icon_state = "unkept"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Unkept"
+	icon_state = "unkept"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/longer
-    name = "Very Long Hair"
-    icon_state = "vlong"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Very Long Hair"
+	icon_state = "vlong"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/longest
-    name = "Very Long Hair 2"
-    icon_state = "longest"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Very Long Hair 2"
+	icon_state = "longest"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/longest2
-    name = "Very Long Over Eye"
-    icon_state = "longest2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Very Long Over Eye"
+	icon_state = "longest2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/veryshortovereye
-    name = "Very Short Over Eye"
-    icon_state = "veryshortovereyealternate"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Very Short Over Eye"
+	icon_state = "veryshortovereyealternate"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/longestalt
-    name = "Very Long with Fringe"
-    icon_state = "vlongfringe"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Very Long with Fringe"
+	icon_state = "vlongfringe"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/volaju
-    name = "Volaju"
-    icon_state = "volaju"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Volaju"
+	icon_state = "volaju"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/hyenamane
-    name = "Hyena Mane"
-    icon_state = "hyenamane"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Hyena Mane"
+	icon_state = "hyenamane"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/forelock
-    name = "Forelock"
-    icon_state = "forelock"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Forelock"
+	icon_state = "forelock"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/scout
-    name = "Scout"
-    icon_state = "scout"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Scout"
+	icon_state = "scout"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/son2
-    name = "Son (Alt)"
-    icon_state = "son2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Son (Alt)"
+	icon_state = "son2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/long4
-    name = "Long (Fourth)"
-    icon_state = "long4"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Long (Fourth)"
+	icon_state = "long4"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/longstraightponytail
-    name = "Long Ponytail"
-    icon_state = "longstraightponytail"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Long Ponytail"
+	icon_state = "longstraightponytail"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 
 /datum/sprite_accessory/hair/head/azur/barmaid
-    name = "Barmaid"
-    icon_state = "barmaid"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Barmaid"
+	icon_state = "barmaid"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bob_rt
-    name = "Bob (Rogue)"
-    icon_state = "bob_rt"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bob (Rogue)"
+	icon_state = "bob_rt"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/messy_rt
-    name = "Messy (Rogue)"
-    icon_state = "messy_rt"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Messy (Rogue)"
+	icon_state = "messy_rt"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/longtails
-    name = "Longtails"
-    icon_state = "longtails"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Longtails"
+	icon_state = "longtails"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/hime
-    name = "Hime"
-    icon_state = "hime"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Hime"
+	icon_state = "hime"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/fatherless
-    name = "Fatherless"
-    icon_state = "fatherless"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Fatherless"
+	icon_state = "fatherless"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/fatherless2
-    name = "Fatherless (Alt)"
-    icon_state = "fatherless2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Fatherless (Alt)"
+	icon_state = "fatherless2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/kepthair
-    name = "Kepthair"
-    icon_state = "kepthair"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Kepthair"
+	icon_state = "kepthair"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/zone
-    name = "Zone"
-    icon_state = "zone"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Zone"
+	icon_state = "zone"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/diagonalbangs
-    name = "Diagonal Bangs"
-    icon_state = "diagonalbangs"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Diagonal Bangs"
+	icon_state = "diagonalbangs"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/sabitsuki_ponytail
-    name = "Sabitsuki (Ponytail)"
-    icon_state = "sabitsuki_ponytail"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Sabitsuki (Ponytail)"
+	icon_state = "sabitsuki_ponytail"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/damsel
-    name = "Damsel"
-    icon_state = "damsel"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Damsel"
+	icon_state = "damsel"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/wavyovereye
-    name = "Wavy Over Eye"
-    icon_state = "wavyovereye"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Wavy Over Eye"
+	icon_state = "wavyovereye"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/straightovereye
-    name = "Straight Over Eye"
-    icon_state = "straightovereye"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Straight Over Eye"
+	icon_state = "straightovereye"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/straightside
-    name = "Straight Side"
-    icon_state = "straightside"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Straight Side"
+	icon_state = "straightside"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/straightshort
-    name = "Straight Short"
-    icon_state = "straightshort"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Straight Short"
+	icon_state = "straightshort"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/thicklong_alt
-    name = "Thick Long (Alt)"
-    icon_state = "thicklong_alt"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Thick Long (Alt)"
+	icon_state = "thicklong_alt"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/mcsqueeb
-    name = "Ye Old McSqueeb"
-    icon_state = "mcsqueeb"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Ye Old McSqueeb"
+	icon_state = "mcsqueeb"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bubblebraids
-    name = "Bubble Braids"
-    icon_state = "bubblebraid"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bubble Braids"
+	icon_state = "bubblebraid"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bubblebraids_v2
-    name = "Bubble Braids Alt"
-    icon_state = "bubblebraid_v2"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bubble Braids Alt"
+	icon_state = "bubblebraid_v2"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/heiress
-    name = "Heiress"
-    icon_state = "heiress"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Heiress"
+	icon_state = "heiress"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/playful
-    name = "Playful"
-    icon_state = "playful"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Playful"
+	icon_state = "playful"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/adventurer
-    name = "Adventurer"
-    icon_state = "adventurer"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Adventurer"
+	icon_state = "adventurer"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/amazon_f
-    name = "Amazon (F)"
-    icon_state = "amazon_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Amazon (F)"
+	icon_state = "amazon_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/barbarian_f
-    name = "Barbarian (F)"
-    icon_state = "barbarian_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Barbarian (F)"
+	icon_state = "barbarian_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/beartails_f
-    name = "Beartails (F)"
-    icon_state = "beartails_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Beartails (F)"
+	icon_state = "beartails_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/berserker
-    name = "Berserker"
-    icon_state = "berserker"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Berserker"
+	icon_state = "berserker"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bob_f
-    name = "Bob (F)"
-    icon_state = "bob_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bob (F)"
+	icon_state = "bob_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/boss
-    name = "Boss"
-    icon_state = "boss"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Boss"
+	icon_state = "boss"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/buns_f
-    name = "Buns (F)"
-    icon_state = "buns_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Buns (F)"
+	icon_state = "buns_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/curly_f
-    name = "Curly (F)"
-    icon_state = "curly_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Curly (F)"
+	icon_state = "curly_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/darkknight
-    name = "Darkknight"
-    icon_state = "darkknight"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Darkknight"
+	icon_state = "darkknight"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/empress_f
-    name = "Empress (F)"
-    icon_state = "empress_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Empress (F)"
+	icon_state = "empress_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/fancy_elf_f
-    name = "Fancy Elf (F)"
-    icon_state = "fancy_elf_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Fancy Elf (F)"
+	icon_state = "fancy_elf_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/foreigner
-    name = "Foreigner"
-    icon_state = "foreigner"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Foreigner"
+	icon_state = "foreigner"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/forsaken
-    name = "Forsaken"
-    icon_state = "forsaken"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Forsaken"
+	icon_state = "forsaken"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/homely_f
-    name = "Homely (F)"
-    icon_state = "homely_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Homely (F)"
+	icon_state = "homely_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/junia_tief_f
-    name = "Junia Tief (F)"
-    icon_state = "junia_tief_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Junia Tief (F)"
+	icon_state = "junia_tief_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/lady_f
-    name = "Lady (F)"
-    icon_state = "lady_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Lady (F)"
+	icon_state = "lady_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/loosebraid_f
-    name = "Loosebraid (F)"
-    icon_state = "loosebraid_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Loosebraid (F)"
+	icon_state = "loosebraid_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/lover_tief_m
-    name = "Lover Tief (M)"
-    icon_state = "lover_tief_m"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Lover Tief (M)"
+	icon_state = "lover_tief_m"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/maid_f
-    name = "Maid (F)"
-    icon_state = "maid_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Maid (F)"
+	icon_state = "maid_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/maiden_f
-    name = "Maiden (F)"
-    icon_state = "maiden_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Maiden (F)"
+	icon_state = "maiden_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/majestic
-    name = "Majestic"
-    icon_state = "majestic"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Majestic"
+	icon_state = "majestic"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/majestic_dwarf
-    name = "Majestic Dwarf"
-    icon_state = "majestic_dwarf"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Majestic Dwarf"
+	icon_state = "majestic_dwarf"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/messy_f
-    name = "Messy (F)"
-    icon_state = "messy_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Messy (F)"
+	icon_state = "messy_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/miner
-    name = "Miner"
-    icon_state = "miner"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Miner"
+	icon_state = "miner"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/mystery_f
-    name = "Mystery (F)"
-    icon_state = "mystery_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Mystery (F)"
+	icon_state = "mystery_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/nobility
-    name = "Nobility"
-    icon_state = "nobility"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Nobility"
+	icon_state = "nobility"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/noblesse_f
-    name = "Noblesse (F)"
-    icon_state = "noblesse_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Noblesse (F)"
+	icon_state = "noblesse_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/nomadic
-    name = "Nomadic"
-    icon_state = "nomadic"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Nomadic"
+	icon_state = "nomadic"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/orc_f
-    name = "Orc (F)"
-    icon_state = "orc_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Orc (F)"
+	icon_state = "orc_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/performer_tief_f
-    name = "Performer Tief (F)"
-    icon_state = "performer_tief_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Performer Tief (F)"
+	icon_state = "performer_tief_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/plain_f
-    name = "Plain (F)"
-    icon_state = "plain_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Plain (F)"
+	icon_state = "plain_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/pixie_f
-    name = "Pixie (F)"
-    icon_state = "pixie_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Pixie (F)"
+	icon_state = "pixie_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/soilbride_f
-    name = "Soilbride (F)"
-    icon_state = "soilbride_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Soilbride (F)"
+	icon_state = "soilbride_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/shrine_f
-    name = "Shrine (F)"
-    icon_state = "shrine_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Shrine (F)"
+	icon_state = "shrine_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/southern
-    name = "Southern"
-    icon_state = "southern"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Southern"
+	icon_state = "southern"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/tails_f
-    name = "Tails (F)"
-    icon_state = "tails_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Tails (F)"
+	icon_state = "tails_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/tsidecut
-    name = "Tsidecut"
-    icon_state = "tsidecut"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Tsidecut"
+	icon_state = "tsidecut"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/updo_f
-    name = "Updo (F)"
-    icon_state = "updo_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Updo (F)"
+	icon_state = "updo_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/wisp_f
-    name = "Wisp (F)"
-    icon_state = "wisp_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Wisp (F)"
+	icon_state = "wisp_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/queenly_f
-    name = "Queenly (F)"
-    icon_state = "queenly_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Queenly (F)"
+	icon_state = "queenly_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/zybantu
-    name = "Zybantu"
-    icon_state = "zybantu"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Zybantu"
+	icon_state = "zybantu"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/chair_ponytail6
-    name = "Chair Ponytail 6"
-    icon_state = "chair_ponytail6"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Chair Ponytail 6"
+	icon_state = "chair_ponytail6"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/chair_manbun
-    name = "Chair Manbun"
-    icon_state = "chair_manbun"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Chair Manbun"
+	icon_state = "chair_manbun"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/fatherless_elf_f
-    name = "Fatherless Elf (F)"
-    icon_state = "fatherless_elf_f"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Fatherless Elf (F)"
+	icon_state = "fatherless_elf_f"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/samurai
-    name = "Samurai"
-    icon_state = "samurai"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Samurai"
+	icon_state = "samurai"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/yakuza
-    name = "Yakuza"
-    icon_state = "yakuza"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Yakuza"
+	icon_state = "yakuza"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/novice
-    name = "Novice"
-    icon_state = "novice"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Novice"
+	icon_state = "novice"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/steppeman
-    name = "Steppeman"
-    icon_state = "steppeman"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Steppeman"
+	icon_state = "steppeman"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/bishonen
-    name = "Bishonen"
-    icon_state = "bishonen"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Bishonen"
+	icon_state = "bishonen"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/emperor
-    name = "Emperor"
-    icon_state = "emperor"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Emperor"
+	icon_state = "emperor"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/female
-    name = "Female"
-    icon_state = "female"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Female"
+	icon_state = "female"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/warlady
-    name = "Warlady"
-    icon_state = "warlady"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Warlady"
+	icon_state = "warlady"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/waterfield
-    name = "Waterfield"
-    icon_state = "waterfield"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Waterfield"
+	icon_state = "waterfield"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/homewaifu
-    name = "Homewaifu"
-    icon_state = "homewaifu"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Homewaifu"
+	icon_state = "homewaifu"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/casual
-    name = "Casual"
-    icon_state = "casual"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Casual"
+	icon_state = "casual"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/martyr
-    name = "Martyr"
-    icon_state = "martyr"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Martyr"
+	icon_state = "martyr"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/neuter
-    name = "Neuter"
-    icon_state = "neuter"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Neuter"
+	icon_state = "neuter"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/hprotagonist
-    name = "Hprotagonist"
-    icon_state = "hprotagonist"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Hprotagonist"
+	icon_state = "hprotagonist"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/azur/alsoprotagonist
-    name = "Alsoprotagonist"
-    icon_state = "alsoprotagonist"
-    gender = NEUTER
-    specuse = ALL_RACES_LIST
+	name = "Alsoprotagonist"
+	icon_state = "alsoprotagonist"
+	gender = NEUTER
+	specuse = ALL_RACES_LIST

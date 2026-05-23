@@ -32,9 +32,9 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	var/default_mob_weight = HUMAN_WEIGHT
 
 	/**
-	 * The list of pronouns this species allows in the character sheet.
-	 * If none are specified, it will default to the PRONOUNS_LIST.
-	 */
+	* The list of pronouns this species allows in the character sheet.
+	* If none are specified, it will default to the PRONOUNS_LIST.
+	*/
 	var/list/allowed_pronouns = PRONOUNS_LIST_NO_IT
 
 	/// The list of voice types this species allows in the character sheet for feminine bodies
@@ -121,31 +121,31 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	/// Custom race title list
 	var/list/race_titles = list()
 	/**
-	 * Males use female clothes, offsets and damage icons.
-	 * Importantly males still use male limb icons.
-	 * This does not effect stats or inherent traits/skills.
-	 * Males will not get boob overlays from this.
-	 */
+	* Males use female clothes, offsets and damage icons.
+	* Importantly males still use male limb icons.
+	* This does not effect stats or inherent traits/skills.
+	* Males will not get boob overlays from this.
+	*/
 	var/swap_male_clothes = FALSE
 	/**
-	 * Females use male clothes, offsets and damage icons.
-	 * Importantly females still use female limb icons.
-	 * This does not effect stats or inherent traits/skills.
-	 * Females will lose their boob overlays.
-	 */
+	* Females use male clothes, offsets and damage icons.
+	* Importantly females still use female limb icons.
+	* This does not effect stats or inherent traits/skills.
+	* Females will lose their boob overlays.
+	*/
 	var/swap_female_clothes = FALSE
 /**
-	 * Males use female clothes and damage icons, but not offsets
-	 * Importantly males still use male limb icons.
-	 * This does not effect stats or inherent traits/skills.
-	 * Males will not get boob overlays from this.
-	 */
+	* Males use female clothes and damage icons, but not offsets
+	* Importantly males still use male limb icons.
+	* This does not effect stats or inherent traits/skills.
+	* Males will not get boob overlays from this.
+	*/
 	var/swap_male_clothes_but_not_offsets = FALSE
 	var/no_boobs = FALSE
 	/**
-	 * For species that don't have mammaries, like Rakshari.
-	 * Removes boob overlay
-	 */
+	* For species that don't have mammaries, like Rakshari.
+	* Removes boob overlay
+	*/
 
 	/// Sounds for males
 	var/datum/voicepack/soundpack_m = /datum/voicepack/male

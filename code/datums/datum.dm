@@ -10,11 +10,11 @@
  */
 /datum
 	/**
-	 * Tick count time when this object was destroyed.
-	 *
-	 * If this is non zero then the object has been garbage collected and is awaiting either
-	 * a hard del by the GC subsystme, or to be autocollected (if it has no references)
-	 */
+	* Tick count time when this object was destroyed.
+	*
+	* If this is non zero then the object has been garbage collected and is awaiting either
+	* a hard del by the GC subsystme, or to be autocollected (if it has no references)
+	*/
 	var/gc_destroyed
 
 	/// Open uis owned by this datum

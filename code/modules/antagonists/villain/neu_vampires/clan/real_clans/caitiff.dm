@@ -6,7 +6,7 @@
 		/datum/coven/auspex,
 		/datum/coven/obfuscate,
 		/datum/coven/bloodheal
-    )
+	)
 	force_VL_if_clan_is_empty = FALSE
 	selectable_by_vampires = FALSE
 

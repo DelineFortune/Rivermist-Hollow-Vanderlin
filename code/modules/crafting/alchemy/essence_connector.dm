@@ -127,34 +127,34 @@
 
 /obj/machinery/essence/splitter/can_connect_to(obj/machinery/essence/target)
 	return istype(target, /obj/machinery/essence/combiner) || \
-		   istype(target, /obj/machinery/essence/reservoir) || \
-		   istype(target, /obj/machinery/essence/enchantment_altar) || \
-		   istype(target, /obj/machinery/essence/test_tube) || \
-		   istype(target, /obj/machinery/essence/infuser) || \
-		   istype(target, /obj/machinery/essence/research_matrix)
+		istype(target, /obj/machinery/essence/reservoir) || \
+		istype(target, /obj/machinery/essence/enchantment_altar) || \
+		istype(target, /obj/machinery/essence/test_tube) || \
+		istype(target, /obj/machinery/essence/infuser) || \
+		istype(target, /obj/machinery/essence/research_matrix)
 
 /obj/machinery/essence/combiner/can_connect_to(obj/machinery/essence/target)
 	return istype(target, /obj/machinery/essence/reservoir) || \
-		   istype(target, /obj/machinery/essence/enchantment_altar) || \
-		   istype(target, /obj/machinery/essence/test_tube) || \
-		   istype(target, /obj/machinery/essence/infuser) || \
-		   istype(target, /obj/machinery/essence/research_matrix)
+		istype(target, /obj/machinery/essence/enchantment_altar) || \
+		istype(target, /obj/machinery/essence/test_tube) || \
+		istype(target, /obj/machinery/essence/infuser) || \
+		istype(target, /obj/machinery/essence/research_matrix)
 
 /obj/machinery/essence/reservoir/can_connect_to(obj/machinery/essence/target)
 	return istype(target, /obj/machinery/essence/combiner) || \
-		   istype(target, /obj/machinery/essence/reservoir) || \
-		   istype(target, /obj/machinery/essence/enchantment_altar) || \
-		   istype(target, /obj/machinery/essence/test_tube) || \
-		   istype(target, /obj/machinery/essence/infuser) || \
-		   istype(target, /obj/machinery/essence/research_matrix)
+		istype(target, /obj/machinery/essence/reservoir) || \
+		istype(target, /obj/machinery/essence/enchantment_altar) || \
+		istype(target, /obj/machinery/essence/test_tube) || \
+		istype(target, /obj/machinery/essence/infuser) || \
+		istype(target, /obj/machinery/essence/research_matrix)
 
 /obj/machinery/essence/harvester/can_connect_to(obj/machinery/essence/target)
 	return istype(target, /obj/machinery/essence/combiner) || \
-		   istype(target, /obj/machinery/essence/reservoir) || \
-		   istype(target, /obj/machinery/essence/enchantment_altar) || \
-		   istype(target, /obj/machinery/essence/test_tube) || \
-		   istype(target, /obj/machinery/essence/infuser) || \
-		   istype(target, /obj/machinery/essence/research_matrix)
+		istype(target, /obj/machinery/essence/reservoir) || \
+		istype(target, /obj/machinery/essence/enchantment_altar) || \
+		istype(target, /obj/machinery/essence/test_tube) || \
+		istype(target, /obj/machinery/essence/infuser) || \
+		istype(target, /obj/machinery/essence/research_matrix)
 
 /datum/essence_connection
 	var/obj/machinery/essence/source

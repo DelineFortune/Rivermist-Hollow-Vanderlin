@@ -17,13 +17,13 @@
 		classic_keys = hotkey_keys.Copy()
 
 /datum/keybinding/proc/down(client/user)
-    SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 
-    if(keybind_signal)
+	if(keybind_signal)
 
-        SEND_SIGNAL(user.mob, keybind_signal)
+		SEND_SIGNAL(user.mob, keybind_signal)
 
-    return FALSE
+	return FALSE
 
 /datum/keybinding/proc/up(client/user)
 	SHOULD_CALL_PARENT(TRUE)

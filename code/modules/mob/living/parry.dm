@@ -366,7 +366,7 @@
 
 	if(!(!src.mind || !user.mind))
 		log_defense(src, user, user.get_active_held_item() ? "parried" : "unarmed parried",
-				   "hands", attacking_item, "INTENT:[uppertext(user.used_intent.name)]")
+				"hands", attacking_item, "INTENT:[uppertext(user.used_intent.name)]")
 
 	if(src.client)
 		record_round_statistic(STATS_PARRIES)

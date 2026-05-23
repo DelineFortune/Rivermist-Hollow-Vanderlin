@@ -55,9 +55,9 @@
 	var/frame_state = "frame_wood"
 
 	/**
-	 * A list with two keys delimiting the spinning interval in which a mouse click has to be pressed while fishing.
-	 * Inherited from baits, passed down to the minigame lure.
-	 */
+	* A list with two keys delimiting the spinning interval in which a mouse click has to be pressed while fishing.
+	* Inherited from baits, passed down to the minigame lure.
+	*/
 	var/list/spin_frequency
 
 	///Prevents spamming the line casting, without affecting the player's click cooldown.
@@ -78,11 +78,11 @@
 	/// The multiplier of negative velocity that pulls the bait/bobber down when not holding the click
 	var/gravity_mult = 1
 	/**
-	 * The multiplier of the bait height. Influenced by the strength_modifier of a material,
-	 * unlike the other variables, lest we add too many vars to materials.
-	 * Also materials with a strength_modifier lower than 1 don't do anything, since
-	 * they're already likely to be quite bad
-	 */
+	* The multiplier of the bait height. Influenced by the strength_modifier of a material,
+	* unlike the other variables, lest we add too many vars to materials.
+	* Also materials with a strength_modifier lower than 1 don't do anything, since
+	* they're already likely to be quite bad
+	*/
 	var/bait_height_mult = 1
 
 /datum/intent/cast

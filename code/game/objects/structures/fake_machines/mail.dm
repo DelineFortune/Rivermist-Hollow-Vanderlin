@@ -475,9 +475,9 @@ GLOBAL_LIST_EMPTY(letters_sent)
 	for(var/datum/antagonist/antag in subject?.mind?.antag_datums)
 		switch(antag.type)
 			if(/datum/antagonist/bandit, /datum/antagonist/maniac, /datum/antagonist/assassin,
-			   /datum/antagonist/zizocultist, /datum/antagonist/zizocultist/leader,
-			   /datum/antagonist/werewolf, /datum/antagonist/werewolf/lesser,
-			   /datum/antagonist/vampire, /datum/antagonist/vampire/lord, /datum/antagonist/vampire/lords_spawn, /datum/antagonist/vampire/lord/daewalker)
+			/datum/antagonist/zizocultist, /datum/antagonist/zizocultist/leader,
+			/datum/antagonist/werewolf, /datum/antagonist/werewolf/lesser,
+			/datum/antagonist/vampire, /datum/antagonist/vampire/lord, /datum/antagonist/vampire/lords_spawn, /datum/antagonist/vampire/lord/daewalker)
 				is_correct = TRUE
 				break
 
@@ -485,9 +485,9 @@ GLOBAL_LIST_EMPTY(letters_sent)
 	if(subject?.patron)
 		switch(subject?.patron.type)
 			if(/datum/patron/inhumen/matthios, /datum/patron/inhumen/zizo, /datum/patron/inhumen/graggar,
-			   /datum/patron/inhumen/baotha, /datum/patron/godless/godless, /datum/patron/godless/autotheist,
-			   /datum/patron/godless/defiant, /datum/patron/godless/dystheist, /datum/patron/godless/rashan,
-			   /datum/patron/godless/galadros)
+			/datum/patron/inhumen/baotha, /datum/patron/godless/godless, /datum/patron/godless/autotheist,
+			/datum/patron/godless/defiant, /datum/patron/godless/dystheist, /datum/patron/godless/rashan,
+			/datum/patron/godless/galadros)
 				is_correct = TRUE
 
 	// Check excommunication

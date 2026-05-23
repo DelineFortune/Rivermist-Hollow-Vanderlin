@@ -1611,14 +1611,14 @@
 		switch(counter_type)
 			if("knee")
 				visible_message(span_danger("[src] drives a knee into [attacker]'s midsection!"), \
-							   span_notice("I drive my knee into [attacker]'s gut!"))
+							span_notice("I drive my knee into [attacker]'s gut!"))
 				var/damage = get_punch_dmg() * 0.9
 				attacker.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
 				attacker.OffBalance(1.5 SECONDS)
 
 			if("elbow")
 				visible_message(span_danger("[src] throws a sharp elbow at [attacker]!"), \
-							   span_notice("I throw a sharp elbow at [attacker]!"))
+							span_notice("I throw a sharp elbow at [attacker]!"))
 				var/damage = get_punch_dmg() * 1.1
 				var/target_zone = pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST)
 				attacker.apply_damage(damage, BRUTE, target_zone)

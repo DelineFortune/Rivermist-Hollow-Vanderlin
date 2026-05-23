@@ -41,16 +41,16 @@
 	screen_max_columns = 1
 
 /datum/component/storage/concrete/grid/potion_belt
-    screen_max_rows = 4
-    screen_max_columns = 4
-    max_w_class = WEIGHT_CLASS_NORMAL
-    max_items = 8
-    attack_hand_interact = TRUE
+	screen_max_rows = 4
+	screen_max_columns = 4
+	max_w_class = WEIGHT_CLASS_NORMAL
+	max_items = 8
+	attack_hand_interact = TRUE
 
 //проверка на тип предмета через открытый инвентарь
 /datum/component/storage/concrete/grid/potion_belt/New(datum/P, ...)
-    . = ..()
-    set_holdable(list(/obj/item/reagent_containers/glass/bottle))
+	. = ..()
+	set_holdable(list(/obj/item/reagent_containers/glass/bottle))
 
 /datum/component/storage/concrete/grid/keyring
 	screen_max_rows = 4

@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(!target.client)
 		return
 	if(is_antag_banned(target.ckey, ROLE_ZIZOIDCULTIST))
-		to_chat(span_danger("This one is unworthy of her aiding her ascension."))
+		to_chat(user, span_danger("This one is unworthy of her aiding her ascension."))
 		return
 	if(istype(target.wear_neck, /obj/item/clothing/neck/psycross/silver) || istype(target.wear_wrists, /obj/item/clothing/neck/psycross/silver) )
 		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
@@ -501,13 +501,13 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	to_chat(cultist, span_notice("Stolen Arcane prowess floods my mind, ZIZO empowers me."))
 
 /datum/ritual/fleshcrafting/curse
-    name = "Hollow Curse"
-    center_requirement = /mob/living/carbon/human
+	name = "Hollow Curse"
+	center_requirement = /mob/living/carbon/human
 
-    w_req = /obj/item/alch/sinew
-    e_req = /obj/item/alch/sinew
-    n_req = /obj/item/natural/fur/volf
-    s_req = /obj/item/natural/fur/volf
+	w_req = /obj/item/alch/sinew
+	e_req = /obj/item/alch/sinew
+	n_req = /obj/item/natural/fur/volf
+	s_req = /obj/item/natural/fur/volf
 
 /datum/ritual/fleshcrafting/curse/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents

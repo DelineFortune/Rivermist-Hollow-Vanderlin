@@ -214,7 +214,7 @@
 	diceroll(thrownby, TRUE)
 	. = ..()
 
-/obj/item/dice/proc/diceroll(mob/user, var/shown)
+/obj/item/dice/proc/diceroll(mob/user, shown)
 	result = roll(sides)
 	if(rigged != DICE_NOT_RIGGED && result != rigged_value)
 		if(rigged == DICE_BASICALLY_RIGGED)

@@ -1,4 +1,4 @@
-var/global/list/colorlist = list(
+GLOBAL_LIST_INIT(colorlist, list(
 	"Custom" = "CUSTOM_RGB",
 	"Swan White"="#ffffff",
 	"Chalk White" = "#f4ecde",
@@ -50,11 +50,11 @@ var/global/list/colorlist = list(
 	"Yellow"="#ffcd43",
 	"Azure"="#007fff",
 	"Baby Puke" = "#b5b004",
-    "Gold" = "#f9a602",
-    "Mage Red" = "#b8252c",
-    "Orange" = "#bd6606",
+	"Gold" = "#f9a602",
+	"Mage Red" = "#b8252c",
+	"Orange" = "#bd6606",
 	"Red" = "#a32121",
-	)
+))
 
 /*	.................   Luxury dye bin   ................... */
 /obj/structure/dye_bin

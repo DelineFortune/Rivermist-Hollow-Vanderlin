@@ -934,7 +934,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 
 				// Use dye bin colors for more variety
 				var/list/color_choices = list("None")
-				for(var/color_name in colorlist)
+				for(var/color_name in GLOB.colorlist)
 					color_choices += color_name
 
 				var/new_color = browser_input_list(usr, "Choose a color for this item:", "Item Color", color_choices, vars["loadout_[slot]_hex"])
@@ -947,8 +947,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 						var/newer_color = input(usr, "Select color:", "Custom Color", current_color) as color|null
 						if(newer_color)
 							vars["loadout_[slot]_hex"] = sanitize_hexcolor(newer_color, include_crunch=1)
-					else
-						// Look up the hex value from colorlist
-						vars["loadout_[slot]_hex"] = colorlist[new_color]
+				else
+					// Look up the hex value from GLOB.colorlist
+					vars["loadout_[slot]_hex"] = GLOB.colorlist[new_color]
 					open_loadout_menu(usr)
 				return

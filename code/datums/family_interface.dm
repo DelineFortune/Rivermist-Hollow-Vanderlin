@@ -1210,7 +1210,7 @@
 	spouse.gender = member.person.gender == MALE ? FEMALE : MALE
 
 	var/allied_houses = list("Westmarch", "Easthold", "Northgate", "Southport", "Silverbrook", "Goldenvale",
-					   "Redcliff", "Bluehaven", "Greenwood", "Blackstone", "Whitehall", "Greycastle")
+					"Redcliff", "Bluehaven", "Greenwood", "Blackstone", "Whitehall", "Greycastle")
 	var/spouse_house = pick(allied_houses)
 
 	var/spouse_title

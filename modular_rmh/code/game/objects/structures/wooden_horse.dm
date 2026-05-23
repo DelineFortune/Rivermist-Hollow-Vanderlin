@@ -87,7 +87,7 @@
 			return FALSE
 
 		M.visible_message(span_danger("[usr] starts strapping [M] onto [src]!"), \
-						  span_userdanger("[usr] starts strapping you onto [src]!"))
+						span_userdanger("[usr] starts strapping you onto [src]!"))
 
 		if(!do_after(usr, 5 SECONDS, src))
 			return FALSE
@@ -95,7 +95,7 @@
 	// If we ARE buckling ourselves, we skip restraint checks
 	else
 		M.visible_message(span_notice("[usr] starts climbing onto [src]..."), \
-						  span_notice("You start climbing onto [src]..."))
+						span_notice("You start climbing onto [src]..."))
 		if(!do_after(usr, 3 SECONDS, src))
 			return FALSE
 

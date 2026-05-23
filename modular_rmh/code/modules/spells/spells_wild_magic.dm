@@ -36,22 +36,22 @@
 	shape.restore_caster()
 
 /datum/action/cooldown/spell/proc/restore_cat_form(mob/living/cat)
-    if(!cat || QDELETED(cat))
-        return
-    var/datum/status_effect/shapechange_mob/from_spell/shape = cat.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
-    if(!shape)
-        return
-    cat.visible_message(span_notice("[cat] shimmers and reforms into their original shape!"))
-    shape.restore_caster()
+	if(!cat || QDELETED(cat))
+		return
+	var/datum/status_effect/shapechange_mob/from_spell/shape = cat.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
+	if(!shape)
+		return
+	cat.visible_message(span_notice("[cat] shimmers and reforms into their original shape!"))
+	shape.restore_caster()
 
 /datum/action/cooldown/spell/proc/restore_crow_form(mob/living/crow)
-    if(!crow || QDELETED(crow))
-        return
-    var/datum/status_effect/shapechange_mob/from_spell/shape = crow.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
-    if(!shape)
-        return
-    crow.visible_message(span_notice("The crow reforms into [owner]'s original body!"))
-    shape.restore_caster()
+	if(!crow || QDELETED(crow))
+		return
+	var/datum/status_effect/shapechange_mob/from_spell/shape = crow.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
+	if(!shape)
+		return
+	crow.visible_message(span_notice("The crow reforms into [owner]'s original body!"))
+	shape.restore_caster()
 /datum/action/cooldown/spell/proc/restore_mute(mob/living/owner)
 	if(!owner || QDELETED(owner))
 		return

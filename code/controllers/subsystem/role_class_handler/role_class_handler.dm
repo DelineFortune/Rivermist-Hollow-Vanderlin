@@ -14,26 +14,26 @@ SUBSYSTEM_DEF(role_class_handler)
 	flags = SS_NO_FIRE
 
 	/**
-	 *	a list of datums dedicated to helping handle a class selection session
-	 *	ex: class_select_handlers[ckey] = /datum/class_select_handler
-	 *	contents: class_select_handlers = list("ckey" = /datum/class_select_handler, "ckey2" = /datum/class_select_handler,... etc)
-	 */
+	*	a list of datums dedicated to helping handle a class selection session
+	*	ex: class_select_handlers[ckey] = /datum/class_select_handler
+	*	contents: class_select_handlers = list("ckey" = /datum/class_select_handler, "ckey2" = /datum/class_select_handler,... etc)
+	*/
 	var/list/class_select_handlers = list()
 
 	/**
-	 *	This ones basically a list for if you want to give a specific ckey a specific isolated datum
-	 *	ex: special_session_queue[ckey] += /datum/job/advclass/BIGMAN
-	 *	contents: special_session_queue = list("ckey" = list("funID" = /datum/job/advclass/class), "ckey2" = list("funID" = /datum/job/advclass/class)... etc)
-	 */
+	*	This ones basically a list for if you want to give a specific ckey a specific isolated datum
+	*	ex: special_session_queue[ckey] += /datum/job/advclass/BIGMAN
+	*	contents: special_session_queue = list("ckey" = list("funID" = /datum/job/advclass/class), "ckey2" = list("funID" = /datum/job/advclass/class)... etc)
+	*/
 	var/list/list/special_session_queue = list()
 
 	/**
-	 *	This is basically a big assc list of lists attached to tags which contain /datum/job/advclass datums
-	 *	ex: sorted_class_categories[CTAG_GAPEMASTERS] += /datum/job/advclass/GAPER
-	 *	contents: sorted_class_categories = list("CTAG_GAPEMASTERS" = list(/datum/job/advclass/GAPER, /datum/job/advclass/GAPER2)... etc)
-	 *	Snowflake lists:
-	 *		CTAG_ALLCLASS = list(every single class datum that exists outside of the parent)
-	 */
+	*	This is basically a big assc list of lists attached to tags which contain /datum/job/advclass datums
+	*	ex: sorted_class_categories[CTAG_GAPEMASTERS] += /datum/job/advclass/GAPER
+	*	contents: sorted_class_categories = list("CTAG_GAPEMASTERS" = list(/datum/job/advclass/GAPER, /datum/job/advclass/GAPER2)... etc)
+	*	Snowflake lists:
+	*		CTAG_ALLCLASS = list(every single class datum that exists outside of the parent)
+	*/
 	var/list/sorted_class_categories = list()
 
 	/// Whether bandits have been injected in the game

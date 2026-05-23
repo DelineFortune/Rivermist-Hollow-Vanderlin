@@ -5,8 +5,8 @@
 	/// Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3
 	var/fan_out_items = TRUE
 	/**
-	 * - if listed type - assoc list with key as typepath and value as amount of items to spawn
-	 * - if single type - typepath to the item
+	* - if listed type - assoc list with key as typepath and value as amount of items to spawn
+	* - if single type - typepath to the item
 	*/
 	var/list/spawned
 	abstract_type = /obj/effect/spawner/guaranteed_map_spawner

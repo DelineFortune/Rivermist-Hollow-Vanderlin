@@ -86,7 +86,7 @@
 	buckle_mob(victim, TRUE, check_loc = FALSE)
 	begin_eat(victim)
 
-/obj/structure/flora/grass/maneater/real/proc/begin_eat(mob/living/victim, var/chew_factor = 1)
+/obj/structure/flora/grass/maneater/real/proc/begin_eat(mob/living/victim, chew_factor = 1)
 	if(victim.loc != loc)
 		return
 
@@ -157,7 +157,7 @@
 		name = "grass"
 		icon_state = "maneater-hidden"
 
-/obj/structure/flora/grass/maneater/real/user_unbuckle_mob(mob/living/M, mob/user, var/break_factor = 1)
+/obj/structure/flora/grass/maneater/real/user_unbuckle_mob(mob/living/M, mob/user, break_factor = 1)
 	if(obj_broken)
 		. = ..()
 		return

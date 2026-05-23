@@ -120,13 +120,13 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 
 
 	traits = list(
-	    TRAIT_HEAVYARMOR,
-	    TRAIT_MEDIUMARMOR,
-	    TRAIT_BLINDFIGHTING,
-	    TRAIT_DODGEEXPERT,
-	    TRAIT_BREADY,
-	    TRAIT_EMPATH,
-	    TRAIT_OLDPARTY
+	TRAIT_HEAVYARMOR,
+	TRAIT_MEDIUMARMOR,
+	TRAIT_BLINDFIGHTING,
+	TRAIT_DODGEEXPERT,
+	TRAIT_BREADY,
+	TRAIT_EMPATH,
+	TRAIT_OLDPARTY
 	)
 
 /datum/job/advclass/burgmeister/marshall/after_spawn(mob/living/carbon/human/spawned, client/player_client)
@@ -212,10 +212,10 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 
 
 	traits = list(
-	    TRAIT_EMPATH,
-	    TRAIT_EXTEROCEPTION,
-	    TRAIT_TUTELAGE,
-	    TRAIT_BETTER_SLEEP
+	TRAIT_EMPATH,
+	TRAIT_EXTEROCEPTION,
+	TRAIT_TUTELAGE,
+	TRAIT_BETTER_SLEEP
 	)
 
 /datum/job/advclass/burgmeister/elected/after_spawn(mob/living/carbon/human/spawned, client/player_client)
@@ -306,9 +306,9 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 
 
 	traits = list(
-	    TRAIT_NOBLE,
-	    TRAIT_BETTER_SLEEP,
-	    TRAIT_EXTEROCEPTION
+	TRAIT_NOBLE,
+	TRAIT_BETTER_SLEEP,
+	TRAIT_EXTEROCEPTION
 	)
 
 /datum/job/advclass/burgmeister/patrician/after_spawn(mob/living/carbon/human/spawned, client/player_client)
@@ -401,10 +401,10 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 
 
 	traits = list(
-	    TRAIT_EMPATH,
-	    TRAIT_EXTEROCEPTION,
-	    TRAIT_TUTELAGE,
-	    TRAIT_BETTER_SLEEP
+	TRAIT_EMPATH,
+	TRAIT_EXTEROCEPTION,
+	TRAIT_TUTELAGE,
+	TRAIT_BETTER_SLEEP
 	)
 
 /datum/outfit/burgmeister/scholar

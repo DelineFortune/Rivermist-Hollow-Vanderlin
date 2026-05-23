@@ -63,11 +63,11 @@
 
 		if(BIOME_SWAMP)
 			return list(/mob/living/simple_animal/hostile/retaliate/troll/bog, /mob/living/simple_animal/hostile/retaliate/gator,
-					   /mob/living/simple_animal/hostile/retaliate/spider, /mob/living/simple_animal/hostile/retaliate/bigrat, /mob/living/simple_animal/hostile/retaliate/frog)
+					/mob/living/simple_animal/hostile/retaliate/spider, /mob/living/simple_animal/hostile/retaliate/bigrat, /mob/living/simple_animal/hostile/retaliate/frog)
 
 		if(BIOME_MOUNTAIN)
 			return list(/mob/living/carbon/human/species/goblin/npc, /mob/living/simple_animal/hostile/retaliate/troll/cave,
-					   /mob/living/simple_animal/hostile/retaliate/spider, /mob/living/simple_animal/hostile/retaliate/goat)
+					/mob/living/simple_animal/hostile/retaliate/spider, /mob/living/simple_animal/hostile/retaliate/goat)
 
 		else
 			return list(/mob/living/simple_animal/hostile/retaliate/wolf)

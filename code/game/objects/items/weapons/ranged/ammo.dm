@@ -73,7 +73,7 @@
 			else
 				blocked = 100
 				target.visible_message("<span class='danger'>\The [src] was deflected!</span>", \
-									   "<span class='danger'>My armor protected me against \the [src]!</span>")
+									"<span class='danger'>My armor protected me against \the [src]!</span>")
 
 	..(target, blocked)
 	DISABLE_BITFIELD(reagents.flags, NO_REACT)

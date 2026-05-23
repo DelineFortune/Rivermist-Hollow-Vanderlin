@@ -78,12 +78,12 @@
 	var/spacewalk = FALSE
 
 	/**
-	 * back up of the real name during admin possession
-	 *
-	 * If an admin possesses an object it's real name is set to the admin name and this
-	 * stores whatever the real name was previously. When possession ends, the real name
-	 * is reset to this value
-	 */
+	* back up of the real name during admin possession
+	*
+	* If an admin possesses an object it's real name is set to the admin name and this
+	* stores whatever the real name was previously. When possession ends, the real name
+	* is reset to this value
+	*/
 	var/name_archive //For admin things like possession
 
 	/// Default body temperature
@@ -137,16 +137,16 @@
 	///What hand is the active hand
 	var/active_hand_index = 2
 	/**
-	 * list of items held in hands
-	 *
-	 * len = number of hands, eg: 2 nulls is 2 empty hands, 1 item and 1 null is 1 full hand
-	 * and 1 empty hand.
-	 *
-	 * NB: contains nulls!
-	 *
-	 * held_items[active_hand_index] is the actively held item, but please use
-	 * get_active_held_item() instead, because OOP
-	 */
+	* list of items held in hands
+	*
+	* len = number of hands, eg: 2 nulls is 2 empty hands, 1 item and 1 null is 1 full hand
+	* and 1 empty hand.
+	*
+	* NB: contains nulls!
+	*
+	* held_items[active_hand_index] is the actively held item, but please use
+	* get_active_held_item() instead, because OOP
+	*/
 	var/list/held_items = list()
 
 	//HUD things
@@ -184,10 +184,10 @@
 	var/atom/movable/remote_control
 
 	/**
-	 * The sound made on death
-	 *
-	 * leave null for no sound. used for *deathgasp
-	 */
+	* The sound made on death
+	*
+	* leave null for no sound. used for *deathgasp
+	*/
 	var/deathsound
 
 	///the current turf being examined in the stat panel

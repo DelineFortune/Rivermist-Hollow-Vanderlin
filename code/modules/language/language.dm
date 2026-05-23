@@ -58,40 +58,40 @@
 	var/list/spans = list()
 
 	/**
-	 * Assoc Lazylist of other language types that would have a degree of mutual understanding with this language.
-	 * For example, you could do `list(/datum/language/common = 50)` to say that this language has a 50% chance to understand common words
-	 * And yeah if you give a 100% chance, they can basically just understand the language.
-	 * Not sure why you would do that though.
-	 */
+	* Assoc Lazylist of other language types that would have a degree of mutual understanding with this language.
+	* For example, you could do `list(/datum/language/common = 50)` to say that this language has a 50% chance to understand common words
+	* And yeah if you give a 100% chance, they can basically just understand the language.
+	* Not sure why you would do that though.
+	*/
 	var/list/mutual_understanding
 
 	/**
-	 * Cache of recently scrambled text
-	 * This allows commonly reused words to not require a full re-scramble every time.
-	 * Is limited to the last SCRAMBLE_CACHE_LEN words spoken. After surpassing this limit,
-	 * the oldest word will be removed from the cache and rescrambled if spoken again.
-	 *
-	 * Case insensitive, punctuation insensitive.
-	 */
+	* Cache of recently scrambled text
+	* This allows commonly reused words to not require a full re-scramble every time.
+	* Is limited to the last SCRAMBLE_CACHE_LEN words spoken. After surpassing this limit,
+	* the oldest word will be removed from the cache and rescrambled if spoken again.
+	*
+	* Case insensitive, punctuation insensitive.
+	*/
 	VAR_PRIVATE/list/scramble_cache = list()
 
 	/**
-	 * Scramble cache, but for the 1000 most common words in the English language.
-	 * These are never rescrambled, so they will consistently be the same thing.
-	 *
-	 * Case insensitive, punctuation insensitive.
-	 */
+	* Scramble cache, but for the 1000 most common words in the English language.
+	* These are never rescrambled, so they will consistently be the same thing.
+	*
+	* Case insensitive, punctuation insensitive.
+	*/
 	VAR_PRIVATE/list/most_common_cache = list()
 
 	/**
-	 * Cache of recently spoken sentences
-	 * So if one person speaks over the radio, everyone hears the same thing.
-	 *
-	 * This is an assoc list [sentence] = [key, scrambled_text]
-	 * Where key is a string that is used to determine context about the listener (like what languages they know)
-	 *
-	 * Case sensitive, punctuation sensitive.
-	 */
+	* Cache of recently spoken sentences
+	* So if one person speaks over the radio, everyone hears the same thing.
+	*
+	* This is an assoc list [sentence] = [key, scrambled_text]
+	* Where key is a string that is used to determine context about the listener (like what languages they know)
+	*
+	* Case sensitive, punctuation sensitive.
+	*/
 	VAR_PRIVATE/list/last_sentence_cache = list()
 
 // Primarily for debugging, allows for easy iteration and testing of languages.

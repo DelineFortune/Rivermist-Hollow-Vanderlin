@@ -134,9 +134,9 @@
 	session_updater.start_updates()
 
 /datum/sex_session/proc/on_arousal_changed()
-    if(session_updater)
-        var/arousal_string = get_arousal_data_string()
-        session_updater.push_data_change("arousal_data", arousal_string)
+	if(session_updater)
+		var/arousal_string = get_arousal_data_string()
+		session_updater.push_data_change("arousal_data", arousal_string)
 
 /datum/sex_session/proc/get_arousal_data_string()
 	var/list/arousal_data = list()

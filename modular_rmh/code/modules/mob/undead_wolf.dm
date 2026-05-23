@@ -110,9 +110,9 @@
 	. = ..()
 	if(is_downed)
 		if(def_zone == "head" || \
-		   def_zone == "nose" || \
-		   def_zone == "mouth" || \
-		   def_zone == "neck")
+		def_zone == "nose" || \
+		def_zone == "mouth" || \
+		def_zone == "neck")
 
 			head_health -= damage
 			if(head_health <= 0 && stat != DEAD)
@@ -183,17 +183,17 @@
 	return ..()
 
 /datum/ai_controller/wolf_undead
-    movement_delay = 0.55 SECONDS
+	movement_delay = 0.55 SECONDS
 
-    ai_movement = /datum/ai_movement/basic_avoidance
+	ai_movement = /datum/ai_movement/basic_avoidance
 
-    blackboard = list(
-        BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
-    )
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
+	)
 
-    planning_subtrees = list(
-        /datum/ai_planning_subtree/simple_find_target/closest,
-        /datum/ai_planning_subtree/basic_melee_attack_subtree,
-    )
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target/closest,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
 
-    idle_behavior = /datum/idle_behavior/idle_random_walk
+	idle_behavior = /datum/idle_behavior/idle_random_walk

@@ -418,8 +418,8 @@ SUBSYSTEM_DEF(housing)
 		return FALSE
 
 	return (T.x >= property_bounds_minx && T.x <= property_bounds_maxx && \
-	        T.y >= property_bounds_miny && T.y <= property_bounds_maxy && \
-	        T.z >= property_bounds_minz && T.z <= property_bounds_maxz)
+	T.y >= property_bounds_miny && T.y <= property_bounds_maxy && \
+	T.z >= property_bounds_minz && T.z <= property_bounds_maxz)
 
 /datum/property_controller/proc/add_access(ckey)
 	if(!(ckey in allowed_list))

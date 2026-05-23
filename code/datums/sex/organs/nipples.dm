@@ -1,8 +1,8 @@
 /obj/item/organ/genitals/nipple
-    abstract_type = /obj/item/organ/genitals/nipple
-    visible_organ = FALSE
-    zone = BODY_ZONE_CHEST
-    altnames = list("nip", "bud", "nipple") //used in thought messages.
+	abstract_type = /obj/item/organ/genitals/nipple
+	visible_organ = FALSE
+	zone = BODY_ZONE_CHEST
+	altnames = list("nip", "bud", "nipple") //used in thought messages.
 
 /obj/item/organ/genitals/nipple/Insert(mob/living/M, special, drop_if_replaced, new_zone = null)
 	. = ..()

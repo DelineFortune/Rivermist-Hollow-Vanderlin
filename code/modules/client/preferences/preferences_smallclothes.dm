@@ -210,16 +210,16 @@ GLOBAL_LIST_EMPTY(cached_armsleeves_flat_icons)
 			var/undie_type = text2path(href_list["undie_type"])
 			var/preference_type = href_list["preference_type"]
 			if(!isnull(undie_type))
-				var/choice = input(user, "Choose a color.", "Underwear Colour") as null|anything in colorlist
+				var/choice = input(user, "Choose a color.", "Underwear Colour") as null|anything in GLOB.colorlist
 				if (choice)
-					var/selected_value = colorlist[choice]
+					var/selected_value = GLOB.colorlist[choice]
 					if(selected_value == "CUSTOM_RGB")
 						var/current_color = smallclothes_preferences[preference_type]||"#FFFFFF"
 						var/new_color = input(user, "Select color:", "Custom Color", current_color) as color|null
 						if(new_color)
 							smallclothes_preferences[preference_type] = sanitize_hexcolor(new_color, include_crunch=1)
 					else
-						smallclothes_preferences[preference_type] = colorlist[choice]
+						smallclothes_preferences[preference_type] = GLOB.colorlist[choice]
 					to_chat(user, "The colour for your underwear has been set to <b>[choice].</b>.")
 				else
 					smallclothes_preferences[preference_type] = null
@@ -230,16 +230,16 @@ GLOBAL_LIST_EMPTY(cached_armsleeves_flat_icons)
 			var/legwear_type = text2path(href_list["legwear_type"])
 			var/preference_type = href_list["preference_type"]
 			if(!isnull(legwear_type))
-				var/choice = input(user, "Choose a color.", "Legwear Colour") as null|anything in colorlist
+				var/choice = input(user, "Choose a color.", "Legwear Colour") as null|anything in GLOB.colorlist
 				if (choice)
-					var/selected_value = colorlist[choice]
+					var/selected_value = GLOB.colorlist[choice]
 					if(selected_value == "CUSTOM_RGB")
 						var/current_color = smallclothes_preferences[preference_type]||"#FFFFFF"
 						var/new_color = input(user, "Select color:", "Custom Color", current_color) as color|null
 						if(new_color)
 							smallclothes_preferences[preference_type] = sanitize_hexcolor(new_color, include_crunch=1)
 					else
-						smallclothes_preferences[preference_type] = colorlist[choice]
+						smallclothes_preferences[preference_type] = GLOB.colorlist[choice]
 					to_chat(user, "The colour for your legwear has been set to <b>[choice].</b>.")
 				else
 					smallclothes_preferences[preference_type] = null
@@ -296,9 +296,9 @@ GLOBAL_LIST_EMPTY(cached_armsleeves_flat_icons)
 			var/bra_type = text2path(href_list["bra_type"])
 			var/preference_type = href_list["preference_type"]
 			if(!isnull(bra_type))
-				var/choice = input(user, "Choose a color.", "Bra Colour") as null|anything in colorlist
-				if (choice && colorlist[choice])
-					smallclothes_preferences[preference_type] = colorlist[choice]
+				var/choice = input(user, "Choose a color.", "Bra Colour") as null|anything in GLOB.colorlist
+				if (choice && GLOB.colorlist[choice])
+					smallclothes_preferences[preference_type] = GLOB.colorlist[choice]
 					to_chat(user, "The colour for your bra has been set to <b>[choice].</b>.")
 				else
 					smallclothes_preferences[preference_type] = null
@@ -310,9 +310,9 @@ GLOBAL_LIST_EMPTY(cached_armsleeves_flat_icons)
 			var/garter_type = text2path(href_list["garter_type"])
 			var/preference_type = href_list["preference_type"]
 			if(!isnull(garter_type))
-				var/choice = input(user, "Choose a color.", "Garter Colour") as null|anything in colorlist
-				if (choice && colorlist[choice])
-					smallclothes_preferences[preference_type] = colorlist[choice]
+				var/choice = input(user, "Choose a color.", "Garter Colour") as null|anything in GLOB.colorlist
+				if (choice && GLOB.colorlist[choice])
+					smallclothes_preferences[preference_type] = GLOB.colorlist[choice]
 					to_chat(user, "The colour for your garter has been set to <b>[choice].</b>.")
 				else
 					smallclothes_preferences[preference_type] = null
@@ -324,9 +324,9 @@ GLOBAL_LIST_EMPTY(cached_armsleeves_flat_icons)
 			var/undershirt_type = text2path(href_list["undershirt_type"])
 			var/preference_type = href_list["preference_type"]
 			if(!isnull(undershirt_type))
-				var/choice = input(user, "Choose a color.", "Undershirt Colour") as null|anything in colorlist
-				if (choice && colorlist[choice])
-					smallclothes_preferences[preference_type] = colorlist[choice]
+				var/choice = input(user, "Choose a color.", "Undershirt Colour") as null|anything in GLOB.colorlist
+				if (choice && GLOB.colorlist[choice])
+					smallclothes_preferences[preference_type] = GLOB.colorlist[choice]
 					to_chat(user, "The colour for your undershirt has been set to <b>[choice].</b>.")
 				else
 					smallclothes_preferences[preference_type] = null
@@ -338,9 +338,9 @@ GLOBAL_LIST_EMPTY(cached_armsleeves_flat_icons)
 			var/armsleeve_type = text2path(href_list["armsleeve_type"])
 			var/preference_type = href_list["preference_type"]
 			if(!isnull(armsleeve_type))
-				var/choice = input(user, "Choose a color.", "armsleeve Colour") as null|anything in colorlist
-				if (choice && colorlist[choice])
-					smallclothes_preferences[preference_type] = colorlist[choice]
+				var/choice = input(user, "Choose a color.", "armsleeve Colour") as null|anything in GLOB.colorlist
+				if (choice && GLOB.colorlist[choice])
+					smallclothes_preferences[preference_type] = GLOB.colorlist[choice]
 					to_chat(user, "The colour for your armsleeve has been set to <b>[choice].</b>.")
 				else
 					smallclothes_preferences[preference_type] = null

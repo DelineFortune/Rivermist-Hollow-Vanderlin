@@ -32,16 +32,16 @@
 
 
 	traits = list(
-        TRAIT_DECEIVING_MEEKNESS,
-        TRAIT_STEELHEARTED,
+		TRAIT_DECEIVING_MEEKNESS,
+		TRAIT_STEELHEARTED,
 		TRAIT_BLINDFIGHTING,
-        TRAIT_DODGEEXPERT
-    )
+		TRAIT_DODGEEXPERT
+	)
 
-    // Summon-bound pistol as the signature ability
+	// Summon-bound pistol as the signature ability
 	spells = list(
 		/datum/action/cooldown/spell/undirected/conjure_item/puffer
-    )
+	)
 
 /datum/job/advclass/combat/adventurer_rogue/renegade/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
@@ -73,9 +73,9 @@
 	r_hand = null
 
 	backpack_contents = list(
-        /obj/item/weapon/knife/hunting = 1,
-        /obj/item/storage/belt/pouch/coins/poor = 1,
-        /obj/item/storage/fancy/cigarettes/zig = 1,
-        /obj/item/flint = 1,
-        /obj/item/reagent_containers/glass/bottle/stronghealthpot = 1,
-    )
+		/obj/item/weapon/knife/hunting = 1,
+		/obj/item/storage/belt/pouch/coins/poor = 1,
+		/obj/item/storage/fancy/cigarettes/zig = 1,
+		/obj/item/flint = 1,
+		/obj/item/reagent_containers/glass/bottle/stronghealthpot = 1,
+	)

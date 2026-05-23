@@ -2,28 +2,28 @@
 	var/client/linked_client //the ss will link it!
 
 	/**
-	 *	This list is organized like so
-	 *	class_cat_alloc_attempts = list(CTAG_PILGRIM = 5, CTAG_ADVENTURER = 3, etc)
-	 *	Wherein you will have this datum attempt to roll you up 5 pilgrim category classes, and 3 adventurer class categories
-	 *	This only counts towards non rare classes with roll_chance of 100 and classes with bypass_class_cat_limits = FALSE.
-	 */
+	*	This list is organized like so
+	*	class_cat_alloc_attempts = list(CTAG_PILGRIM = 5, CTAG_ADVENTURER = 3, etc)
+	*	Wherein you will have this datum attempt to roll you up 5 pilgrim category classes, and 3 adventurer class categories
+	*	This only counts towards non rare classes with roll_chance of 100 and classes with bypass_class_cat_limits = FALSE.
+	*/
 	var/list/class_cat_alloc_attempts
 
 	/// Whether we bypass reqs on class cat alloc attempts
 	var/class_cat_alloc_bypass_reqs = FALSE
 
 	/**
-	 *	This list is organized exactly like the class_cat_alloc_attempts the numbers dictate how many plusboosts we give to the category
-	 *	class_cat_alloc_attempts = list(CTAG_PILGRIM = 3, CTAG_ADVENTURER = 2, etc)
-	 *	If you put a number in, it will attempt to allocate it to the cat
-	 */
+	*	This list is organized exactly like the class_cat_alloc_attempts the numbers dictate how many plusboosts we give to the category
+	*	class_cat_alloc_attempts = list(CTAG_PILGRIM = 3, CTAG_ADVENTURER = 2, etc)
+	*	If you put a number in, it will attempt to allocate it to the cat
+	*/
 	var/list/class_cat_plusboost_attempts
 
 	/**
-	 *	This list is organized like so
-	 *	forced_class_additions = list(datum/job/advclass/filled_class)
-	 *	Wherein the class will just be forced onto the list to be displayed
-	 */
+	*	This list is organized like so
+	*	forced_class_additions = list(datum/job/advclass/filled_class)
+	*	Wherein the class will just be forced onto the list to be displayed
+	*/
 	var/list/forced_class_additions
 
 	/// Whether we bypass reqs on these forced classes

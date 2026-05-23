@@ -28,9 +28,9 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
  */
 /datum/fish_source
 	/**
-	 * Fish catch weight table - these are relative weights
-	 * Keys are fish type paths, values are base weights
-	 */
+	* Fish catch weight table - these are relative weights
+	* Keys are fish type paths, values are base weights
+	*/
 	var/list/fish_table = list()
 	/// If a key from fish_table is present here, that fish is availible in limited quantity and is reduced by one on successful fishing
 	var/list/fish_counts = list()

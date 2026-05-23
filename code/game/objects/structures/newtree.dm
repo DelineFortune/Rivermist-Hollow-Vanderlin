@@ -38,13 +38,13 @@
 
 /obj/structure/flora/newtree/attack_hand_secondary(mob/user, list/modifiers)
 
-    . = ..()
-    if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-        return
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 
-    handle_special_items_retrieval(user, src)
+	handle_special_items_retrieval(user, src)
 
-    return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/flora/newtree/attack_hand(mob/user)
 	if(isliving(user))

@@ -113,7 +113,7 @@
 
 			if(!isnull(value) || show_bad_skills)
 				this_category_skills += list(this_skill)
- 		this_category["skills"] = this_category_skills
+		this_category["skills"] = this_category_skills
 
 		if(LAZYLEN(this_category["skills"]))
 			skill_categories += list(this_category)

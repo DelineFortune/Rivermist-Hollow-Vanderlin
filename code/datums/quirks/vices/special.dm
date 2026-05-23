@@ -402,7 +402,7 @@
 		return
 	var/mob/living/carbon/human/H = owner
 	H.visible_message(span_warning("[H]'s hands continue to tremble."), \
-					  span_warning("Your hands continue to shake..."))
+					span_warning("Your hands continue to shake..."))
 
 /atom/movable/screen/alert/status_effect/tremor_grip_loss
 	name = "Trembling Hands"

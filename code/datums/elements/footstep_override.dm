@@ -14,9 +14,9 @@
 	///The priority this element has in relation to other elements of the same type attached to other movables on the same turf.	var/priority
 	var/priority
 	/**
-	 * A list of turfs occupied by the movables this element is attached to.
-	 * Needed so it stops listening the turf's signals ONLY when it has no movable with the element.
-	 */
+	* A list of turfs occupied by the movables this element is attached to.
+	* Needed so it stops listening the turf's signals ONLY when it has no movable with the element.
+	*/
 	var/list/occupied_turfs = list()
 
 /datum/element/footstep_override/Attach(atom/movable/target, clawfootstep = FOOTSTEP_HARD_CLAW, barefootstep = FOOTSTEP_HARD_BAREFOOT, heavyfootstep = FOOTSTEP_GENERIC_HEAVY, footstep = FOOTSTEP_FLOOR, priority = STEP_SOUND_NO_PRIORITY)

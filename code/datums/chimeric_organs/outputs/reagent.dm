@@ -11,10 +11,10 @@
 	generated_amount *= (node_purity * 0.02) * (tier * 0.5)
 
 	var/list/reagent_types = list(/datum/reagent/medicine,
-								  /datum/reagent/drug,
-								  /datum/reagent/toxin,
-								  /datum/reagent/consumable,
-								  /datum/reagent/consumable/ethanol)
+								/datum/reagent/drug,
+								/datum/reagent/toxin,
+								/datum/reagent/consumable,
+								/datum/reagent/consumable/ethanol)
 	var/datum/reagent/reagent_type = pick(reagent_types)
 
 	var/list/pickers

@@ -20,16 +20,16 @@
 	return out
 
 /datum/proc/tools_list(list/L, subtypes_ok = FALSE)
-    var/list/out = list()
-    for(var/atom/path as anything in L)
-        out += list(list(
-            "name" = initial(path.name),
-            "icon" = "[initial(path.icon)]",
-            "icon_state" = "[initial(path.icon_state)]",
-            "any" = subtypes_ok,
-            "_path" = "[path]",
-        ))
-    return out
+	var/list/out = list()
+	for(var/atom/path as anything in L)
+		out += list(list(
+			"name" = initial(path.name),
+			"icon" = "[initial(path.icon)]",
+			"icon_state" = "[initial(path.icon_state)]",
+			"any" = subtypes_ok,
+			"_path" = "[path]",
+		))
+	return out
 
 /// Converts a reagent typepath=amount assoc list
 /datum/proc/reagents_list(list/L)

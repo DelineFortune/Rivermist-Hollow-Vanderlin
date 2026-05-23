@@ -61,11 +61,11 @@
 /datum/fish_movement/proc/move_fish(seconds_per_tick)
 	times_fired++
 	/**
-	 * The jump chances are meant to run every odd tick (each every decisecond)
-	 * We cannot do it every tick because the fish would be jumpier than intended
-	 * and we cannot cut the chances in half to fit on each tick, because the maximum probability
-	 *  would go from 100% to 75%.
-	 */
+	* The jump chances are meant to run every odd tick (each every decisecond)
+	* We cannot do it every tick because the fish would be jumpier than intended
+	* and we cannot cut the chances in half to fit on each tick, because the maximum probability
+	*  would go from 100% to 75%.
+	*/
 	var/can_roll = times_fired % 2
 
 	var/long_chance = long_jump_chance * seconds_per_tick * (1/seconds_per_tick)
@@ -78,9 +78,9 @@
 	// Switching to new long jump target can interrupt any other
 	if(can_roll && (can_interrupt_move || isnull(target_position)) && prob(long_chance))
 		/**
-		 * Move at least 0.75 to full of the availible bar in given direction,
-		 * and more likely to move in the direction where there's more space
-		 */
+		* Move at least 0.75 to full of the availible bar in given direction,
+		* and more likely to move in the direction where there's more space
+		*/
 		var/distance_from_top = FISHING_MINIGAME_AREA - master.fish_position - master.fish_height
 		var/distance_from_bottom = master.fish_position
 		var/top_chance
@@ -112,17 +112,17 @@
 				//Then, calculate the ratio between absolute idle velocity and halved acceleration multiplier.
 				var/halved_ratio = (acceleration_mult * 0.5) / abs_idle_vel
 				/**
-				 * If the idle velocity is more than half the acceleration,
-				 * proceed to use powers, for diminishing loss of acceleration per additional unit of idle velocity.
-				 * This way you never reach 0 acceleration while allowing more extreme values to keep lowering it.
-				 */
+				* If the idle velocity is more than half the acceleration,
+				* proceed to use powers, for diminishing loss of acceleration per additional unit of idle velocity.
+				* This way you never reach 0 acceleration while allowing more extreme values to keep lowering it.
+				*/
 				if(halved_ratio < 1)
 					var/power = min(halved_ratio + 0.5, 1)
 					target_acceleration *= 1 - (halved_ratio^power)
 				/**
-				 * Otherwise we add the idle velocity (which we know is of opposite sign and
-				 * has an absolute value between 0.ε and 0.5) to the target velocity
-				 */
+				* Otherwise we add the idle velocity (which we know is of opposite sign and
+				* has an absolute value between 0.ε and 0.5) to the target velocity
+				*/
 				else
 					target_acceleration += idle_velocity
 

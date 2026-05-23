@@ -11,32 +11,32 @@
 	/// Weakref to the parent owning this datum
 	var/datum/weakref/parent
 	/**
-	 * List of fingerprints on this atom
-	 *
-	 * Formatting:
-	 * * print = print
-	 */
+	* List of fingerprints on this atom
+	*
+	* Formatting:
+	* * print = print
+	*/
 	var/list/fingerprints
 	/**
-	 * List of hiddenprints on this atom
-	 *
-	 * Formatting:
-	 * * ckey = realname/gloves/ckey
-	 */
+	* List of hiddenprints on this atom
+	*
+	* Formatting:
+	* * ckey = realname/gloves/ckey
+	*/
 	var/list/hiddenprints
 	/**
-	 * List of blood dna on this atom
-	 *
-	 * Formatting:
-	 * * dna = bloodtype
-	 */
+	* List of blood dna on this atom
+	*
+	* Formatting:
+	* * dna = bloodtype
+	*/
 	var/list/blood_DNA
 	/**
-	 * List of clothing fibers on this atom
-	 *
-	 * Formatting:
-	 * * fiber = fiber
-	 */
+	* List of clothing fibers on this atom
+	*
+	* Formatting:
+	* * fiber = fiber
+	*/
 	var/list/fibers
 
 /datum/forensics/New(atom/parent, fingerprints, hiddenprints, blood_DNA, fibers)

@@ -132,11 +132,11 @@
 	/// Whether we're currently charging the spell.
 	var/currently_charging = FALSE
 	/**
-	 * Cost to charge.
-	 *
-	 * Total drain is: ([charge_time] / [process_time]) * charge_drain
-	 * process_time is currently 4 from SSaction_charge.
-	 */
+	* Cost to charge.
+	*
+	* Total drain is: ([charge_time] / [process_time]) * charge_drain
+	* process_time is currently 4 from SSaction_charge.
+	*/
 	var/charge_drain = 0
 	/// Time to charge.
 	var/charge_time = 0

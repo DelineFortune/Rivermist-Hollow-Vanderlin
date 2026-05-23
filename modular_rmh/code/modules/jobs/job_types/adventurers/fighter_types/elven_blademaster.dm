@@ -18,8 +18,8 @@
 /datum/job/advclass/combat/adventurer_fighter/elven_blademaster
 	title = "Elven Blademaster"
 	tutorial = "Honed in the courts of Evereska, you are a master of blade and agility. \
-    With your people scattered or gone, you now roam the wider realms, \
-    lending your skill to those in need—or seeking new challenges worthy of your craft."
+	With your people scattered or gone, you now roam the wider realms, \
+	lending your skill to those in need—or seeking new challenges worthy of your craft."
 	allowed_races = RACES_PLAYER_ELF_ALL
 
 	outfit = /datum/outfit/adventurer_fighter/elven_blademaster

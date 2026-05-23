@@ -62,5 +62,5 @@
 	excluded_turfs = list()
 	allowed_areas = list(/area/outdoors/wilderness)
 	spawnableAtoms = list(/obj/structure/flora/grass/water = 20,
-	                        /obj/structure/flora/grass/water/reeds = 30,
-	                        /obj/structure/kneestingers = 55)
+	/obj/structure/flora/grass/water/reeds = 30,
+	/obj/structure/kneestingers = 55)

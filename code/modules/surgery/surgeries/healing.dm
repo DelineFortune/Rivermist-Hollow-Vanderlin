@@ -33,9 +33,9 @@
 	/// How much burn damage we heal per completion
 	var/burnhealing = 0
 	/**
-	 * Heals an extra point of damager per X missing damage of type (burn damage for burn healing, brute for brute)
-	 * Smaller Number = More Healing!
-	 */
+	* Heals an extra point of damager per X missing damage of type (burn damage for burn healing, brute for brute)
+	* Smaller Number = More Healing!
+	*/
 	var/missinghpbonus = 0
 
 /datum/surgery_step/heal/validate_target(mob/user, mob/living/carbon/target, target_zone, datum/intent/intent)

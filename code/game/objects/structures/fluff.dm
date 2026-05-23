@@ -424,13 +424,13 @@
 
 /obj/structure/fluff/clock/attack_hand_secondary(mob/user, list/modifiers)
 
-    . = ..()
-    if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-        return
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 
-    handle_special_items_retrieval(user, src)
+	handle_special_items_retrieval(user, src)
 
-    return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fluff/clock/examine(mob/user)
 	. = ..()
@@ -672,13 +672,13 @@
 
 /obj/structure/fluff/statue/attack_hand_secondary(mob/user, list/modifiers)
 
-    . = ..()
-    if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-        return
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 
-    handle_special_items_retrieval(user, src)
+	handle_special_items_retrieval(user, src)
 
-    return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fluff/statue/CanPass(atom/movable/mover, turf/target)
 	. = ..()

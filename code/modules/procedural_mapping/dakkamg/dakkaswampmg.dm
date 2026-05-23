@@ -23,8 +23,7 @@
 							/obj/item/grown/log/tree/stick = 4,
 							/obj/structure/flora/grass/maneater/real = 1,
 							/obj/item/restraints/legcuffs/beartrap/armed/camouflage = 0)
-	spawnableTurfs = list(/turf/open/water/swamp = 5,
-	                     /turf/open/floor/dirt = 80)
+	spawnableTurfs = list(/turf/open/water/swamp = 5, /turf/open/floor/dirt = 80)
 	allowed_areas = list(/area/outdoors/bog)
 
 /datum/mapGeneratorModule/dswampwater
