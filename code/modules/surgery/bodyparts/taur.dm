@@ -24,6 +24,10 @@
 	var/offset_y = 0
 	// body_offset_y shifts the main body parts up/down when this taur is equipped
 	var/body_offset_y = 0
+	// bellyride_victim_y_offset shifts a strapped bellyrider without affecting the wearer's body/equipment offset.
+	var/bellyride_victim_y_offset = 0
+	// Hoof/paw-style taur bodies use a lower-body bellyriding mount instead of the biped harness position.
+	var/bellyride_quadruped = FALSE
 	// taur_icon_state sets which icon to use from icons/mob/taurs.dmi to render
 	// (we don't use icon_state to avoid duplicate rendering on dropped organs)
 	var/taur_icon_state = "naga_s"
@@ -153,6 +157,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/otie
 	name = "Otie Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "otie_s"
@@ -163,6 +168,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/canine
 	name = "Canine Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "canine_s"
@@ -173,6 +179,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/venard
 	name = "Venard Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "venard_s"
@@ -183,6 +190,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/drake
 	name = "Drake Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "drake_s"
@@ -192,6 +200,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/dragon
 	name = "Dragon Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "drake2_s"
@@ -202,6 +211,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/noodle
 	name = "Noodle Dragon Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "noodle_s"
@@ -212,6 +222,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/horse
 	name = "Saiga Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "saiga_s"
@@ -221,6 +232,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/deer
 	name = "Deer Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "deer_s"
@@ -230,6 +242,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/redpanda
 	name = "Red Panda Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "redpanda_s"
@@ -239,6 +252,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/rat
 	name = "Rat Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "rat_s"
@@ -248,6 +262,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/skunk
 	name = "Skunk Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "skunk_s"
@@ -258,6 +273,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/kitsune
 	name = "Kitsune Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "kitsune_s"
@@ -268,6 +284,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/feline
 	name = "Feline Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "feline_s"
@@ -278,6 +295,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/snep
 	name = "Tempest Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "tempest_s"
@@ -288,6 +306,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/tiger
 	name = "Tiger Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "feline_s"
@@ -319,6 +338,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/centipede
 	name = "Centipede Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	taur_icon_state = "centipede_s"
@@ -366,12 +386,14 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/jdeer
 	icon = 'modular_rmh/icons/mob/taur2.dmi'
-	name = "Jenny Body"
+	name = "Large Deer Body"
+	bellyride_quadruped = TRUE
 
 	offset_x = -16
 	offset_y = 0
 	// Special offset for jdeer taur to render the body and all equipment 16 pixels higher on Y-axis, without affecting other taur types.
 	body_offset_y = 17
+	bellyride_victim_y_offset = 3
 	taur_icon_state = "jdeer_s"
 	taur_markings_state = "jdeer_markings"
 

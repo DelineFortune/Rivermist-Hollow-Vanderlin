@@ -331,6 +331,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/cowbell
 	name = "Cowbell"
 	item_path = /obj/item/catbell/cow
+
+/datum/loadout_item/bellyriding_harness
+	name = "Bellyriding Harness"
+	item_path = /obj/item/clothing/armor/bellyriding_harness
+
 //FACE
 
 /datum/loadout_item/ragmask

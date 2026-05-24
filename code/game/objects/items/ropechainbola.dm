@@ -125,7 +125,7 @@
 		target.update_handcuffed()
 		return TRUE
 	else
-		if(target.handcuffed)
+		if(target.legcuffed)
 			return FALSE
 
 		if(user && !user.temporarilyRemoveItemFromInventory(src))

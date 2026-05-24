@@ -35,6 +35,12 @@
 				if(direct == NORTH|SOUTH)
 					OffBalance(30)*/
 
+	if(buckled && buckled.loc != NewLoc)
+		var/datum/component/bellyriding/belly_comp = buckled.GetComponent(/datum/component/bellyriding)
+		if(belly_comp?.current_victim == src)
+			belly_comp.start_victim_escape(src)
+			return FALSE
+
 	. = ..()
 	if(loc == NewLoc)
 		if(wear_armor)
@@ -121,6 +127,11 @@
 	return FALSE
 
 /mob/living/carbon/human/relaymove(mob/user, direction)
+	var/datum/component/bellyriding/belly_comp = GetComponent(/datum/component/bellyriding)
+	if(belly_comp?.current_victim == user)
+		belly_comp.start_victim_escape(user)
+		return FALSE
+
 	if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE))
 		var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
 		if(riding_datum)

@@ -453,13 +453,13 @@
 /datum/sex_session/proc/get_speed_multiplier()
 	switch(speed)
 		if(SEX_SPEED_LOW)
-			return 1.5
+			return 1
 		if(SEX_SPEED_MID)
-			return 2.5
+			return 1.5
 		if(SEX_SPEED_HIGH)
-			return 3.5
+			return 2.25
 		if(SEX_SPEED_EXTREME)
-			return 4.5
+			return 3
 
 /datum/sex_session/proc/get_stamina_cost_multiplier()
 	switch(force)
@@ -590,6 +590,9 @@
 
 /datum/sex_session/proc/get_selected_tab_content(selected_tab)
 	switch(selected_tab)
+		if("bellyriding")
+			if(get_bellyriding_component())
+				return get_bellyriding_tab_content(selected_tab)
 		if("custom_actions")
 			return get_custom_actions_tab_content(selected_tab)
 		//if("genital")
@@ -603,6 +606,63 @@
 		if("notes")
 			return get_notes_tab_content()
 	return get_interactions_tab_content(selected_tab)
+
+/datum/sex_session/proc/get_bellyriding_tab_content(selected_tab)
+	var/list/content = list()
+	var/datum/component/bellyriding/belly_comp = get_bellyriding_component()
+
+	content += "<div class='action-section'>"
+	content += "<div class='action-subheader'>Harness Controls</div>"
+	content += "<div class='action-list'>"
+	if(belly_comp)
+		var/toggle_label = belly_comp.enable_interactions ? "Disable Bellyriding Interactions" : "Enable Bellyriding Interactions"
+		var/toggle_class = belly_comp.enable_interactions ? "action-button linkOn" : "action-button linkOff"
+		content += "<div class='action-item'>"
+		content += "<a class='[toggle_class]' href='?src=[REF(src)];task=bellyriding_toggle;tab=[selected_tab]'>[toggle_label]</a>"
+		content += "<div class='action-icons'></div>"
+		content += "</div>"
+		content += "<div class='action-item'>"
+		content += "<a class='action-button' href='?src=[REF(src)];task=bellyriding_release;tab=[selected_tab]'>Release From Harness</a>"
+		content += "<div class='action-icons'></div>"
+		content += "</div>"
+	content += "</div>"
+	content += "</div>"
+
+	content += "<div class='action-section'>"
+	content += "<div class='action-subheader'>Harness Actions</div>"
+	content += "<div class='action-list'>"
+	var/list/bellyriding_actions = list(
+		/datum/sex_action/bellyriding/groin_rub,
+		/datum/sex_action/bellyriding/frot,
+		/datum/sex_action/bellyriding/vaginal,
+		/datum/sex_action/bellyriding/anal
+	)
+	for(var/action_type in bellyriding_actions)
+		var/datum/sex_action/action = SEX_ACTION(action_type)
+		if(!action)
+			continue
+
+		var/button_class = "action-button"
+		var/is_current = (belly_comp?.selected_action_type == action_type)
+		var/can_perform = can_perform_action(action)
+		var/action_key = url_encode(action.get_menu_action_key())
+
+		if(!can_perform)
+			button_class += " linkOff"
+		if(is_current)
+			button_class += " active"
+
+		content += "<div class='action-item'>"
+		content += "<a class='[button_class]' href='?src=[REF(src)];task=bellyriding_action;action_type=[action_key];tab=[selected_tab]'>[format_ui_text(action.name)]</a>"
+		content += "<div class='action-icons'>"
+		if(is_current)
+			content += "<a href='?src=[REF(src)];task=bellyriding_action_clear;tab=[selected_tab]' class='icon-btn stop' title='Return to automatic bellyriding'>X</a>"
+		content += "</div>"
+		content += "</div>"
+	content += "</div>"
+	content += "</div>"
+
+	return content.Join("")
 
 /datum/sex_session/proc/get_interactions_tab_content(selected_tab)
 	var/list/content = list()
@@ -804,6 +864,10 @@
 	var/list/dat = list()
 	var/list/arousal_data = list()
 	SEND_SIGNAL(user, COMSIG_SEX_GET_AROUSAL, arousal_data)
+	var/datum/component/bellyriding/belly_comp = get_bellyriding_component()
+	var/show_bellyriding_tab = (belly_comp != null)
+	if(!show_bellyriding_tab && selected_tab == "bellyriding")
+		selected_tab = "interactions"
 
 	// CSS styling to match the dark red/brown color scheme
 	dat += "<style>"
@@ -999,6 +1063,8 @@
 
 	dat += "<div class='tabs'>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=interactions' class='tab [selected_tab == "interactions" ? "active" : ""]'>Interactions</a>"
+	if(show_bellyriding_tab)
+		dat += "<a href='?src=[REF(src)];task=tab;tab=bellyriding' class='tab [selected_tab == "bellyriding" ? "active" : ""]'>Bellyriding</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=custom_actions' class='tab [selected_tab == "custom_actions" ? "active" : ""]'>Custom Actions</a>"
 	//dat += "<a href='?src=[REF(src)];task=tab;tab=genital' class='tab [selected_tab == "genital" ? "active" : ""]'>Controls</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=session' class='tab [selected_tab == "session" ? "active" : ""]'>Session</a>"
@@ -1302,6 +1368,24 @@
 			edging_other = !edging_other
 		if("swap_lying_direction")
 			user.swap_lying_direction()
+		if("bellyriding_toggle")
+			var/datum/component/bellyriding/belly_comp = get_bellyriding_component()
+			if(belly_comp)
+				belly_comp.enable_interactions = !belly_comp.enable_interactions
+		if("bellyriding_release")
+			var/datum/component/bellyriding/belly_comp = get_bellyriding_component()
+			if(belly_comp)
+				belly_comp.unbuckle_victim()
+		if("bellyriding_action")
+			var/datum/component/bellyriding/belly_comp = get_bellyriding_component()
+			var/datum/sex_action/action = get_action_template(href_list["action_type"])
+			if(belly_comp && action && ispath(action.type, /datum/sex_action/bellyriding))
+				belly_comp.set_selected_action(action.type, user)
+				INVOKE_ASYNC(belly_comp, TYPE_PROC_REF(/datum/component/bellyriding, maybe_do_interaction))
+		if("bellyriding_action_clear")
+			var/datum/component/bellyriding/belly_comp = get_bellyriding_component()
+			if(belly_comp)
+				belly_comp.set_selected_action(null, user)
 
 		if("update_session_name")
 			var/new_name = url_decode(href_list["name"])
@@ -1395,6 +1479,17 @@
 					to_chat(user, "<span class='warning'>Note not found.</span>")
 
 	show_ui(selected_tab)
+
+/datum/sex_session/proc/get_bellyriding_component()
+	if(!user || !target)
+		return null
+	var/datum/component/bellyriding/belly_comp = user.GetComponent(/datum/component/bellyriding)
+	if(belly_comp && belly_comp.current_victim == target)
+		return belly_comp
+	belly_comp = target.GetComponent(/datum/component/bellyriding)
+	if(belly_comp && belly_comp.current_victim == user)
+		return belly_comp
+	return null
 
 /datum/sex_session/proc/get_sex_session_header()
 	if(user == target)

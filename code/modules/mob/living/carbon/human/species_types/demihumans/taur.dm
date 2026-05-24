@@ -64,7 +64,6 @@
 		/obj/item/bodypart/taur/wasp,
 		/obj/item/bodypart/taur/insect,
 		/obj/item/bodypart/taur/jdeer,
-		/datum/customizer/bodypart_feature/pubic_hair,
 	)
 
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID

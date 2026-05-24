@@ -64,6 +64,7 @@
 // BEGIN_INCLUDE
 #include "anchored_mobs.dm"
 #include "belly_fullness.dm"
+#include "bellyriding.dm"
 #include "body_storage.dm"
 #include "buildmode_search.dm"
 #include "component_tests.dm"
