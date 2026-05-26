@@ -1117,3 +1117,12 @@
 	output = /obj/item/clothing/shoes/courtphysician/female
 	craftdiff = 3
 	category = "Shoes"
+
+/datum/repeatable_crafting_recipe/leather/tossbladebelt
+	name = "tossbladebelt"
+	requirements = list(
+		/obj/item/natural/hide/cured = 1,
+		/obj/item/natural/fibers = 1,
+	)
+	output = /obj/item/storage/belt/leather/knifebelt
+	craftdiff = 2

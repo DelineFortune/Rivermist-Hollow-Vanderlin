@@ -15,6 +15,6 @@
 	invocation = "Bonfire!"
 	invocation_type = INVOCATION_SHOUT
 
-	summon_type = list(/obj/machinery/light/fueled/firebowl/church/magic)
+	summon_type = list(/obj/machinery/light/fueled/hearth/magic)
 	summon_radius = 0
-	summon_lifespan = 30 SECONDS
+	summon_lifespan = 3 MINUTES

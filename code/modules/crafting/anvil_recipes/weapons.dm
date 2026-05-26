@@ -156,9 +156,9 @@
 	createditem_extra = 1
 
 /datum/anvil_recipe/weapons/bronze/throwingdagger
-	name = "3x Bronze Throwing Daggers"
+	name = "5x Bronze Throwing Daggers"
 	created_item = /obj/item/weapon/knife/throwingknife/bronze
-	createditem_extra = 2
+	createditem_extra = 4
 
 /datum/anvil_recipe/weapons/bronze/ji
 	name = "Bronze Dagger-Ax (+ Small Log)"
@@ -483,6 +483,11 @@
 	appro_skill = /datum/attribute/skill/craft/weaponsmithing
 	created_item = /obj/item/weapon/mace/elvenclub
 	craftdiff = 2
+
+/datum/anvil_recipe/weapons/iron/throwingdagger
+	name = "5x Iron Throwing Daggers"
+	created_item = /obj/item/weapon/knife/throwingknife
+	createditem_extra = 4
 
 // --------- STEEL ------------  Fancy gear for Knights
 /datum/anvil_recipe/weapons/steel
@@ -897,6 +902,11 @@
 	appro_skill = /datum/attribute/skill/craft/weaponsmithing
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/weapon/mace/elvenclub/steel
+
+/datum/anvil_recipe/weapons/steel/throwingdagger
+	name = "5x Steel Throwing Daggers"
+	created_item = /obj/item/weapon/knife/throwingknife/steel
+	createditem_extra = 4
 
 // --------- SILVER ------------  Harder to craft, does less damage and has less durability than steel, but banes undead.
 

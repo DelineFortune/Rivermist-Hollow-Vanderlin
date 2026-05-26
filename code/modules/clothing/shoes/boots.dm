@@ -12,6 +12,10 @@
 	salvage_amount = 1
 	max_integrity = INTEGRITY_STANDARD
 
+/obj/item/clothing/shoes/boots/apply_components()
+	. = ..()
+	AddComponent(/datum/component/storage/concrete/boots)
+
 /obj/item/clothing/shoes/boots/armor
 	name = "plated boots"
 	desc = "Armored boots made from steel offering heavy protection against both melee and ranged attacks."

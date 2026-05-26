@@ -418,6 +418,12 @@
 	. = ..()
 
 /obj/machinery/light/fueled/hearth/Destroy()
+	if(attachment)
+		attachment.forceMove(loc)
+		attachment = null
+	if(food)
+		food.forceMove(loc)
+		food = null
 	. = ..()
 
 /obj/machinery/light/fueled/hearth/attackby(obj/item/W, mob/living/user, list/modifiers)
@@ -506,6 +512,15 @@
 	if(isliving(user) && on)
 		user.visible_message("<span class='warning'>[user] snuffs [src].</span>")
 		burn_out()
+
+/obj/machinery/light/fueled/hearth/magic //cookable so
+	name = "magical bonfire"
+	icon_state = "churchfire1"
+	base_state = "churchfire"
+	color = "#6ab2ee"
+	bulb_colour = "#6ab2ee"
+	max_integrity = 30
+	density = TRUE //cant be used as a mine
 
 /obj/machinery/light/fueled/campfire
 	name = "campfire"

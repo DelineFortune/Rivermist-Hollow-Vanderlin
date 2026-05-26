@@ -113,12 +113,12 @@
 	craftdiff = 3
 
 /datum/artificer_recipe/tools/lockpicks
-	name = "3x Lockpicks"
+	name = "5x Lockpicks"
 	required_item = /obj/item/ingot/iron
 	created_item = /obj/item/lockpick
 	appro_skill = /datum/attribute/skill/craft/locksmithing
 	hammers_per_item = 5
-	created_amount = 3
+	created_amount = 5
 	craftdiff = 2
 
 /datum/artificer_recipe/tools/lockpickring

@@ -39,10 +39,51 @@
 	cost = 10
 	contains = /obj/item/soap/bath
 
-/datum/supply_pack/narcotics/perfume
-	name = "Perfume"
-	cost = 25
+/datum/supply_pack/narcotics/perfume/random
+	name = "Random Perfume"
+	cost = 10
 	contains = list(/obj/item/perfume/random)
+
+/datum/supply_pack/narcotics/perfume/lavender
+	name = "Lavender Perfume"
+	cost = 25
+	contains = list(/obj/item/perfume/lavender)
+
+/datum/supply_pack/narcotics/perfume/cherry
+	name = "Cherry Perfume"
+	cost = 25
+	contains = list(/obj/item/perfume/cherry)
+
+/datum/supply_pack/narcotics/perfume/rose
+	name = "Rose Perfume"
+	cost = 25
+	contains = list(/obj/item/perfume/rose)
+
+/datum/supply_pack/narcotics/perfume/jasmine
+	name = "Jasmine Perfume"
+	cost = 25
+	contains = list(/obj/item/perfume/jasmine)
+
+/datum/supply_pack/narcotics/perfume/mint
+	name = "Mint Perfume"
+	cost = 25
+	contains = list(/obj/item/perfume/mint)
+
+/datum/supply_pack/narcotics/perfume/vanilla
+	name = "Vanilla Perfume"
+	cost = 25
+	contains = list(/obj/item/perfume/vanilla)
+
+/datum/supply_pack/narcotics/perfume/pear
+	name = "Pear Perfume"
+	cost = 25
+	contains = list(/obj/item/perfume/pear)
+
+/datum/supply_pack/narcotics/perfume/strawberry
+	name = "Pear Perfume"
+	cost = 25
+	contains = list(/obj/item/perfume/strawberry)
+
 
 /datum/supply_pack/narcotics/poison
 	name = "Poison"

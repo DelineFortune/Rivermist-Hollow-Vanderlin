@@ -9,7 +9,7 @@
 	throwforce = 0
 	drop_sound = 'sound/items/gems (1).ogg'
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH|ITEM_SLOT_NECK|ITEM_SLOT_RING
-	grid_height = 64
+	grid_height = 32
 	grid_width = 32
 
 /obj/item/lockpick
@@ -26,7 +26,7 @@
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH|ITEM_SLOT_NECK
 	destroy_sound = 'sound/items/pickbreak.ogg'
 	grid_width = 32
-	grid_height = 64
+	grid_height = 32
 
 //custom key
 /obj/item/key/custom

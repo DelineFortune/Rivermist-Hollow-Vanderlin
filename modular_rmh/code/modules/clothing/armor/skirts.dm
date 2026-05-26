@@ -24,6 +24,7 @@
 	desc = "Short studded skirt made of fine leather and iron."
 	icon_state = "studdedskirt"
 	genital_access = TRUE
+	sewrepair = /datum/attribute/skill/craft/tanning/patching
 
 /obj/item/clothing/pants/chainlegs/iron/skirt
 	name = "iron chain skirt"
