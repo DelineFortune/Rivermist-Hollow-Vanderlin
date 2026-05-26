@@ -250,7 +250,6 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue,
 		ORGAN_SLOT_LIVER = /obj/item/organ/liver,
 		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
-		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
 		ORGAN_SLOT_GUTS = /obj/item/organ/guts,
 		ORGAN_SLOT_PUBIC = /obj/item/organ/genitals/pubes,
 		ORGAN_SLOT_ANUS = /obj/item/organ/genitals/filling_organ/anus,
@@ -316,13 +315,13 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	var/list/pain_emote_by_power = list(
 		"100" = "agonyscream",
 		"90" = "whimper",
-		"80" = "moan",
-		"70" = "cry",
+		"80" = "whimper",
+		"70" = "gargle",
 		"60" = "gargle",
 		"50" = "moan",
 		"40" = "moan",
 		"30" = "groan",
-		"20" = "groan",
+		"20" = "grunt",
 		"10" = "grunt",
 	) //Below 10 pain, we shouldn't emote
 

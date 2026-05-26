@@ -181,6 +181,9 @@
 /obj/item/organ/proc/is_dead()
 	return (CHECK_BITFIELD(organ_flags, ORGAN_DESTROYED|ORGAN_DEAD) || (damage >= maxHealth))
 
+/obj/item/organ/proc/can_be_surgically_manipulated()
+	return TRUE
+
 /obj/item/organ/proc/is_bruised()
 	return (damage >= low_threshold)
 

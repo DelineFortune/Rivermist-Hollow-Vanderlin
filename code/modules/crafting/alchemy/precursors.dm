@@ -1104,7 +1104,6 @@ GLOBAL_LIST_INIT(natural_precursor_registry, list())
 		/datum/thaumaturgical_essence/life = 1
 	)
 	init_types = list(
-		/obj/item/organ/appendix,
 		/obj/item/organ/heart,
 		/obj/item/organ/eyes,
 		/obj/item/organ/liver,

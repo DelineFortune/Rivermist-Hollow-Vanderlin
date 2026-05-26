@@ -214,6 +214,7 @@
 		injury.adjust_germ_level(incoming_germ * 0.1)
 
 	update_damages()
+	owner.updatehealth()
 
 	/*
 	for(var/datum/wound/iter_wound as anything in wounds)
@@ -401,27 +402,42 @@
 	bandage = new_bandage
 	bandage_limb()
 	new_bandage.forceMove(src)
+	apply_bandage_reagents()
 	return TRUE
 
+/obj/item/bodypart/proc/apply_bandage_reagents()
+	if(!istype(bandage, /obj/item/natural/cloth))
+		return FALSE
+	if(!owner)
+		return FALSE
+
+	var/obj/item/natural/cloth/cloth = bandage
+	if(!cloth.reagents?.total_volume)
+		return FALSE
+
+	var/list/reagents_to_apply = cloth.reagents.reagent_list.Copy()
+	for(var/datum/reagent/R as anything in reagents_to_apply)
+		if(!R || !(R in cloth.reagents.reagent_list))
+			continue
+		var/amount_to_transfer = min(R.volume, R.metabolization_rate)
+		if(amount_to_transfer <= 0)
+			continue
+		R.on_bodypart_absorb(src, owner, amount_to_transfer)
+		cloth.reagents.remove_reagent(R.type, amount_to_transfer)
+		. = TRUE
+
 /obj/item/bodypart/proc/try_bandage_expire()
-	var/bleed_rate = get_bleed_rate()
 	if(!bandage)
 		return FALSE
+	apply_bandage_reagents()
+
+	var/bleed_rate = get_bleed_rate()
 	if(!bleed_rate)
 		return FALSE
 
 	var/bandage_health = 1
 	if(istype(bandage, /obj/item/natural/cloth))
 		var/obj/item/natural/cloth/cloth = bandage
-
-		if(cloth.reagents && cloth.reagents.total_volume > 0)
-			if(owner && owner.reagents)
-				for(var/datum/reagent/R in cloth.reagents.reagent_list)
-					var/amount_to_transfer = min(R.volume, R.metabolization_rate)
-					if(amount_to_transfer > 0)
-
-						R.on_bodypart_absorb(src, owner, amount_to_transfer)
-						cloth.reagents.remove_reagent(R.type, amount_to_transfer)
 
 		if(owner)
 			owner.transfer_blood_to(cloth, bleed_rate * 0.25)

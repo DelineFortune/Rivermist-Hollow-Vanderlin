@@ -243,6 +243,12 @@
 	metabolization_rate = REAGENTS_METABOLISM
 	overdose_threshold = 15
 
+/datum/reagent/poison/herbal/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0, target_zone = null)
+	if((method & TOUCH) && iscarbon(M))
+		var/mob/living/carbon/carbon_target = M
+		carbon_target.adjust_germ_level_directed(max(1, reac_volume * 2), body_zone = target_zone)
+	return ..()
+
 /datum/reagent/poison/herbal/weak_atropa
 	name = "Dilute Atropa Extract"
 	description = "A very diluted extract that causes mild discomfort."

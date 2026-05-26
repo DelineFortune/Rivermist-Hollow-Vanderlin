@@ -394,13 +394,8 @@
 				//owner.flash_pain(damage_side_effect*4)
 				owner.adjust_eye_blur(damage_side_effect)
 				owner.adjust_confusion(damage_side_effect)
-				switch(rand(1,3))
-					if(1)
-						owner.stuttering += damage_side_effect
-					if(2)
-						owner.slurring += damage_side_effect
-					if(3)
-						owner.cultslurring += damage_side_effect
+				// RMH: brain damage can still daze and knock down, but should not
+				// mangle speech on a social/RP-focused server.
 				owner.CombatKnockdown(damage_side_effect*2, damage_side_effect, (damage_side_effect >= 5 ? damage_side_effect : null), damage_side_effect >= 5)
 		if(!is_failing())
 			REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
@@ -427,6 +422,8 @@
 	if(!ispath(trauma))
 		trauma = trauma.type
 	if(!initial(trauma.can_gain))
+		return FALSE
+	if(natural_gain && initial(trauma.brain_damage_speech_effect))
 		return FALSE
 	if(!resilience)
 		resilience = initial(trauma.resilience)

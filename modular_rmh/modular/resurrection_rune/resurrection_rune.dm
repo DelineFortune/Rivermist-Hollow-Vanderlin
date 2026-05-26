@@ -633,12 +633,21 @@
 		return RUNE_STAGE_IMMEDIATE
 	if(target.is_dead())
 		return RUNE_STAGE_IMMEDIATE
-	var/sleeping_above_crit = target.IsSleeping() && target.health > target.crit_threshold
-	if(target.health <= RUNE_THRESHOLD_FULLCRIT && target.stat == UNCONSCIOUS && !sleeping_above_crit)
+	var/effective_health = get_effective_rescue_health(target)
+	var/sleeping_above_crit = target.IsSleeping() && effective_health > target.crit_threshold
+	if(effective_health <= RUNE_THRESHOLD_FULLCRIT && target.stat == UNCONSCIOUS && !sleeping_above_crit)
 		return RUNE_STAGE_HARD_CRIT
-	if((target.health <= RUNE_THRESHOLD_SOFTCRIT && !sleeping_above_crit) || target.get_num_legs(TRUE) < 2)
+	if((effective_health <= RUNE_THRESHOLD_SOFTCRIT && !sleeping_above_crit) || target.get_num_legs(TRUE) < 2)
 		return RUNE_STAGE_SOFT_CRIT
 	return RUNE_STAGE_NONE
+
+/datum/resurrection_rune_controller/proc/get_effective_rescue_health(mob/living/carbon/target)
+	if(!target)
+		return INFINITY
+
+	var/injury_pressure = target.getBruteLoss() + target.getFireLoss() + target.getToxLoss() + target.getOxyLoss() + target.getCloneLoss()
+	injury_pressure += target.getOrganLoss(ORGAN_SLOT_BRAIN)
+	return min(target.health, target.maxHealth - injury_pressure)
 
 /datum/resurrection_rune_controller/proc/process_hard_crit_timeouts()
 	if(!hard_crit_deadlines.len)

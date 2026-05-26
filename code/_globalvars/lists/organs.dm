@@ -1,7 +1,6 @@
 /// Organ slot processing order for life proc
 GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_BRAIN,
-	ORGAN_SLOT_APPENDIX,
 	ORGAN_SLOT_STOMACH,
 	ORGAN_SLOT_EARS,
 	ORGAN_SLOT_EYES,

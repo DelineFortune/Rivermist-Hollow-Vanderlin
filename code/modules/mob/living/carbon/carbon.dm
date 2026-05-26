@@ -1012,9 +1012,20 @@
 			organ.applyOrganDamage(excess_healing * -1)
 
 	for(var/obj/item/organ/parent in internal_organs)//we treat this like the initial heart beat filling all the arteries with blood again
-		parent.current_blood = min(parent.current_blood, (parent.current_blood + (parent.max_blood_storage * 0.4)))
+		parent.current_blood = min(parent.current_blood + (parent.max_blood_storage * 0.4), parent.max_blood_storage)
 
-	return ..()
+	. = ..()
+
+	var/full_organ_heal = full_heal_flags & (HEAL_ADMIN|HEAL_ORGANS|HEAL_REFRESH_ORGANS)
+	if(full_organ_heal)
+		for(var/obj/item/organ/organ as anything in internal_organs)
+			organ.setOrganDamage(0)
+			organ.set_germ_level(0)
+
+	if(excess_healing || full_organ_heal || (full_heal_flags & HEAL_BLOOD))
+		for(var/obj/item/organ/organ as anything in internal_organs)
+			if(organ.max_blood_storage > 0)
+				organ.current_blood = organ.max_blood_storage
 
 /mob/living/carbon/fully_heal(heal_flags = HEAL_ALL)
 

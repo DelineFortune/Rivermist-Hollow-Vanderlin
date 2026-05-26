@@ -10,6 +10,7 @@
 	scan_desc = ""
 	gain_text = "<span class='warning'>Speaking clearly is getting harder.</span>"
 	lose_text = "<span class='notice'>I feel in control of my speech.</span>"
+	brain_damage_speech_effect = TRUE
 
 /datum/brain_trauma/mild/stuttering/on_life()
 	owner.stuttering = min(owner.stuttering + 5, 25)
@@ -25,6 +26,7 @@
 	scan_desc = ""
 	gain_text = "<span class='warning'>I feel dumber.</span>"
 	lose_text = "<span class='notice'>I feel smart again.</span>"
+	brain_damage_speech_effect = TRUE
 
 /datum/brain_trauma/mild/dumbness/on_gain()
 	ADD_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
@@ -49,6 +51,7 @@
 	scan_desc = ""
 	gain_text = "<span class='danger'>I can't seem to form any coherent thoughts!</span>"
 	lose_text = "<span class='danger'>My mind feels more clear.</span>"
+	brain_damage_speech_effect = TRUE
 
 /datum/brain_trauma/mild/speech_impediment/on_gain()
 	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
@@ -76,7 +79,7 @@
 				owner.adjust_confusion(10 SECONDS)
 				owner.set_eye_blur_if_lower(20 SECONDS)
 			if(6 to 9)
-				owner.slurring += 30
+				owner.adjust_confusion(5 SECONDS)
 			if(10)
 				to_chat(owner, "<span class='notice'>I forget for a moment what you were doing.</span>")
 				owner.Stun(20)
@@ -151,6 +154,7 @@
 	scan_desc = ""
 	gain_text = "<span class='warning'>I lose my grasp on complex words.</span>"
 	lose_text = "<span class='notice'>I feel my vocabulary returning to normal again.</span>"
+	brain_damage_speech_effect = TRUE
 
 	var/static/list/common_words = world.file2list("strings/1000_most_common.txt")
 
@@ -193,6 +197,7 @@
 	scan_desc = ""
 	gain_text = "<span class='warning'>I feel a faint echo of my thoughts...</span>"
 	lose_text = "<span class='notice'>The faint echo fades away.</span>"
+	brain_damage_speech_effect = TRUE
 	var/list/hear_dejavu = list()
 	var/list/speak_dejavu = list()
 

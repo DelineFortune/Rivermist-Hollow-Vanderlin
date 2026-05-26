@@ -4,6 +4,7 @@
 	scan_desc = ""
 	gain_text = "<span class='warning'>I start finding default values very unnerving...</span>"
 	lose_text = "<span class='notice'>I no longer feel afraid of default values.</span>"
+	brain_damage_speech_effect = TRUE
 	var/phobia_type
 	/// Cooldown for proximity checks so we don't spam a range 7 view every two seconds.
 	COOLDOWN_DECLARE(check_cooldown)

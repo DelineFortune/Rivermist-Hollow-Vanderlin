@@ -5,7 +5,7 @@
 /obj/item/organ/get_mechanics_examine(mob/user)
 	. = ..()
 
-	if(owner && CHECK_BITFIELD(organ_flags, ORGAN_CUT_AWAY))
+	if(owner && can_be_surgically_manipulated() && CHECK_BITFIELD(organ_flags, ORGAN_CUT_AWAY))
 		for(var/atom/thing as anything in attaching_items)
 			. += "Use [initial(thing.name)] to reattach this organ to [owner]."
 
@@ -14,7 +14,7 @@
 	for(var/thing in healing_tools)
 		. += "Use a [thing] to heal this organ."
 
-	if(owner && !CHECK_BITFIELD(organ_flags, ORGAN_CUT_AWAY))
+	if(owner && can_be_surgically_manipulated() && !CHECK_BITFIELD(organ_flags, ORGAN_CUT_AWAY))
 		. += "Use a sharp item or scalpel to sever this organ from [owner]."
 
 	if(germ_level)
@@ -28,6 +28,9 @@
 	if(owner && CHECK_BITFIELD(organ_flags, ORGAN_CUT_AWAY))
 		for(var/thing in attaching_items)
 			if(istype(tool, thing))
+				if(!can_be_surgically_manipulated())
+					to_chat(user, span_warning("\The [src] cannot be surgically reattached."))
+					return TRUE
 				handle_attaching_item(tool, user, params)
 				return TRUE
 	for(var/thing in healing_items)
@@ -39,6 +42,9 @@
 			handle_healing_item(tool, user, params)
 			return TRUE
 	if(owner && (tool.sharpness == IS_SHARP || tool.tool_behaviour == TOOL_SCALPEL) && !CHECK_BITFIELD(organ_flags, ORGAN_CUT_AWAY))
+		if(!can_be_surgically_manipulated())
+			to_chat(user, span_warning("\The [src] cannot be surgically severed."))
+			return TRUE
 		handle_cutting_away(tool, user, params)
 		return TRUE
 	if(tool.tool_behaviour == TOOL_CAUTERY)
@@ -46,6 +52,10 @@
 		return TRUE
 
 /obj/item/organ/proc/handle_attaching_item(obj/item/tool, mob/living/user, params)
+	if(!can_be_surgically_manipulated())
+		to_chat(user, span_warning("\The [src] cannot be surgically reattached."))
+		return TRUE
+
 	var/obj/item/natural/stack = tool
 	user.visible_message(span_notice("<b>[user]</b> starts attaching \the [src] on \the <b>[owner]</b>..."), \
 					span_notice("I start attaching \the [src] on \the <b>[owner]</b>..."), \
@@ -105,6 +115,10 @@
 		scar_organ(10, 60)
 
 /obj/item/organ/proc/handle_cutting_away(obj/item/tool, mob/living/user, params)
+	if(!can_be_surgically_manipulated())
+		to_chat(user, span_warning("\The [src] cannot be surgically severed."))
+		return TRUE
+
 	user.visible_message(span_notice("<b>[user]</b> starts severing \the [src] from \the [owner]..."), \
 					span_notice("I start severing \the [src] from \the [owner]..."), \
 					vision_distance = COMBAT_MESSAGE_RANGE)

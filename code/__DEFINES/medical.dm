@@ -35,7 +35,6 @@
 #define ORGAN_SLOT_ARTERY "artery"
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_SPLEEN "spleen"
-#define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_STOMACH "stomach"
 #define ORGAN_SLOT_GUTS "guts"
 #define ORGAN_SLOT_EARS "ears"

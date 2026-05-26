@@ -73,8 +73,6 @@
 	switch(slot)
 		if(ORGAN_SLOT_BRAIN)
 			return "brain"
-		if(ORGAN_SLOT_APPENDIX)
-			return "appendix"
 		if(ORGAN_SLOT_STOMACH)
 			return "stomach"
 		if(ORGAN_SLOT_GUTS)

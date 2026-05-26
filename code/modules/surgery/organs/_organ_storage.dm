@@ -251,6 +251,10 @@
 		return FALSE //must be on grab intent
 	var/organ_volume = bodypart_affected?.get_cavity_volume()
 	var/obj/item/organ/O = I
+	if(istype(O) && !O.can_be_surgically_manipulated())
+		if(!stop_messages && user)
+			to_chat(user, span_warning("\The [O] cannot be surgically inserted."))
+		return FALSE
 	if(!istype(O) && bodypart_affected && ((organ_volume + I.w_class > bodypart_affected.max_cavity_volume) || (I.w_class > bodypart_affected.max_cavity_item_size)) )
 		if(!stop_messages)
 			to_chat(user, span_warning("\The [bodypart_affected ? bodypart_affected : "<b>[parent]</b>"] cannot hold [I]!"))
@@ -279,6 +283,8 @@
 	. = FALSE
 	var/obj/item/organ/O = I
 	if(istype(O))
+		if(!O.can_be_surgically_manipulated())
+			return FALSE
 		if(!(O in contents()))
 			var/mob/living/carbon/carbon_parent = parent
 			O.forceMove(bodypart_affected)
@@ -328,6 +334,8 @@
 		return FALSE
 	var/obj/item/organ/O = AM
 	if(istype(O))
+		if(!O.can_be_surgically_manipulated())
+			return FALSE
 		if(!CHECK_BITFIELD(O.organ_flags, ORGAN_CUT_AWAY))
 			return FALSE
 	. = ..()

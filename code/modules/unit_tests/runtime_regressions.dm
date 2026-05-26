@@ -342,3 +342,136 @@
 	TEST_ASSERT(!("Hello World" in test_mind.active_uis), "Deleting a visual UI should remove it from the owner mind.")
 	TEST_ASSERT(!("Hello World Panel" in test_mind.active_uis), "Deleting a visual UI should remove child UIs from the owner mind.")
 	TEST_ASSERT_NULL(first_element.parent, "Deleting a visual UI should clear element parent backrefs.")
+
+/datum/unit_test/disinfectant_soaked_bandage_treats_injury
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/disinfectant_soaked_bandage_treats_injury/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/obj/item/bodypart/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+	TEST_ASSERT_NOTNULL(chest, "Test human should have a chest bodypart.")
+
+	var/datum/injury/injury = chest.create_injury(WOUND_SLASH, 20)
+	TEST_ASSERT_NOTNULL(injury, "Test setup should create a slash injury.")
+	injury.adjust_germ_level(10)
+
+	var/obj/item/natural/cloth/bandage/soaked_bandage = allocate(/obj/item/natural/cloth/bandage)
+	soaked_bandage.reagents.add_reagent(/datum/reagent/consumable/ethanol, 3)
+	chest.try_bandage(soaked_bandage)
+
+	TEST_ASSERT(injury.is_disinfected(), "A disinfectant-soaked bandage should disinfect the injury as soon as it is applied.")
+	TEST_ASSERT(injury.germ_level < 10, "A disinfectant-soaked bandage should reduce injury germs when it is applied.")
+
+/datum/unit_test/player_bodypart_attacks_do_not_roll_violent_organ_damage
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/player_bodypart_attacks_do_not_roll_violent_organ_damage/Run()
+	var/mob/living/carbon/human/player_body = allocate(/mob/living/carbon/human)
+	var/datum/mind/player_mind = allocate(/datum/mind, "organ-damage-test")
+	player_mind.current = player_body
+	player_body.mind = player_mind
+	var/obj/item/bodypart/chest = player_body.get_bodypart(BODY_ZONE_CHEST)
+	TEST_ASSERT_NOTNULL(chest, "Test human should have a chest bodypart.")
+
+	var/organ_damage_before = 0
+	for(var/obj/item/organ/organ as anything in player_body.internal_organs)
+		organ_damage_before += organ.damage
+
+	var/rolled_organ_damage = chest.damage_internal_organs(WOUND_PIERCE, 200, 200, forced = TRUE)
+
+	var/organ_damage_after = 0
+	for(var/obj/item/organ/organ as anything in player_body.internal_organs)
+		organ_damage_after += organ.damage
+
+	TEST_ASSERT(!rolled_organ_damage, "Violent bodypart attacks should not roll organ damage for player characters until the system is reworked.")
+	TEST_ASSERT_EQUAL(organ_damage_after, organ_damage_before, "Violent bodypart attacks should not change player character organ damage until the system is reworked.")
+	player_body.mind = null
+	player_mind.current = null
+
+/datum/unit_test/admin_revive_refills_organ_blood
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/admin_revive_refills_organ_blood/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/list/arteries = patient.getorganslotlist(ORGAN_SLOT_ARTERY)
+	TEST_ASSERT(length(arteries), "Test human should have at least one artery.")
+
+	var/obj/item/organ/artery = arteries[1]
+	artery.applyOrganDamage(artery.maxHealth)
+	artery.current_blood = 0
+
+	patient.revive(ADMIN_HEAL_ALL)
+
+	TEST_ASSERT_EQUAL(artery.damage, 0, "Admin revive should clear artery organ damage.")
+	TEST_ASSERT_EQUAL(artery.current_blood, artery.max_blood_storage, "Admin revive should refill local organ blood so healed organs do not immediately fail again.")
+
+/datum/unit_test/wounds_do_not_infect_from_ordinary_movement
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/wounds_do_not_infect_from_ordinary_movement/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/obj/item/bodypart/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+	TEST_ASSERT_NOTNULL(chest, "Test human should have a chest bodypart.")
+
+	var/datum/injury/injury = chest.create_injury(WOUND_SLASH, 60)
+	TEST_ASSERT_NOTNULL(injury, "Test setup should create a slash injury.")
+
+	injury.movement_infect(patient)
+
+	TEST_ASSERT_EQUAL(injury.germ_level, 0, "Ordinary movement should not infect wounds; infection should require explicit contamination.")
+
+/datum/unit_test/poison_splash_contaminates_wounds
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/poison_splash_contaminates_wounds/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/obj/item/bodypart/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+	TEST_ASSERT_NOTNULL(chest, "Test human should have a chest bodypart.")
+
+	var/datum/injury/injury = chest.create_injury(WOUND_SLASH, 20)
+	TEST_ASSERT_NOTNULL(injury, "Test setup should create a slash injury.")
+
+	var/datum/reagent/strongpoison/poison = allocate(/datum/reagent/strongpoison)
+	poison.reaction_mob(patient, TOUCH, 2, target_zone = BODY_ZONE_CHEST)
+
+	TEST_ASSERT(injury.germ_level > 0, "Poison splashes should explicitly contaminate wounds.")
+
+/datum/unit_test/health_potions_heal_organ_damage_by_strength
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/health_potions_heal_organ_damage_by_strength/Run()
+	var/mob/living/carbon/human/weak_patient = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/strong_patient = allocate(/mob/living/carbon/human)
+	var/obj/item/organ/weak_heart = weak_patient.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/strong_heart = strong_patient.getorganslot(ORGAN_SLOT_HEART)
+	TEST_ASSERT_NOTNULL(weak_heart, "Weak potion test patient should have a heart.")
+	TEST_ASSERT_NOTNULL(strong_heart, "Strong potion test patient should have a heart.")
+
+	var/starting_damage = 40
+	weak_heart.applyOrganDamage(starting_damage)
+	strong_heart.applyOrganDamage(starting_damage)
+
+	var/datum/reagent/medicine/healthpot/weak_potion = allocate(/datum/reagent/medicine/healthpot)
+	var/datum/reagent/medicine/stronghealth/strong_potion = allocate(/datum/reagent/medicine/stronghealth)
+	weak_potion.volume = 5
+	strong_potion.volume = 5
+
+	weak_potion.on_mob_life(weak_patient, 1)
+	strong_potion.on_mob_life(strong_patient, 1)
+
+	var/weak_healing = starting_damage - weak_heart.damage
+	var/strong_healing = starting_damage - strong_heart.damage
+	TEST_ASSERT(weak_healing > 0, "Weak healing potions should restore some organ damage.")
+	TEST_ASSERT(strong_healing > weak_healing, "Strong healing potions should restore more organ damage than weak healing potions.")
