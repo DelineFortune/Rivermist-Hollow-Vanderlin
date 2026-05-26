@@ -88,14 +88,14 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		OFFSET_PENIS = list(0,0),\
 		OFFSET_BREASTS = list(0,0),\
 		OFFSET_TESTICLES = list(0,0),\
-		OFFSET_VAGINA = list(0,0),\
+		OFFSET_VAGINA = list(0,-3),\
 	)
 
 	var/list/offset_genitals_f = list(
 		OFFSET_PENIS = list(0,0),\
 		OFFSET_BREASTS = list(0,-1),\
 		OFFSET_TESTICLES = list(0,0),\
-		OFFSET_VAGINA = list(0,-1),\
+		OFFSET_VAGINA = list(0,-4),\
 	)
 
 	/// Type of damage overlay to use

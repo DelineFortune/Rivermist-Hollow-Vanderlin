@@ -475,3 +475,39 @@
 	var/strong_healing = starting_damage - strong_heart.damage
 	TEST_ASSERT(weak_healing > 0, "Weak healing potions should restore some organ damage.")
 	TEST_ASSERT(strong_healing > weak_healing, "Strong healing potions should restore more organ damage than weak healing potions.")
+
+/datum/unit_test/self_injury_check_lists_damaged_main_organs
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/self_injury_check_lists_damaged_main_organs/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/list/healthy_examination = patient.check_for_injuries(patient, silent = TRUE)
+	var/healthy_output = healthy_examination.Join("\n")
+	TEST_ASSERT(!findtext(healthy_output, "<summary>Organs</summary>"), "Self injury checks should not show a main organ health section when organs are healthy.")
+
+	var/obj/item/organ/heart = patient.getorganslot(ORGAN_SLOT_HEART)
+	TEST_ASSERT_NOTNULL(heart, "Test human should have a heart.")
+	heart.applyOrganDamage(40)
+
+	var/list/damaged_examination = patient.check_for_injuries(patient, silent = TRUE)
+	var/damaged_output = damaged_examination.Join("\n")
+	TEST_ASSERT(findtext(damaged_output, "<summary>Organs</summary>"), "Self injury checks should show a main organ health section when a main organ is damaged.")
+	TEST_ASSERT(findtext(damaged_output, "heart"), "Self injury checks should name damaged main organs.")
+
+/datum/unit_test/self_injury_check_lists_genitals_in_collapsible_section
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/self_injury_check_lists_genitals_in_collapsible_section/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/obj/item/organ/genitals/penis/penis = allocate(/obj/item/organ/genitals/penis)
+	TEST_ASSERT(penis.Insert(patient, special = TRUE, drop_if_replaced = FALSE), "Test setup should insert a genital organ.")
+
+	var/list/examination = patient.check_for_injuries(patient, silent = TRUE)
+	var/output = examination.Join("\n")
+	TEST_ASSERT(findtext(output, "<details><summary>Genitals</summary>"), "Self injury checks should show genital information in a collapsible section.")
+	TEST_ASSERT(findtext(output, "penis"), "Self injury checks should name present genital organs.")
+	TEST_ASSERT(!findtext(output, "heart"), "The genital self-check section should not list non-genital organs.")

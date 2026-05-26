@@ -675,39 +675,100 @@
 		examination += span_info(span_green("[getToxLoss()] TOXIN"))
 		examination += span_info(span_blue("[getOxyLoss()] OXYGEN"))
 
-	examination += "ø ------------ ø" //automatically lists internal organs that have those functions
-	var/mob/living/carbon/human/userino = user
-	if(userino.has_quirk(/datum/quirk/peculiarity/selfawaregeni))
-		for(var/obj/item/organ/genitals/filling_organ/forgan in userino.internal_organs)
-			var/health_status = ""
-			var/health_ratio = (forgan.maxHealth - forgan.damage) / forgan.maxHealth
-			if(forgan.maxHealth - forgan.damage < forgan.maxHealth)
-				health_status = " It looks [round(health_ratio * 100)]% healthy."
-			else
-				health_status = " It looks <span class='green'>OK</span>"
+	if(user == src)
+		var/main_organ_examination = get_damaged_main_organ_examination()
+		if(main_organ_examination)
+			examination += main_organ_examination
 
-			if(forgan.reagents.total_volume)
-				examination += span_info("[user == src ? "my" : "[user.p_their()]"] [pick(forgan.altnames)] are <bold>[forgan.reagents.total_volume]/[forgan.reagents.maximum_volume] liguae</bold> full.[health_status]")
-			else
-				examination += span_info("[user == src ? "my" : "[user.p_their()]"] [pick(forgan.altnames)] has no fluids.[health_status]")
-			var/list/stored_items = forgan.contents
-			if(length(stored_items))
-				examination += span_info("There is <bold>[english_list(stored_items)]</bold> in [user == src ? "my" : "[user.p_their()]"] [pick(forgan.altnames)].")
-			continue
-		examination += "ø ------------ ø</span>"
+		var/genital_examination = get_genital_examination()
+		if(genital_examination)
+			examination += genital_examination
 
-
-	var/mob/living/carbon/human/H = user
-	for(var/obj/item/organ/genitals/gen in H.internal_organs)
-		if(SEND_SIGNAL(gen, COMSIG_BODYSTORAGE_IS_ITEM_TYPE_IN, /obj/item/natural/worms/leech, STORAGE_LAYER_OUTER))
-			for(var/obj/item/natural/worms/leech/invader in gen.contents)
-				if(SEND_SIGNAL(gen, COMSIG_BODYSTORAGE_IS_ITEM_IN, invader, STORAGE_LAYER_OUTER))
-					examination += "☼ <a href='byond://?src=[REF(src)];leech=[REF(invader)];organ=[REF(gen)]'>There's a leech on my [gen.name]!</a>"
-			examination += "ø ------------ ø</span>"
+	examination += "ø ------------ ø</span>"
 
 	if(!silent)
 		to_chat(user, examination.Join("\n"))
 	return examination
+
+/mob/living/carbon/human/proc/get_self_check_details(summary, list/lines)
+	if(!length(lines))
+		return
+	var/result = "<details><summary>[summary]</summary>"
+	for(var/line in lines)
+		result += " - [line]\n"
+	result += "</details>"
+	return result
+
+/mob/living/carbon/human/proc/get_organ_health_examination_line(obj/item/organ/organ, include_healthy = FALSE)
+	if(!organ || organ.maxHealth <= 0)
+		return
+	if(organ.damage <= 0 && !include_healthy)
+		return
+
+	var/health_ratio = max(0, (organ.maxHealth - organ.damage) / organ.maxHealth)
+	var/health_percent = round(health_ratio * 100)
+	var/status = "healthy"
+	var/status_class = "green"
+	if(organ.damage >= organ.maxHealth || (organ.organ_flags & ORGAN_DESTROYED))
+		status = "ruined"
+		status_class = "userdanger"
+	else if(organ.damage >= organ.high_threshold || (organ.organ_flags & ORGAN_FAILING))
+		status = "badly damaged"
+		status_class = "danger"
+	else if(organ.damage >= organ.medium_threshold)
+		status = "damaged"
+		status_class = "danger"
+	else if(organ.damage >= organ.low_threshold)
+		status = "bruised"
+		status_class = "warning"
+	else if(organ.damage > 0)
+		status = "lightly hurt"
+		status_class = "warning"
+
+	var/organ_label = lowertext(organ.name)
+	var/organ_zone = organ.current_zone || organ.zone
+	if(organ_zone)
+		organ_label += " ([parse_zone(organ_zone)])"
+	return "<span class='[status_class]'>[organ_label] is [status] ([health_percent]% healthy).</span>"
+
+/mob/living/carbon/human/proc/get_damaged_main_organ_examination()
+	var/list/organ_lines = list()
+	for(var/obj/item/organ/organ as anything in internal_organs)
+		if(istype(organ, /obj/item/organ/genitals))
+			continue
+		var/organ_line = get_organ_health_examination_line(organ)
+		if(organ_line)
+			organ_lines += organ_line
+	return get_self_check_details("Organs", organ_lines)
+
+/mob/living/carbon/human/proc/get_genital_examination()
+	var/list/genital_lines = list()
+	for(var/obj/item/organ/organ as anything in internal_organs)
+		if(!istype(organ, /obj/item/organ/genitals))
+			continue
+		var/obj/item/organ/genitals/genital = organ
+		var/genital_line = get_organ_health_examination_line(genital, TRUE)
+		if(genital_line)
+			genital_lines += genital_line
+
+		if(istype(genital, /obj/item/organ/genitals/filling_organ))
+			var/obj/item/organ/genitals/filling_organ/filling_organ = genital
+			if(filling_organ.reagents)
+				if(filling_organ.reagents.total_volume)
+					genital_lines += "[lowertext(filling_organ.name)] contains <bold>[filling_organ.reagents.total_volume]/[filling_organ.reagents.maximum_volume] units</bold> of fluid."
+				else
+					genital_lines += "[lowertext(filling_organ.name)] has no fluids."
+
+		var/list/stored_items = genital.contents
+		if(length(stored_items))
+			genital_lines += "There is <bold>[english_list(stored_items)]</bold> in my [lowertext(genital.name)]."
+
+		if(SEND_SIGNAL(genital, COMSIG_BODYSTORAGE_IS_ITEM_TYPE_IN, /obj/item/natural/worms/leech, STORAGE_LAYER_OUTER))
+			for(var/obj/item/natural/worms/leech/invader in genital.contents)
+				if(SEND_SIGNAL(genital, COMSIG_BODYSTORAGE_IS_ITEM_IN, invader, STORAGE_LAYER_OUTER))
+					genital_lines += "☼ <a href='byond://?src=[REF(src)];leech=[REF(invader)];organ=[REF(genital)]'>There's a leech on my [lowertext(genital.name)]!</a>"
+
+	return get_self_check_details("Genitals", genital_lines)
 
 /mob/living/carbon/human/proc/check_limb_for_injuries(mob/user = src, choice = BODY_ZONE_CHEST, advanced = FALSE, silent = FALSE)
 	choice = check_zone(choice)

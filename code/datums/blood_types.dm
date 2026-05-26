@@ -175,7 +175,7 @@ GLOBAL_LIST_INIT_TYPED(blood_types, /datum/blood_type, init_subtypes_w_path_keys
 	used_table = /datum/chimeric_table/triton
 
 /datum/blood_type/human/medicator
-	name = "Medicator"
+	name = "Kenku"
 	used_table = /datum/chimeric_table/medicator
 
 /datum/blood_type/human/dwarf

@@ -9,6 +9,8 @@
 	//--rendering relay vars--
 	///integer: what plane we will relay this planes render to
 	var/render_relay_plane = RENDER_PLANE_MASTER
+	///integer: overrides the layer used for this plane's render relay
+	var/render_relay_layer
 	///bool: Whether this plane should get a render target automatically generated
 	var/generate_render_target = TRUE
 	///integer: blend mode to apply to the render relay in case you dont want to use the plane_masters blend_mode
@@ -201,6 +203,7 @@
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = GAME_PLANE
+	render_relay_layer = MOB_LAYER
 
 /atom/movable/screen/plane_master/game_world_fov_hidden/backdrop(mob/mymob)
 	. = ..()
