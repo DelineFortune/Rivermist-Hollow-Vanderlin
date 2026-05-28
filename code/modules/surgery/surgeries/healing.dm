@@ -133,12 +133,22 @@
 /********************BURN STEPS********************/
 /datum/surgery_step/heal/burn/basic
 	name = "Tend burns"
+	implements = list(
+		TOOL_HEMOSTAT = 60,
+		TOOL_IMPROVISED_HEMOSTAT = 50,
+		TOOL_SCREWDRIVER = 50,
+	)
 	burnhealing = 10
 	missinghpbonus = 5
 
 /********************COMBO STEPS********************/
 /datum/surgery_step/heal/combo
 	name = "Tend burns & bruises"
+	implements = list(
+		TOOL_HEMOSTAT = 60,
+		TOOL_IMPROVISED_HEMOSTAT = 50,
+		TOOL_SCREWDRIVER = 50,
+	)
 	brutehealing = 6
 	burnhealing = 6
 	missinghpbonus = 5

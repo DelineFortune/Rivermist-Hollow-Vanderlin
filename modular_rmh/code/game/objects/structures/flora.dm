@@ -365,6 +365,7 @@
 	density = TRUE
 	max_integrity = 150
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	blade_dulling = DULLING_PICK
 	destroy_sound = 'sound/foley/smash_rock.ogg'
 	attacked_sound = 'sound/foley/hit_rock.ogg'

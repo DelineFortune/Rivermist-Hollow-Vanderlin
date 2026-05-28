@@ -73,6 +73,7 @@
 	drop_sound = 'sound/foley/dropsound/shovel_drop.ogg'
 	melting_material = /datum/material/iron
 	melt_amount = 80
+	volume = 200
 	var/processing_amount = 0 ///we use this to "reserve" reagents
 	var/static/list/recipe_list = list()
 
@@ -90,10 +91,12 @@
 /obj/item/reagent_containers/glass/bucket/pot/copper
 	icon_state = "pote_copper"
 	melting_material = /datum/material/copper
+	volume = 100
 
 /obj/item/reagent_containers/glass/bucket/pot/stone
 	icon_state = "pote_stone"
 	melting_material = null
+	volume = 50
 
 /obj/item/reagent_containers/glass/bucket/pot/attackby(obj/item/I, mob/user, list/modifiers)
 	if(istype(I, /obj/item/reagent_containers/glass/bowl))

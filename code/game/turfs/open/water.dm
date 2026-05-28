@@ -675,7 +675,7 @@
 					continue
 				if(!BP.is_organic_limb())
 					continue
-				var/obj/item/natural/worms/leech/I = new(C)
+				var/obj/item/natural/worms/leech/I = spawn_wild_leech(C)
 				BP.add_embedded_object(I, silent = TRUE)
 				return .
 
@@ -732,7 +732,7 @@
 					continue
 				if(!BP.is_organic_limb())
 					continue
-				var/obj/item/natural/worms/leech/I = new(C)
+				var/obj/item/natural/worms/leech/I = spawn_wild_leech(C)
 				BP.add_embedded_object(I, silent = TRUE)
 				return .
 
@@ -769,7 +769,7 @@
 					continue
 				if(!BP.is_organic_limb())
 					continue
-				var/obj/item/natural/worms/leech/I = new(C)
+				var/obj/item/natural/worms/leech/I = spawn_wild_leech(C)
 				BP.add_embedded_object(I, silent = TRUE)
 				return .
 

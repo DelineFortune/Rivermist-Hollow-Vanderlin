@@ -94,7 +94,8 @@
 	. = ..()
 	if(knockout)
 		affected.Unconscious(knockout)
-	ADD_TRAIT(affected, TRAIT_DISFIGURED, "[type]")
+	if(!affected.is_player_character())
+		ADD_TRAIT(affected, TRAIT_DISFIGURED, "[type]")
 	if(paralysis)
 		ADD_TRAIT(affected, TRAIT_NO_BITE, "[type]")
 		ADD_TRAIT(affected, TRAIT_PARALYSIS, "[type]")
@@ -133,6 +134,11 @@
 	knockout = 25 SECONDS
 	min_damage_dividend = 0.95
 	viable_zones = list(BODY_ZONE_PRECISE_SKULL)
+
+/datum/wound/fracture/head/brain/get_crit_prob(bclass, dam, damage_dividend, mob/living/user, obj/item/bodypart/affected, zone_precise, list/modifiers)
+	if(affected?.owner?.is_player_character())
+		return 0
+	return ..()
 
 /datum/wound/fracture/head/brain/on_life()
 	. = ..()

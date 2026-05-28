@@ -54,17 +54,15 @@
 	var/datum/attribute/skill/skill_used = /datum/attribute/skill/misc/medicine
 	/// Necessary skill MINIMUM to perform this surgery step, of skill_used
 	var/skill_min = SKILL_RANK_NOVICE
-	/// Skill median used to apply success and speed bonuses
+	/// Skill rank used as this step's expected training level
 	var/skill_median = SKILL_RANK_JOURNEYMAN
 
-	/// Requirement threshold for the diceroll as a baseline
-	var/dice_requirement = 25
-	/// Crit window for the diceroll
-	var/dice_crit = 8
-	/// Number of dice rolled
-	var/dice_num = 3
-	/// Sides per die
-	var/dice_sides = 20
+	/// Minimum chance a surgery step can have after modifiers
+	var/minimum_success_chance = 5
+	/// Maximum chance a surgery step can have after modifiers
+	var/maximum_success_chance = 99
+	/// Medicine skill where critical failures stop occurring through normal odds
+	var/critical_failure_skill_cutoff = 15
 
 	/**
 	* type; doesn't show up if this type exists.
@@ -258,15 +256,12 @@
 	LAZYREMOVE(target.surgeries, target_zone)
 
 	var/roll_result = DICE_FAILURE
-	var/roll_requirement
+	var/success_chance
+	var/critical_failure_chance
 	if(!try_to_fail)
-		roll_requirement = get_roll_requirement(user, target, target_zone, tool, intent)
-		roll_result = user.diceroll(
-			requirement = roll_requirement,
-			crit = dice_crit,
-			dice_num = dice_num,
-			dice_sides = dice_sides,
-		)
+		success_chance = get_success_chance(user, target, target_zone, tool, intent)
+		critical_failure_chance = get_critical_failure_chance(user)
+		roll_result = roll_surgery_result(success_chance, critical_failure_chance)
 
 	var/chem_ok = chem_check(target)
 
@@ -276,14 +271,14 @@
 				// chems missing: degrade to normal failure path even on crit
 				if(failure(user, target, target_zone, tool, intent))
 					play_failure_sound(user, target, target_zone, tool)
-					display_roll(user, "CRIT SUCCESS (chem fail)", roll_requirement)
+					display_roll(user, "CRIT SUCCESS (chem fail)", success_chance, critical_failure_chance)
 					if(repeating && can_do_step(user, target, target_zone, tool, intent, try_to_fail))
 						initiate(user, target, target_zone, tool, intent, try_to_fail)
 				return FALSE
 			if(crit_success(user, target, target_zone, tool, intent))
 				add_surgery_xp(user)
 				play_success_sound(user, target, target_zone, tool)
-				display_roll(user, "CRIT SUCCESS", roll_requirement)
+				display_roll(user, "CRIT SUCCESS", success_chance, critical_failure_chance)
 				if(repeating && can_do_step(user, target, target_zone, tool, intent, try_to_fail))
 					initiate(user, target, target_zone, tool, intent, try_to_fail)
 				return TRUE
@@ -293,14 +288,14 @@
 			if(!chem_ok)
 				if(failure(user, target, target_zone, tool, intent))
 					play_failure_sound(user, target, target_zone, tool)
-					display_roll(user, "SUCCESS (chem fail)", roll_requirement)
+					display_roll(user, "SUCCESS (chem fail)", success_chance, critical_failure_chance)
 					if(repeating && can_do_step(user, target, target_zone, tool, intent, try_to_fail))
 						initiate(user, target, target_zone, tool, intent, try_to_fail)
 				return FALSE
 			if(success(user, target, target_zone, tool, intent))
 				add_surgery_xp(user)
 				play_success_sound(user, target, target_zone, tool)
-				display_roll(user, "SUCCESS", roll_requirement)
+				display_roll(user, "SUCCESS", success_chance, critical_failure_chance)
 				if(repeating && can_do_step(user, target, target_zone, tool, intent, try_to_fail))
 					initiate(user, target, target_zone, tool, intent, try_to_fail)
 				return TRUE
@@ -309,7 +304,7 @@
 		if(DICE_CRIT_FAILURE)
 			if(crit_failure(user, target, target_zone, tool, intent))
 				play_failure_sound(user, target, target_zone, tool)
-				display_roll(user, "CRIT FAILURE", roll_requirement)
+				display_roll(user, "CRIT FAILURE", success_chance, critical_failure_chance)
 				if(repeating && can_do_step(user, target, target_zone, tool, intent, try_to_fail))
 					initiate(user, target, target_zone, tool, intent, try_to_fail)
 			return FALSE
@@ -317,48 +312,101 @@
 		else // DICE_FAILURE or try_to_fail
 			if(failure(user, target, target_zone, tool, intent))
 				play_failure_sound(user, target, target_zone, tool)
-				display_roll(user, try_to_fail ? "INTENTIONAL FAIL" : "FAILURE", try_to_fail ? null : roll_requirement)
+				display_roll(user, try_to_fail ? "INTENTIONAL FAIL" : "FAILURE", try_to_fail ? null : success_chance, critical_failure_chance)
 				if(repeating && can_do_step(user, target, target_zone, tool, intent, try_to_fail))
 					initiate(user, target, target_zone, tool, intent, try_to_fail)
 			return FALSE
 
-/datum/surgery_step/proc/get_roll_requirement(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
-	var/requirement = dice_requirement
+/datum/surgery_step/proc/roll_surgery_result(success_chance, critical_failure_chance)
+	success_chance = clamp(success_chance, 0, 100)
+	critical_failure_chance = clamp(critical_failure_chance, 0, 100 - success_chance)
+	var/roll = rand(1, 1000) / 10
+	if(roll <= critical_failure_chance)
+		return DICE_CRIT_FAILURE
+	if(roll <= critical_failure_chance + success_chance)
+		return DICE_SUCCESS
+	return DICE_FAILURE
 
-	if(skill_used)
-		var/skill_level = floor(GET_MOB_SKILL_VALUE_OLD(user, skill_used)) || 0
-		var/skill_delta = (skill_level - skill_median) * 0.5
-		requirement += skill_delta
-
-	if(implements)
-		var/implement_type = tool_check(user, tool)
-		if(implement_type)
-			var/tool_chance = implements[implement_type] || 100
-			requirement += round((100 - tool_chance) / 100 * 6, 1)
-
-	var/loc_mod = get_location_modifier(target)
-	requirement += round((loc_mod - 1) * 8, 1)
-
+/datum/surgery_step/proc/get_success_chance(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
+	var/success_chance = get_base_success_chance_for_skill(get_surgery_skill(user))
+	success_chance += get_tool_success_modifier(user, tool)
+	success_chance += get_location_success_modifier(target)
+	success_chance += get_diceroll_success_modifier(user)
 	var/overseer_bonus = get_overseer_bonus(user, target, target_zone)
-	requirement += overseer_bonus
+	success_chance += overseer_bonus
 	if(overseer_bonus > 0)
 		to_chat(user, span_notice("You feel more confident with an experienced eye watching over you."))
+	return clamp(round(success_chance, 0.1), minimum_success_chance, maximum_success_chance)
 
-	return FLOOR(clamp(requirement, dice_num, dice_num * dice_sides), 1)
+/datum/surgery_step/proc/get_critical_failure_chance(mob/user)
+	return get_critical_failure_chance_for_skill(get_surgery_skill(user))
+
+/datum/surgery_step/proc/get_surgery_skill(mob/user)
+	if(!skill_used)
+		return SKILL_LEVEL_LEGENDARY
+	return clamp(GET_MOB_SKILL_VALUE(user, skill_used) || 0, SKILL_LEVEL_NONE, SKILL_LEVEL_LEGENDARY)
+
+/datum/surgery_step/proc/get_base_success_chance_for_skill(skill_level)
+	skill_level = clamp(skill_level || 0, SKILL_LEVEL_NONE, SKILL_LEVEL_LEGENDARY)
+	if(skill_level < critical_failure_skill_cutoff)
+		return 20 + skill_level * 2
+	if(skill_level < 35)
+		return 50 + (skill_level - critical_failure_skill_cutoff) * 2
+	if(skill_level < 40)
+		return 90 + (skill_level - 35)
+	return min(maximum_success_chance, 95 + (skill_level - 40) * 0.2)
+
+/datum/surgery_step/proc/get_critical_failure_chance_for_skill(skill_level)
+	skill_level = clamp(skill_level || 0, SKILL_LEVEL_NONE, SKILL_LEVEL_LEGENDARY)
+	if(skill_level >= critical_failure_skill_cutoff)
+		return 0
+	return round((critical_failure_skill_cutoff - skill_level) * 0.7, 0.1)
+
+/datum/surgery_step/proc/get_tool_success_modifier(mob/user, obj/item/tool)
+	if(!implements)
+		return 0
+	var/implement_type = tool_check(user, tool)
+	if(!implement_type)
+		return 0
+	return get_tool_quality_success_modifier(implements[implement_type] || 100)
+
+/datum/surgery_step/proc/get_tool_quality_success_modifier(tool_chance)
+	return clamp(round((tool_chance - 80) / 5, 0.1), -10, 5)
+
+/datum/surgery_step/proc/get_location_success_modifier(mob/living/target)
+	if(!target)
+		return 0
+	var/location_modifier = get_location_modifier(target)
+	if(location_modifier >= 1.1)
+		return 3
+	if(location_modifier >= 1)
+		return 1
+	if(location_modifier >= 0.8)
+		return -2
+	if(location_modifier >= 0.7)
+		return -5
+	return -10
+
+/datum/surgery_step/proc/get_diceroll_success_modifier(mob/user)
+	if(!user?.attributes)
+		return 0
+	return clamp(round(user.attributes.get_diceroll_modifier(DICE_CONTEXT_PHYSICAL) * 2, 0.1), -15, 15)
 
 /datum/surgery_step/proc/get_overseer_bonus(mob/user, mob/living/target, target_zone)
 	var/best_bonus = 0
+	var/user_skill = get_surgery_skill(user)
+	var/minimum_overseer_skill = skill_median * 10
 	for(var/mob/living/carbon/human/nearby in view(3, user))
 		if(nearby == user)
 			continue
 		if(nearby.stat != CONSCIOUS)
 			continue
-		var/overseer_skill = GET_MOB_SKILL_VALUE_OLD(nearby, /datum/attribute/skill/misc/medicine)
-		if(overseer_skill <= skill_median)
+		var/overseer_skill = GET_MOB_SKILL_VALUE(nearby, /datum/attribute/skill/misc/medicine) || 0
+		if(overseer_skill <= minimum_overseer_skill)
 			continue
-		if(overseer_skill <= GET_MOB_SKILL_VALUE_OLD(user, /datum/attribute/skill/misc/medicine))
+		if(overseer_skill <= user_skill)
 			continue
-		var/bonus = (overseer_skill - skill_median) * 0.25
+		var/bonus = clamp(round((overseer_skill - max(user_skill, minimum_overseer_skill)) / 5, 0.1), 1, 5)
 		if(bonus > best_bonus)
 			best_bonus = bonus
 	return best_bonus
@@ -369,11 +417,11 @@
 	var/mob/living/carbon/human/doctor = user
 	user.mind.add_sleep_experience(/datum/attribute/skill/misc/medicine, GET_MOB_ATTRIBUTE_VALUE(doctor, STAT_INTELLIGENCE) * (skill_min / 3))
 
-/datum/surgery_step/proc/display_roll(mob/user, result_label, requirement)
+/datum/surgery_step/proc/display_roll(mob/user, result_label, success_chance, critical_failure_chance)
 	if(!user.client?.prefs.showrolls)
 		return
-	if(requirement != null)
-		to_chat(user, span_warning("[result_label] (requirement was [requirement]/[dice_num * dice_sides])"))
+	if(success_chance != null)
+		to_chat(user, span_warning("[result_label] ([success_chance]% success, [critical_failure_chance || 0]% critical failure)"))
 	else
 		to_chat(user, span_warning("[result_label]"))
 

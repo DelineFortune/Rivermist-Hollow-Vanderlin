@@ -560,6 +560,7 @@
 /datum/component/arousal/proc/handle_climax(datum/sex_action/action, climax_type, mob/living/user, mob/living/target, giving, mob/living/action_initiator, mob/living/action_target, mob/living/action_performer)
 	var/obj/item/organ/genitals/filling_organ/testicles/testes
 	var/obj/item/organ/genitals/filling_organ/vagina/vag
+	var/climax_fluid_transferred = FALSE
 	if(user.getorganslot(ORGAN_SLOT_TESTICLES) && user.getorganslot(ORGAN_SLOT_PENIS))
 		testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 	if(user.getorganslot(ORGAN_SLOT_VAGINA))
@@ -586,14 +587,17 @@
 			if(testes)
 				if(testes.reagents)
 					var/cum_to_take = CLAMP((testes.reagents.maximum_volume/2), 1, 10 * testes.organ_size)
-					turf.add_liquid_from_reagents(testes.reagents, amount = cum_to_take)
-					if(target)
+					var/cum_transferred = route_climax_reagents(testes.reagents, cum_to_take, user, target, action, climax_type, turf, null, action_initiator, action_target, action_performer)
+					if(cum_transferred > 0)
+						climax_fluid_transferred = TRUE
+					if(target && cum_transferred > 0)
 						target.apply_status_effect(/datum/status_effect/facial)
 			if(vag)
 				if(vag.reagents)
 					var/femcum_to_take = min(8, vag.reagents.total_volume*0.3)
-					turf.add_liquid_from_reagents(vag.reagents, amount = femcum_to_take)
-			if(target && (!action || !action.knot_on_finish))
+					if(route_climax_reagents(vag.reagents, femcum_to_take, user, target, action, climax_type, turf, null, action_initiator, action_target, action_performer) > 0)
+						climax_fluid_transferred = TRUE
+			if(target && climax_fluid_transferred && (!action || !action.knot_on_finish))
 				apply_facial_effect(target)
 
 		if(ORGASM_LOCATION_INTO)
@@ -610,11 +614,13 @@
 							cameloc = target.getorganslot(ORGAN_SLOT_ANUS)
 				if(cameloc && cameloc.reagents)
 					var/cum_to_take = CLAMP((testes.reagents.maximum_volume / 4), 1, min(testes.reagents.total_volume, cameloc.reagents.maximum_volume - cameloc.reagents.total_volume))
-					testes.reagents.trans_to(cameloc, cum_to_take, transfered_by = user, method = INGEST)
+					if(route_climax_reagents(testes.reagents, cum_to_take, user, target, action, climax_type, cameloc, INGEST, action_initiator, action_target, action_performer) > 0)
+						climax_fluid_transferred = TRUE
 				else if(target)
 					var/cum_to_take = CLAMP((testes.reagents.maximum_volume / 4), 1, testes.reagents.total_volume)
-					testes.reagents.trans_to(target, cum_to_take, transfered_by = user, method = INGEST)
-			if(target)
+					if(route_climax_reagents(testes.reagents, cum_to_take, user, target, action, climax_type, target, INGEST, action_initiator, action_target, action_performer) > 0)
+						climax_fluid_transferred = TRUE
+			if(target && climax_fluid_transferred)
 				apply_creampie_effect(target)
 
 		if(ORGASM_LOCATION_ORAL)
@@ -625,12 +631,14 @@
 				if(user.getorganslot(ORGAN_SLOT_PENIS) && action.check_sex_lock(user, ORGAN_SLOT_PENIS))
 					if(testes && testes.reagents)
 						var/cum_to_take = CLAMP((testes.reagents.maximum_volume / 4), 1, min(testes.reagents.total_volume, target.reagents.maximum_volume - target.reagents.total_volume))
-						testes.reagents.trans_to(target, cum_to_take, transfered_by = user, method = INGEST)
+						if(route_climax_reagents(testes.reagents, cum_to_take, user, target, action, climax_type, target, INGEST, action_initiator, action_target, action_performer) > 0)
+							climax_fluid_transferred = TRUE
 				if(user.getorganslot(ORGAN_SLOT_VAGINA) && action.check_sex_lock(user, ORGAN_SLOT_VAGINA))
 					if(vag && vag.reagents)
 						var/femcum_to_take = min(8, vag.reagents.total_volume*0.3)
-						vag.reagents.trans_to(target, femcum_to_take, transfered_by = user, method = INGEST)
-			if(target)
+						if(route_climax_reagents(vag.reagents, femcum_to_take, user, target, action, climax_type, target, INGEST, action_initiator, action_target, action_performer) > 0)
+							climax_fluid_transferred = TRUE
+			if(target && climax_fluid_transferred)
 				if(is_oral)
 					apply_facial_effect(target)
 				else
@@ -644,16 +652,29 @@
 			if(testes)
 				if(testes.reagents)
 					var/cum_to_take = CLAMP((testes.reagents.maximum_volume/5), 1, testes.reagents.total_volume)
-					turf.add_liquid_from_reagents(testes.reagents, amount = cum_to_take)
+					route_climax_reagents(testes.reagents, cum_to_take, user, target, action, climax_type, turf, null, action_initiator, action_target, action_performer)
 			if(vag)
 				if(vag.reagents)
 					var/femcum_to_take = min(2, vag.reagents.total_volume*0.3)
-					turf.add_liquid_from_reagents(vag.reagents, amount = femcum_to_take)
+					route_climax_reagents(vag.reagents, femcum_to_take, user, target, action, climax_type, turf, null, action_initiator, action_target, action_performer)
 	if(testes)
 		if(testes.reagents)
 			if(testes.reagents.total_volume <= testes.reagents.maximum_volume / 4)
 				to_chat(user, span_info("Damn, my [pick(testes.altnames)] are pretty dry now."))
 	after_ejaculation(climax_type == ORGASM_LOCATION_INTO || climax_type == ORGASM_LOCATION_ORAL, user, target, action, action_initiator, action_target, action_performer)
+
+/datum/component/arousal/proc/route_climax_reagents(datum/reagents/source_reagents, amount, mob/living/user, mob/living/target, datum/sex_action/action, climax_type, atom/destination, transfer_method, mob/living/action_initiator, mob/living/action_target, mob/living/action_performer)
+	if(!source_reagents || amount <= 0)
+		return 0
+	var/remaining = apply_sex_action_climax_effects(user, target, action, climax_type, source_reagents, amount, destination, transfer_method, action_initiator, action_target, action_performer)
+	if(remaining <= 0)
+		return 0
+	if(isturf(destination))
+		var/turf/destination_turf = destination
+		destination_turf.add_liquid_from_reagents(source_reagents, amount = remaining)
+	else if(destination)
+		source_reagents.trans_to(destination, remaining, transfered_by = user, method = transfer_method)
+	return remaining
 
 /datum/component/arousal/proc/apply_facial_effect(mob/living/recipient)
 	if(!recipient)

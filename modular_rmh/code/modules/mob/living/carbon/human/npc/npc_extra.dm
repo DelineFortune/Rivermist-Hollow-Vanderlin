@@ -25,23 +25,27 @@
 	var/burn  = getFireLoss() * 0.5
 	var/tox   = getToxLoss()
 	var/oxy   = getOxyLoss()
+	var/total_damage = brute + burn + tox + oxy
+	var/total_threshold = max(threshold_brute, threshold_burn, threshold_tox, threshold_oxy)
 
-	if(brute >= threshold_brute || \
-	burn  >= threshold_burn  || \
-	tox   >= threshold_tox   || \
-	oxy   >= threshold_oxy)
+	var/passed_damage_threshold = (total_damage >= total_threshold) || \
+		(brute >= threshold_brute) || \
+		(burn  >= threshold_burn)  || \
+		(tox   >= threshold_tox)   || \
+		(oxy   >= threshold_oxy)
 
+	if(!passed_damage_threshold)
+		return
 
-		if(prob(chance_escape && legcuffed == null && handcuffed == null && buckled == null && !pulledby))
-			visible_message("<span class='warning'>[src] escapes!</span>")
-			do_smoke(1, get_turf(src), /obj/effect/particle_effect/smoke)
-			qdel(src)
-			return
-		else
-			visible_message("<span class='danger'>[src] dies!</span>")
-			var/total_damage = brute + burn + tox + oxy
-			if(total_damage < 200)
-				adjustOxyLoss(200 - total_damage)
-			death(FALSE)
-			return
+	var/can_escape = chance_escape && legcuffed == null && handcuffed == null && buckled == null && !pulledby
+	if(can_escape && prob(chance_escape))
+		visible_message("<span class='warning'>[src] escapes!</span>")
+		do_smoke(1, get_turf(src), /obj/effect/particle_effect/smoke)
+		qdel(src)
+		return
+
+	visible_message("<span class='danger'>[src] dies!</span>")
+	if(total_damage < 200)
+		adjustOxyLoss(200 - total_damage)
+	death(FALSE)
 	return

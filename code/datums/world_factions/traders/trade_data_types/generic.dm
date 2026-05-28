@@ -122,7 +122,7 @@
 
 /datum/trader_data/luxury_merchant
 	name = "Luxury"
-	base_type = list(/datum/supply_pack/luxury)
+	base_type = list(/datum/supply_pack/luxury, /datum/supply_pack/narcotics/perfume)
 	initial_products = list()
 	initial_wanteds = list(
 		/obj/item/ingot/gold = list(30, INFINITY, ""),

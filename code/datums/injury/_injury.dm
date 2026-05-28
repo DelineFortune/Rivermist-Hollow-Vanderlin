@@ -141,8 +141,9 @@
 
 //makes the injury get infected more when the victim is moving around
 /datum/injury/proc/movement_infect(mob/living/carbon/source)
-	if(parent_bodypart && prob(25) && infection_check())
-		adjust_germ_level(infection_rate)
+	// RMH TODO: wound infection should come from explicit contamination events
+	// such as dirty water or poison splashes, not ordinary movement.
+	return FALSE
 
 //special proc for when the parent bodypart receives some damage
 /datum/injury/proc/receive_damage(damage_received = 0, pain_received = 0, wounding_type = WOUND_BLUNT)
@@ -356,10 +357,12 @@
 
 // unbandages the injury
 /datum/injury/proc/unbandage_injury()
-	injury_flags |= INJURY_BANDAGED
+	injury_flags &= ~INJURY_BANDAGED
 	return TRUE
 
 /datum/injury/proc/is_bleeding()
+	if((required_status & BODYPART_ROBOTIC) || (parent_bodypart && !parent_bodypart.is_organic_limb()))
+		return FALSE
 	for(var/thing in embedded_objects)
 		var/obj/item/item = thing
 		if(item.w_class >= WEIGHT_CLASS_SMALL)

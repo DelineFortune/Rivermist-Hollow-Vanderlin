@@ -88,14 +88,14 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		OFFSET_PENIS = list(0,0),\
 		OFFSET_BREASTS = list(0,0),\
 		OFFSET_TESTICLES = list(0,0),\
-		OFFSET_VAGINA = list(0,0),\
+		OFFSET_VAGINA = list(0,-3),\
 	)
 
 	var/list/offset_genitals_f = list(
 		OFFSET_PENIS = list(0,0),\
 		OFFSET_BREASTS = list(0,-1),\
 		OFFSET_TESTICLES = list(0,0),\
-		OFFSET_VAGINA = list(0,-1),\
+		OFFSET_VAGINA = list(0,-4),\
 	)
 
 	/// Type of damage overlay to use
@@ -250,7 +250,6 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue,
 		ORGAN_SLOT_LIVER = /obj/item/organ/liver,
 		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
-		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
 		ORGAN_SLOT_GUTS = /obj/item/organ/guts,
 		ORGAN_SLOT_PUBIC = /obj/item/organ/genitals/pubes,
 		ORGAN_SLOT_ANUS = /obj/item/organ/genitals/filling_organ/anus,
@@ -316,13 +315,13 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	var/list/pain_emote_by_power = list(
 		"100" = "agonyscream",
 		"90" = "whimper",
-		"80" = "moan",
-		"70" = "cry",
+		"80" = "whimper",
+		"70" = "gargle",
 		"60" = "gargle",
 		"50" = "moan",
 		"40" = "moan",
 		"30" = "groan",
-		"20" = "groan",
+		"20" = "grunt",
 		"10" = "grunt",
 	) //Below 10 pain, we shouldn't emote
 
@@ -1520,6 +1519,10 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 			for(var/obj/item/embedded in affecting.embedded_objects)
 				target.grabbedby(user, 1, item_override = embedded)
 				return TRUE
+		var/obj/item/natural/worms/leech/leech = target.get_grabbable_leech_for_zone(user.zone_selected)
+		if(leech)
+			target.grabbedby(user, 1, item_override = leech)
+			return TRUE
 		target.grabbedby(user)
 		return TRUE
 
@@ -2189,6 +2192,10 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 			H.adjustCloneLoss(damage_amount)
 		if(BRAIN)
 			damage_amount = forced ? damage : damage * hit_percent * H.physiology.brain_mod
+			// RMH TODO: traumatic brain damage is too punishing for our social/RP pacing.
+			// Blood-loss and poison-style brain organ damage still use organ damage APIs directly.
+			if(H.is_player_character())
+				return 0
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
 	return damage_amount
 

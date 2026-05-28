@@ -14,23 +14,14 @@
 		STAT_CONSTITUTION = -1
 	)
 /datum/species/medicator
-	name = "Medicator"
+	name = "Kenku"
 	id = SPEC_ID_MEDICATOR
 	changesource_flags = WABBAJACK
 
 	meat = list(/obj/item/reagent_containers/food/snacks/meat/strange/inhumen = 1)
 
-	desc = "Medicators originate from the fetid swamps and murk within the islands off the Sword Coast. Their species has historically been localized around the area, \
-	although the catastrophe of Baldur's Gate has resulted in droves of their kind seeking refuge elsewhere. They are a newer form of sentience, with records dating back only after Lolth's ascension. \
-	\n\n\
-	Their appearance is gaunt, patches of bare skin riddled with feathers and pox scars, Medicators are a horrifying fusion of bird and men- unlike their far more appealing adversaries, the harpies. \
-	With long, hanging beaks clacking as they breathe, other species find them dipleasing at best and repulsive at worst. Despite this, their eyes betray great intelligence behind otherwise monstrosity.	\
-	\n\n\
-	Born of carcinogens, pollution, mechanical and biological waste, these creatures were not always sentient. \
-	Through their appearance, accidental origin, and innate sicknesses, they have gained the fascination and uplifting of Ilmater and inherited aspects of the god of endurance in turn. \
-	Medicators, as they called themselves, carry with them the bedside manners, or lack thereof, of the worst Ilmatari. \
-	Their culture holds discovery and medicinal breakthroughs in the highest regard, be it through experimentation to shift their own ailments or others'. \
-	Medicators care little about the nickname granted to them by other species, 'feculents,' so long as their medical prowess is not subject to question. \
+	desc = "Kenkus originate from the fetid swamps and murk within the islands off the Sword Coast. Their species has historically been localized around the area, \
+	although the catastrophe of Baldur's Gate has resulted in droves of their kind seeking refuge elsewhere. \
 	\n\n\
 	Medicators and Harpies often find themselves in conflict, mirroring the quarrels of their patrons, whether of conscious faith or not."
 
@@ -103,7 +94,6 @@
 		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue,
 		ORGAN_SLOT_LIVER = /obj/item/organ/liver,
 		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
-		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
 		ORGAN_SLOT_GUTS = /obj/item/organ/guts,
 		ORGAN_SLOT_PUBIC = /obj/item/organ/genitals/pubes,
 		ORGAN_SLOT_ANUS = /obj/item/organ/genitals/filling_organ/anus,

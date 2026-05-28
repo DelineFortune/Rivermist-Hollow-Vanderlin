@@ -33,6 +33,11 @@
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
 
+/obj/item/clothing/shoes/shortboots/apply_components()
+	. = ..()
+	AddComponent(/datum/component/storage/concrete/boots)
+
+
 /obj/item/clothing/shoes/ridingboots
 	name = "riding boots"
 	color = "#d5c2aa"
@@ -46,6 +51,11 @@
 	salvage_amount = 1
 	wetable = FALSE
 
+/obj/item/clothing/shoes/ridingboots/apply_components()
+	. = ..()
+	AddComponent(/datum/component/storage/concrete/boots)
+
+
 /obj/item/clothing/shoes/apothboots
 	name = "apothecary boots"
 	desc = "Boots designed for the toil of tincture gathering and mixing."
@@ -55,6 +65,10 @@
 	armor = list("blunt" = 15, "slash" = 15, "stab" = 15,  "piercing" = 5, "fire" = 0, "acid" = 0)
 	sellprice = 10
 	wetable = FALSE
+
+/obj/item/clothing/shoes/apothboots/apply_components()
+	. = ..()
+	AddComponent(/datum/component/storage/concrete/boots)
 
 /obj/item/clothing/shoes/simpleshoes
 	name = "shoes"
@@ -174,6 +188,11 @@
 	color = "#d5c2aa"
 	icon_state = "psydonboots"
 	item_state = "psydonboots"
+
+/obj/item/clothing/shoes/psydonboots/apply_components()
+	. = ..()
+	AddComponent(/datum/component/storage/concrete/boots)
+
 
 /obj/item/clothing/shoes/courtphysician
 	name = "sanguine shoes"

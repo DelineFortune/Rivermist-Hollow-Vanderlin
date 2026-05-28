@@ -3769,7 +3769,6 @@
 #include "code\modules\surgery\organs\external\tails.dm"
 #include "code\modules\surgery\organs\external\wings\functional_wings.dm"
 #include "code\modules\surgery\organs\external\wings\wings.dm"
-#include "code\modules\surgery\organs\internal\appendix.dm"
 #include "code\modules\surgery\organs\internal\brain.dm"
 #include "code\modules\surgery\organs\internal\eyes.dm"
 #include "code\modules\surgery\organs\internal\heart.dm"

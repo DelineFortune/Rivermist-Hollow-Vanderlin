@@ -342,3 +342,328 @@
 	TEST_ASSERT(!("Hello World" in test_mind.active_uis), "Deleting a visual UI should remove it from the owner mind.")
 	TEST_ASSERT(!("Hello World Panel" in test_mind.active_uis), "Deleting a visual UI should remove child UIs from the owner mind.")
 	TEST_ASSERT_NULL(first_element.parent, "Deleting a visual UI should clear element parent backrefs.")
+
+/datum/unit_test/disinfectant_soaked_bandage_treats_injury
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/disinfectant_soaked_bandage_treats_injury/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/obj/item/bodypart/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+	TEST_ASSERT_NOTNULL(chest, "Test human should have a chest bodypart.")
+
+	var/datum/injury/injury = chest.create_injury(WOUND_SLASH, 20)
+	TEST_ASSERT_NOTNULL(injury, "Test setup should create a slash injury.")
+	injury.adjust_germ_level(10)
+
+	var/obj/item/natural/cloth/bandage/soaked_bandage = allocate(/obj/item/natural/cloth/bandage)
+	soaked_bandage.reagents.add_reagent(/datum/reagent/consumable/ethanol, 3)
+	chest.try_bandage(soaked_bandage)
+
+	TEST_ASSERT(injury.is_disinfected(), "A disinfectant-soaked bandage should disinfect the injury as soon as it is applied.")
+	TEST_ASSERT(injury.germ_level < 10, "A disinfectant-soaked bandage should reduce injury germs when it is applied.")
+
+/datum/unit_test/player_bodypart_attacks_do_not_roll_violent_organ_damage
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/player_bodypart_attacks_do_not_roll_violent_organ_damage/Run()
+	var/mob/living/carbon/human/player_body = allocate(/mob/living/carbon/human)
+	var/datum/mind/player_mind = allocate(/datum/mind, "organ-damage-test")
+	player_mind.current = player_body
+	player_body.mind = player_mind
+	var/obj/item/bodypart/chest = player_body.get_bodypart(BODY_ZONE_CHEST)
+	TEST_ASSERT_NOTNULL(chest, "Test human should have a chest bodypart.")
+
+	var/organ_damage_before = 0
+	for(var/obj/item/organ/organ as anything in player_body.internal_organs)
+		organ_damage_before += organ.damage
+
+	var/rolled_organ_damage = chest.damage_internal_organs(WOUND_PIERCE, 200, 200, forced = TRUE)
+
+	var/organ_damage_after = 0
+	for(var/obj/item/organ/organ as anything in player_body.internal_organs)
+		organ_damage_after += organ.damage
+
+	TEST_ASSERT(!rolled_organ_damage, "Violent bodypart attacks should not roll organ damage for player characters until the system is reworked.")
+	TEST_ASSERT_EQUAL(organ_damage_after, organ_damage_before, "Violent bodypart attacks should not change player character organ damage until the system is reworked.")
+	player_body.mind = null
+	player_mind.current = null
+
+/datum/unit_test/player_facial_trauma_crits_do_not_roll_tongue_or_disfigurement
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/player_facial_trauma_crits_do_not_roll_tongue_or_disfigurement/Run()
+	var/mob/living/carbon/human/player_body = allocate(/mob/living/carbon/human)
+	var/datum/mind/player_mind = allocate(/datum/mind, "facial-trauma-test")
+	player_mind.current = player_body
+	player_body.mind = player_mind
+
+	var/obj/item/bodypart/head = player_body.get_bodypart(BODY_ZONE_HEAD)
+	TEST_ASSERT_NOTNULL(head, "Test human should have a head bodypart.")
+
+	var/datum/wound/facial/tongue/tongue_loss = GLOB.primordial_wounds[/datum/wound/facial/tongue]
+	var/datum/wound/facial/disfigurement/disfigurement = GLOB.primordial_wounds[/datum/wound/facial/disfigurement]
+	TEST_ASSERT_NOTNULL(tongue_loss, "Test setup should have a primordial tongue-loss wound.")
+	TEST_ASSERT_NOTNULL(disfigurement, "Test setup should have a primordial disfigurement wound.")
+
+	var/tongue_chance = tongue_loss.get_crit_prob(BCLASS_CUT, 120, 1, null, head, BODY_ZONE_HEAD, list(CRIT_MOD_CHANCE = 100))
+	var/disfigurement_chance = disfigurement.get_crit_prob(BCLASS_STAB, 120, 1, null, head, BODY_ZONE_HEAD, list(CRIT_MOD_CHANCE = 100))
+
+	TEST_ASSERT_EQUAL(tongue_chance, 0, "Player character head trauma should not roll tongue removal wounds.")
+	TEST_ASSERT_EQUAL(disfigurement_chance, 0, "Player character head trauma should not roll facial disfigurement wounds.")
+	player_body.mind = null
+	player_mind.current = null
+
+/datum/unit_test/player_skull_trauma_does_not_disfigure_or_roll_brain_fractures
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/player_skull_trauma_does_not_disfigure_or_roll_brain_fractures/Run()
+	var/mob/living/carbon/human/player_body = allocate(/mob/living/carbon/human)
+	var/datum/mind/player_mind = allocate(/datum/mind, "skull-trauma-test")
+	player_mind.current = player_body
+	player_body.mind = player_mind
+
+	var/obj/item/bodypart/head = player_body.get_bodypart(BODY_ZONE_HEAD)
+	TEST_ASSERT_NOTNULL(head, "Test human should have a head bodypart.")
+
+	var/datum/wound/fracture/head/head_fracture = allocate(/datum/wound/fracture/head)
+	head_fracture.on_mob_gain(player_body)
+	TEST_ASSERT(!HAS_TRAIT(player_body, TRAIT_DISFIGURED), "Player character skull trauma should not apply the disfigured trait.")
+
+	var/datum/wound/fracture/head/brain/brain_fracture = GLOB.primordial_wounds[/datum/wound/fracture/head/brain]
+	TEST_ASSERT_NOTNULL(brain_fracture, "Test setup should have a primordial depressed cranial fracture wound.")
+	var/brain_fracture_chance = brain_fracture.get_crit_prob(BCLASS_BLUNT, 120, 1, null, head, BODY_ZONE_PRECISE_SKULL, list(CRIT_MOD_CHANCE = 100))
+	TEST_ASSERT_EQUAL(brain_fracture_chance, 0, "Player character skull trauma should not roll depressed cranial fracture wounds.")
+	player_body.mind = null
+	player_mind.current = null
+
+/datum/unit_test/player_direct_trauma_brain_damage_is_ignored
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/player_direct_trauma_brain_damage_is_ignored/Run()
+	var/mob/living/carbon/human/player_body = allocate(/mob/living/carbon/human)
+	var/datum/mind/player_mind = allocate(/datum/mind, "brain-trauma-test")
+	player_mind.current = player_body
+	player_body.mind = player_mind
+
+	var/obj/item/organ/brain = player_body.getorganslot(ORGAN_SLOT_BRAIN)
+	TEST_ASSERT_NOTNULL(brain, "Test human should have a brain organ.")
+	var/brain_damage_before = brain.damage
+
+	player_body.apply_damage(damage = 40, damagetype = BRAIN, def_zone = BODY_ZONE_HEAD, forced = TRUE)
+	TEST_ASSERT_EQUAL(brain.damage, brain_damage_before, "Player character direct trauma damage should not damage the brain organ.")
+
+	player_body.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+	TEST_ASSERT_EQUAL(brain.damage, brain_damage_before + 5, "Non-trauma brain organ damage paths should still apply to player characters.")
+	player_body.mind = null
+	player_mind.current = null
+
+/datum/unit_test/admin_revive_refills_organ_blood
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/admin_revive_refills_organ_blood/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/list/arteries = patient.getorganslotlist(ORGAN_SLOT_ARTERY)
+	TEST_ASSERT(length(arteries), "Test human should have at least one artery.")
+
+	var/obj/item/organ/artery = arteries[1]
+	artery.applyOrganDamage(artery.maxHealth)
+	artery.current_blood = 0
+
+	patient.revive(ADMIN_HEAL_ALL)
+
+	TEST_ASSERT_EQUAL(artery.damage, 0, "Admin revive should clear artery organ damage.")
+	TEST_ASSERT_EQUAL(artery.current_blood, artery.max_blood_storage, "Admin revive should refill local organ blood so healed organs do not immediately fail again.")
+
+/datum/unit_test/wounds_do_not_infect_from_ordinary_movement
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/wounds_do_not_infect_from_ordinary_movement/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/obj/item/bodypart/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+	TEST_ASSERT_NOTNULL(chest, "Test human should have a chest bodypart.")
+
+	var/datum/injury/injury = chest.create_injury(WOUND_SLASH, 60)
+	TEST_ASSERT_NOTNULL(injury, "Test setup should create a slash injury.")
+
+	injury.movement_infect(patient)
+
+	TEST_ASSERT_EQUAL(injury.germ_level, 0, "Ordinary movement should not infect wounds; infection should require explicit contamination.")
+
+/datum/unit_test/prosthetic_mechanical_injuries_do_not_bleed
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/prosthetic_mechanical_injuries_do_not_bleed/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/obj/item/bodypart/r_arm/original_arm = patient.get_bodypart(BODY_ZONE_R_ARM)
+	TEST_ASSERT_NOTNULL(original_arm, "Test human should have a right arm to replace.")
+	original_arm.drop_limb()
+	qdel(original_arm)
+
+	var/obj/item/bodypart/r_arm/prosthetic/wood/prosthetic_arm = allocate(/obj/item/bodypart/r_arm/prosthetic/wood)
+	prosthetic_arm.attach_limb(patient, special = TRUE)
+	var/datum/injury/injury = prosthetic_arm.create_injury(WOUND_SLASH, 30)
+	TEST_ASSERT_NOTNULL(injury, "Test setup should create a mechanical injury on a prosthetic limb.")
+	TEST_ASSERT_EQUAL(injury.required_status, BODYPART_ROBOTIC, "Prosthetic limbs should use mechanical injury datums.")
+
+	TEST_ASSERT(!injury.is_bleeding(), "Mechanical injuries on prosthetic limbs should not bleed.")
+	TEST_ASSERT_EQUAL(prosthetic_arm.get_bleed_rate(), 0, "Prosthetic limbs should not contribute blood loss after mechanical injury.")
+
+/datum/unit_test/prosthetic_limbs_do_not_have_blood_bearing_organs
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/prosthetic_limbs_do_not_have_blood_bearing_organs/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/obj/item/bodypart/r_leg/original_leg = patient.get_bodypart(BODY_ZONE_R_LEG)
+	TEST_ASSERT_NOTNULL(original_leg, "Test human should have a right leg to replace.")
+	original_leg.drop_limb()
+	qdel(original_leg)
+
+	var/obj/item/bodypart/r_leg/prosthetic/wood/prosthetic_leg = allocate(/obj/item/bodypart/r_leg/prosthetic/wood)
+	TEST_ASSERT(!prosthetic_leg.artery_needed(), "Prosthetic limbs should not need artery organs.")
+	TEST_ASSERT(!length(prosthetic_leg.getorganslotlist(ORGAN_SLOT_ARTERY)), "Prosthetic limbs should not spawn artery organs.")
+
+	prosthetic_leg.attach_limb(patient, special = TRUE)
+	prosthetic_leg.burn_dam = prosthetic_leg.max_damage
+
+	TEST_ASSERT_EQUAL(prosthetic_leg.get_bleed_rate(), 0, "Severe prosthetic burn damage should not create blood loss.")
+
+/datum/unit_test/poison_splash_contaminates_wounds
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/poison_splash_contaminates_wounds/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/obj/item/bodypart/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+	TEST_ASSERT_NOTNULL(chest, "Test human should have a chest bodypart.")
+
+	var/datum/injury/injury = chest.create_injury(WOUND_SLASH, 20)
+	TEST_ASSERT_NOTNULL(injury, "Test setup should create a slash injury.")
+
+	var/datum/reagent/strongpoison/poison = allocate(/datum/reagent/strongpoison)
+	poison.reaction_mob(patient, TOUCH, 2, target_zone = BODY_ZONE_CHEST)
+
+	TEST_ASSERT(injury.germ_level > 0, "Poison splashes should explicitly contaminate wounds.")
+
+/datum/unit_test/health_potions_heal_organ_damage_by_strength
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/health_potions_heal_organ_damage_by_strength/Run()
+	var/mob/living/carbon/human/weak_patient = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/strong_patient = allocate(/mob/living/carbon/human)
+	var/obj/item/organ/weak_heart = weak_patient.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/strong_heart = strong_patient.getorganslot(ORGAN_SLOT_HEART)
+	TEST_ASSERT_NOTNULL(weak_heart, "Weak potion test patient should have a heart.")
+	TEST_ASSERT_NOTNULL(strong_heart, "Strong potion test patient should have a heart.")
+
+	var/starting_damage = 40
+	weak_heart.applyOrganDamage(starting_damage)
+	strong_heart.applyOrganDamage(starting_damage)
+
+	var/datum/reagent/medicine/healthpot/weak_potion = allocate(/datum/reagent/medicine/healthpot)
+	var/datum/reagent/medicine/stronghealth/strong_potion = allocate(/datum/reagent/medicine/stronghealth)
+	weak_potion.volume = 5
+	strong_potion.volume = 5
+
+	weak_potion.on_mob_life(weak_patient, 1)
+	strong_potion.on_mob_life(strong_patient, 1)
+
+	var/weak_healing = starting_damage - weak_heart.damage
+	var/strong_healing = starting_damage - strong_heart.damage
+	TEST_ASSERT(weak_healing > 0, "Weak healing potions should restore some organ damage.")
+	TEST_ASSERT(strong_healing > weak_healing, "Strong healing potions should restore more organ damage than weak healing potions.")
+
+/datum/unit_test/self_injury_check_lists_damaged_main_organs
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/self_injury_check_lists_damaged_main_organs/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/list/healthy_examination = patient.check_for_injuries(patient, silent = TRUE)
+	var/healthy_output = healthy_examination.Join("\n")
+	TEST_ASSERT(!findtext(healthy_output, "<summary>Organs</summary>"), "Self injury checks should not show a main organ health section when organs are healthy.")
+
+	var/obj/item/organ/heart = patient.getorganslot(ORGAN_SLOT_HEART)
+	TEST_ASSERT_NOTNULL(heart, "Test human should have a heart.")
+	heart.applyOrganDamage(40)
+
+	var/list/damaged_examination = patient.check_for_injuries(patient, silent = TRUE)
+	var/damaged_output = damaged_examination.Join("\n")
+	TEST_ASSERT(findtext(damaged_output, "<summary>Organs</summary>"), "Self injury checks should show a main organ health section when a main organ is damaged.")
+	TEST_ASSERT(findtext(damaged_output, "heart"), "Self injury checks should name damaged main organs.")
+
+/datum/unit_test/self_injury_check_lists_genitals_in_collapsible_section
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/self_injury_check_lists_genitals_in_collapsible_section/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/obj/item/organ/genitals/penis/penis = allocate(/obj/item/organ/genitals/penis)
+	TEST_ASSERT(penis.Insert(patient, special = TRUE, drop_if_replaced = FALSE), "Test setup should insert a genital organ.")
+
+	var/list/examination = patient.check_for_injuries(patient, silent = TRUE)
+	var/output = examination.Join("\n")
+	TEST_ASSERT(findtext(output, "<details><summary>Genitals</summary>"), "Self injury checks should show genital information in a collapsible section.")
+	TEST_ASSERT(findtext(output, "penis"), "Self injury checks should name present genital organs.")
+	TEST_ASSERT(!findtext(output, "heart"), "The genital self-check section should not list non-genital organs.")
+
+/datum/unit_test/npc_damage_threshold_uses_total_damage
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/npc_damage_threshold_uses_total_damage/Run()
+	var/mob/living/carbon/human/npc = allocate(/mob/living/carbon/human)
+	npc.threshold_brute = 20
+	npc.threshold_burn = 20
+	npc.threshold_tox = 20
+	npc.threshold_oxy = 20
+	npc.chance_escape = 0
+
+	npc.setToxLoss(15, updating_health = FALSE)
+	npc.setOxyLoss(10, updating_health = FALSE)
+	npc.npc_damage_threshold()
+
+	TEST_ASSERT_EQUAL(npc.stat, DEAD, "NPC threshold deaths should trigger when combined weighted damage passes the configured threshold.")
+
+/datum/unit_test/npc_damage_threshold_escape_chance_uses_configured_percent
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/npc_damage_threshold_escape_chance_uses_configured_percent/Run()
+	for(var/i in 1 to 3)
+		var/mob/living/carbon/human/npc = allocate(/mob/living/carbon/human)
+		npc.threshold_brute = 20
+		npc.threshold_burn = 20
+		npc.threshold_tox = 20
+		npc.threshold_oxy = 20
+		npc.chance_escape = 100
+		npc.setToxLoss(15, updating_health = FALSE)
+		npc.setOxyLoss(10, updating_health = FALSE)
+
+		npc.npc_damage_threshold()
+
+		TEST_ASSERT(QDELETED(npc), "NPCs with a 100 percent escape chance should always escape instead of dying.")

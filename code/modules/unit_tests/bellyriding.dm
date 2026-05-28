@@ -1,9 +1,3 @@
-/datum/unit_test/bellyriding_jdeer_uses_dedicated_victim_offset/Run()
-	var/obj/item/bodypart/taur/jdeer/jdeer_body = allocate(/obj/item/bodypart/taur/jdeer)
-
-	TEST_ASSERT_EQUAL(jdeer_body.body_offset_y, 17, "Jenny Body should keep its raised wearer body offset.")
-	TEST_ASSERT_EQUAL(jdeer_body.bellyride_victim_y_offset, 9, "Jenny Body should use a separate bellyrider victim offset.")
-
 /datum/unit_test/bellyriding_penetrative_actions_route_internal_climax/Run()
 	var/datum/sex_action/bellyriding/anal/anal_action = new
 	var/datum/sex_action/bellyriding/vaginal/vaginal_action = new

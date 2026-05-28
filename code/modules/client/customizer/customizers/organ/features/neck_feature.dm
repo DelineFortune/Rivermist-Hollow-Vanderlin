@@ -12,7 +12,7 @@
 	customizer_choices = list(/datum/customizer_choice/organ/neck_feature/medicator)
 
 /datum/customizer_choice/organ/neck_feature/medicator
-	name = "Medicator Fluff"
+	name = "Kenku Fluff"
 	allows_accessory_color_customization = FALSE
 	organ_type = /obj/item/organ/neck_feature/medicator
 	sprite_accessories = list(

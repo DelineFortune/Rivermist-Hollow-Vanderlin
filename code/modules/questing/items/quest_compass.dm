@@ -5,6 +5,8 @@
 	icon_state = "icon"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_HIP|ITEM_SLOT_NECK|ITEM_SLOT_WRISTS
+	grid_height = 32
+	grid_width = 32
 
 	var/datum/weakref/linked_scroll_ref
 	var/datum/weakref/focused_target_ref

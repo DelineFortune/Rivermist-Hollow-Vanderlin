@@ -1,5 +1,5 @@
 /datum/component/storage/concrete/grid/messkit
-	screen_max_rows = 2
+	screen_max_rows = 4
 	screen_max_columns = 5
 	max_w_class = WEIGHT_CLASS_BULKY
 	not_while_equipped = TRUE
@@ -22,6 +22,8 @@
 	populate_contents = list(
 		/obj/item/plate,
 		/obj/item/reagent_containers/glass/bowl,
+		/obj/item/reagent_containers/glass/bottle/waterskin,
+		/obj/item/reagent_containers/glass/bucket/pot/copper,
 		/obj/item/cooking/pan,
 		/obj/item/mobilestove,
 		/obj/item/folding_table_stored

@@ -600,5 +600,4 @@ GLOBAL_LIST_EMPTY(linked_recipe_cache)
 		/obj/item/organ/tail,
 		/obj/item/organ/brain,
 		/obj/item/organ/tongue,
-		/obj/item/organ/appendix,
 	)

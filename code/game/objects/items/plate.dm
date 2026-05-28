@@ -8,7 +8,7 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/food)
 	w_class = WEIGHT_CLASS_NORMAL
 	///How many things fit on this plate?
-	var/max_items = 2
+	var/max_items = 4
 	///The offset from side to side the food items can have on the plate
 	var/max_x_offset = 4
 	///The max height offset the food can reach on the plate

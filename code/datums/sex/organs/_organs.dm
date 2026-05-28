@@ -14,6 +14,9 @@
 		return FALSE
 	return ..()
 
+/obj/item/organ/genitals/can_be_surgically_manipulated()
+	return FALSE
+
 /obj/item/organ/genitals/adjust_germ_level(add_germs, minimum_germs = 0, maximum_germs = GERM_LEVEL_MAXIMUM)
 	if(owner?.is_player_character())
 		germ_level = GERM_LEVEL_STERILE

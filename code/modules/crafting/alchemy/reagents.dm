@@ -1,4 +1,18 @@
 //Potions
+#define HEALTH_POTION_ORGAN_HEAL 1
+#define STRONG_HEALTH_POTION_ORGAN_HEAL 4
+
+/datum/reagent/medicine/proc/heal_organ_damage(mob/living/carbon/M, healing_amount)
+	if(!M || healing_amount <= 0)
+		return FALSE
+	for(var/obj/item/organ/organ as anything in M.internal_organs)
+		if(organ.damage <= 0)
+			continue
+		organ.applyOrganDamage(-healing_amount)
+		. = TRUE
+	if(.)
+		M.updatehealth()
+
 /datum/reagent/medicine/healthpot
 	name = "Health Potion"
 	description = "Gradually regenerates all types of damage."
@@ -36,6 +50,7 @@
 		M.adjustFireLoss(-1.75*REM * efficiency, 0)
 		M.adjustOxyLoss(-1.25 * efficiency, 0)
 		M.adjustCloneLoss(-1.75*REM * efficiency, 0)
+		heal_organ_damage(M, HEALTH_POTION_ORGAN_HEAL * efficiency)
 	..()
 
 /datum/reagent/medicine/stronghealth
@@ -80,6 +95,7 @@
 		M.adjustFireLoss(-7*REM * efficiency, 0)
 		M.adjustOxyLoss(-5 * efficiency, 0)
 		M.adjustCloneLoss(-7*REM * efficiency, 0)
+		heal_organ_damage(M, STRONG_HEALTH_POTION_ORGAN_HEAL * efficiency)
 	if(istype(M, /mob/living/carbon/human/species/werewolf))
 		var/mob/living/carbon/human/human = M
 		var/obj/item/clothing/werewolf_armor = human.skin_armor
@@ -87,6 +103,9 @@
 			werewolf_armor.repair_damage(werewolf_armor.max_integrity * 0.02 * efficiency)
 	..()
 	. = 1
+
+#undef HEALTH_POTION_ORGAN_HEAL
+#undef STRONG_HEALTH_POTION_ORGAN_HEAL
 
 /datum/reagent/medicine/rosawater
 	name = "Rosa Water"
@@ -447,6 +466,12 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 			M.adjustToxLoss(tox * efficiency)
 	return ..()
 
+/datum/reagent/berrypoison/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0, target_zone = null)
+	if((method & TOUCH) && iscarbon(M))
+		var/mob/living/carbon/carbon_target = M
+		carbon_target.adjust_germ_level_directed(max(1, reac_volume * 2), body_zone = target_zone)
+	return ..()
+
 /datum/reagent/berrypoison/shroom
 	name = "Mushroom Poison"
 	color = "#5647e0"
@@ -474,6 +499,12 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 		else
 			M.add_nausea(6 * efficiency) //So a poison bolt (2u) will eventually cause puking at least once
 			M.adjustToxLoss(4.5 * efficiency) // just enough so 5u will kill you dead with no help
+	return ..()
+
+/datum/reagent/strongpoison/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0, target_zone = null)
+	if((method & TOUCH) && iscarbon(M))
+		var/mob/living/carbon/carbon_target = M
+		carbon_target.adjust_germ_level_directed(max(1, reac_volume * 3), body_zone = target_zone)
 	return ..()
 
 /datum/reagent/organpoison
@@ -537,6 +568,12 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 					H.graggometer = 0
 	return ..()
 
+/datum/reagent/organpoison/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0, target_zone = null)
+	if((method & TOUCH) && iscarbon(M))
+		var/mob/living/carbon/carbon_target = M
+		carbon_target.adjust_germ_level_directed(max(1, reac_volume * 2), body_zone = target_zone)
+	return ..()
+
 /datum/reagent/organpoison/human
 	name = "Human Organ Poison"
 	cannibalism_pool = SPECIES_CANNIBAL_MEN
@@ -563,6 +600,12 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 			M.adjust_stamina(2.25 * efficiency) //Slowly leech stamina
 	return ..()
 
+/datum/reagent/stampoison/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0, target_zone = null)
+	if((method & TOUCH) && iscarbon(M))
+		var/mob/living/carbon/carbon_target = M
+		carbon_target.adjust_germ_level_directed(max(1, reac_volume * 2), body_zone = target_zone)
+	return ..()
+
 /datum/reagent/strongstampoison
 	name = "Strong Stamina Poison"
 	description = ""
@@ -579,6 +622,12 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 			M.adjust_stamina(4.5 * efficiency)
 		else
 			M.adjust_stamina(9 * efficiency) //Rapidly leech stamina
+	return ..()
+
+/datum/reagent/strongstampoison/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0, target_zone = null)
+	if((method & TOUCH) && iscarbon(M))
+		var/mob/living/carbon/carbon_target = M
+		carbon_target.adjust_germ_level_directed(max(1, reac_volume * 3), body_zone = target_zone)
 	return ..()
 
 //a combination of strong stamina and doom poison
@@ -609,6 +658,12 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 		M.adjustOxyLoss(1 * efficiency)
 	else
 		M.adjustOxyLoss(2 * efficiency)
+	return ..()
+
+/datum/reagent/dreaddeath/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0, target_zone = null)
+	if((method & TOUCH) && iscarbon(M))
+		var/mob/living/carbon/carbon_target = M
+		carbon_target.adjust_germ_level_directed(max(1, reac_volume * 4), body_zone = target_zone)
 	return ..()
 
 /datum/reagent/killersice

@@ -49,6 +49,7 @@
 #define OVI_EGG_BOG_BUG "bog_bug_ovi"
 #define OVI_EGG_HARPY "harpy_ovi"
 #define OVI_EGG_EMBRYO "embryo_ovi"
+#define OVI_EGG_LEECH "leech_ovi"
 
 // Oviposition customization and balance limits.
 #define OVI_EGG_MAX_CLUTCH 30

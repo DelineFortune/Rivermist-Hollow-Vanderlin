@@ -444,6 +444,11 @@
 	. = FALSE
 	if(organ_bonus == CANT_ORGAN)
 		return
+	// RMH TODO: violent organ damage is too punishing for our social/RP pacing.
+	// Rework this into an opt-in dungeon or monster-facing mechanic before enabling
+	// it for player characters again.
+	if(owner?.is_player_character())
+		return FALSE
 	var/list/internal_organs = list()
 	internal_organs |= get_organs()
 	//damaging face organs = also damaging head organs
@@ -635,16 +640,9 @@
 		return
 
 	var/germ_gain_multiplier = owner.is_player_character() ? 0.25 : 1
-	var/turf/open/floor/open_turf = get_turf(owner)
-	var/owner_germ_level = 2*owner.germ_level
-	for(var/obj/item/embeddies in embedded_objects)
-		owner_germ_level += (embeddies.germ_level/20)
-
-	// Open injuries can become infected, regardless of antibiotics
-	if(istype(open_turf))
-		for(var/datum/injury/injury as anything in injuries)
-			if(injury.infection_check(delta_time, times_fired) && (max(open_turf.germ_level, owner_germ_level) > injury.germ_level))
-				injury.adjust_germ_level(injury.infection_rate * (0.5 * delta_time) * germ_gain_multiplier)
+	// RMH: open wounds should not pull ambient/body germs on their own. Infection
+	// now needs explicit contamination such as dirty water, filthy reagents, or
+	// germy weapons/tools calling adjust_germ_level() on the injury/bodypart.
 
 	// If we have sufficient antibiotics, then skip over this stuff, the infection is going away
 	var/antibiotics = owner.get_antibiotics()

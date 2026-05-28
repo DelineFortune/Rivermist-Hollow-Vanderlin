@@ -1,6 +1,5 @@
 /obj/item/organ/genitals/butt
 	name = "butt"
-	icon = 'modular_rmh/icons/eaglephntm/icons/obj/surgery.dmi'
 	icon_state = "butt"
 	visible_organ = TRUE
 	zone = BODY_ZONE_PRECISE_STOMACH

@@ -1,3 +1,108 @@
+/datum/sex_action_effect_context
+	var/mob/living/receiver
+	var/mob/living/partner
+	var/datum/sex_action/action
+	var/mob/living/action_initiator
+	var/mob/living/action_target
+	var/mob/living/action_performer
+	var/datum/sex_session/session
+	var/giving = TRUE
+	var/arousal_amt = 0
+	var/pain_amt = 0
+	var/orgasm_prog_amt = 0
+	var/force = SEX_FORCE_MID
+	var/speed = SEX_SPEED_MID
+	var/resistance = RESIST_NONE
+	var/climax_type = null
+	var/mob/living/climaxer
+	var/atom/climax_destination
+	var/climax_method = null
+
+/datum/sex_action_effect_context/New(mob/living/_receiver, mob/living/_partner, datum/sex_action/_action, mob/living/_action_initiator, mob/living/_action_target, _giving = TRUE)
+	receiver = _receiver
+	partner = _partner
+	action = _action
+	action_initiator = _action_initiator
+	action_target = _action_target
+	giving = _giving
+
+/datum/sex_action_effect
+	var/obj/item/source_item
+
+/datum/sex_action_effect/New(obj/item/_source_item)
+	source_item = _source_item
+
+/datum/sex_action_effect/proc/modify_action(datum/sex_action_effect_context/context)
+	return
+
+/datum/sex_action_effect/proc/after_action(datum/sex_action_effect_context/context)
+	return
+
+/datum/sex_action_effect/proc/intercept_climax(datum/sex_action_effect_context/context, datum/reagents/source_reagents, amount)
+	return 0
+
+/obj/item/proc/get_sex_action_effects(datum/sex_action_effect_context/context)
+	return null
+
+/proc/collect_sex_action_effects(datum/sex_action_effect_context/context)
+	var/list/effects = list()
+	if(!context)
+		return effects
+	var/list/seen_items = list()
+	collect_sex_action_effects_from_mob(context.action_initiator, context, effects, seen_items)
+	collect_sex_action_effects_from_mob(context.action_target, context, effects, seen_items)
+	return effects
+
+/proc/collect_sex_action_effects_from_mob(mob/living/effect_mob, datum/sex_action_effect_context/context, list/effects, list/seen_items)
+	if(!ishuman(effect_mob))
+		return
+	var/mob/living/carbon/human/human = effect_mob
+	var/static/list/effect_slots = list(
+		ORGAN_SLOT_PENIS,
+		ORGAN_SLOT_VAGINA,
+		ORGAN_SLOT_ANUS,
+		ORGAN_SLOT_LEFT_NIP,
+		ORGAN_SLOT_RIGHT_NIP,
+		ORGAN_SLOT_BREASTS,
+	)
+	for(var/slot in effect_slots)
+		var/obj/item/organ/organ = human.getorganslot(slot)
+		if(!organ)
+			continue
+		var/list/stored_items = SEND_SIGNAL(organ, COMSIG_BODYSTORAGE_GET_2D_ITEM_LIST)
+		if(!length(stored_items))
+			continue
+		for(var/obj/item/stored_item as anything in stored_items)
+			if(!stored_item || (stored_item in seen_items))
+				continue
+			seen_items += stored_item
+			var/list/item_effects = stored_item.get_sex_action_effects(context)
+			if(length(item_effects))
+				effects += item_effects
+
+/proc/qdel_sex_action_effects(list/effects)
+	for(var/datum/sex_action_effect/effect as anything in effects)
+		qdel(effect)
+
+/proc/apply_sex_action_climax_effects(mob/living/climaxer, mob/living/target, datum/sex_action/action, climax_type, datum/reagents/source_reagents, amount, atom/climax_destination, climax_method, mob/living/action_initiator, mob/living/action_target, mob/living/action_performer)
+	if(!source_reagents || amount <= 0)
+		return amount
+	var/datum/sex_action_effect_context/context = new(climaxer, target, action, action_initiator ? action_initiator : climaxer, action_target ? action_target : target, TRUE)
+	context.climaxer = climaxer
+	context.climax_type = climax_type
+	context.climax_destination = climax_destination
+	context.climax_method = climax_method
+	context.action_performer = action_performer
+	var/list/effects = collect_sex_action_effects(context)
+	var/remaining = amount
+	for(var/datum/sex_action_effect/effect as anything in effects)
+		if(remaining <= 0)
+			break
+		var/consumed = effect.intercept_climax(context, source_reagents, remaining)
+		remaining = max(0, remaining - max(consumed, 0))
+	qdel_sex_action_effects(effects)
+	return remaining
+
 /datum/sex_session //! TODO SEX SOUNDS
 	/// The initiating user
 	var/mob/living/user
@@ -404,7 +509,25 @@
 	SEND_SIGNAL(action_user_final, COMSIG_SEX_GET_AROUSAL, arousal_data_user)
 	res_send = arousal_data_user["resistance_to_pleasure"]
 
-	SEND_SIGNAL(action_user_final, COMSIG_SEX_RECEIVE_ACTION, sex_act, action_initiator, action_target, arousal_amt, pain_amt, orgasm_prog_amt, giving, force, speed, res_send, user)
+	var/mob/living/action_partner = action_user_final == action_initiator ? action_target : action_initiator
+	var/datum/sex_action_effect_context/effect_context = new(action_user_final, action_partner, sex_act, action_initiator, action_target, giving)
+	effect_context.session = src
+	effect_context.action_performer = user
+	effect_context.arousal_amt = arousal_amt
+	effect_context.pain_amt = pain_amt
+	effect_context.orgasm_prog_amt = orgasm_prog_amt
+	effect_context.force = force
+	effect_context.speed = speed
+	effect_context.resistance = res_send
+	var/list/effects = collect_sex_action_effects(effect_context)
+	for(var/datum/sex_action_effect/effect as anything in effects)
+		effect.modify_action(effect_context)
+
+	SEND_SIGNAL(action_user_final, COMSIG_SEX_RECEIVE_ACTION, sex_act, action_initiator, action_target, effect_context.arousal_amt, effect_context.pain_amt, effect_context.orgasm_prog_amt, giving, force, speed, res_send, user)
+
+	for(var/datum/sex_action_effect/effect as anything in effects)
+		effect.after_action(effect_context)
+	qdel_sex_action_effects(effects)
 
 /datum/sex_session/proc/handle_passive_ejaculation(mob/living/handler)
 	if(!handler)

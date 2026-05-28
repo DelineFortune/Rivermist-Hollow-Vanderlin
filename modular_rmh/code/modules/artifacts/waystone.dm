@@ -209,6 +209,7 @@
 /obj/item/natural/stone/attack_self_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(user.mana_pool.amount <= STONE_TRANSFORMATION_MANA_COST)
+		user.show_message("<span class='notice'>You squeeze [src] in your hand but you lack the necessary mana.</span>")
 		return
 
 	user.show_message("<span class='notice'>You squeeze [src] in your hand and concentrate your mana on it.</span>")

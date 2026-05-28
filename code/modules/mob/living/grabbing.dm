@@ -506,6 +506,13 @@
 	log_combat(user, M, "itemremovedgrab [sublimb_grabbed] ")
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
+		if(ishuman(C) && istype(sublimb_grabbed, /obj/item/natural/worms/leech))
+			var/mob/living/carbon/human/H = C
+			var/obj/item/natural/worms/leech/leech = sublimb_grabbed
+			if(leech.pull_off_host(user, H, L, null))
+				qdel(src)
+				return TRUE
+			return FALSE
 		var/obj/item/I = locate(sublimb_grabbed) in L.embedded_objects
 		if(QDELETED(I) || QDELETED(L) || !L.remove_embedded_object(I))
 			return FALSE

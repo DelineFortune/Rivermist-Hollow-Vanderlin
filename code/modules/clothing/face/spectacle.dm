@@ -45,11 +45,13 @@
 	name = "crimson spectacles"
 	desc = "Spectacles evoking the stained glass of imposing cathedrals."
 	icon_state = "bglasses"
+	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 
 /obj/item/clothing/face/spectacles/sglasses
 	name = "smokey onyxa spectacles"
 	desc = "Death has come to your little town, Sheriff. Now, you can either ignore it, or you can help me to stop it."
 	icon_state = "sglasses"
+	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 
 /obj/item/clothing/face/spectacles/inq
 	name = "inquisitorial spectacles"

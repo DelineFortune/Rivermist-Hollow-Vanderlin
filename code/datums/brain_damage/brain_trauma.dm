@@ -15,6 +15,8 @@
 	var/random_gain = TRUE //can this be gained through random traumas?
 	var/resilience = TRAUMA_RESILIENCE_BASIC //how hard is this to cure?
 	var/clonable = TRUE // will this transfer if the brain is cloned?
+	/// RMH: random brain damage should not garble, block, or rewrite player speech.
+	var/brain_damage_speech_effect = FALSE
 
 /datum/brain_trauma/Destroy()
 	if(brain && brain.traumas)

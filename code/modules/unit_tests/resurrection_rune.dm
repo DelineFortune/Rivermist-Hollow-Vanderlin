@@ -1,3 +1,6 @@
+#define TEST_RUNE_STAGE_SOFT_CRIT 1
+#define TEST_RUNE_THRESHOLD_SOFTCRIT 45
+
 /datum/unit_test/resurrection_rune_sleeping_above_crit_is_not_rescue_eligible
 #ifdef FOCUS_RESURRECTION_RUNE_TEST
 	focus = TRUE
@@ -29,6 +32,39 @@
 
 	var/rescue_stage = controller.get_rescue_stage(sleeper)
 	TEST_ASSERT_NOTEQUAL(rescue_stage, 0, "Sleeping in actual crit should still count as a resurrection rune rescue state.")
+
+/datum/unit_test/resurrection_rune_counts_new_bodypart_injuries
+#ifdef FOCUS_RESURRECTION_RUNE_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/resurrection_rune_counts_new_bodypart_injuries/Run()
+	var/datum/resurrection_rune_controller/controller = allocate(/datum/resurrection_rune_controller)
+	var/mob/living/carbon/human/injured = allocate(/mob/living/carbon/human)
+
+	var/remaining_damage = injured.maxHealth - TEST_RUNE_THRESHOLD_SOFTCRIT + 5
+	for(var/obj/item/bodypart/bodypart as anything in injured.bodyparts)
+		var/bodypart_capacity = bodypart.max_damage - bodypart.get_damage()
+		if(bodypart_capacity <= 0)
+			continue
+		var/injury_damage = min(remaining_damage, bodypart_capacity)
+		bodypart.create_injury(WOUND_SLASH, injury_damage)
+		bodypart.update_damages()
+		remaining_damage -= injury_damage
+		if(remaining_damage <= 0)
+			break
+
+	injured.updatehealth()
+
+	TEST_ASSERT(remaining_damage <= 0, "Test setup should apply enough injury pressure to cross the rune soft-crit threshold.")
+	TEST_ASSERT(injured.getBruteLoss() > injured.maxHealth - TEST_RUNE_THRESHOLD_SOFTCRIT, "Test setup should create visible bodypart injury damage.")
+	TEST_ASSERT_EQUAL(injured.health, injured.maxHealth, "Human health currently ignores ordinary bodypart injury, which is the regression this rune test covers.")
+	var/rescue_stage = controller.get_rescue_stage(injured)
+	TEST_ASSERT_EQUAL(rescue_stage, TEST_RUNE_STAGE_SOFT_CRIT, "The resurrection rune should treat serious new bodypart injuries as rescue-worthy even when health has not dropped.")
+
+#undef TEST_RUNE_STAGE_SOFT_CRIT
+#undef TEST_RUNE_THRESHOLD_SOFTCRIT
+
 /*
 /datum/unit_test/resurrection_rune_outlaw_voluntary_call_uses_linked_rune
 #ifdef FOCUS_RESURRECTION_RUNE_TEST

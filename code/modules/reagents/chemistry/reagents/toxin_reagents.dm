@@ -16,6 +16,12 @@
 		M.adjustToxLoss(toxpwr*REM * efficiency, 0)
 	return ..()
 
+/datum/reagent/toxin/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0, target_zone = null)
+	if((method & TOUCH) && iscarbon(M))
+		var/mob/living/carbon/carbon_target = M
+		carbon_target.adjust_germ_level_directed(max(1, reac_volume * max(toxpwr, 1)), body_zone = target_zone)
+	return ..()
+
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
 	description = "A powerful poison derived from certain species of mushroom."

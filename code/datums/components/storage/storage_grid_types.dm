@@ -53,7 +53,7 @@
 	set_holdable(list(/obj/item/reagent_containers/glass/bottle))
 
 /datum/component/storage/concrete/grid/keyring
-	screen_max_rows = 4
+	screen_max_rows = 2
 	screen_max_columns = 5
 	max_w_class = WEIGHT_CLASS_SMALL
 	allow_dump_out = TRUE
@@ -332,7 +332,7 @@
 	insert_preposition = "on"
 
 /datum/component/storage/concrete/grid/food/cooking/pot
-	screen_max_rows = 3
+	screen_max_rows = 4
 	screen_max_columns = 3
 	insert_verb = "put"
 	insert_preposition = "in"

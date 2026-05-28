@@ -35,7 +35,6 @@
 #define ORGAN_SLOT_ARTERY "artery"
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_SPLEEN "spleen"
-#define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_STOMACH "stomach"
 #define ORGAN_SLOT_GUTS "guts"
 #define ORGAN_SLOT_EARS "ears"
@@ -263,7 +262,7 @@ DEFINE_BITFIELD(organ_flags, list(
 /// Medical equipment should start out as this
 #define GERM_LEVEL_STERILE 0
 /// Maximum germ level you can reach by standing still.
-#define GERM_LEVEL_AMBIENT 250
+#define GERM_LEVEL_AMBIENT 100
 /// Maximum germ level any atom can normally achieve
 #define GERM_LEVEL_MAXIMUM 1000
 

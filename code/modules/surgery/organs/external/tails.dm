@@ -36,8 +36,8 @@
 	accessory_type = /datum/sprite_accessory/tail/hawk
 
 /obj/item/organ/tail/medicator
-	name = "medicator plumage"
-	desc = "A foul smelling substance drips from the tips, even without its host."
+	name = "kenku plumage"
+	desc = "Feathery tail."
 	accessory_type = /datum/sprite_accessory/tail/medicator
 	var/datum/component/stillness_timer/stillness
 

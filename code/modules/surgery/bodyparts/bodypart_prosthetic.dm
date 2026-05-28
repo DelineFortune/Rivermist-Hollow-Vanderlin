@@ -22,6 +22,9 @@
 	resistance_flags = NONE
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
+	limb_flags = NONE
+	artery_type = null
+	bleeds = FALSE
 	brute_reduction = 0
 	burn_reduction = 0
 	max_damage = 0
@@ -36,6 +39,9 @@
 	resistance_flags = NONE
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
+	limb_flags = NONE
+	artery_type = null
+	bleeds = FALSE
 	brute_reduction = 0
 	burn_reduction = 0
 	max_damage = 0
@@ -50,6 +56,9 @@
 	resistance_flags = NONE
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
+	limb_flags = NONE
+	artery_type = null
+	bleeds = FALSE
 	brute_reduction = 0
 	burn_reduction = 0
 	max_damage = 0
@@ -63,6 +72,9 @@
 	resistance_flags = NONE
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
+	limb_flags = NONE
+	artery_type = null
+	bleeds = FALSE
 	brute_reduction = 0
 	burn_reduction = 0
 	max_damage = 0

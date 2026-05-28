@@ -11,6 +11,7 @@
 	scan_desc = ""
 	gain_text = "<span class='warning'>I forget how to speak!</span>"
 	lose_text = "<span class='notice'>I suddenly remember how to speak.</span>"
+	brain_damage_speech_effect = TRUE
 
 /datum/brain_trauma/severe/mute/on_gain()
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
@@ -26,6 +27,7 @@
 	scan_desc = ""
 	gain_text = "<span class='warning'>I have trouble forming words in my head...</span>"
 	lose_text = "<span class='notice'>I suddenly remember how languages work.</span>"
+	brain_damage_speech_effect = TRUE
 	var/datum/language_holder/prev_language
 	var/datum/language_holder/mob_language
 

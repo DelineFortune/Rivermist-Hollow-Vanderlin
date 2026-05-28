@@ -125,7 +125,7 @@
 	node_purity_max = 45
 
 /datum/chimeric_table/medicator
-	name = "Medicator"
+	name = "Kenku"
 	compatible_blood_types = list(
 		/datum/blood_type/human/medicator,
 	)

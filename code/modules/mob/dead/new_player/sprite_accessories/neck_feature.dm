@@ -124,7 +124,7 @@
 	icon_state = "insectf"
 
 /datum/sprite_accessory/neck_feature/fluff/medicator
-	name = "Medicator Fluff"
+	name = "Kenku Fluff"
 	icon = 'icons/mob/sprite_accessory/neck_features/medicator_fluff.dmi'
 	icon_state = "vulture"
 	relevant_layers = list(BODY_ADJ_LAYER)

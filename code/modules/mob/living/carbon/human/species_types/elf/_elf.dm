@@ -16,14 +16,14 @@
 		OFFSET_PENIS = list(0,0),\
 		OFFSET_BREASTS = list(0,0),\
 		OFFSET_TESTICLES = list(0,0),\
-		OFFSET_VAGINA = list(0,0),\
+		OFFSET_VAGINA = list(0,-3),\
 	)
 
 	offset_genitals_f = list(
 		OFFSET_PENIS = list(0,0),\
 		OFFSET_BREASTS = list(0,0),\
 		OFFSET_TESTICLES = list(0,0),\
-		OFFSET_VAGINA = list(0,-1),\
+		OFFSET_VAGINA = list(0,-3),\
 	)
 
 /datum/species/elf/on_species_gain(mob/living/carbon/C, datum/species/old_species)
