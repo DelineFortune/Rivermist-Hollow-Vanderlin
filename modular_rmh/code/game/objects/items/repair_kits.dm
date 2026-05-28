@@ -83,22 +83,23 @@
 	amount_repair = 5
 	smeltresult = /obj/item/fertilizer/ash
 
+// MERCHANT SELL
 /datum/supply_pack/tools/poor_armorkit
-	name = "Poor Armor Repair Kit"
-	cost = 45
+	name = "Poor armor repair kit"
+	cost = 25
 	contains = /obj/item/repair_kit/poor_armorkit
 
-/datum/supply_pack/tools/repair_kit
-	name = "Armor Repair Kit"
-	cost = 90
-	contains = /obj/item/repair_kit
-
 /datum/supply_pack/tools/poor_sewingkit
-	name = "Poor Sewing Kit"
+	name = "Poor sewing kit"
 	cost = 15
 	contains = /obj/item/repair_kit/poor_sewingkit
 
+/datum/supply_pack/tools/repair_kit
+	name = "Armor repair kit"
+	cost = 50
+	contains = /obj/item/repair_kit
+
 /datum/supply_pack/tools/sewingkit
-	name = "Sewing Kit"
-	cost = 45
+	name = "Sewing kit"
+	cost = 35
 	contains = /obj/item/repair_kit/sewingkit

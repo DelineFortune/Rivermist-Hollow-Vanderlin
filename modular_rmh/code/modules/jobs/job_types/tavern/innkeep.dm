@@ -64,7 +64,7 @@
 	backr = null
 	backl = null
 	belt = /obj/item/storage/belt/leather
-	beltl = /obj/item/storage/keyring/innkeep
+	beltl = /obj/item/storage/keyring/tavern_keeper
 	beltr = /obj/item/reagent_containers/glass/bottle/beer/blackgoat
 	ring = null
 	l_hand = null

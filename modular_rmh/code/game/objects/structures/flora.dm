@@ -311,8 +311,8 @@
 	num_random_icons = 0
 	attacked_sound = "plantcross"
 	destroy_sound = "plantcross"
-	max_integrity = 5
-	debris = list(/obj/item/natural/fibers = 2)
+	max_integrity = 50
+	debris = list(/obj/item/natural/fibers = 1)
 
 //colorful light crystal
 /obj/structure/flora/crystal

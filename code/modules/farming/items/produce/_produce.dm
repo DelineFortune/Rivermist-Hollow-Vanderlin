@@ -108,6 +108,7 @@
 	bitesize_mod = 2
 	tastes = list("oat" = 1)
 	grind_results = list(/datum/reagent/flour = 10)
+	mill_result = /obj/item/reagent_containers/powder/flour // RMH
 	item_flags = OBTAINED_DATA
 	obtained_from = list(list("Threshing oat stalks", /obj/item/natural/chaff/oat))
 

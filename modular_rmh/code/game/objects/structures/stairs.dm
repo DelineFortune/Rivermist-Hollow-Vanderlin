@@ -33,3 +33,7 @@
 /obj/structure/stairs/stone/cwdown
 	icon = 'modular_rmh/icons/obj/structures/stairscurve.dmi'
 	icon_state = "stoneCWdown"
+
+/obj/structure/stairs/maskstairs
+	icon = 'modular_rmh/icons/obj/structures/stairs_mask.dmi'
+	icon_state = "stairs_mask"

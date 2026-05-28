@@ -27,3 +27,6 @@
 
 /obj/item/storage/keyring/guild_artisan
 	keys = list(/obj/item/key/artificer, /obj/item/key/blacksmith, /obj/item/key/tailor, /obj/item/key/miner)
+
+/obj/item/storage/keyring/tavern_keeper
+	keys = list(/obj/item/key/tavern, /obj/item/key/roomi, /obj/item/key/roomii, /obj/item/key/roomiii, /obj/item/key/roomiv, /obj/item/key/roomv)
