@@ -2192,6 +2192,10 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 			H.adjustCloneLoss(damage_amount)
 		if(BRAIN)
 			damage_amount = forced ? damage : damage * hit_percent * H.physiology.brain_mod
+			// RMH TODO: traumatic brain damage is too punishing for our social/RP pacing.
+			// Blood-loss and poison-style brain organ damage still use organ damage APIs directly.
+			if(H.is_player_character())
+				return 0
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
 	return damage_amount
 

@@ -6,6 +6,7 @@
 /obj/structure/flora
 	var/num_random_icons = 0
 	layer = FLORA_LAYER
+	plane = GAME_PLANE_UPPER
 
 /obj/structure/flora/Initialize()
 	. = ..()

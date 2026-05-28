@@ -181,6 +181,11 @@
 	viable_zones = list(BODY_ZONE_HEAD)
 	var/permanent = FALSE
 
+/datum/wound/facial/tongue/get_crit_prob(bclass, dam, damage_dividend, mob/living/user, obj/item/bodypart/affected, zone_precise, list/modifiers)
+	if(affected?.owner?.is_player_character())
+		return 0
+	return ..()
+
 /datum/wound/facial/tongue/can_apply_to_mob(mob/living/affected)
 	. = ..()
 	if(!.)
@@ -220,6 +225,11 @@
 	critical = TRUE
 	associated_bclasses = STAB_BCLASSES
 	viable_zones = list(BODY_ZONE_HEAD)
+
+/datum/wound/facial/disfigurement/get_crit_prob(bclass, dam, damage_dividend, mob/living/user, obj/item/bodypart/affected, zone_precise, list/modifiers)
+	if(affected?.owner?.is_player_character())
+		return 0
+	return ..()
 
 /datum/wound/facial/disfigurement/on_mob_gain(mob/living/affected)
 	. = ..()

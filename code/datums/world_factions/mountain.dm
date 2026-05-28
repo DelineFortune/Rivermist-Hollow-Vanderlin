@@ -63,6 +63,10 @@
 		/datum/supply_pack/tools/thresher,
 		/datum/supply_pack/tools/plough,
 		/datum/supply_pack/tools/bucket,
+		/datum/supply_pack/tools/poor_armorkit,
+		/datum/supply_pack/tools/repair_kit,
+		/datum/supply_pack/tools/poor_sewingkit,
+		/datum/supply_pack/tools/sewingkit,
 		///Weapon (Singular)
 		/datum/supply_pack/weapons/iron/bayonet,
 		// Food - Hearty dwarven fare
@@ -172,7 +176,17 @@
 		// Food & Luxury
 		/datum/supply_pack/food/drinks/voddena,
 		/datum/supply_pack/jewelry/circlet,
+		/datum/supply_pack/luxury/chess,
 		/datum/supply_pack/luxury/silver_plaque_belt,
+		/datum/supply_pack/narcotics/perfume/random,
+		/datum/supply_pack/narcotics/perfume/lavender,
+		/datum/supply_pack/narcotics/perfume/cherry,
+		/datum/supply_pack/narcotics/perfume/rose,
+		/datum/supply_pack/narcotics/perfume/jasmine,
+		/datum/supply_pack/narcotics/perfume/mint,
+		/datum/supply_pack/narcotics/perfume/vanilla,
+		/datum/supply_pack/narcotics/perfume/pear,
+		/datum/supply_pack/narcotics/perfume/strawberry,
 		/datum/supply_pack/medicine/antipregpot
 	)
 	exotic_pool = list(

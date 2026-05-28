@@ -392,6 +392,81 @@
 	player_body.mind = null
 	player_mind.current = null
 
+/datum/unit_test/player_facial_trauma_crits_do_not_roll_tongue_or_disfigurement
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/player_facial_trauma_crits_do_not_roll_tongue_or_disfigurement/Run()
+	var/mob/living/carbon/human/player_body = allocate(/mob/living/carbon/human)
+	var/datum/mind/player_mind = allocate(/datum/mind, "facial-trauma-test")
+	player_mind.current = player_body
+	player_body.mind = player_mind
+
+	var/obj/item/bodypart/head = player_body.get_bodypart(BODY_ZONE_HEAD)
+	TEST_ASSERT_NOTNULL(head, "Test human should have a head bodypart.")
+
+	var/datum/wound/facial/tongue/tongue_loss = GLOB.primordial_wounds[/datum/wound/facial/tongue]
+	var/datum/wound/facial/disfigurement/disfigurement = GLOB.primordial_wounds[/datum/wound/facial/disfigurement]
+	TEST_ASSERT_NOTNULL(tongue_loss, "Test setup should have a primordial tongue-loss wound.")
+	TEST_ASSERT_NOTNULL(disfigurement, "Test setup should have a primordial disfigurement wound.")
+
+	var/tongue_chance = tongue_loss.get_crit_prob(BCLASS_CUT, 120, 1, null, head, BODY_ZONE_HEAD, list(CRIT_MOD_CHANCE = 100))
+	var/disfigurement_chance = disfigurement.get_crit_prob(BCLASS_STAB, 120, 1, null, head, BODY_ZONE_HEAD, list(CRIT_MOD_CHANCE = 100))
+
+	TEST_ASSERT_EQUAL(tongue_chance, 0, "Player character head trauma should not roll tongue removal wounds.")
+	TEST_ASSERT_EQUAL(disfigurement_chance, 0, "Player character head trauma should not roll facial disfigurement wounds.")
+	player_body.mind = null
+	player_mind.current = null
+
+/datum/unit_test/player_skull_trauma_does_not_disfigure_or_roll_brain_fractures
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/player_skull_trauma_does_not_disfigure_or_roll_brain_fractures/Run()
+	var/mob/living/carbon/human/player_body = allocate(/mob/living/carbon/human)
+	var/datum/mind/player_mind = allocate(/datum/mind, "skull-trauma-test")
+	player_mind.current = player_body
+	player_body.mind = player_mind
+
+	var/obj/item/bodypart/head = player_body.get_bodypart(BODY_ZONE_HEAD)
+	TEST_ASSERT_NOTNULL(head, "Test human should have a head bodypart.")
+
+	var/datum/wound/fracture/head/head_fracture = allocate(/datum/wound/fracture/head)
+	head_fracture.on_mob_gain(player_body)
+	TEST_ASSERT(!HAS_TRAIT(player_body, TRAIT_DISFIGURED), "Player character skull trauma should not apply the disfigured trait.")
+
+	var/datum/wound/fracture/head/brain/brain_fracture = GLOB.primordial_wounds[/datum/wound/fracture/head/brain]
+	TEST_ASSERT_NOTNULL(brain_fracture, "Test setup should have a primordial depressed cranial fracture wound.")
+	var/brain_fracture_chance = brain_fracture.get_crit_prob(BCLASS_BLUNT, 120, 1, null, head, BODY_ZONE_PRECISE_SKULL, list(CRIT_MOD_CHANCE = 100))
+	TEST_ASSERT_EQUAL(brain_fracture_chance, 0, "Player character skull trauma should not roll depressed cranial fracture wounds.")
+	player_body.mind = null
+	player_mind.current = null
+
+/datum/unit_test/player_direct_trauma_brain_damage_is_ignored
+#ifdef FOCUS_RUNTIME_REGRESSION_TEST
+	focus = TRUE
+#endif
+
+/datum/unit_test/player_direct_trauma_brain_damage_is_ignored/Run()
+	var/mob/living/carbon/human/player_body = allocate(/mob/living/carbon/human)
+	var/datum/mind/player_mind = allocate(/datum/mind, "brain-trauma-test")
+	player_mind.current = player_body
+	player_body.mind = player_mind
+
+	var/obj/item/organ/brain = player_body.getorganslot(ORGAN_SLOT_BRAIN)
+	TEST_ASSERT_NOTNULL(brain, "Test human should have a brain organ.")
+	var/brain_damage_before = brain.damage
+
+	player_body.apply_damage(damage = 40, damagetype = BRAIN, def_zone = BODY_ZONE_HEAD, forced = TRUE)
+	TEST_ASSERT_EQUAL(brain.damage, brain_damage_before, "Player character direct trauma damage should not damage the brain organ.")
+
+	player_body.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+	TEST_ASSERT_EQUAL(brain.damage, brain_damage_before + 5, "Non-trauma brain organ damage paths should still apply to player characters.")
+	player_body.mind = null
+	player_mind.current = null
+
 /datum/unit_test/admin_revive_refills_organ_blood
 #ifdef FOCUS_RUNTIME_REGRESSION_TEST
 	focus = TRUE

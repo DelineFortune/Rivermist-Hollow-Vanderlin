@@ -82,3 +82,23 @@
 	for_armor = FALSE
 	amount_repair = 5
 	smeltresult = /obj/item/fertilizer/ash
+
+/datum/supply_pack/tools/poor_armorkit
+	name = "Poor Armor Repair Kit"
+	cost = 45
+	contains = /obj/item/repair_kit/poor_armorkit
+
+/datum/supply_pack/tools/repair_kit
+	name = "Armor Repair Kit"
+	cost = 90
+	contains = /obj/item/repair_kit
+
+/datum/supply_pack/tools/poor_sewingkit
+	name = "Poor Sewing Kit"
+	cost = 15
+	contains = /obj/item/repair_kit/poor_sewingkit
+
+/datum/supply_pack/tools/sewingkit
+	name = "Sewing Kit"
+	cost = 45
+	contains = /obj/item/repair_kit/sewingkit
