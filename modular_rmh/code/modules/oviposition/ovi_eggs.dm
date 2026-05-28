@@ -175,6 +175,29 @@
 	internal_contraction_message = "My %CONTAINER% clenches in sharp contractions around the hatchling inside."
 	internal_birth_message = "%CARRIER% doubles over as a newborn forces its way out of %CONTAINER%!"
 
+/datum/oviposition_egg_profile/leech
+	egg_type = OVI_EGG_LEECH
+	display_name = "leech egg"
+	display_desc = "A small dark egg, slick and faintly twitching."
+	display_icon_state = "egg_color"
+	display_color = "#3c244d"
+	hatch_result_type = /obj/item/natural/worms/leech/erotic/burrowing
+	requires_fertilization = FALSE
+	poll_for_ghost = FALSE
+	require_ghost_to_hatch = FALSE
+	incubation_stage_duration = 90 SECONDS
+	stage_messages = list(
+		1 = "A tiny leech egg settles in my %CONTAINER%.",
+		2 = "The leech egg in my %CONTAINER% twitches with small, eager movements.",
+		3 = "The leech egg in my %CONTAINER% feels ready to split.",
+	)
+	ready_message = "The leech egg in my %CONTAINER% is ready to hatch."
+	hatch_message = "%EGG% splits open with a wet little twitch!"
+	auto_hatch_when_laid = TRUE
+	hatch_inside_host = TRUE
+	allow_manual_host_removal = TRUE
+	internal_hatch_layer = STORAGE_LAYER_DEEP
+
 /proc/get_oviposition_egg_profile(egg_type)
 	var/profile_type = /datum/oviposition_egg_profile
 	switch(egg_type)
@@ -192,6 +215,8 @@
 			profile_type = /datum/oviposition_egg_profile/harpy
 		if(OVI_EGG_EMBRYO)
 			profile_type = /datum/oviposition_egg_profile/embryo
+		if(OVI_EGG_LEECH)
+			profile_type = /datum/oviposition_egg_profile/leech
 	return new profile_type
 
 /proc/get_species_oviposition_egg_type(mob/living/owner)

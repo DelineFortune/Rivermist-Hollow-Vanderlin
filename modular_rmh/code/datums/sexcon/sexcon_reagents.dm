@@ -220,6 +220,33 @@
 	list_reagents = list(/datum/reagent/consumable/aphrodisiac = 25)
 	desc = "A bottle with an unmarked, pink sticky liquid. Some kind of potion."
 
+/datum/reagent/consumable/lactation_inducer
+	name = "Lactation Inducer"
+	taste_description = "warm cream"
+	description = "A mild reagent that encourages milk production while present in the body."
+	reagent_state = LIQUID
+	color = "#fff3d6"
+	metabolization_rate = 0.04 * REAGENTS_METABOLISM
+
+/datum/reagent/consumable/lactation_inducer/on_mob_life(mob/living/carbon/human/C)
+	. = ..()
+	if(!ishuman(C))
+		return
+	var/obj/item/organ/genitals/filling_organ/breasts/breasts = C.getorganslot(ORGAN_SLOT_BREASTS)
+	if(!breasts)
+		return
+	if(C.get_erp_pref(/datum/erp_preference/boolean/allow_forced_lactation))
+		breasts.add_temporary_lactation_source(src)
+	else
+		breasts.remove_temporary_lactation_source(src)
+
+/datum/reagent/consumable/lactation_inducer/on_mob_end_metabolize(mob/living/carbon/human/C)
+	. = ..()
+	if(!ishuman(C))
+		return
+	var/obj/item/organ/genitals/filling_organ/breasts/breasts = C.getorganslot(ORGAN_SLOT_BREASTS)
+	breasts?.remove_temporary_lactation_source(src)
+
 /datum/supply_pack/narcotics/aphrodisiac
 	name = "Aphrodisiac"
 	cost = 25

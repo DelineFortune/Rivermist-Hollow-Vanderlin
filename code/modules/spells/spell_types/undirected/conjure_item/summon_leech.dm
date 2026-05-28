@@ -15,8 +15,13 @@
 	spell_cost = 30
 
 	delete_old = FALSE
-	item_type = /obj/item/natural/worms/leech
+	item_type = /obj/item/natural/worms/leech/wild
 	item_duration = 0
+
+/datum/action/cooldown/spell/undirected/conjure_item/summon_leech/make_item()
+	var/obj/item/natural/worms/leech/made_item = spawn_wild_leech(null)
+	LAZYADD(item_refs, WEAKREF(made_item))
+	return made_item
 
 /datum/action/cooldown/spell/undirected/conjure_item/summon_leech/pestra
 	name = "Healing Leech"

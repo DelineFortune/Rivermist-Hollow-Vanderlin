@@ -1519,6 +1519,10 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 			for(var/obj/item/embedded in affecting.embedded_objects)
 				target.grabbedby(user, 1, item_override = embedded)
 				return TRUE
+		var/obj/item/natural/worms/leech/leech = target.get_grabbable_leech_for_zone(user.zone_selected)
+		if(leech)
+			target.grabbedby(user, 1, item_override = leech)
+			return TRUE
 		target.grabbedby(user)
 		return TRUE
 

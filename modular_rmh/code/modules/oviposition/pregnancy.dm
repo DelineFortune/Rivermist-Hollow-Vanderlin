@@ -330,6 +330,10 @@
 		finalize_living_hatch(player, hatchling)
 		return hatch_living_inside_host(hatchling)
 
+	if(isitem(hatch_result))
+		var/obj/item/hatch_item = hatch_result
+		return hatch_item_inside_host(hatch_item)
+
 	qdel(hatch_result)
 	return FALSE
 
@@ -422,6 +426,42 @@
 	if(hatch_message)
 		to_chat(carrier, span_warning(format_container_message(hatch_message)))
 	playsound(carrier, 'sound/effects/wounds/splatter.ogg', 70, TRUE)
+	qdel(egg)
+	return TRUE
+
+/datum/component/pregnancy/proc/hatch_item_inside_host(obj/item/hatch_item)
+	if(!egg || !container || !carrier || !hatch_item)
+		qdel(hatch_item)
+		return FALSE
+
+	var/target_layer = egg.internal_hatch_layer
+	var/datum/component/body_storage/storage = container.GetComponent(/datum/component/body_storage)
+	if(!storage?.available_layers[target_layer])
+		target_layer = STORAGE_LAYER_DEEP
+
+	var/hatch_message = egg.internal_hatch_message || egg.get_hatch_message()
+	if(!remove_from_host(BODYSTORAGE_REMOVE_INTERNAL))
+		qdel(hatch_item)
+		return FALSE
+
+	var/fit_result = SEND_SIGNAL(container, COMSIG_BODYSTORAGE_TRY_INSERT, hatch_item, target_layer, TRUE)
+	switch(fit_result)
+		if(INSERT_FEEDBACK_OK, INSERT_FEEDBACK_OK_FORCE, INSERT_FEEDBACK_OK_OVERRIDE, INSERT_FEEDBACK_ALMOST_FULL)
+			if(hatch_message)
+				to_chat(carrier, span_warning(format_container_message(hatch_message)))
+			if(istype(hatch_item, /obj/item/natural/worms/leech/erotic))
+				var/obj/item/natural/worms/leech/erotic/leech = hatch_item
+				leech.on_hatched_inside_host(container, carrier, target_layer)
+			playsound(carrier, 'sound/effects/wounds/splatter.ogg', 70, TRUE)
+			qdel(egg)
+			return TRUE
+
+	var/turf/drop_location = get_turf(carrier)
+	if(drop_location)
+		hatch_item.forceMove(drop_location)
+		to_chat(carrier, span_warning("[hatch_item] hatches from [egg], but there is no room for it inside my [get_container_location_name()]."))
+	else
+		qdel(hatch_item)
 	qdel(egg)
 	return TRUE
 
