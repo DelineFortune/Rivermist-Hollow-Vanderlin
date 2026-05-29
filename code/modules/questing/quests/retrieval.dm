@@ -41,6 +41,9 @@
 
 	return ROUND_UP(distance_reward + item_bonus)
 
+/datum/quest/retrieval/calculate_reward(turf/target_turf)
+	return calculate_errand_reward(target_turf)
+
 /datum/quest/retrieval/can_generate_for_world()
 	return has_supported_spawn_landmark()
 

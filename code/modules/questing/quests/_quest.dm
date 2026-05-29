@@ -43,6 +43,8 @@
 	var/distance_bonus_mult = 0
 	/// Map reward modifier from quest_map_config, set once at generation
 	var/map_reward_modifier = 1.0
+	/// Unscaled map reward modifier, kept for reward formulas that need their own curve
+	var/map_reward_base_modifier = 1.0
 	/// Map difficulty modifier from quest_map_config, set once at generation
 	var/map_difficulty_modifier = 1.0
 
@@ -467,6 +469,7 @@
 	var/datum/quest_map_config/config = get_quest_map_config_for_turf(landmark_turf)
 	if(!config)
 		return
+	map_reward_base_modifier = config.reward_modifier
 	map_reward_modifier = config.reward_modifier * QUEST_MAP_REWARD_SCALE
 	map_difficulty_modifier = config.difficulty_modifier
 
@@ -586,6 +589,16 @@
 	// Apply map reward modifier
 	base_total *= map_reward_modifier
 	// Apply distance bonus (up to QUEST_DISTANCE_BONUS_MAX_MULT extra)
+	base_total *= (1 + distance_bonus_mult)
+	return max(0, ROUND_UP(base_total))
+
+/datum/quest/proc/calculate_errand_reward(turf/target_turf)
+	var/risk_score = max(1, ROUND_UP(get_risk_score(target_turf)))
+	var/workload_reward = max(0, ROUND_UP(get_workload_reward(target_turf)))
+	threat_tier = get_tier_from_risk_score(risk_score)
+	var/base_total = get_base_reward() + (risk_score * QUEST_ERRAND_REWARD_PER_RISK_POINT) + (workload_reward * QUEST_ERRAND_WORKLOAD_REWARD_MULT)
+	var/map_curve = map_reward_base_modifier * map_reward_base_modifier
+	base_total *= map_curve
 	base_total *= (1 + distance_bonus_mult)
 	return max(0, ROUND_UP(base_total))
 

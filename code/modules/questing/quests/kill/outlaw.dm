@@ -32,7 +32,7 @@
 	reward *= map_reward_modifier
 	// Apply distance bonus
 	reward *= (1 + distance_bonus_mult)
-	return max(0, ROUND_UP(reward))
+	return max(0, min(QUEST_BOSS_REWARD_MAX, ROUND_UP(reward)))
 
 /datum/quest/kill/boss/generate(obj/effect/landmark/quest_spawner/landmark)
 	..()

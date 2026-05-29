@@ -66,6 +66,9 @@
 	var/distance_reward = ((pickup_distance + delivery_distance) / QUEST_DELIVERY_DISTANCE_DIVISOR) * QUEST_DELIVERY_DISTANCE_BONUS
 	return ROUND_UP(distance_reward + QUEST_COURIER_BONUS_FLAT)
 
+/datum/quest/courier/calculate_reward(turf/target_turf)
+	return calculate_errand_reward(target_turf)
+
 /datum/quest/courier/proc/spawn_courier_item(area/delivery_area, obj/effect/landmark/quest_spawner/landmark)
 	if(!delivery_area)
 		return null
