@@ -61,3 +61,20 @@
 	lowpop_tick = 1
 	highpop_tick = 2
 
+/datum/threat_region/rmh_basinruins
+	region_name = THREAT_REGION_RMH_BASIN_RUINS
+	latent_ambush = DANGER_MODERATE_FLOOR
+	min_ambush = DANGER_LOW_FLOOR
+	max_ambush = DANGER_MODERATE_LIMIT
+	fixed_ambush = FALSE
+	lowpop_tick = 1
+	highpop_tick = 2
+
+/datum/threat_region/rmh_northdanger
+	region_name = THREAT_REGION_RMH_NORTH_DANGER
+	latent_ambush = DANGER_MODERATE_FLOOR
+	min_ambush = DANGER_LOW_FLOOR
+	max_ambush = DANGER_MODERATE_FLOOR
+	fixed_ambush = FALSE
+	lowpop_tick = 1
+	highpop_tick = 2

@@ -58,10 +58,6 @@
 /obj/structure/curtain/green,
 /turf/open/floor/wood,
 /area/indoors/town/rmh)
-"V" = (
-/obj/structure/stairs/cwdown,
-/turf/open/floor/ruinedwood/alizeria/tiles/wood20,
-/area/indoors/town/rmh)
 "W" = (
 /turf/open/openspace,
 /area/indoors/town/rmh)
@@ -142,7 +138,7 @@ Y
 "}
 (4,1,2) = {"
 Y
-V
+D
 k
 k
 Y

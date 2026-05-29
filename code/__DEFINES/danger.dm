@@ -31,3 +31,5 @@
 #define THREAT_REGION_RMG_DARK_FOREST "Dark Forest"
 #define THREAT_REGION_RMH_DESERT "Enchanted Desert"
 #define THREAT_REGION_RMH_UNDERDARK "RMH Underdark"
+#define THREAT_REGION_RMH_BASIN_RUINS "RMH Basin Ruins"
+#define THREAT_REGION_RMH_NORTH_DANGER "RMH North's Danger"

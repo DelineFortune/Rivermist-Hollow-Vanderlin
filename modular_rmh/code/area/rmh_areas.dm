@@ -49,6 +49,18 @@
 	first_time_text = "NORTH FOREST"
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "woods_n"
+	soundenv = 19
+	ambush_times = list("night","dawn","dusk","day")
+	ambush_types = list(
+				/turf/open/floor/grass,
+				/turf/open/floor/dirt)
+	ambush_mobs = list(
+				/mob/living/simple_animal/hostile/retaliate/wolf = 60,
+				/mob/living/simple_animal/hostile/retaliate/fox = 50,
+				/mob/living/simple_animal/hostile/retaliate/bobcat = 50,
+				/mob/living/simple_animal/hostile/retaliate/bigrat = 30,
+				/mob/living/simple_animal/hostile/retaliate/fae/sprite = 20)
+	threat_region = THREAT_REGION_RMH_NORTH_DANGER
 
 /area/outdoors/rmh_field/west
 	name = "West Forest"
@@ -118,13 +130,36 @@
 	ambient_index = AMBIENCE_CAVE
 	ambient_index_night = AMBIENCE_GENERIC
 
+/area/outdoors/rmh_field/basinruin
+	name = "Ruined Fort"
+	first_time_text = "RUINED FORT"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	background_track_dusk = 'modular_rmh/sound/music/area/basinruins.ogg'
+	background_track_night = 'modular_rmh/sound/music/area/basinruins.ogg'
+	icon_state = "rfort"
+	soundenv = 19
+	ambush_times = list("night","dawn","dusk","day")
+	ambush_types = list(
+				/turf/open/floor/grass,
+				/turf/open/floor/grass/healthy,
+				/turf/open/floor/dirt/road,
+				/turf/open/floor/dirt,
+				/turf/open/floor/cobble/alt,
+				/turf/open/floor/cobble,
+				/turf/open/floor/cobblerock)
+	ambush_mobs = list(
+				/mob/living/simple_animal/hostile/retaliate/wolf = 60,
+				/mob/living/carbon/human/species/goblin/npc/ambush/cave = 50,
+				/mob/living/carbon/human/species/goblin/npc/ambush = 50,
+				/mob/living/simple_animal/hostile/retaliate/direbear = 20)
+	converted_type = /area/indoors/shelter/rmh_field
+	threat_region = THREAT_REGION_RMH_BASIN_RUINS
 // - - - - - -
 //MOUNTAINS
 // - - - - - -
 /area/outdoors/mountains/rmh_mountains
 	name = "Dusk Spire Mountains Pass"
 	icon_state = "decap"
-	ambush_mobs = null
 	background_track = 'sound/music/area/decap.ogg'
 	background_track_dusk = 'sound/music/area/decap.ogg'
 	background_track_night = 'sound/music/area/decap.ogg'
@@ -138,6 +173,23 @@
 	first_time_text = "NORTHERN MOUNTAINS BASIN"
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "n_basin"
+	soundenv = 19
+	ambush_times = list("night","dawn","dusk","day")
+	ambush_types = list(
+				/turf/open/floor/grass,
+				/turf/open/floor/grass/healthy,
+				/turf/open/floor/dirt/road,
+				/turf/open/floor/dirt,
+				/turf/open/floor/cobble/alt,
+				/turf/open/floor/cobble,
+				/turf/open/floor/cobblerock)
+	ambush_mobs = list(
+				/mob/living/simple_animal/hostile/retaliate/wolf = 60,
+				/mob/living/carbon/human/species/goblin/npc/ambush/cave = 50,
+				/mob/living/carbon/human/species/goblin/npc/ambush = 50,
+				/mob/living/simple_animal/hostile/retaliate/direbear = 20)
+	converted_type = /area/indoors/shelter/rmh_field
+	threat_region = THREAT_REGION_RMH_NORTH_DANGER
 
 /area/indoors/shelter/mountains/rmh_mountains
 	icon = 'modular_rmh/icons/turf/areas.dmi'
@@ -795,6 +847,14 @@
 	icon_state = "cave"
 	droning_index = DRONING_CAVE_GENERIC
 	ambient_index = AMBIENCE_CAVE
+	ambush_times = list("night","dusk")
+	ambush_types = list(
+				/turf/open/floor/cobblerock,
+				/turf/open/floor/dirt,
+				/turf/open/floor/naturalstone)
+	ambush_mobs = list(
+				/mob/living/carbon/human/species/goblin/npc/ambush/cave = 50,
+				/mob/living/carbon/human/species/goblin/npc/ambush = 50)
 	soundenv = 8
 	//deathsight_message = "a dark cave"
 	converted_type = /area/outdoors/caves
@@ -812,6 +872,18 @@
 	first_time_text = "UNDERDARK DESCENT"
 	icon_state = "underworld"
 	ceiling_protected = TRUE
+
+/area/indoors/cave/rmh_cave/safezone
+	name = "Safe zone - Mine"
+	first_time_text = "CALM PLACE"
+	ceiling_protected = TRUE
+	background_track_dawn = 'modular_rmh/sound/music/area/safe_zone_mines.ogg'
+	background_track = 'modular_rmh/sound/music/area/safe_zone_mines.ogg'
+	background_track_dusk = 'modular_rmh/sound/music/area/safe_zone_mines.ogg'
+	background_track_night = 'modular_rmh/sound/music/area/safe_zone_mines.ogg'
+	ambush_times = null
+	ambush_types = null
+	ambush_mobs = null
 
 /area/outdoors/beach/rmh_beach
 	name = "Misty Lake"

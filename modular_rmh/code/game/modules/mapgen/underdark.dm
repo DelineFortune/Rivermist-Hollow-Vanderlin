@@ -13,23 +13,23 @@
 	clusterCheckFlags = CLUSTER_CHECK_DIFFERENT_ATOMS
 	allowed_turfs = list(/turf/open/floor/naturalstone)
 	allowed_areas = list(/area/under/underdark)
-	spawnableAtoms = list(/obj/structure/flora/shroom_tree/happy/random = 30,
-							/obj/structure/flora/mushroomcluster = 20,
-							/obj/structure/flora/tinymushrooms = 20,
+	spawnableAtoms = list(/obj/structure/flora/shroom_tree/happy/random = 50,
+							/obj/structure/flora/mushroomcluster = 50,
+							/obj/structure/flora/tinymushrooms = 50,
 							/obj/structure/roguerock = 25,
 							/obj/item/natural/rock = 25,
-							/obj/structure/flora/crystal = 12,
-							/obj/structure/vine = 5,
-							/obj/structure/flora/gemcrystals/aquamarine = 2,
-							/obj/structure/flora/gemcrystals/aquamarine/small = 3,
-							/obj/structure/flora/gemcrystals/emerald = 2,
-							/obj/structure/flora/gemcrystals/emerald/small = 3,
-							/obj/structure/flora/gemcrystals/rube = 2,
-							/obj/structure/flora/gemcrystals/rube/small = 3,
-							/obj/structure/flora/gemcrystals/topaz = 2,
-							/obj/structure/flora/gemcrystals/topaz/small = 3,
-							/obj/structure/flora/gemcrystals/lapiz = 1,
-							/obj/structure/flora/gemcrystals/sapphiresmall = 2)
+							/obj/structure/flora/crystal = 30,
+							/obj/structure/flora/grass/crawlvines = 20,
+							/obj/structure/flora/gemcrystals/aquamarine = 0.5,
+							/obj/structure/flora/gemcrystals/aquamarine/small = 0.5,
+							/obj/structure/flora/gemcrystals/emerald = 0.5,
+							/obj/structure/flora/gemcrystals/emerald/small = 0.5,
+							/obj/structure/flora/gemcrystals/rube = 0.5,
+							/obj/structure/flora/gemcrystals/rube/small = 0.5,
+							/obj/structure/flora/gemcrystals/topaz = 0.5,
+							/obj/structure/flora/gemcrystals/topaz/small = 0.5,
+							/obj/structure/flora/gemcrystals/lapiz = 0.5,
+							/obj/structure/flora/gemcrystals/sapphiresmall = 0.5)
 
 /datum/mapGeneratorModule/underdarkmud
 	clusterCheckFlags = CLUSTER_CHECK_SAME_ATOMS

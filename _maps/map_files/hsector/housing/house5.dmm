@@ -63,12 +63,6 @@
 /obj/structure/curtain/green,
 /turf/open/floor/wood,
 /area/indoors/town/rmh)
-"Q" = (
-/obj/structure/stairs/ccwdown{
-	dir = 1
-	},
-/turf/open/floor/ruinedwood/alizeria/tiles/wood19,
-/area/indoors/town/rmh)
 "R" = (
 /obj/structure/fluff/railing/corner,
 /turf/open/floor/ruinedwood/alizeria/tiles/wood19,
@@ -166,7 +160,7 @@ f
 f
 f
 m
-Q
+w
 a
 "}
 (3,1,2) = {"
