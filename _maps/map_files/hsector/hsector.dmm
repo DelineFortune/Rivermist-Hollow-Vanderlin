@@ -49598,11 +49598,6 @@
 /obj/machinery/light/fueled/torchholder/c,
 /turf/open/floor/cobble,
 /area/under/town/rmh/basement/farm)
-"qop" = (
-/obj/structure/stairs/stone,
-/obj/structure/stairs/stone/cw,
-/turf/open/floor/cobblerock,
-/area/outdoors/rmh_air)
 "qoE" = (
 /obj/item/natural/stoneblock,
 /turf/open/floor/cobblerock,
@@ -315957,7 +315952,7 @@ etm
 etm
 etm
 etm
-qop
+iAe
 etm
 etm
 etm
