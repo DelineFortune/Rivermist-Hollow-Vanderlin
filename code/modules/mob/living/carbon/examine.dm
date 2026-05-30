@@ -273,7 +273,7 @@
 	. = list()
 	if(stat < UNCONSCIOUS && isliving(user))
 		var/mob/living/living_user = user
-		if(living_user.has_quirk(/datum/quirk/vice/wanted))
+		if(living_user.has_quirk(/datum/quirk/vice/wanted) && user != src)
 			user.add_stress(/datum/stress_event/hunted)
 
 

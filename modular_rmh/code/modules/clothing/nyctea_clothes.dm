@@ -21,7 +21,6 @@
 	icon_state = "stockings"
 	item_state = "stockings"
 	misc_flags = CRAFTING_TEST_EXCLUDE
-	icon_state_base
 	damaged_icon = 'modular_rmh/icons/clothing/nyctea.dmi'
 	damaged_overlay_icon = 'modular_rmh/icons/clothing/onmob/nyctea_onmob.dmi'
 
