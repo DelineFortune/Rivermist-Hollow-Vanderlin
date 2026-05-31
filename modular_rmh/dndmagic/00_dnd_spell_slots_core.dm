@@ -1,3 +1,8 @@
+// Core DND spell slot system.
+// Required by DND spell helpers, debug grants, and life.dm restore calls.
+// Load this file in the .dme before/alongside the DND spell helper files.
+// The old debug_grant_dnd_fireball() verb was intentionally removed here; use dnd_spell_grant_debug.dm instead.
+
 #define DND_SPELL_SLOT_MIN 1
 #define DND_SPELL_SLOT_MAX 5
 #define DND_SPELL_SLOT_ICON_MAX 4
@@ -528,15 +533,3 @@
 #undef DND_SPELL_SLOT_MAX
 #undef DND_SPELL_SLOT_ICON_MAX
 #undef DND_SHORT_REST_MAX_CHARGES
-
-/mob/living/carbon/human/verb/debug_grant_dnd_fireball()
-	set name = "Grant DND Fireball"
-	set category = "Debug"
-
-	setup_default_dnd_spell_slots()
-	grant_dnd_spell_hud()
-
-	var/datum/action/cooldown/spell/projectile/fireball/F = new
-	F.Grant(src)
-
-	to_chat(src, span_notice("DND Fireball granted."))
