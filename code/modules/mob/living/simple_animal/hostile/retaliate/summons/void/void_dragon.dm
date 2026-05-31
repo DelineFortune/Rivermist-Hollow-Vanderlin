@@ -41,7 +41,7 @@
 	aggressive = 1
 	deathmessage = "collapses to the floor with a final roar, the impact rocking the ground."
 	footstep_type = FOOTSTEP_MOB_HEAVY
-	var/void_corruption = TRUE
+	var/void_corruption = FALSE
 	dendor_taming_chance = DENDOR_TAME_PROB_NONE
 	food_max = 0
 
