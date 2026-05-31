@@ -3934,6 +3934,7 @@
 #include "modular_rmh\code\datums\character_flaw.dm"
 #include "modular_rmh\code\datums\combat_music.dm"
 #include "modular_rmh\code\datums\dna.dm"
+#include "modular_rmh\code\datums\loadouts.dm"
 #include "modular_rmh\code\datums\reflection.dm"
 #include "modular_rmh\code\datums\ai\horny_ai\find_potential_horny_targets.dm"
 #include "modular_rmh\code\datums\ai\horny_ai\horny_ai_datums.dm"

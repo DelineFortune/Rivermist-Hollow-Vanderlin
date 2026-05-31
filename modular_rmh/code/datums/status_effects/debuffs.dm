@@ -689,3 +689,21 @@
 		owner.toggle_rogmove_intent(MOVE_INTENT_WALK)
 		owner.update_sneak_invis()
 	return ..()
+
+//---------------------------------------------------------------------------------------------------------------------------------
+
+// Pregnacy status
+
+/datum/status_effect/debuff/impregnation
+	id = "impregnation"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/impregnation
+	duration = 2 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/impregnation
+	name = "Impregnated"
+	desc = "I feel the seed spreading inside me, soon I will be pregnant."
+	icon = 'modular_rmh/icons/mob/screen_alert.dmi'
+	icon_state = "impregnation"
+
+//---------------------------------------------------------------------------------------------------------------------------------

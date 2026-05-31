@@ -521,12 +521,12 @@
 
 	if(!allows_conventional_impregnation || pregnant)
 		return FALSE
-
-	if(owner.has_quirk(/datum/quirk/peculiarity/selfawaregeni))
-		to_chat(owner, span_love("I feel a surge of warmth in my [src.name], I'm definitely pregnant!"))
+	to_chat(owner, span_love("I feel a surge of warmth in my [src.name], I'm definitely pregnant!"))
+	owner.apply_status_effect(/datum/status_effect/debuff/impregnation)
 	reagents.maximum_volume *= 0.5
 	pregnant = TRUE
 	conventional_pregnancy_stage = 0
+
 	if(owner.getorganslot(ORGAN_SLOT_BREASTS))
 		var/obj/item/organ/genitals/filling_organ/breasts/breasties = owner.getorganslot(ORGAN_SLOT_BREASTS)
 		if(!breasties.refilling)
